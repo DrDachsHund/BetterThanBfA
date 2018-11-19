@@ -1,12 +1,5 @@
-case class Cell(x:Int, y:Int)
+import de.htwg.se.betterthanbfa.model.Player
 
-val cell1 = Cell(4,5)
-cell1.x
-cell1.y
+val test = Player("Test")
 
-case class Field(cells: Array[Cell])
-
-val field1 = Field(Array.ofDim[Cell](1))
-field1.cells(0)=cell1
-field1.cells(0).x
-field1.cells(0).y
+test.toString
