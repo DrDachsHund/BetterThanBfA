@@ -13,5 +13,5 @@ case class Player(playerName: String) {
     "\nLevel: " + level +
     "\nHealth: " + health +
     "\nStamina: " + stamina +
-    "\nExperiance: " + experience
+    "\nExperience: " + experience
 }

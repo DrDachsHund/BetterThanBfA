@@ -1,4 +1,4 @@
-import de.htwg.se.betterthanbfa.model.Player
+import de.htwg.se.betterthanbfa.model._
 
 val test = Player("Test")
 
