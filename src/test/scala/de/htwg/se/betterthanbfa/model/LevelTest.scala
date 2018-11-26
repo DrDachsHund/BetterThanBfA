@@ -14,8 +14,7 @@ class LevelTest extends WordSpec with Matchers {
     }
     "have when init" should {
       "initialise Array" in {
-        level.initArray
-        level.map should be(Array(1,0,0))
+        level.map should be(Array(0,0,0),(0,0,0))
       }
     }
     "have a nice String representation" in {

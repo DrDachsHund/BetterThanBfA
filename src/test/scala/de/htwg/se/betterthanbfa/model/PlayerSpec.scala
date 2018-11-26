@@ -11,7 +11,7 @@ class PlayerSpec extends WordSpec with Matchers {
     "have a name"  in {
       player.name should be("Your Name")
       player.health should be(100)
-      player.stamina should be(100)
+      player.mana should be(100)
       player.level should be(1)
       player.experience should be(0)
     }

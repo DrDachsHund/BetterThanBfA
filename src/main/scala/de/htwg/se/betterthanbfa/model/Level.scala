@@ -2,25 +2,19 @@ package de.htwg.se.betterthanbfa.model
 
 case class Level(size:Int) {
 
-    val map = new Array[Int](size)
+  val map = Array.ofDim[Int](size,size)
 
-    def initArray = {
-      var i = 0;
-      while(i < map.length) {
-        if(i != 0) {
-          map.update(i,0)
-        } else {
-          map.update(i,1)
-        }
-        i += 1
-      }
-    }
-
+  def update(x:Int,y:Int,e:Int) = {
+    map(x)(y) = e
+  }
 
   override def toString:String = {
     var s:String = ""
     for (i <- map) {
-      s += " " + i
+      for (x <- i) {
+        s += " " + x
+      }
+      s += "\n"
     }
     s
   }
