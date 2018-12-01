@@ -14,6 +14,9 @@ object BetterThanBfA {
   def main(args: Array[String]): Unit = {
     var input: String = ""
 
+    //println(player.posY)
+    //println(level.player.posY)
+
     do {
       println("Level: \n" + level.toString)
       input = readLine()

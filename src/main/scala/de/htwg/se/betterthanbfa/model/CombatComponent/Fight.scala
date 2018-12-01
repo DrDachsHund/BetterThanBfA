@@ -5,49 +5,45 @@ import de.htwg.se.betterthanbfa.model.playerComponent.Player
 
 class Fight() {
 
-
-  object Choices extends Enumeration {
-    val Attack,Block,Items,Run = Value
-  }
-
-
   def fight(player: Player, enemy: Enemy) = {
-    while (player.isAlive || enemy.isAlive) {
-      while (!playerTurn()) {}
+    while (player.isAlive && enemy.isAlive) {
+      while (!playerTurn(player,enemy)) {}
       println("Test")
     }
-    
-
   }
 
-  def attack():Boolean = {
+
+  //private
+  private def attack(player: Player, enemy: Enemy):Boolean = {
     println("attack")
+    enemy.health -= player.attack
+    println("Player Health: " + player.health + "Enemy Health: " + enemy.health)
     true
   }
 
 
-  def block():Boolean = {
+  private def block():Boolean = {
     println("block")
     true
   }
 
-  def items():Boolean = {
+  private def items():Boolean = {
     println("items")
     true
   }
 
-  def flee():Boolean = {
+  private def flee():Boolean = {
     println("flee")
     true
   }
 
 
-  def playerTurn():Boolean = {
+  private def playerTurn(player: Player, enemy: Enemy):Boolean = {
     println("Player Turn!")
     println("(0)Attack: - (1)Block: - (2)Items: - (3)Flee:")
     var input = readLine()
     input match {
-      case "0" => attack()
+      case "0" => attack(player: Player, enemy: Enemy) // ersma weil ka wie sonst
       case "1" => block()
       case "2" => items()
       case "3" => flee()

@@ -3,6 +3,7 @@ package de.htwg.se.betterthanbfa.model.playerComponent
 case class Player(playerName: String) {
   val entityN: Int = 1
   val name: String = playerName
+  var attack: Int = 10
   var health: Int = 100
   var mana: Int = 100
   var level: Int = 1
@@ -13,6 +14,7 @@ case class Player(playerName: String) {
 
   def isAlive: Boolean = health > 0
 
+  /* ersma in level ka obs so stimmt!
   def moveRight() = posX += 1
 
   def moveLeft() = posX -= 1
@@ -20,7 +22,7 @@ case class Player(playerName: String) {
   def moveUp() = posY += 1
 
   def moveDown() = posY -= 1
-
+*/
 
   override def toString: String = "Name: " + name +
     "\nLevel: " + level +
