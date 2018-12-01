@@ -1,18 +1,16 @@
 package de.htwg.se.betterthanbfa.aview
 
+import de.htwg.se.betterthanbfa.model.LevelComponent.Level
 import de.htwg.se.betterthanbfa.model._
+import de.htwg.se.betterthanbfa.model.playerComponent.Player
 
 class Tui {
-
-  def InputLine(input: String): Unit = {
+  def processInputLine(input: String, level: Level): Unit = {
     input match {
-      case "c" => new Player("Test")
-      case "cl" => new Level(10)
-      //case "k" =>   ...
-      //case "e" => new Enemy()
-      //case "q" => exit
+      case "n" => level.createLevel(10)
+      case default => level
     }
-
   }
+
 
 }

@@ -1,4 +1,7 @@
-package de.htwg.se.betterthanbfa.model
+package de.htwg.se.betterthanbfa.model.CombatComponent
+
+import de.htwg.se.betterthanbfa.model.EnemyComponent.Enemy
+import de.htwg.se.betterthanbfa.model.playerComponent.Player
 
 class Fight() {
 

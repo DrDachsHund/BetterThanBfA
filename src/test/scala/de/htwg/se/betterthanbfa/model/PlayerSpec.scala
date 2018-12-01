@@ -1,5 +1,6 @@
 package de.htwg.se.betterthanbfa.model
 
+import de.htwg.se.betterthanbfa.model.playerComponent.Player
 import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
