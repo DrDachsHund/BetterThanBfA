@@ -7,17 +7,31 @@ class Fight() {
 
   def fight(player: Player, enemy: Enemy) = {
     while (player.isAlive && enemy.isAlive) {
+      println("Im Fight:")
+      println("Player Health: " + player.health + " Enemy Health: " + enemy.health)
       while (!playerTurn(player,enemy)) {}
-      println("Test")
+      if (enemy.isAlive) {
+        enemyTurn(player,enemy)
+      }
     }
   }
 
+  private def enemyTurn(player: Player, enemy: Enemy): Unit = {
+    println("Enemy Turn:")
+    val r = new scala.util.Random
+    val x = r.nextInt(2)
+    x match {
+      case 0 => println("Attack")
+        player.health -= enemy.attack
+      case 1 => println("Block")
+      case default => println("FEHLER !!!!!!!!!!!!!!!!!!!!!!!!!!")
+    }
+  }
 
   //private
   private def attack(player: Player, enemy: Enemy):Boolean = {
     println("attack")
     enemy.health -= player.attack
-    println("Player Health: " + player.health + "Enemy Health: " + enemy.health)
     true
   }
 

@@ -6,6 +6,7 @@ case class Enemy(player: Player, posX: Int , posY: Int) {
   val r = new scala.util.Random
 
   val entityN: Int = 2
+  var attack: Int = 10
   var health: Int = 100
   var mana: Int = 100
   //var posX: Int = x glaube unnötig weil in übergabe parameter

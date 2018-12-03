@@ -21,8 +21,9 @@ object BetterThanBfA {
       println("Level: \n" + level.toString)
       input = readLine()
       tui.processInputLine(input, level)
-    } while (input != "q")
+    } while (input != "q" && player.isAlive)
 
+    println("Game Over")
 
   }
 }
