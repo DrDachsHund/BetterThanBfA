@@ -1,5 +1,6 @@
 package de.htwg.se.betterthanbfa.model.EnemyComponent
 
+import de.htwg.se.betterthanbfa.model.ItemComponent.{Shield, Weapon}
 import de.htwg.se.betterthanbfa.model.playerComponent.Player
 
 case class Enemy(player: Player, posX: Int , posY: Int) {
@@ -14,6 +15,11 @@ case class Enemy(player: Player, posX: Int , posY: Int) {
   var level: Int = setLevel()
   var name = Array("Zombie", "Skeleton", "Human", "Bandit", "Skeleton-Mage")
   var typ: String = setType()
+
+  var isBlocking = false
+
+  var shield: Shield = new Shield()
+  var weapon: Weapon = new Weapon()
 
   //private
   private def setType() = name(r.nextInt(5))

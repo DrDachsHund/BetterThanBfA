@@ -1,20 +1,25 @@
 package de.htwg.se.betterthanbfa.aview
 
-import de.htwg.se.betterthanbfa.model.LevelComponent.Level
-import de.htwg.se.betterthanbfa.model._
-import de.htwg.se.betterthanbfa.model.playerComponent.Player
+import de.htwg.se.betterthanbfa.controller.Controller
+import de.htwg.se.betterthanbfa.util.Observer
 
-class Tui {
-  def processInputLine(input: String, level: Level): Unit = {
+class Tui(controller: Controller) extends Observer {
+
+  controller.add(this)
+
+  def processInputLine(input: String): Unit = {
     input match {
-      case "n" => level.createLevel(10)
-      case "w" => level.moveUp()
-      case "s" => level.moveDown()
-      case "a" => level.moveLeft()
-      case "d" => level.moveRight()
-      case default => level
+      case "q" =>
+      case "n" => controller.createLevel(10)
+      case "w" => controller.move(input)
+      case "s" => controller.move(input)
+      case "a" => controller.move(input)
+      case "d" => controller.move(input)
+      case "i" => println(controller.playerToString)
+      case _ => println("FalscheEingabe")
     }
   }
 
+  override def update: Boolean = {println(controller.levelToString);true}
 
 }

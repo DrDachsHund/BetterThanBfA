@@ -1,5 +1,7 @@
 package de.htwg.se.betterthanbfa.model.playerComponent
 
+import de.htwg.se.betterthanbfa.model.ItemComponent.{Inventory, Shield, Weapon}
+
 case class Player(playerName: String) {
   val entityN: Int = 1
   val name: String = playerName
@@ -11,22 +13,22 @@ case class Player(playerName: String) {
   var posX: Int = 0
   var posY: Int = 0
 
+  var isBlocking = false
+
+  val inventory: Inventory = new Inventory()
+
+  var shield: Shield = new Shield()
+  var weapon: Weapon = new Weapon()
 
   def isAlive: Boolean = health > 0
-
-  /* ersma in level ka obs so stimmt!
-  def moveRight() = posX += 1
-
-  def moveLeft() = posX -= 1
-
-  def moveUp() = posY += 1
-
-  def moveDown() = posY -= 1
-*/
 
   override def toString: String = "Name: " + name +
     "\nLevel: " + level +
     "\nHealth: " + health +
     "\nMana: " + mana +
-    "\nExperience: " + experience
+    "\nExperience: " + experience +
+    "\n" + weapon.toString +
+    "\n" + shield.toString +
+    "\n" + inventory.toString
+
 }
