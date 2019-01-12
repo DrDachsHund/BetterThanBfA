@@ -12,10 +12,34 @@ class Fight() {
     isFighting = true
     while (player.isAlive && enemy.isAlive && isFighting) {
       println("Im Fight:")
-      println("Player Health: " + player.health + " " + enemy.typ + " Health: " + enemy.health)
+      println("Player Health: " + player.health + "/" + player.maxHealth + "\n{" +
+        enemy.typ + " Health: " + enemy.health + "/" + enemy.maxHealth + "\n" + enemy.weapon.toString + "\n" + enemy.shield.toString  + " }")
       while (!playerTurn(player,enemy)) {}
       if (enemy.isAlive && isFighting) {
+        enemy.isBlocking = false
         enemyTurn(player,enemy)
+      }
+    }
+    if (!enemy.isAlive && player.isAlive) {
+      if (player.collectExperience(enemy.experience)) {
+        println("Level Up: " + player.level)
+      }
+      println("PlayerEXP:" + player.experience + " u need " + (player.maxExperience - player.experience) + " for the next level")
+
+      println("Loot: \n[0]" + enemy.weapon.toString + "\n[1]" + enemy.shield.toString + "\n[2] Take all \n[x} Leave")
+      var input = readLine()
+      input match {
+        case "0" =>
+          player.inventory.addWeapon(enemy.weapon)
+          println("U took the Weapon")
+        case "1" =>
+          player.inventory.addShields(enemy.shield)
+          println("U took the Shield")
+        case "2" =>
+          player.inventory.addWeapon(enemy.weapon)
+          player.inventory.addShields(enemy.shield)
+          println("U took both")
+        case _ => println("U took nozhing")
       }
     }
   }
@@ -26,11 +50,18 @@ class Fight() {
     val x = r.nextInt(2)
     x match {
       case 0 => {
-        println("Attack")
+        println("Enemy Attack: ")
         if (player.isBlocking) {
-          player.health -= enemy.attack - player.shield.block
+          println("You are trying to block the Attack")
+          var x = enemy.attack + enemy.weapon.attack - player.shield.block
+          if (x > 0) {
+            println("The enemy strikes through ur block with " + x + " dmg")
+            player.health -= x
+          }
         } else {
-          player.health -= enemy.attack
+          var x = enemy.attack + enemy.weapon.attack
+          println("The Enemy hits u with " + x + " dmg")
+          player.health -= x
         }
       }
       case 1 => {
@@ -45,9 +76,16 @@ class Fight() {
   private def attack(player: Player, enemy: Enemy):Boolean = {
     println("attack")
     if (enemy.isBlocking) {
-      enemy.health -= player.attack + player.weapon.attack - enemy.shield.block
+      println("The Enemy is blocking ur attack")
+      var x = player.attack + player.weapon.attack - enemy.shield.block
+      if (x > 0) {
+        println("You attack for " + x)
+        enemy.health -= x
+      }
     } else {
-      enemy.health -= player.attack + player.weapon.attack
+      var x = player.attack + player.weapon.attack
+      println("You attack for "  + x)
+      enemy.health -= x
     }
     true
   }
@@ -64,6 +102,12 @@ class Fight() {
     var x = new Potion()
     x.randomPotion(player)
     player.inventory.addPotion(x)
+    var y = new Potion()
+    y.randomPotion(player)
+    player.inventory.addPotion(y)
+    var z = new Potion()
+    z.randomPotion(player)
+    player.inventory.addPotion(z)
 
     var heal = 0
     var heavyHeal = 0
@@ -86,17 +130,47 @@ class Fight() {
       }
     }
 
-    println("Heal(" + heal + "): 0\n")
-    println("HeavyHeal(" + heavyHeal + "): 1\n")
-    println("Mana(" + mana + "): 2\n")
-    println("HeavyMana(" + heavyMana + "): 3\n")
+    var test = true
+    var help = ""
+    var input = ""
+    while(test) {
 
+      println("[0]Heal(" + heal + ")\n")
+      println("[1]HeavyHeal(" + heavyHeal + ")\n")
+      println("[2]Mana(" + mana + ")\n")
+      println("[3]HeavyMana(" + heavyMana + ")\n")
+      println("[x]Belibige Taste zum zurueck gehen")
 
-    ///var x = scala.collection.mutable.Map[String, Integer]()
+      input = readLine()
+      input match {
+        case "0" => help = "Heal"
+          if (heal > 0) test = false
+        case "1" => help = "HeavyHeal"
+          if (heavyHeal > 0) test = false
+        case "2" => help = "Mana"
+          if (mana > 0) test = false
+        case "3" => help = "HeavyMana"
+          if (heavyMana > 0) test = false
+        case _ => {
+          println("Falsche Eingabe!")
+           return false
+        }
+      }
+    }
 
-   // x = player.inventory.potions.groupBy(identity).mapValues(_.size)
+    for (i <- player.inventory.potions.toList) {
+      if (help == i.typ) {
+        if (input == "0" || input == "1") {
+          player.heal(i.power)
+      } else {
+          player.refresh(i.power)
+        }
+        player.inventory.removePotion(i)
+        return true
+      }
+    }
 
-    true
+    false
   }
 
   private def flee(player: Player, enemy: Enemy):Boolean = {
@@ -134,14 +208,13 @@ class Fight() {
     input match {
       case "0" => attack(player, enemy) // ersma weil ka wie sonst
       case "1" => block(player, enemy)
-      case "2" => items(player, enemy)
+      case "2" => if(!items(player, enemy)) return false
       case "3" => flee(player, enemy)
       case _ => {
         println("Falsche Eingabe!")
-        false
+        return false
       }
     }
-    enemy.isBlocking = false
     true
   }
 

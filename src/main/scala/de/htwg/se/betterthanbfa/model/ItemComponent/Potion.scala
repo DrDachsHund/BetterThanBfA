@@ -21,16 +21,16 @@ class Potion {
         power = 25
       }
       case "HeavyHeal" => {
-        value = 10
-        power = 25
+        value = 25
+        power = 50
       }
       case "Mana" => {
-        value = 10
-        power = 25
+        value = 25
+        power = 10
       }
       case "HeavyMana" => {
-        value = 10
-        power = 25
+        value = 100
+        power = 30
       }
     }
   }

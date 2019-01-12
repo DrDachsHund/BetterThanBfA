@@ -3,7 +3,6 @@ package de.htwg.se.betterthanbfa.model.ItemComponent
 import de.htwg.se.betterthanbfa.model.playerComponent.Player
 
 class Shield() {
-
   val r = new scala.util.Random
 
   var name: String = "TESTSchild"

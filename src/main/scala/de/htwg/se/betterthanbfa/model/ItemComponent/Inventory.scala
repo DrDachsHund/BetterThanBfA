@@ -49,4 +49,26 @@ class Inventory {
     s
   }
 
+  def weaponstoString: String = {
+    var s: String = "Weapons: \n"
+    for (i <- weapons.toList) {
+      s += i + "\n"
+    }
+    s
+  }
+  def shieldstoString: String = {
+    var s: String = "Shields: \n"
+    for (i <- shields.toList) {
+      s += i + "\n"
+    }
+    s
+  }
+  def potionstoString: String = {
+    var s: String = "Potions: \n"
+    for (i <- potions.toList) {
+      s += i + "\n"
+    }
+    s
+  }
+
 }
