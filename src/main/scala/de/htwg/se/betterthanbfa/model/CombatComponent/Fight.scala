@@ -8,26 +8,16 @@ class Fight() {
 
   var isFighting = true
 
-  def fight(player: Player, enemy: Enemy):Unit = {
+  def fight(player: Player, enemy: Enemy):Boolean = {
     isFighting = true
-    while (player.isAlive && enemy.isAlive && isFighting) {
-      println("Im Fight:")
-      println("Player Health: " + player.health + "/" + player.maxHealth + "\n{" +
-        enemy.typ + " Health: " + enemy.health + "/" + enemy.maxHealth + "\n" + enemy.weapon.toString + "\n" + enemy.shield.toString  + " }")
-      while (!playerTurn(player,enemy)) {}
-      if (enemy.isAlive && isFighting) {
-        enemy.isBlocking = false
-        enemyTurn(player,enemy)
-      }
-    }
-    if (!enemy.isAlive && player.isAlive) {
-      if (player.collectExperience(enemy.experience)) {
-        println("Level Up: " + player.level)
-      }
-      println("PlayerEXP:" + player.experience + " u need " + (player.maxExperience - player.experience) + " for the next level")
 
-      println("Loot: \n[0]" + enemy.weapon.toString + "\n[1]" + enemy.shield.toString + "\n[2] Take all \n[x} Leave")
-      var input = readLine()
+    if (player.isAlive && enemy.isAlive && isFighting) {
+      return true
+    }
+    false
+  }
+
+  def lootEnemy(player: Player,enemy: Enemy, input: String): Unit = {
       input match {
         case "0" =>
           player.inventory.addWeapon(enemy.weapon)
@@ -41,10 +31,16 @@ class Fight() {
           println("U took both")
         case _ => println("U took nozhing")
       }
-    }
   }
 
-  private def enemyTurn(player: Player, enemy: Enemy): Unit = {
+  def collectEXP(player: Player, enemy: Enemy): Unit = {
+    if (player.collectExperience(enemy.experience)) {
+      println("Level Up: " + player.level)
+    }
+    println("PlayerEXP:" + player.experience + " u need " + (player.maxExperience - player.experience) + " for the next level")
+  }
+
+  def enemyTurn(player: Player, enemy: Enemy): Unit = {
     println(enemy.typ + " Turn:")
     val r = new scala.util.Random
     val x = r.nextInt(2)
@@ -72,8 +68,7 @@ class Fight() {
     }
   }
 
-  //private
-  private def attack(player: Player, enemy: Enemy):Boolean = {
+  def attack(player: Player, enemy: Enemy):Boolean = {
     println("attack")
     if (enemy.isBlocking) {
       println("The Enemy is blocking ur attack")
@@ -91,13 +86,13 @@ class Fight() {
   }
 
 
-  private def block(player: Player, enemy: Enemy):Boolean = {
+  def block(player: Player, enemy: Enemy):Boolean = {
     println("block")
     player.isBlocking = true
     true
   }
 
-  private def items(player: Player, enemy: Enemy):Boolean = {
+  def items(player: Player, enemy: Enemy):Boolean = {
     println("items")
     var x = new Potion()
     x.randomPotion(player)
@@ -173,7 +168,7 @@ class Fight() {
     false
   }
 
-  private def flee(player: Player, enemy: Enemy):Boolean = {
+  def flee(player: Player, enemy: Enemy):Boolean = {
     println("Try to flee")
     val r = new scala.util.Random
 
@@ -198,26 +193,26 @@ class Fight() {
   }
 
 
-  private def playerTurn(player: Player, enemy: Enemy):Boolean = {
-    println("Player Turn!")
-    println("(0)Attack: - (1)Block: - (2)Items: - (3)Flee:")
-
-    player.isBlocking = false
-
-    var input = readLine()
-    input match {
-      case "0" => attack(player, enemy) // ersma weil ka wie sonst
-      case "1" => block(player, enemy)
-      case "2" => if(!items(player, enemy)) return false
-      case "3" => flee(player, enemy)
-      case _ => {
-        println("Falsche Eingabe!")
-        return false
-      }
-    }
-    true
+  def playerTurnToString(player: Player, enemy: Enemy): String = {
+    var s: String = "Player Turn! \n"
+    s += "Player Health: " + player.health + "/" + player.maxHealth + "\n" +
+      enemy.typ + " Health: " + enemy.health + "/" + enemy.maxHealth + "\n"
+    s += "(0)Attack: - (1)Block: - (2)Items: - (3)Flee:"
+    s
   }
 
+  def enemyTurnToString(player: Player, enemy: Enemy): String = {
+    "OBSERVERENEMYPLACEHOLDER"
+  }
 
+  def fightToString(player: Player,enemy: Enemy): String = {
+    var s: String = "Im Fight:\n"
+    s += enemy.typ + enemy.weapon.toString + "\n" + enemy.shield.toString
+    s
+  }
+
+  def lootEnemyToString(enemy: Enemy): String = {
+    "Loot: \n[0]" + enemy.weapon.toString + "\n[1]" + enemy.shield.toString + "\n[2] Take all \n[x} Leave"
+  }
 
 }

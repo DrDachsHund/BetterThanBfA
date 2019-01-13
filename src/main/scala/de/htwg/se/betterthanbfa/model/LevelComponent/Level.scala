@@ -11,6 +11,8 @@ case class Level(player: Player) {
 
   var enemys: List[Enemy] = List()
 
+  var currentEnemy: Enemy = new Enemy(player,0,0)
+
   //public
   def createLevel(size: Int) = {
     map = Array.ofDim[Int](size, size)

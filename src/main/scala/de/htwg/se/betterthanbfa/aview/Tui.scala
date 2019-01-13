@@ -21,7 +21,6 @@ class Tui(controller: Controller) extends Observer {
         case _ => println("FalscheEingabe")
       }
     } else if (controller.gameMode == GameMode.Inventory) {
-      //println(controller.playerInventoryToString) maynbe beim update idk
       input match {
         case "q" =>
         case "b" => controller.selectMap()
@@ -35,8 +34,55 @@ class Tui(controller: Controller) extends Observer {
         case "q" =>
         case "b" => controller.selectInventory()
         case _ =>
-          //controler.selectweapon(input)
-          println("FalscheEingabe")
+          var x: Int = 0
+          try {
+            x = input.toInt
+          } catch {
+            case e: Exception => 0
+          }
+          if(!controller.equipWeapon(x)) {
+            println("FalscheEingabe")
+            //println("x:" + x)
+          }
+      }
+    } else if (controller.gameMode == GameMode.InventoryShield) {
+      input match {
+        case "q" =>
+        case "b" => controller.selectInventory()
+        case _ =>
+          var x: Int = 0
+          try {
+            x = input.toInt
+          } catch {
+            case e: Exception => 0
+          }
+          if(!controller.equipShield(x)) {
+            println("FalscheEingabe")
+            //println("x:" + x)
+          }
+      }
+    } else if (controller.gameMode == GameMode.InventoryPotion) {
+      input match {
+        case "q" =>
+        case "b" => controller.selectInventory()
+        case _ =>
+          if (!controller.usePotion(input)) {
+            println("FalscheEingabe")
+          }
+      }
+    } else if (controller.gameMode == GameMode.FightPlayerTurn) {
+      input match {
+        case "q" =>
+        case _ =>
+          if (!controller.fightPlayerTurn(input))
+            println("FalscheEingabe")
+      }
+    } else if (controller.gameMode == GameMode.Loot) {
+      input match {
+        case "q" =>
+        case _ =>
+          if (!controller.lootEnemy(input))
+            println("FalscheEingabe")
       }
     }
 
@@ -45,7 +91,46 @@ class Tui(controller: Controller) extends Observer {
   override def update: Boolean = {
     //if gamemode notify
     //jup def mit fight auch so weil das dann mit notify auch bai guy wahrscheinlich gleich funtzt
-    println(controller.levelToString);true
+
+    if (controller.gameMode == GameMode.Map) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.levelToString);
+      return true
+    } else if (controller.gameMode == GameMode.Inventory) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.inventoryToString);
+      return true
+    } else if (controller.gameMode == GameMode.InventoryWeapon) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.weaponsToString);
+      return true
+    } else if (controller.gameMode == GameMode.InventoryShield) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.shieldsToString);
+      return true
+    } else if (controller.gameMode == GameMode.InventoryPotion) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.potionsToString);
+      return true
+    } else if (controller.gameMode == GameMode.Fight) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.fightToString)
+      return true
+    } else if (controller.gameMode == GameMode.FightPlayerTurn) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.playerTurnToString)
+      return true
+    } else  if (controller.gameMode == GameMode.FightEnemyTurn) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.enemyTurnToString)
+      return true
+    } else  if (controller.gameMode == GameMode.Loot) {
+      println("GameMode: " + controller.gameMode)
+      println(controller.lootEnemyToString)
+      return true
+    }
+
+    false
   }
 
 }

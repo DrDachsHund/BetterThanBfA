@@ -5,7 +5,7 @@ import de.htwg.se.betterthanbfa.model.playerComponent.Player
 class Shield() {
   val r = new scala.util.Random
 
-  var name: String = "TESTSchild"
+  var name: String = "Left-Hand"
 
   var value: Int = 0
   var block: Int = 0
@@ -13,6 +13,7 @@ class Shield() {
   def randomShield(player: Player):Unit = {
     value = player.level + r.nextInt(10)
     block = player.level + r.nextInt(5)
+    //name nur so zum testen!!!
     name = name + player.level + value + block
   }
 

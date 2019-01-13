@@ -32,6 +32,14 @@ class Inventory {
     potions -= potion
   }
 
+  def countPotions(name: String): Int = {
+    var x = 0
+    for (i <- potions.toList) {
+      if (i.typ == name) x += 1
+    }
+    x
+  }
+
   override def toString: String = {
     var s: String = "Inventory: \n"
     s += "Wepons:"
@@ -51,22 +59,28 @@ class Inventory {
 
   def weaponstoString: String = {
     var s: String = "Weapons: \n"
+    var x: Int = 0
     for (i <- weapons.toList) {
-      s += i + "\n"
+      s += "(" + x + ")" + i + "\n"
+      x += 1
     }
     s
   }
   def shieldstoString: String = {
     var s: String = "Shields: \n"
+    var x: Int = 0
     for (i <- shields.toList) {
-      s += i + "\n"
+      s += "(" + x + ")" + i + "\n"
+      x += 1
     }
     s
   }
   def potionstoString: String = {
     var s: String = "Potions: \n"
+    var x: Int = 0
     for (i <- potions.toList) {
-      s += i + "\n"
+      s += "(" + x + ")" + i + "\n"
+      x += 1
     }
     s
   }
