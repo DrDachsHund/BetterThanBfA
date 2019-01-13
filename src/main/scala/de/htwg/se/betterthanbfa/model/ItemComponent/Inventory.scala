@@ -75,14 +75,27 @@ class Inventory {
     }
     s
   }
+
   def potionstoString: String = {
-    var s: String = "Potions: \n"
-    var x: Int = 0
-    for (i <- potions.toList) {
-      s += "(" + x + ")" + i + "\n"
-      x += 1
-    }
+    var heal = 0
+    var heavyHeal = 0
+    var mana = 0
+    var heavyMana = 0
+
+    heal = countPotions("Heal")
+    heavyHeal = countPotions("HeavyHeal")
+    mana = countPotions("Mana")
+    heavyMana = countPotions("HeavyMana")
+
+    var s = ""
+
+    s += "[0]Heal(" + heal + ")\n"
+    s += "[1]HeavyHeal(" + heavyHeal + ")\n"
+    s += "[2]Mana(" + mana + ")\n"
+    s += "[3]HeavyMana(" + heavyMana + ")\n"
+    s += "[b]Zum zurueck gehen"
     s
   }
+
 
 }

@@ -24,9 +24,9 @@ class Tui(controller: Controller) extends Observer {
       input match {
         case "q" =>
         case "b" => controller.selectMap()
-        case "w" => println(controller.selectWeapon())
-        case "s" => println(controller.selectShield())
-        case "p" => println(controller.selectPotion())
+        case "w" => println(controller.selectWeapon)
+        case "s" => println(controller.selectShield)
+        case "p" => println(controller.selectPotion)
         case _ => println("FalscheEingabe")
       }
     } else if (controller.gameMode == GameMode.InventoryWeapon) {
@@ -67,7 +67,7 @@ class Tui(controller: Controller) extends Observer {
         case "b" => controller.selectInventory()
         case _ =>
           if (!controller.usePotion(input)) {
-            println("FalscheEingabe")
+            println("FalscheEingabe oder Keine Potion zu verfügung")
           }
       }
     } else if (controller.gameMode == GameMode.FightPlayerTurn) {
@@ -89,9 +89,6 @@ class Tui(controller: Controller) extends Observer {
   }
 
   override def update: Boolean = {
-    //if gamemode notify
-    //jup def mit fight auch so weil das dann mit notify auch bai guy wahrscheinlich gleich funtzt
-
     if (controller.gameMode == GameMode.Map) {
       println("GameMode: " + controller.gameMode)
       println(controller.levelToString);

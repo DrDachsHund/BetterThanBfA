@@ -1,6 +1,6 @@
 package de.htwg.se.betterthanbfa.model.playerComponent
 
-import de.htwg.se.betterthanbfa.model.ItemComponent.{Inventory, Shield, Weapon}
+import de.htwg.se.betterthanbfa.model.ItemComponent.{Inventory, Potion, Shield, Weapon}
 
 case class Player(playerName: String) {
   val entityN: Int = 1
@@ -19,6 +19,11 @@ case class Player(playerName: String) {
   var isBlocking = false
 
   val inventory: Inventory = new Inventory()
+
+  //nur zum testen
+  private var TESTPOTION = new Potion()
+  TESTPOTION.randomPotion(this)
+  inventory.addPotion(TESTPOTION)
 
   var shield: Shield = new Shield()
   var weapon: Weapon = new Weapon()
@@ -53,10 +58,76 @@ case class Player(playerName: String) {
     return false
   }
 
-  def equipItem(): Unit = {
-
-
+  def equipWeapon(index: Int): Boolean = {
+    if (index >= inventory.weapons.size) {
+      return false
+    } else {
+      inventory.addWeapon(weapon)
+      weapon = inventory.weapons(index)
+      inventory.removeWeapon(inventory.weapons(index))
+      true
+    }
   }
+
+  def equipShield(index: Int): Boolean = {
+    if (index >= inventory.shields.size) {
+      return false
+    } else {
+      inventory.addShields(shield)
+      shield = inventory.shields(index)
+      inventory.removeShields(inventory.shields(index))
+      true
+    }
+  }
+
+  def usePotion(input: String): Boolean = {
+    var help: String = ""
+
+    input match {
+      case "0" =>
+        if (inventory.countPotions("Heal") > 0) {
+          help = "Heal"
+        } else {
+          return false
+        }
+      case "1" =>
+        if (inventory.countPotions("HeavyHeal") > 0) {
+          help = "HeavyHeal"
+        } else {
+          return false
+        }
+      case "2" =>
+        if (inventory.countPotions("Mana") > 0) {
+          help = "Mana"
+        } else {
+          return false
+        }
+      case "3" =>
+        if (inventory.countPotions("HeavyMana") > 0) {
+          help = "HeavyMana"
+        } else {
+          return false
+        }
+      case _ => {
+        return false
+      }
+    }
+
+    for (i <- inventory.potions.toList) {
+      if (help == i.typ) {
+        if (input == "0" || input == "1") {
+          heal(i.power)
+        } else {
+          refresh(i.power)
+        }
+        inventory.removePotion(i)
+        return true
+      }
+    }
+
+    false
+  }
+
 
   override def toString: String = "Name: " + name +
     "\nLevel: " + level +
