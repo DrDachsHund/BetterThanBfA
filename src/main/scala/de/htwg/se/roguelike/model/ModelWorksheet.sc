@@ -17,3 +17,7 @@ case class Enemy(name: String) {
   val enemy1 = new Enemy
 
   val enemy2 = Enemy("Zombie")
+
+  val enemy3 = Enemy("Mage")
+
+//Testing the Worksheet interactions with Git, Pull and Push
