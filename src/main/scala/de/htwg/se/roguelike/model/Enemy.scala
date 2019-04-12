@@ -1,12 +1,8 @@
 package de.htwg.se.roguelike.model
 
-  case class Enemy(name: String) {
-    def this() = this(name = "Skeleton")
-
-    val health = 100
-    val attack = 10
-    val exp = 0
-
+  case class Enemy(name: String = "Skeleton", health:Int = 100, attack:Int = 10, exp:Int = 0) {
+    
+    def isAlive():Boolean = health > 0
 
     override def toString: String =
       "Name: " + name +
