@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model
 
-class Fight {
+case class Fight() {
 
   def interaction(player: Player, enemies: List[Enemy]): Boolean = {
     for (enemy <- enemies) {
