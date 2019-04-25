@@ -34,13 +34,17 @@ class EnemyTest extends WordSpec with Matchers {
       enemy1.toString should be("Name: " + "Skeleton" +
         "\nhealth: " + "100" +
         "\nAttack: " + "10" +
-        "\nExperience: " + "0")
+        "\nExperience: " + "0" +
+        "\nposX: " + "0" +
+        "\nposY: " + "0")
     }
       "have a nice String representation when set" in {
         enemy2.toString should be("Name: " + "Enemy Name" +
           "\nhealth: " + "500" +
           "\nAttack: " + "100" +
-          "\nExperience: " + "100")
+          "\nExperience: " + "100" +
+          "\nposX: " + "0" +
+          "\nposY: " + "0")
       }
   }}
 }
