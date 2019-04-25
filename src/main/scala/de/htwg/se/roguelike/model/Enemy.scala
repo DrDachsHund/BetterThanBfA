@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model
 
-  case class Enemy(name: String = "Skeleton", health:Int = 100, attack:Int = 10, exp:Int = 0) {
+  case class Enemy(name: String = "Skeleton", health:Int = 100, attack:Int = 10, exp:Int = 0, posX:Int, posY:Int) {
     
     def isAlive():Boolean = health > 0
 
