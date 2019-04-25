@@ -13,10 +13,22 @@ class PlayerSpec extends WordSpec with Matchers {
       player.name should be("Your Name")
     }
     "have a nice String representation" in {
-      player.toString should be("Your Name")
+      player.toString should be(
+        "Name: " + "Your Name" +
+          "\nhealth: " + "100" +
+          "\nAttack: " + "10" +
+          "\nExperience: " + "0" +
+          "\nposX: " + "0" +
+          "\nposY: " + "0")
     }
-   }
-  }
+      "when alive" in {
+        player.isAlive() should be(true)
+      }
+      val player2 = player.copy(health = 0)
+      "when not alive" in {
+        player2.isAlive() should be(false)
+      }
+  }}
 
 
 }

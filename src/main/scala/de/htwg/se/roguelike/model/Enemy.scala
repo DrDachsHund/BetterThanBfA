@@ -8,5 +8,8 @@ package de.htwg.se.roguelike.model
       "Name: " + name +
         "\nhealth: " + health +
         "\nAttack: " + attack +
-        "\nExperience: " + exp
+        "\nExperience: " + exp +
+        "\nposX: " + posX +
+        "\nposY: " + posY
+
   }
