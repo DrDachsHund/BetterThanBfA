@@ -9,5 +9,4 @@ package de.htwg.se.roguelike.model
         "\nhealth: " + health +
         "\nAttack: " + attack +
         "\nExperience: " + exp
-
   }
