@@ -24,11 +24,11 @@ class EnemyTest extends WordSpec with Matchers {
         enemy2.exp should be(100)
       }
       "when alive" in {
-        enemy1.isAlive() should be(true)
+        enemy1.isAlive should be(true)
       }
       val enemy3 = enemy2.copy(health = 0)
       "when not alive" in {
-        enemy3.isAlive() should be(false)
+        enemy3.isAlive should be(false)
       }
       "have a nice String representation when not set" in {
       enemy1.toString should be("Name: " + "Skeleton" +
