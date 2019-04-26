@@ -1,60 +1,30 @@
 package de.htwg.se.roguelike.aview
 
-import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.controller.Controller
+import de.htwg.se.roguelike.util.Observer
 
-class Tui {
+class Tui(controller: Controller) extends Observer {
 
-  def processInputLine(input: String, level:Level, player:Player, enemies:List[Enemy]):(Level,Player,List[Enemy]) = {
+  controller.add(this)
+
+  def processInputLine(input: String): Unit = {
+
     input match {
-      case "q" => {
-        var tupel = (level,player,enemies)
-        (tupel._1,tupel._2 ,tupel._3)
-      }
-
-      case "r"=> {
-        var tupel = new LevelCreator(10).createRandom(player,5)
-        (tupel._1, tupel._2, tupel._3)
-      }
-
-      case "n" => {
-        var tupel = (new LevelCreator(10).createLevel(player, enemies), player, enemies)
-        (tupel._1, tupel._2, tupel._3)
-      }
-
-      case "i" => {
-        print("Interaction: " + new Fight().interaction(player,enemies) + "\n")
-        (level,player,enemies)
-      }
-
-      case "w" => {
-        var tupel1 = level.moveUp(player)
-        var tupel = (tupel1._1,tupel1._2,enemies)
-        (tupel._1,tupel._2 ,tupel._3)
-      }
-
-      case "a" => {
-        var tupel1 = level.moveLeft(player)
-        var tupel = (tupel1._1,tupel1._2,enemies)
-        (tupel._1,tupel._2 ,tupel._3)
-      }
-
-      case "s" => {
-        var tupel1 = level.moveDown(player)
-        var tupel = (tupel1._1,tupel1._2,enemies)
-        (tupel._1,tupel._2 ,tupel._3)
-      }
-
-      case "d" => {
-        var tupel1 = level.moveRight(player)
-        var tupel = (tupel1._1,tupel1._2,enemies)
-        (tupel._1,tupel._2 ,tupel._3)
-      }
-
+      case "q" =>
+      case "r" => controller.createRandomLevel
+      case "n" => controller.createLevel
+      case "i" =>
+        val interaction = controller.interaction
+        if (interaction) println("Player interacts with Enemy") else println("No interaction found")
+      case "w" => controller.moveUp
+      case "a" => controller.moveLeft
+      case "s" => controller.moveDown
+      case "d" => controller.moveRight
       case _ => {
         print("Wrong Input!!!")
-        (level,player,enemies)
-        }
-
       }
     }
+  }
+
+  override def update: Unit = println(controller.levelToString)
 }

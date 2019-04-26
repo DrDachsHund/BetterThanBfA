@@ -4,7 +4,7 @@ import scala.util.Random
 
 class LevelCreator(size:Int) {
 
-  def createLevel(player: Player, enemies:List[Enemy]): Level = {
+  def createLevel(player: Player, enemies:Vector[Enemy]): Level = {
     var level = new Level(size)
 
     level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(5)))
@@ -17,7 +17,7 @@ class LevelCreator(size:Int) {
   }
 
 //col und row noch (fehlerhaft beschrieben) wahrescheinlich vertauschen
-  def createRandom(player: Player, enemyCount:Int): (Level,Player,List[Enemy]) = {
+  def createRandom(player: Player, enemyCount:Int): (Level,Vector[Enemy]) = {
     var level = new Level(size)
 
     level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(5)))
@@ -25,7 +25,7 @@ class LevelCreator(size:Int) {
     var row:Int = 0
     var col:Int = 0
 
-    var enemies:List[Enemy] = List()
+    var enemies:Vector[Enemy] = Vector()
 
     for (x <- 1 to enemyCount) {
 
@@ -42,7 +42,7 @@ class LevelCreator(size:Int) {
 
     //print(enemies)
 
-    (level,player,enemies)
+    (level,enemies)
   }
 
 }

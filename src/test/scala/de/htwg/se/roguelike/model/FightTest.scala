@@ -12,10 +12,10 @@ class FightTest extends WordSpec with Matchers{
     "new" should {
       val fight = new Fight
       "when interaction" in {
-        fight.interaction(new Player(name = "Test",posX = 0,posY = 0),List(new Enemy(posX = 0,posY = 0))) should be(true)
+        fight.interaction(new Player(name = "Test",posX = 0,posY = 0),Vector(new Enemy(posX = 0,posY = 0))) should be(true)
       }
       "when no interaction" in {
-        fight.interaction(new Player(name = "Test",posX = 1,posY = 0),List(new Enemy(posX = 0,posY = 0))) should be(false)
+        fight.interaction(new Player(name = "Test",posX = 1,posY = 0),Vector(new Enemy(posX = 0,posY = 0))) should be(false)
       }
     }}
 

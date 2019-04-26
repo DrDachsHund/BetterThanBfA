@@ -13,9 +13,11 @@ class TileTest extends WordSpec with Matchers {
       "have a value" in {
         tile.value should be(3)
       }
-      "when set" in {
+    "set" should {
+      "bla" in {
         tile.isSet should be(true)
       }
+    }
       val tile2 = tile.copy(value = 0)
       "when not set" in {
         tile2.isSet should be(false)

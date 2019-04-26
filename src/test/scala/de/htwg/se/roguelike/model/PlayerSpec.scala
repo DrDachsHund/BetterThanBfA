@@ -1,10 +1,7 @@
 package de.htwg.se.roguelike.model
 
 import org.scalatest._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class PlayerSpec extends WordSpec with Matchers {
   "A Player" when {
     "new" should {
@@ -21,7 +18,7 @@ class PlayerSpec extends WordSpec with Matchers {
           "\nposX: " + "0" +
           "\nposY: " + "0")
     }
-      "when alive" in {
+      "when... alive" in {
         player.isAlive() should be(true)
       }
       val player2 = player.copy(health = 0)
