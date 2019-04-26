@@ -7,7 +7,7 @@ class LevelCreator(size:Int) {
   def createLevel(player: Player, enemies:List[Enemy]): Level = {
     var level = new Level(size)
 
-    level = new Level(level.map.replaceTile(player.posX,player.posY,new Tile(5)))
+    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(5)))
 
     for (x <- enemies) {
       level = new Level(level.map.replaceTile(x.posX,x.posY,new Tile(3)))
@@ -16,11 +16,11 @@ class LevelCreator(size:Int) {
     level
   }
 
-
+//col und row noch (fehlerhaft beschrieben) wahrescheinlich vertauschen
   def createRandom(player: Player, enemyCount:Int): (Level,Player,List[Enemy]) = {
     var level = new Level(size)
 
-    level = new Level(level.map.replaceTile(player.posX,player.posY,new Tile(5)))
+    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(5)))
 
     var row:Int = 0
     var col:Int = 0
@@ -29,11 +29,10 @@ class LevelCreator(size:Int) {
 
     for (x <- 1 to enemyCount) {
 
-      print("XDDXXDDXDXD\n")
       do {
         col = Random.nextInt(level.map.size)
         row = Random.nextInt(level.map.size)
-      } while (level.map.tile(row,col).isSet)
+      } while (level.map.tile(col,row).isSet)
 
       var enemy = new Enemy(name = "RandomEnemy",posX = row, posY = col)
       enemies = enemies :+ enemy
@@ -41,7 +40,7 @@ class LevelCreator(size:Int) {
       level = new Level(level.map.replaceTile(col,row,new Tile(3)))
     }
 
-    print(enemies)
+    //print(enemies)
 
     (level,player,enemies)
   }
