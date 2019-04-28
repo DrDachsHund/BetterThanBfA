@@ -5,7 +5,7 @@ case class Land[T] (map:Vector[Vector[T]]) {
 
   val size:Int = map.size
 
-  def tile(row:Int, col:Int):T = map(row)(col)
+  def tile(col:Int, row:Int):T = map(col)(row)
 
-  def replaceTile(row:Int,col:Int,tile:T):Land[T] = copy(map.updated(row, map(row).updated(col, tile)))
+  def replaceTile(col:Int,row:Int,tile:T):Land[T] = copy(map.updated(col, map(col).updated(row, tile)))
 }
