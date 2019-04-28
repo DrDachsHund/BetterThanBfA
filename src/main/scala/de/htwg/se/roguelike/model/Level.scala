@@ -8,8 +8,7 @@ case class Level(map: Land[Tile]) {
       return (this,player)
     }
 
-    var player1 = player.copy(posY = player.posY - 1)
-
+    val player1 = player.copy(posY = player.posY - 1)
     var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
     level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
@@ -21,8 +20,7 @@ case class Level(map: Land[Tile]) {
       return (this,player)
     }
 
-    var player1 = player.copy(posY = player.posY + 1)
-
+    val player1 = player.copy(posY = player.posY + 1)
     var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
     level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
@@ -34,8 +32,7 @@ case class Level(map: Land[Tile]) {
       return (this,player)
     }
 
-    var player1 = player.copy(posX = player.posX - 1)
-
+    val player1 = player.copy(posX = player.posX - 1)
     var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
     level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
@@ -47,8 +44,7 @@ case class Level(map: Land[Tile]) {
       return (this,player)
     }
 
-    var player1 = player.copy(posX = player.posX + 1)
-
+    val player1 = player.copy(posX = player.posX + 1)
     var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
     level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
