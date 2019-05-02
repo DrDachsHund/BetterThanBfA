@@ -24,28 +24,28 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
 
   def moveUp: Unit = {
-    var (level1,player1) = level.moveUp(player)
+    val (level1,player1) = level.moveUp(player)
     level = level1
     player = player1
     notifyObservers
   }
 
   def moveDown: Unit = {
-    var (level1,player1) = level.moveDown(player)
+    val (level1,player1) = level.moveDown(player)
     level = level1
     player = player1
     notifyObservers
   }
 
   def moveLeft: Unit = {
-    var (level1,player1) = level.moveLeft(player)
+    val (level1,player1) = level.moveLeft(player)
     level = level1
     player = player1
     notifyObservers
   }
 
   def moveRight: Unit = {
-    var (level1,player1) = level.moveRight(player)
+    val (level1,player1) = level.moveRight(player)
     level = level1
     player = player1
     notifyObservers
