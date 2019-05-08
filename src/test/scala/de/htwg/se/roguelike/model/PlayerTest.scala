@@ -1,9 +1,6 @@
 package de.htwg.se.roguelike.model
 
-import org.junit.runner.RunWith
 import org.scalatest._
-import org.scalatest.junit.JUnitRunner
-
 
 class PlayerTest extends WordSpec with Matchers {
   "A Player" when {

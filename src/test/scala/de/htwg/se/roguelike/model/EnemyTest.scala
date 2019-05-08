@@ -1,8 +1,6 @@
 package de.htwg.se.roguelike.model
 
-//import org.scalatest.{Matchers, WordSpec}
 import org.scalatest._
-
 
 class EnemyTest extends WordSpec with Matchers {
   "A Enemy" when {

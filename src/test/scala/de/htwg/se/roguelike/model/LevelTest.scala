@@ -3,9 +3,6 @@ package de.htwg.se.roguelike.model
 import org.scalatest.WordSpec
 
 import org.scalatest._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-
 
 class LevelTest extends WordSpec with Matchers{
 

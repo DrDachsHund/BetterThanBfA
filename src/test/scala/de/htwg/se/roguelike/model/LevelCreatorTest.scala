@@ -1,9 +1,6 @@
 package de.htwg.se.roguelike.model
 
 import org.scalatest._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-
 
 class LevelCreatorTest extends WordSpec with Matchers {
   "A LevelCreater creates a specific or random Level. A LevelCreator" should {
