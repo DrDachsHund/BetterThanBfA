@@ -14,16 +14,14 @@ class TuiTest extends WordSpec with Matchers{
     "do nothing  on input 'q'" in {
       tui.processInputLine("q")
     }
+    "create a Level on input 'n'" in {
+      tui.processInputLine("n")
+      controller.level should be(new LevelCreator(10).createLevel(player,enemies))
+    }
     "create a random Level on input 'r'" in {
       tui.processInputLine("r")
-      controller.createRandomLevel
       controller.level.map.size should be(10)
       controller.enemies.size should be(10)
-    }
-    "create a Level on input 'n'" in {
-      tui.processInputLine("r")
-      controller.createLevel
-      controller.level should be(new LevelCreator(10).createLevel(player,enemies))
     }
     "find interactions with input i" in {
       tui.processInputLine("i")
@@ -36,21 +34,18 @@ class TuiTest extends WordSpec with Matchers{
       controller.player.posY should be(old-1)
     }
     "find interactions with input 'a'" in {
-      tui.processInputLine("a")
       val old = controller.player.posX
-      controller.moveLeft
+      tui.processInputLine("a")
       controller.player.posX should be(old-1)
     }
     "find interactions with input 's'" in {
-      tui.processInputLine("s")
       val old = controller.player.posY
-      controller.moveUp
+      tui.processInputLine("s")
       controller.player.posY should be(old+1)
     }
     "find interactions with input 'd'" in {
-      tui.processInputLine("d")
       val old = controller.player.posX
-      controller.moveUp
+      tui.processInputLine("d")
       controller.player.posX should be(old+1)
     }
 
