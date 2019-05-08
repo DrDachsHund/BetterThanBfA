@@ -5,7 +5,7 @@ import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
+
 class TileTest extends WordSpec with Matchers {
   "A Tile " when {
     "new" should {

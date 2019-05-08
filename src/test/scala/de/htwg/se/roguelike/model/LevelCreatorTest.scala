@@ -4,7 +4,7 @@ import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
+
 class LevelCreatorTest extends WordSpec with Matchers {
   "A LevelCreater creates a specific or random Level. A LevelCreator" should {
     val level = new LevelCreator(2).
