@@ -28,9 +28,8 @@ class TuiTest extends WordSpec with Matchers{
       controller.interaction should be(false)
     }
     "move up with input 'w'" in {
-      tui.processInputLine("w")
       val old = controller.player.posY
-      controller.moveUp
+      tui.processInputLine("w")
       controller.player.posY should be(old-1)
     }
     "find interactions with input 'a'" in {

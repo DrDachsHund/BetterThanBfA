@@ -4,6 +4,8 @@ import de.htwg.se.roguelike.aview.Tui
 import de.htwg.se.roguelike.controller.Controller
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 
+import scala.io.StdIn.readLine
+
 object RogueLike {
 
   val controller = new Controller(player = new Player(name = "Player",posX = 5, posY = 5)
@@ -17,8 +19,11 @@ object RogueLike {
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
-
-    do {
+    if (args.length != 0) {
+      input = args(0)
+    }
+    if (!input.isEmpty) tui.processInputLine(input)
+    else do {
       input = readLine()
       tui.processInputLine(input)
     } while (input != "q")
