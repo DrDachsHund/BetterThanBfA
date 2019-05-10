@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike
 
-import de.htwg.se.roguelike.aview.Tui
+import de.htwg.se.roguelike.aview._
 import de.htwg.se.roguelike.controller.Controller
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 
@@ -13,7 +13,8 @@ object RogueLike {
     new Enemy(name = "TestE2",posX = 1, posY = 0),
     new Enemy(name = "TestE3",posX = 0, posY = 1)),
     level = new Level(10))
-  val tui = new Tui(controller)
+  var tui:State = new TuiMain(controller)
+
   controller.notifyObservers
 
 
