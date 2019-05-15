@@ -23,10 +23,10 @@ object RogueLike {
     if (args.length != 0) {
       input = args(0)
     }
-    if (!input.isEmpty) tui.processInputLine(input)
+    if (!input.isEmpty) tui.strategy.tui(input)
     else do {
       input = readLine()
-      tui.processInputLine(input)
+      tui.strategy.tui(input)
     } while (input != "q")
   }
 }
