@@ -13,7 +13,7 @@ object RogueLike {
     new Enemy(name = "TestE2",posX = 1, posY = 0),
     new Enemy(name = "TestE3",posX = 0, posY = 1)),
     level = new Level(10))
-  var tui:State = new TuiMain(controller)
+  var tui:Tui = new Tui(controller)
 
   controller.notifyObservers
 
