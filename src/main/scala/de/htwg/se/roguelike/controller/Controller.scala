@@ -27,49 +27,29 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     }
   }
 
-  /*
-  def move(val (level1,player1)) {
-    level = level1
-    player = player1
+
+  def move(lp: (Level,Player)): GameStatus.gameStatus =  {
+    level = lp._1
+    player = lp._2
     interaction
     notifyObservers
     gameStatus
   }
-  */
+
   def moveUp: GameStatus.gameStatus = {
-    val (level1,player1) = level.moveUp(player)
-    level = level1
-    player = player1
-    interaction
-    notifyObservers
-    gameStatus
+    move(level.moveUp(player))
   }
 
   def moveDown: GameStatus.gameStatus = {
-    val (level1,player1) = level.moveDown(player)
-    level = level1
-    player = player1
-    interaction
-    notifyObservers
-    gameStatus
+    move(level.moveDown(player))
   }
 
   def moveLeft: GameStatus.gameStatus = {
-    val (level1,player1) = level.moveLeft(player)
-    level = level1
-    player = player1
-    interaction
-    notifyObservers
-    gameStatus
+    move(level.moveLeft(player))
   }
 
   def moveRight: GameStatus.gameStatus = {
-    val (level1,player1) = level.moveRight(player)
-    level = level1
-    player = player1
-    interaction
-    notifyObservers
-    gameStatus
+    move(level.moveRight(player))
   }
 
   //Fight----
