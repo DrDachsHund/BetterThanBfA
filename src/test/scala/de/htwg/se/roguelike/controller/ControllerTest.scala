@@ -79,6 +79,19 @@ class ControllerTest extends WordSpec with Matchers {
         controller1.attack()
         observer.updated should be(true)
       }
+      "change game status when player dies" in {
+        controller1.player = controller.player.copy(health = 1, posX = 5, posY = 5)
+        controller1.enemies = Vector(new Enemy("TestEnemy",health = 100, posX = 5, posY = 5))
+        controller1.attack()
+        controller1.gameStatus should be(GameStatus.GAMEOVER)
+      }
+
+      "change game status when enemy dies" in {
+        controller1.player = controller.player.copy(health = 100, posX = 5, posY = 5)
+        controller1.enemies = Vector(new Enemy("TestEnemy",health = 1, posX = 5, posY = 5))
+        controller1.attack()
+        controller1.gameStatus should be(GameStatus.LEVEL)
+      }
 
       "updateToString" when {
         "gameStatus is LEVEL" in {
@@ -92,6 +105,8 @@ class ControllerTest extends WordSpec with Matchers {
         }
 
         "gameStatus is FIGHTSTATUS" in {
+          controller1.player = controller.player.copy(health = 1, posX = 5, posY = 5)
+          controller1.enemies = Vector(new Enemy("TestEnemy",health = 100, posX = 5, posY = 5))
           controller1.gameStatus = GameStatus.FIGHTSTATUS
           controller1.updateToString should be(controller1.fightStatus)
         }
