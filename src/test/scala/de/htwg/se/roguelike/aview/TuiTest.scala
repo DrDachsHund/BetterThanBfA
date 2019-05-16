@@ -18,11 +18,6 @@ class TuiTest extends WordSpec with Matchers{
       tui.state.processInputLine("n")
       controller.level should be(new LevelCreator(10).createLevel(player,enemies))
     }
-    "create a random Level on input 'r'" in {
-      tui.state.processInputLine("r")
-      controller.level.map.size should be(10)
-      controller.enemies.size should be(10)
-    }
     "move up with input 'w'" in {
       val old = controller.player.posY
       tui.state.processInputLine("w")
@@ -48,6 +43,11 @@ class TuiTest extends WordSpec with Matchers{
       val old = controller.updateToString
       tui.state.processInputLine("99999")
       controller.updateToString should be(old)
+    }
+    "create a random Level on input 'r'" in {
+      tui.state.processInputLine("r")
+      controller.level.map.size should be(10)
+      controller.enemies.size should be(10)
     }
 
 /*
