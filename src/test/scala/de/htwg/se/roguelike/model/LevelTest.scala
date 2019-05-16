@@ -91,6 +91,12 @@ class LevelTest extends WordSpec with Matchers{
         left._2.posX should be(0)
       }
 
+      "remove a Tile" in {
+        var level2 = new Level(2)
+        level2 = level2.removeElement(0,0,1)
+        level2.map.tile(0,0) should be(new Tile(1))
+      }
+
       "have a nice String representation" in {
         level.toString should be("0 0 \n0 0 \n")
       }
