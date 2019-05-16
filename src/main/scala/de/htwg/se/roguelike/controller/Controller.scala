@@ -98,8 +98,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   def updateToString: String = {
     if (gameStatus == GameStatus.LEVEL) level.toString
     else if(gameStatus == GameStatus.FIGHT) fight.toString
-    else if (gameStatus == GameStatus.FIGHTSTATUS) fightStatus
-    else "FEHLER"
+    else fightStatus
   }
 
 
