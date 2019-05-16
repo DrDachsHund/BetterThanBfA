@@ -6,7 +6,7 @@ import org.scalatest.{Matchers, WordSpec}
 
 class TuiTest extends WordSpec with Matchers{
 
-  "A Rogue-Like Tui" should {
+  "A Rogue-Like TuiMain" should {
     val player = new Player(name = "Player",posX = 5, posY = 5)
     val enemies = Vector(new Enemy(name = "TestE1",posX = 0, posY = 0), new Enemy(name = "TestE2",posX = 1, posY = 0), new Enemy(name = "TestE3",posX = 0, posY = 1))
     val controller = new Controller(player = player, enemies = enemies ,level = new Level(10))
@@ -49,18 +49,23 @@ class TuiTest extends WordSpec with Matchers{
       controller.level.map.size should be(10)
       controller.enemies.size should be(10)
     }
+  }
 
-/*
-    "do an attack on input '1'" in {
-      val player = new Player(name = "Player",posX = 0, posY = 0)
-      val enemies = Vector(new Enemy(name = "TestE1",posX = 0, posY = 0), new Enemy(name = "TestE2",posX = 1, posY = 0), new Enemy(name = "TestE3",posX = 0, posY = 1))
-      val controller = new Controller(player = player, enemies = enemies ,level = new Level(10))
-      val old = controller.updateToString
-      tui.state.processInputLine("1")
-      controller.player.health should be(85)
+  "A Rogue-Like TuiFight" should {
+    val player = new Player(name = "Player",posX = 0, posY = 0)
+    val enemies = Vector(new Enemy(name = "TestE1",posX = 0, posY = 0), new Enemy(name = "TestE2",posX = 1, posY = 0), new Enemy(name = "TestE3",posX = 0, posY = 1))
+    val controller = new Controller(player = player, enemies = enemies ,level = new Level(10))
+    controller.gameStatus = GameStatus.FIGHT
+    val tui = new Tui(controller)
+    tui.state = new tui.tuiFight
 
-    }
-*/
+        "do an attack on input '1'" in {
+          val old = controller.updateToString
+          tui.state.processInputLine("1")
+          controller.player.health should be(85)
+
+        }
+
   }
 }
 
