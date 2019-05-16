@@ -1,35 +1,49 @@
+import scala.util.Random
+
+object Context2 {
+
+  var strategy = if (Random.nextInt() % 2 == 0) strategy1 else strategy2
+
+  def strategy1 = println("I am strategy 1")
+
+  def strategy2 = println("I am strategy 2")
+}
+
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+
+
+object Context1 {
+  trait Strategy {
+    def execute
+  }
+  class Strategy1 extends Strategy {
+    override def execute = println("I am strategy 1")
+  }
+  class Strategy2 extends Strategy {
+    override def execute = println("I am strategy 2")
+  }
+  var strategy = if (Random.nextInt() % 2 == 0) new Strategy1 else new Strategy2
+}
+
+Context1.strategy.execute
+Context1.strategy.execute
+Context1.strategy.execute
+Context1.strategy.execute
+Context1.strategy.execute
+Context1.strategy.execute
+
 trait Event
 
 case class OnEvent() extends Event
 
 case class OffEvent() extends Event
-
-object StateContext1 {
-  trait State {
-    def handle(e: Event): State
-  }
-  case class OnState() extends State {
-    println("I am On")
-    override def handle(e: Event): State = {
-      e match {
-        case on: OnEvent => OnState()
-        case off: OffEvent => OffState()
-      }
-    }
-}
-case class OffState() extends State {
-  println("I am Off")
-  override def handle(e: Event): State = {
-    e match {
-      case on: OnEvent => OnState()
-      case off: OffEvent => OffState()
-    }
-  }
-}
-var state: State = OffState()
-def handle(e: Event) = state = state.handle(e)
-}
-
 
 
 object StateContext2 {
@@ -45,11 +59,6 @@ object StateContext2 {
   def onState = println("I am on")
   def offState = println("I am off")
 }
-
-
-
-StateContext1.handle(new OnEvent)
-StateContext1.handle(new OffEvent)
 
 
 StateContext2.handle(OnEvent())

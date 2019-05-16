@@ -12,4 +12,8 @@ package de.htwg.se.roguelike.model
         "\nposX: " + posX +
         "\nposY: " + posY
 
+
+
+    //FactoryMethod maybe
+    //und Template methode vll hier bei attack oder fight ist bestimmt VERY nice
   }

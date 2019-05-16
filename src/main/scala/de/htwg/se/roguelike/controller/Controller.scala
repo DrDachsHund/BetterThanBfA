@@ -5,6 +5,9 @@ import de.htwg.se.roguelike.util.Observable
 
 class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] = Vector()) extends Observable {
 
+  val fight = new Fight
+  var gameStatus = GameStatus.LEVEL
+
   def createRandomLevel: Unit = {
     val (level1,enemies1) = new LevelCreator(10).createRandom(player, 10)
     level = level1
@@ -17,40 +20,63 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers
   }
 
-  def interaction: Boolean = {
-    val bool = new Fight().interaction(player,enemies)
-    notifyObservers
-    bool
+  def interaction: Unit = {
+    if (fight.interaction(player,enemies)) {
+      gameStatus = GameStatus.FIGHT
+      //toStringHandler(gameStatus)
+    }
   }
 
-  def moveUp: Unit = {
+  def moveUp: GameStatus.gameStatus = {
     val (level1,player1) = level.moveUp(player)
     level = level1
     player = player1
+    interaction
     notifyObservers
+    gameStatus
   }
 
-  def moveDown: Unit = {
+  def moveDown: GameStatus.gameStatus = {
     val (level1,player1) = level.moveDown(player)
     level = level1
     player = player1
+    interaction
     notifyObservers
+    gameStatus
   }
 
-  def moveLeft: Unit = {
+  def moveLeft: GameStatus.gameStatus = {
     val (level1,player1) = level.moveLeft(player)
     level = level1
     player = player1
+    interaction
     notifyObservers
+    gameStatus
   }
 
-  def moveRight: Unit = {
+  def moveRight: GameStatus.gameStatus = {
     val (level1,player1) = level.moveRight(player)
     level = level1
     player = player1
+    interaction
     notifyObservers
+    gameStatus
   }
 
-  def levelToString: String = level.toString
 
+  def updateToString: String = {
+    if (gameStatus == GameStatus.LEVEL) level.toString
+    else fight.toString
+  }
+  /*
+  def fightToString = println(fight.toString)
+  def levelToString = println(level.toString)
+
+  def toStringHandler(e: GameStatus.gameStatus ) = {
+    e match {
+      case GameStatus.LEVEL => updateToString = levelToString
+      case GameStatus.FIGHT => updateToString = fightToString
+    }
+  }
+  */
 }

@@ -1,49 +1,49 @@
 package de.htwg.se.roguelike.aview
 
 import de.htwg.se.roguelike.controller.Controller
+import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.util.Observer
 
 class Tui(controller: Controller) extends Observer {
 
-  trait Strategy {
-    def tui(input:String)
+  trait State {
+    def processInputLine(input:String)
+    def handle(e: GameStatus.gameStatus )
   }
 
   controller.add(this)
 
-  var test:Int = 0
+  var state:State = new tuiMain
 
-  var strategy = if (test == 0) new tuiMain else new tuiFight
+  class tuiMain extends State {
 
-  class tuiMain extends Strategy {
-    def tui(input: String): Unit = {
+    def processInputLine(input: String): Unit = {
       input match {
         case "q" =>
         case "r" => controller.createRandomLevel
         case "n" => controller.createLevel
 
-        case "i" =>
-          val interaction = controller.interaction
-          if (interaction) {
-            println("Player interacts with Enemy")
-            test = 1
-            strategy = new tuiFight
-          }
-          else println("No interaction found")
+        case "w" => handle(controller.moveUp)
+        case "a" => handle(controller.moveLeft)
+        case "s" => handle(controller.moveDown)
+        case "d" => handle(controller.moveRight)
 
-        case "w" => controller.moveUp
-        case "a" => controller.moveLeft
-        case "s" => controller.moveDown
-        case "d" => controller.moveRight
         case _ => {
           print("Wrong Input!!!")
         }
       }
     }
+
+    override def handle(e: GameStatus.gameStatus ) = {
+      e match {
+        case GameStatus.LEVEL => state = this
+        case GameStatus.FIGHT => state = new tuiFight
+      }
+    }
   }
 
-  class tuiFight extends Strategy {
-    def tui(input: String): Unit = {
+  class tuiFight extends State {
+    def processInputLine(input: String): Unit = {
       input match {
         case "q" =>
         case "x" => println("DXXDXDXXXD")
@@ -52,9 +52,16 @@ class Tui(controller: Controller) extends Observer {
         }
       }
     }
+
+    override def handle(e: GameStatus.gameStatus ) = {
+      e match {
+        case GameStatus.LEVEL => state = new tuiMain
+        case GameStatus.FIGHT => state = this
+      }
+    }
   }
 
-  override def update: Unit = println(controller.levelToString)
+  override def update: Unit = println(">> \n" + controller.updateToString + "<<\n")
 
 
 
