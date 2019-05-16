@@ -51,6 +51,9 @@ case class Level(map: Land[Tile]) {
     (level,player1)
   }
 
+  def removeElement(col:Int, row:Int, value:Int): Level = {
+    new Level(this.map.replaceTile(col,row,new Tile(value)))
+  }
 
   override def toString: String = {
     val sb = new StringBuilder

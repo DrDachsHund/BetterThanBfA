@@ -6,3 +6,6 @@ import de.htwg.se.roguelike.model.{Enemy, Entity, Player}
 //geht nicht zumindest nicht das ich wüsste da entity nicht copyn lann :(
 val entity:Player = new Player("Test")
 val entity2:Enemy = new Enemy()
+
+
+entity2.health = entity2.copy(health = entity2.health - entity.attack)

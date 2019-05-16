@@ -27,6 +27,15 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     }
   }
 
+  /*
+  def move(val (level1,player1)) {
+    level = level1
+    player = player1
+    interaction
+    notifyObservers
+    gameStatus
+  }
+  */
   def moveUp: GameStatus.gameStatus = {
     val (level1,player1) = level.moveUp(player)
     level = level1
@@ -63,10 +72,40 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     gameStatus
   }
 
+  //Fight----
+
+  def attack():GameStatus.gameStatus = {
+    var enemy = fight.getEnemy(player,enemies)
+    enemies = enemies.filterNot(_ == enemy)
+    enemy = fight.playerAttack(player,enemy)
+    player = fight.enemyAttack(player,enemy)
+
+    if (!player.isAlive()) gameStatus = GameStatus.GAMEOVER
+    else if (!enemy.isAlive()) {
+      gameStatus = GameStatus.LEVEL
+      level = level.removeElement(enemy.posY,enemy.posX,5)
+    } //LOOT
+    else {
+      gameStatus = GameStatus.FIGHTSTATUS
+      enemies = enemies :+ enemy
+    }
+    notifyObservers
+    gameStatus
+  }
+
+  //Fight----
 
   def updateToString: String = {
     if (gameStatus == GameStatus.LEVEL) level.toString
-    else fight.toString
+    else if(gameStatus == GameStatus.FIGHT) fight.toString
+    else if (gameStatus == GameStatus.FIGHTSTATUS) fightStatus
+    else "FEHLER"
+  }
+
+
+  def fightStatus:String = {
+    "Player Health: " + player.health + "\n" +
+    "Enemy Health: " + fight.getEnemy(player,enemies).health + "\n"
   }
   /*
   def fightToString = println(fight.toString)

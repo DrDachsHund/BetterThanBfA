@@ -38,6 +38,9 @@ class Tui(controller: Controller) extends Observer {
       e match {
         case GameStatus.LEVEL => state = this
         case GameStatus.FIGHT => state = new tuiFight
+        case _ => {
+          print("Wrong GameStatus!!!")
+        }
       }
     }
   }
@@ -46,7 +49,7 @@ class Tui(controller: Controller) extends Observer {
     def processInputLine(input: String): Unit = {
       input match {
         case "q" =>
-        case "x" => println("DXXDXDXXXD")
+        case "1" => handle(controller.attack)
         case _ => {
           print("Wrong Input!!!")
         }
@@ -57,6 +60,11 @@ class Tui(controller: Controller) extends Observer {
       e match {
         case GameStatus.LEVEL => state = new tuiMain
         case GameStatus.FIGHT => state = this
+        case GameStatus.FIGHTSTATUS => state = this
+        case GameStatus.GAMEOVER => println("IS VORBEI MA DUDE")
+        case _ => {
+          print("Wrong GameStatus!!!")
+        }
       }
     }
   }
