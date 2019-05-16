@@ -30,7 +30,7 @@ class EnemyTest extends WordSpec with Matchers {
       "when not alive" in {
         enemy3.isAlive should be(false)
       }
-      "have a nice String representation when not set" in {
+      "have a nice String representation" in {
       enemy1.toString should be("Name: " + "Skeleton" +
         "\nhealth: " + "100" +
         "\nAttack: " + "10" +
@@ -38,16 +38,6 @@ class EnemyTest extends WordSpec with Matchers {
         "\nposX: " + "0" +
         "\nposY: " + "0")
     }
-      /*
-      "have a nice String representation when set" in {
-        enemy2.toString should be("Name: " + "Enemy Name" +
-          "\nhealth: " + "500" +
-          "\nAttack: " + "100" +
-          "\nExperience: " + "100" +
-          "\nposX: " + "0" +
-          "\nposY: " + "0")
-      }
-      */
   }}
 
 }

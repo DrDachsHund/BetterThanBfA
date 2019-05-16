@@ -10,8 +10,10 @@ class ControllerTest extends WordSpec with Matchers {
     "observed by an Observer" should {
       val smallLevel = new Level(10)
       val player1 = new Player("New Player",posX = 5,posY = 5)
-      val enemies1 = Vector(new Enemy("TestEnemy",posX = 5,posY = 6), new Enemy("TestEnemy2",posX = 7,posY = 8))
-      val controller = new Controller(smallLevel,player1,enemies1)
+      val enemies = Vector(new Enemy("TestEnemy",posX = 5,posY = 6), new Enemy("TestEnemy2",posX = 7,posY = 8))
+      val enemies1 = Vector(new Enemy("TestEnemy",posX = 5,posY = 5), new Enemy("TestEnemy2",posX = 7,posY = 8))
+      val controller = new Controller(smallLevel,player1,enemies)
+      val controller1 = new Controller(smallLevel,player1,enemies1)
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
@@ -71,9 +73,34 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.posX should be (old-1)
         controller.player.posY should be (6)
       }
+      "notify its Observer after atack" in {
+        controller1.interaction
+        controller1.gameStatus should be(GameStatus.FIGHT)
+        controller1.attack()
+        observer.updated should be(true)
+      }
 
+      "updateToString" when {
+        "gameStatus is LEVEL" in {
+          controller1.gameStatus = GameStatus.LEVEL
+          controller1.updateToString should be(controller1.level.toString)
+        }
 
+        "gameStatus is FIGHT" in {
+          controller1.gameStatus = GameStatus.FIGHT
+          controller1.updateToString should be(controller1.fight.toString)
+        }
 
+        "gameStatus is FIGHTSTATUS" in {
+          controller1.gameStatus = GameStatus.FIGHTSTATUS
+          controller1.updateToString should be(controller1.fightStatus)
+        }
+      }
+
+      "when fightStatus" in {
+        controller1.fightStatus should be("Player Health: " + controller1.player.health + "\n" +
+          "Enemy Health: " + controller1.fight.getEnemy(controller1.player,controller1.enemies).health + "\n")
+      }
 
     }
   }
