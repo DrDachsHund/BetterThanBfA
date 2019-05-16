@@ -11,5 +11,5 @@ case class Fight() {
   }
 
 
-  override def toString: String = "UTUDUICXDICCTZCOIGCVOG"
+
 }

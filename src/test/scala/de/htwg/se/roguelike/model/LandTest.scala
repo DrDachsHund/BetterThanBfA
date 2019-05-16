@@ -2,7 +2,10 @@ package de.htwg.se.roguelike.model
 
 
 import org.scalatest._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class LandTest extends WordSpec with Matchers {
   "A Land is a two-dimensional Vector of Tiles. A Land" when {
     "new" should {

@@ -1,7 +1,11 @@
 package de.htwg.se.roguelike.model
 
-import org.scalatest._
 
+import org.scalatest._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
+@RunWith(classOf[JUnitRunner])
 class TileTest extends WordSpec with Matchers {
   "A Tile " when {
     "new" should {
