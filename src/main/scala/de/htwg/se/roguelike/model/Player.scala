@@ -6,10 +6,11 @@ case class Player(name: String,
                   lvl:Int = 0,
                   exp:Int = 0,
                   posX:Int = 0, posY:Int = 0,
-                  inventory:Vector[Item] = Vector(),
-                  rightHand:Weapon = Item("Weapon"),
-                  //rightHand:Weapon = new Weapon("RightFist",0,false,5,5),
-                  leftHand:Weapon = new Weapon("LeftFist",0,false,5,5)) extends Entity {
+                  inventory:Vector[Item] = Vector(Armor("Helmet"),Armor("Chest")),
+                  rightHand:Weapon = new Weapon("RightFist",0,false,5,5),
+                  leftHand:Weapon = new Weapon("LeftFist",0,false,5,5)
+                 //helmet:Armor = new Helmet
+                 ) extends Entity {
 
    override def toString: String =
       "Name: " + name +

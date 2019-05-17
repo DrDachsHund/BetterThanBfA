@@ -12,7 +12,7 @@ class Tui(controller: Controller) extends Observer {
   }
 
   controller.add(this)
-
+  //State Pattern
   var state:State = new tuiMain
 
   class tuiMain extends State {
