@@ -23,10 +23,9 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   def interaction: Unit = {
     if (fight.interaction(player,enemies)) {
       gameStatus = GameStatus.FIGHT
-      //toStringHandler(gameStatus)
+     // toStringHandler(gameStatus)
     }
   }
-
 
   def move(lp: (Level,Player)): GameStatus.gameStatus =  {
     level = lp._1
@@ -57,6 +56,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   def attack():GameStatus.gameStatus = {
     var enemy = fight.getEnemy(player,enemies)
     enemies = enemies.filterNot(_ == enemy)
+
     enemy = fight.playerAttack(player,enemy)
     player = fight.enemyAttack(player,enemy)
 
@@ -78,17 +78,18 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   def updateToString: String = {
     if (gameStatus == GameStatus.LEVEL) level.toString
     else if(gameStatus == GameStatus.FIGHT) fight.toString
-    else fightStatus
+    else if (gameStatus == GameStatus.FIGHTSTATUS) fightStatus
+    else "GAME OVER"
   }
-
 
   def fightStatus:String = {
     "Player Health: " + player.health + "\n" +
     "Enemy Health: " + fight.getEnemy(player,enemies).health + "\n"
   }
-  /*
-  def fightToString = println(fight.toString)
-  def levelToString = println(level.toString)
+/*
+  var updateToString = levelToString
+  def fightToString = fight.toString
+  def levelToString = level.toString
 
   def toStringHandler(e: GameStatus.gameStatus ) = {
     e match {
@@ -96,5 +97,5 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       case GameStatus.FIGHT => updateToString = fightToString
     }
   }
-  */
+*/
 }

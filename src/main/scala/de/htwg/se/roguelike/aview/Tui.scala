@@ -16,18 +16,15 @@ class Tui(controller: Controller) extends Observer {
   var state:State = new tuiMain
 
   class tuiMain extends State {
-
     def processInputLine(input: String): Unit = {
       input match {
         case "q" =>
         case "r" => controller.createRandomLevel
         case "n" => controller.createLevel
-
         case "w" => handle(controller.moveUp)
         case "a" => handle(controller.moveLeft)
         case "s" => handle(controller.moveDown)
         case "d" => handle(controller.moveRight)
-
         case _ => {
           print("Wrong Input!!!")
         }
@@ -69,8 +66,7 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
+  //GameOver Tui fürs REstarten des Games (Fehler bei Attacken nachdem man Stirbt)
+
   override def update: Unit = println(">> \n" + controller.updateToString + "<<\n")
-
-
-
 }

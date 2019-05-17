@@ -1,11 +1,18 @@
-import de.htwg.se.roguelike.model.{Enemy, Entity, Player}
+import scala.util.Random
 
+object Context2 {
 
-//nicht player enemy abert trait so das man das selbe bei beiden aufrufen lann
-//also zb trait (entity1:Entity, entity2:Entity)
-//geht nicht zumindest nicht das ich wüsste da entity nicht copyn lann :(
-val entity:Player = new Player("Test")
-val entity2:Enemy = new Enemy()
+  var strategy = if (Random.nextInt() % 2 == 0) strategy1 else strategy2
 
+  def strategy1 = println("I am strategy 1")
 
-entity2.health = entity2.copy(health = entity2.health - entity.attack)
+  def strategy2 = println("I am strategy 2")
+}
+
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy
+Context2.strategy

@@ -11,6 +11,7 @@ package de.htwg.se.roguelike.model
                    leftHand:Weapon = new Weapon("LeftFist",0,false,5,5)) extends Entity {
 
 
+    //Template Method
     override def getAttack(): Int = super.getAttack() - 2
 
     override def toString: String =

@@ -16,5 +16,4 @@ trait Entity {
 
   def getAttack():Int = attack + rightHand.dmg + (leftHand.dmg / 2)
 
-
 }
