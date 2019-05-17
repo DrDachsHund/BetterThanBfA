@@ -68,5 +68,5 @@ class Tui(controller: Controller) extends Observer {
 
   //GameOver Tui fürs REstarten des Games (Fehler bei Attacken nachdem man Stirbt)
 
-  override def update: Unit = println(">> \n" + controller.updateToString + "<<\n")
+  override def update: Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")
 }

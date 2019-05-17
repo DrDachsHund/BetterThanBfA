@@ -40,9 +40,9 @@ class TuiTest extends WordSpec with Matchers{
     }
 
     "do nothing on bad input like'99999'" in {
-      val old = controller.updateToString
+      val old = controller.strategy.updateToString
       tui.state.processInputLine("99999")
-      controller.updateToString should be(old)
+      controller.strategy.updateToString should be(old)
     }
     "create a random Level on input 'r'" in {
       tui.state.processInputLine("r")
@@ -60,7 +60,7 @@ class TuiTest extends WordSpec with Matchers{
     tui.state = new tui.tuiFight
 
         "do an attack on input '1'" in {
-          val old = controller.updateToString
+          val old = controller.strategy.updateToString
           tui.state.processInputLine("1")
           controller.player.health should be(85)
 

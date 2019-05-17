@@ -23,7 +23,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   def interaction: Unit = {
     if (fight.interaction(player,enemies)) {
       gameStatus = GameStatus.FIGHT
-     // toStringHandler(gameStatus)
+      strategy = new StrategyFight
     }
   }
 
@@ -63,10 +63,12 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     if (!player.isAlive()) gameStatus = GameStatus.GAMEOVER
     else if (!enemy.isAlive()) {
       gameStatus = GameStatus.LEVEL
+      strategy = new StrategyLevel
       level = level.removeElement(enemy.posY,enemy.posX,5)
     } //LOOT
     else {
       gameStatus = GameStatus.FIGHTSTATUS
+      strategy = new StrategyFightStatus
       enemies = enemies :+ enemy
     }
     notifyObservers
@@ -74,19 +76,20 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
 
   //Fight----
-
+/*
   def updateToString: String = {
     if (gameStatus == GameStatus.LEVEL) level.toString
     else if(gameStatus == GameStatus.FIGHT) fight.toString
     else if (gameStatus == GameStatus.FIGHTSTATUS) fightStatus
     else "GAME OVER"
   }
-
+*/
   def fightStatus:String = {
     "Player Health: " + player.health + "\n" +
     "Enemy Health: " + fight.getEnemy(player,enemies).health + "\n"
   }
-/*
+
+/* Strategy Pattern Try:
   var updateToString = levelToString
   def fightToString = fight.toString
   def levelToString = level.toString
@@ -98,4 +101,29 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     }
   }
 */
+
+  var strategy: Strategy = new StrategyLevel
+
+  trait Strategy {
+    def updateToString:String
+  }
+  class StrategyLevel extends Strategy {
+    override def updateToString = level.toString
+  }
+  class StrategyFight extends Strategy {
+    override def updateToString = fight.toString
+  }
+  class StrategyFightStatus extends Strategy {
+    override def updateToString = fightStatus
+  }
+
+
+
+
+
+
+
+
+
+
 }

@@ -96,19 +96,19 @@ class ControllerTest extends WordSpec with Matchers {
       "updateToString" when {
         "gameStatus is LEVEL" in {
           controller1.gameStatus = GameStatus.LEVEL
-          controller1.updateToString should be(controller1.level.toString)
+          controller1.strategy.updateToString should be(controller1.level.toString)
         }
 
         "gameStatus is FIGHT" in {
           controller1.gameStatus = GameStatus.FIGHT
-          controller1.updateToString should be(controller1.fight.toString)
+          controller1.strategy.updateToString should be(controller1.fight.toString)
         }
 
         "gameStatus is FIGHTSTATUS" in {
           controller1.player = controller.player.copy(health = 1, posX = 5, posY = 5)
           controller1.enemies = Vector(new Enemy("TestEnemy",health = 100, posX = 5, posY = 5))
           controller1.gameStatus = GameStatus.FIGHTSTATUS
-          controller1.updateToString should be(controller1.fightStatus)
+          controller1.strategy.updateToString should be(controller1.fightStatus)
         }
       }
 
