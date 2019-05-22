@@ -1,12 +1,13 @@
 package de.htwg.se.roguelike.controller
 
 import de.htwg.se.roguelike.model._
-import de.htwg.se.roguelike.util.Observable
+import de.htwg.se.roguelike.util.{Observable, UndoManager}
 
 class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] = Vector()) extends Observable {
 
   val fight = new Fight
   var gameStatus = GameStatus.LEVEL
+  private val undoManager = new UndoManager
 
   def createRandomLevel: Unit = {
     val (level1,enemies1) = new LevelCreator(10).createRandom(player, 10)
@@ -27,33 +28,29 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     }
   }
 
-  def move(lp: (Level,Player)): GameStatus.gameStatus =  {
-    level = lp._1
-    player = lp._2
-    interaction
+  def moveUp: Unit = {
+    undoManager.doStep(new MoveCommand(level.moveUp(player),enemies,this))
     notifyObservers
-    gameStatus
   }
 
-  def moveUp: GameStatus.gameStatus = {
-    move(level.moveUp(player))
+  def moveDown: Unit = {
+    undoManager.doStep(new MoveCommand(level.moveDown(player),enemies,this))
+    notifyObservers
   }
 
-  def moveDown: GameStatus.gameStatus = {
-    move(level.moveDown(player))
+  def moveLeft: Unit = {
+    undoManager.doStep(new MoveCommand(level.moveLeft(player),enemies,this))
+    notifyObservers
   }
 
-  def moveLeft: GameStatus.gameStatus = {
-    move(level.moveLeft(player))
-  }
-
-  def moveRight: GameStatus.gameStatus = {
-    move(level.moveRight(player))
+  def moveRight: Unit = {
+    undoManager.doStep(new MoveCommand(level.moveRight(player),enemies,this))
+    notifyObservers
   }
 
   //Fight----
 
-  def attack():GameStatus.gameStatus = {
+  def attack():Unit = {
     var enemy = fight.getEnemy(player,enemies)
     enemies = enemies.filterNot(_ == enemy)
 
@@ -72,36 +69,11 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       enemies = enemies :+ enemy
     }
     notifyObservers
-    gameStatus
   }
 
   //Fight----
-/*
-  def updateToString: String = {
-    if (gameStatus == GameStatus.LEVEL) level.toString
-    else if(gameStatus == GameStatus.FIGHT) fight.toString
-    else if (gameStatus == GameStatus.FIGHTSTATUS) fightStatus
-    else "GAME OVER"
-  }
-*/
-  def fightStatus:String = {
-    "Player Health: " + player.health + "\n" +
-    "Enemy Health: " + fight.getEnemy(player,enemies).health + "\n"
-  }
 
-/* Strategy Pattern Try:
-  var updateToString = levelToString
-  def fightToString = fight.toString
-  def levelToString = level.toString
-
-  def toStringHandler(e: GameStatus.gameStatus ) = {
-    e match {
-      case GameStatus.LEVEL => updateToString = levelToString
-      case GameStatus.FIGHT => updateToString = fightToString
-    }
-  }
-*/
-
+  //Strategy Pattern toString---
   var strategy: Strategy = new StrategyLevel
 
   trait Strategy {
@@ -116,12 +88,23 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   class StrategyFightStatus extends Strategy {
     override def updateToString = fightStatus
   }
+  def fightStatus:String = {
+    "Player Health: " + player.health + "\n" +
+      "Enemy Health: " + fight.getEnemy(player,enemies).health + "\n"
+  }
+  //Strategy Pattern toString---
 
+  //UndoManager---
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers
+  }
 
-
-
-
-
+  def redo: Unit = {
+    undoManager.redoStep
+    notifyObservers
+  }
+  //UndoManager---
 
 
 

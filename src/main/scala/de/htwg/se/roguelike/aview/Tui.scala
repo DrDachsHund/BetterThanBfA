@@ -8,7 +8,7 @@ class Tui(controller: Controller) extends Observer {
 
   trait State {
     def processInputLine(input:String)
-    def handle(e: GameStatus.gameStatus )
+    def handle()
   }
 
   controller.add(this)
@@ -21,17 +21,21 @@ class Tui(controller: Controller) extends Observer {
         case "q" =>
         case "r" => controller.createRandomLevel
         case "n" => controller.createLevel
-        case "w" => handle(controller.moveUp)
-        case "a" => handle(controller.moveLeft)
-        case "s" => handle(controller.moveDown)
-        case "d" => handle(controller.moveRight)
+        case "w" => controller.moveUp
+        case "a" => controller.moveLeft
+        case "s" => controller.moveDown
+        case "d" => controller.moveRight
+        case "z" => controller.undo
+        case "y" => controller.redo
         case _ => {
           print("Wrong Input!!!")
         }
       }
+      handle
     }
 
-    override def handle(e: GameStatus.gameStatus ) = {
+    override def handle() = {
+      val e = controller.gameStatus
       e match {
         case GameStatus.LEVEL => state = this
         case GameStatus.FIGHT => state = new tuiFight
@@ -46,14 +50,16 @@ class Tui(controller: Controller) extends Observer {
     def processInputLine(input: String): Unit = {
       input match {
         case "q" =>
-        case "1" => handle(controller.attack)
+        case "1" => controller.attack
         case _ => {
           print("Wrong Input!!!")
         }
       }
+      handle
     }
 
-    override def handle(e: GameStatus.gameStatus ) = {
+    override def handle() = {
+      val e = controller.gameStatus
       e match {
         case GameStatus.LEVEL => state = new tuiMain
         case GameStatus.FIGHT => state = this
