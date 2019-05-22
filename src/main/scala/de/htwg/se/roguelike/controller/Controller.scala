@@ -49,7 +49,6 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
 
   //Fight----
-
   def attack():Unit = {
       var enemy:Enemy = new Enemy()
       for (enemyTest <- enemies) {
@@ -75,7 +74,6 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       }
     notifyObservers
   }
-
   //Fight----
 
   //Strategy Pattern toString---
@@ -118,7 +116,11 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
   //UndoManager---
 
-
+  //Inventory---
+  def usePotion(index:Int): Unit = {
+    val potion = player.inventory.getPotion(index)
+    player = potion.usePotion(player)
+  }
 
 
 }

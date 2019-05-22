@@ -8,7 +8,7 @@ trait Entity {
   val exp:Int
   val posX:Int
   val posY:Int
-  val inventory:Vector[Item]
+  val inventory:Inventory
   val rightHand:Weapon
   val leftHand:Weapon
 
