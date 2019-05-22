@@ -111,12 +111,12 @@ class ControllerTest extends WordSpec with Matchers {
           controller1.strategy.updateToString should be(controller1.fightStatus)
         }
       }
-
+/*
       "when fightStatus" in {
         controller1.fightStatus should be("Player Health: " + controller1.player.health + "\n" +
           "Enemy Health: " + controller1.fight.getEnemy(controller1.player,controller1.enemies).health + "\n")
       }
-
+*/
     }
   }
 }

@@ -10,15 +10,6 @@ case class Fight() {
     false
   }
 
-  def getEnemy(player: Player, enemies: Vector[Enemy]): Enemy = {
-    for (enemy <- enemies) {
-      if (player.posX == enemy.posX && player.posY == enemy.posY)
-        return enemy
-    }
-    println("FEHLER SOLLTE NIE HIER VORBEI KOMMEN")
-    null
-  }
-
   def playerAttack(player:Player, enemy: Enemy): Enemy = {
     println("PlayerAttack")
     val enemy2 = enemy.copy(health = (enemy.health - player.getAttack()))

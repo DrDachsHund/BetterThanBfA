@@ -20,6 +20,7 @@ class FightTest extends WordSpec with Matchers{
         val enemies = Vector(new Enemy(posX = 1,posY = 0))
         fight.interaction(player,enemies) should be(false)
       }
+      /*
       "when getEnemy" in {
         val enemies = Vector(enemy)
         fight.getEnemy(player,enemies) should be(enemy)
@@ -28,6 +29,7 @@ class FightTest extends WordSpec with Matchers{
         val enemies = Vector(new Enemy(posX = 1,posY = 0))
         fight.getEnemy(player,enemies) should be(null)
       }
+      */
       "when playerAttack" in {
         val enemy2 = fight.playerAttack(player,enemy)
         enemy2.health should be(83)

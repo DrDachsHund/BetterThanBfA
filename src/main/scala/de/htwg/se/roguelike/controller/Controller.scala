@@ -51,23 +51,28 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   //Fight----
 
   def attack():Unit = {
-    var enemy = fight.getEnemy(player,enemies)
-    enemies = enemies.filterNot(_ == enemy)
+      var enemy:Enemy = new Enemy()
+      for (enemyTest <- enemies) {
+        if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
+          enemy = enemyTest
+      }
 
-    enemy = fight.playerAttack(player,enemy)
-    player = fight.enemyAttack(player,enemy)
+      enemies = enemies.filterNot(_ == enemy)
 
-    if (!player.isAlive()) gameStatus = GameStatus.GAMEOVER
-    else if (!enemy.isAlive()) {
-      gameStatus = GameStatus.LEVEL
-      strategy = new StrategyLevel
-      level = level.removeElement(enemy.posY,enemy.posX,5)
-    } //LOOT
-    else {
-      gameStatus = GameStatus.FIGHTSTATUS
-      strategy = new StrategyFightStatus
-      enemies = enemies :+ enemy
-    }
+      enemy = fight.playerAttack(player, enemy)
+      player = fight.enemyAttack(player, enemy)
+
+      if (!player.isAlive()) gameStatus = GameStatus.GAMEOVER
+      else if (!enemy.isAlive()) {
+        gameStatus = GameStatus.LEVEL
+        strategy = new StrategyLevel
+        level = level.removeElement(enemy.posY, enemy.posX, 5)
+      } //LOOT
+      else {
+        gameStatus = GameStatus.FIGHTSTATUS
+        strategy = new StrategyFightStatus
+        enemies = enemies :+ enemy
+      }
     notifyObservers
   }
 
@@ -89,8 +94,15 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     override def updateToString = fightStatus
   }
   def fightStatus:String = {
-    "Player Health: " + player.health + "\n" +
-      "Enemy Health: " + fight.getEnemy(player,enemies).health + "\n"
+    var sb = new StringBuilder
+    sb ++= ("Player Health: " + player.health + "\n")
+    sb ++= "Enemy Health: "
+    for (enemyTest <- enemies) {
+      if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
+        sb ++= ("" + enemyTest.health)
+    }
+    sb ++= "\n"
+    sb.toString
   }
   //Strategy Pattern toString---
 
