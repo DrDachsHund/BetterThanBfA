@@ -19,5 +19,6 @@ trait Potion extends Item {
 object Potion {
   def apply(kind: String) = kind match {
     case "Heal" => new HealPotion("HealPotion",10,false,50) //.randomItem
+    case "Mana" => new HealPotion("ManaPotion",10,false,50)
   }
 }

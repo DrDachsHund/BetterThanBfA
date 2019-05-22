@@ -148,7 +148,11 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     } else if (index <= player.inventory.potions.size && index > 0) {
       val potion = player.inventory.getPotion(index)
       player = potion.usePotion(player)
-      player = player.copy(inventory = player.inventory.copy(potions = player.inventory.potions.filterNot(_ == potion)))
+      var usedPotion = player.inventory.potions.filter(_ == potion)
+      usedPotion = usedPotion.drop(1)
+      var newPotions = player.inventory.potions.filterNot(_ == potion)
+      newPotions ++= usedPotion
+      player = player.copy(inventory = player.inventory.copy(potions = newPotions))
     } else println("CONTROLLER FALSCHER ODER INKOREKTER INDEX => " + index)
     notifyObservers
   }
