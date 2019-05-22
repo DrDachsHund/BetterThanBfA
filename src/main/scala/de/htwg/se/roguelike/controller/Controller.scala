@@ -25,6 +25,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     if (fight.interaction(player,enemies)) {
       gameStatus = GameStatus.FIGHT
       strategy = new StrategyFight
+      //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
     }
   }
 
@@ -63,16 +64,18 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
 
       if (!player.isAlive()) gameStatus = GameStatus.GAMEOVER
       else if (!enemy.isAlive()) {
-        gameStatus = GameStatus.LEVEL
-        strategy = new StrategyLevel
+        //gameStatus = GameStatus.LEVEL
+        //strategy = new StrategyLevel
+        setGameStatus(GameStatus.LEVEL)
         level = level.removeElement(enemy.posY, enemy.posX, 5)
       } //LOOT
       else {
-        gameStatus = GameStatus.FIGHTSTATUS
-        strategy = new StrategyFightStatus
+        //gameStatus = GameStatus.FIGHTSTATUS
+        //strategy = new StrategyFightStatus
         enemies = enemies :+ enemy
+        setGameStatus(GameStatus.FIGHTSTATUS)
       }
-    notifyObservers
+    setGameStatus(GameStatus.FIGHT)
   }
   //Fight----
 
@@ -86,18 +89,40 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     override def updateToString = level.toString
   }
   class StrategyFight extends Strategy {
-    override def updateToString = fight.toString
+    override def updateToString = fight.toString + "[i]Inventory\n"
   }
   class StrategyFightStatus extends Strategy {
     override def updateToString = fightStatus
   }
+  class StrategyInventory extends Strategy {
+    override def updateToString =
+        "[1]Potions\n" +
+        "[2]Weapons\n" +
+        "[3]Armor\n" +
+        "[x]Back\n"
+  }
+  class StrategyPotions extends Strategy {
+    override def updateToString =
+      "Player Health: <" + player.health + ">\n" +
+      "Player Mana: <" + player.mana + ">\n" +
+      player.inventory.potionsToString + "[x}Back\n"
+  }
+  class StrategyWeapons extends Strategy {
+    override def updateToString = player.inventory.weaponsToString + "[x}Back\n"
+  }
+  class StrategyArmor extends Strategy {
+    override def updateToString = player.inventory.armorToString + "[x}Back\n"
+  }
+  class StrategyGameOver extends Strategy {
+    override def updateToString = "GAME OVER DUDE"
+  }
   def fightStatus:String = {
     var sb = new StringBuilder
-    sb ++= ("Player Health: " + player.health + "\n")
+    sb ++= ("Player Health: <" + player.health + ">\n")
     sb ++= "Enemy Health: "
     for (enemyTest <- enemies) {
       if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
-        sb ++= ("" + enemyTest.health)
+        sb ++= ("<" + enemyTest.health + ">")
     }
     sb ++= "\n"
     sb.toString
@@ -118,9 +143,30 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
 
   //Inventory---
   def usePotion(index:Int): Unit = {
-    val potion = player.inventory.getPotion(index)
-    player = potion.usePotion(player)
+    if (player.inventory.potions.size < 1) {
+      println("Keine Potion Vorhanden!!!")
+    } else if (index <= player.inventory.potions.size && index > 0) {
+      val potion = player.inventory.getPotion(index)
+      player = potion.usePotion(player)
+      player = player.copy(inventory = player.inventory.copy(potions = player.inventory.potions.filterNot(_ == potion)))
+    } else println("CONTROLLER FALSCHER ODER INKOREKTER INDEX => " + index)
+    notifyObservers
   }
+  //Inventory---
 
+  def setGameStatus(gameStatus: GameStatus.Value): Unit = {
+    this.gameStatus = gameStatus
+    gameStatus match {
+      case GameStatus.LEVEL => strategy = new StrategyLevel
+      case GameStatus.FIGHT => strategy = new StrategyFight
+      case GameStatus.FIGHTSTATUS => strategy = new StrategyFightStatus
+      case GameStatus.GAMEOVER => strategy = new StrategyGameOver
+      case GameStatus.INVENTORY => strategy = new StrategyInventory
+      case GameStatus.INVENTORYPOTION => strategy = new StrategyPotions
+      case GameStatus.INVENTORYWEAPON => strategy = new StrategyArmor
+      case GameStatus.INVENTORYARMOR => strategy = new StrategyArmor
+    }
+    notifyObservers
+  }
 
 }

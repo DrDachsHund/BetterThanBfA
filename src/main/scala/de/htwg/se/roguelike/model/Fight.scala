@@ -22,6 +22,6 @@ case class Fight() {
     player2
   }
 
-  override def toString: String = "Fight:\n[1]Attack\n[2]:Block"
+  override def toString: String = "Fight:\n[1]Attack\n[2]:Block\n"
 
 }

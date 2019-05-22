@@ -14,6 +14,7 @@ class Tui(controller: Controller) extends Observer {
   controller.add(this)
   //State Pattern
   var state:State = new tuiMain
+  var inventoryGameStatus = GameStatus.LEVEL
 
   class tuiMain extends State {
     def processInputLine(input: String): Unit = {
@@ -27,7 +28,10 @@ class Tui(controller: Controller) extends Observer {
         case "d" => controller.moveRight
         case "z" => controller.undo
         case "y" => controller.redo
-        case "i" => controller.gameStatus = GameStatus.INVENTORY
+        case "i" => {
+          controller.setGameStatus(GameStatus.INVENTORY)
+          inventoryGameStatus = GameStatus.LEVEL
+        }
         case _ => {
           print("Wrong Input!!!")
         }
@@ -53,6 +57,10 @@ class Tui(controller: Controller) extends Observer {
       input match {
         case "q" =>
         case "1" => controller.attack
+        case "i" => {
+          controller.setGameStatus(GameStatus.INVENTORY)
+          inventoryGameStatus = GameStatus.FIGHT
+        }
         case _ => {
           print("Wrong Input!!!")
         }
@@ -66,6 +74,7 @@ class Tui(controller: Controller) extends Observer {
         case GameStatus.LEVEL => state = new tuiMain
         case GameStatus.FIGHT => state = this
         case GameStatus.FIGHTSTATUS => state = this
+        case GameStatus.INVENTORY => state = new tuiInventoryMain
         case GameStatus.GAMEOVER => println("IS VORBEI MA DUDE")
         case _ => {
           print("Wrong GameStatus!!!")
@@ -76,12 +85,11 @@ class Tui(controller: Controller) extends Observer {
 
   class tuiInventoryMain extends State {
     override def processInputLine(input: String): Unit = {
-      println("TUIINVENTORY")
       input match {
-        case "1" => controller.gameStatus = GameStatus.INVENTORYPOTION
-        case "2" => controller.gameStatus = GameStatus.INVENTORYWEAPON
-        case "3" => controller.gameStatus = GameStatus.INVENTORYARMOR
-        case "4" => //controller.gameStatus = inventoryGamestatus immer setzen wenn inven6ory aufgerufen
+        case "1" => controller.setGameStatus(GameStatus.INVENTORYPOTION)
+        case "2" => controller.setGameStatus(GameStatus.INVENTORYWEAPON)
+        case "3" => controller.setGameStatus(GameStatus.INVENTORYARMOR)
+        case "x" => controller.setGameStatus(inventoryGameStatus)
         case "q" =>
         case _ => {
           print("Wrong Input!!!")
@@ -94,10 +102,10 @@ class Tui(controller: Controller) extends Observer {
     override def handle() = {
       val e = controller.gameStatus
       e match {
+        case GameStatus.INVENTORY => state = this
         case GameStatus.LEVEL => state = new tuiMain
-        case GameStatus.FIGHT => state = this
+        case GameStatus.FIGHT => state = new tuiFight
         case GameStatus.INVENTORYPOTION => state = new tuiInventoryPotion
-        case GameStatus.GAMEOVER => println("IS VORBEI MA DUDE")
         case _ => {
           print("Wrong GameStatus!!!")
         }
@@ -107,12 +115,13 @@ class Tui(controller: Controller) extends Observer {
 
   class tuiInventoryPotion extends State {
     override def processInputLine(input: String): Unit = {
-      println("TUIPOTION")
       input match {
-        case "1" => controller.usePotion(input.toInt)
-        case "x" => controller.gameStatus = GameStatus.LEVEL
-        case _ => {// zahlen überprüfung mit inventory.potion.size
-          println("Wrong Input!!!")
+        case "x" => controller.setGameStatus(GameStatus.INVENTORY)
+        case _ => {
+          input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
+            case index :: Nil => controller.usePotion(index)
+            case _ =>
+          }
         }
       }
       handle
@@ -120,7 +129,8 @@ class Tui(controller: Controller) extends Observer {
     override def handle() = {
       val e = controller.gameStatus
       e match {
-        case GameStatus.LEVEL => state = new tuiMain
+        case GameStatus.INVENTORYPOTION => state = this
+        case GameStatus.INVENTORY => state = new tuiInventoryMain
         case _ => {
           print("Wrong GameStatus!!!")
         }
