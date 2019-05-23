@@ -50,7 +50,7 @@ class TuiTest extends WordSpec with Matchers{
       controller.enemies.size should be(10)
     }
   }
-
+/*
   "A Rogue-Like TuiFight" should {
     val player = new Player(name = "Player",posX = 0, posY = 0)
     val enemies = Vector(new Enemy(name = "TestE1",posX = 0, posY = 0), new Enemy(name = "TestE2",posX = 1, posY = 0), new Enemy(name = "TestE3",posX = 0, posY = 1))
@@ -67,5 +67,6 @@ class TuiTest extends WordSpec with Matchers{
         }
 
   }
+  */
 }
 

@@ -6,18 +6,19 @@ import de.htwg.se.roguelike.util.Observer
 
 class Tui(controller: Controller) extends Observer {
 
+  /*
   trait State {
     def processInputLine(input:String)
     def handle()
   }
-
+*/
   //undo manager noch fehler zwei mal z um zurück zu kommen beim ersten mal
 
   controller.add(this)
   //State Pattern
-  var state:State = new tuiMain
+  var state:State = new tuiMain(controller,this)
   var inventoryGameStatus = GameStatus.LEVEL
-
+/*
   class tuiMain extends State {
     def processInputLine(input: String): Unit = {
       input match {
@@ -212,7 +213,7 @@ class Tui(controller: Controller) extends Observer {
       }
     }
   }
-
+*/
 
   //GameOver Tui fürs REstarten des Games (Fehler bei Attacken nachdem man Stirbt)
 
