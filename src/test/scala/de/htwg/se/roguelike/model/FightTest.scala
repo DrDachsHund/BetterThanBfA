@@ -22,11 +22,11 @@ class FightTest extends WordSpec with Matchers{
       }
       "when playerAttack" in {
         val enemy2 = fight.playerAttack(player,enemy)
-        enemy2.health should be(75)
+        enemy2.health should be(83)
       }
       "when enemyAttack" in {
         val player2 = fight.enemyAttack(player,enemy)
-        player2.health should be(90)
+        player2.health should be(85)
       }
       "have a nice String representation" in {
         fight.toString should be("Fight:\n[1]Attack\n[2]:Block\n")
