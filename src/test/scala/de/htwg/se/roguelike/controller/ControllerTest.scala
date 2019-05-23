@@ -198,7 +198,7 @@ class ControllerTest extends WordSpec with Matchers {
         }
       }
     }
-    "equip armor" should {
+    "un-/equip armor" should {
       val smallLevel = new Level(10)
       val player = new Player(name = "Test", inventory = new Inventory(armor = Vector(Armor("Helmet"),Armor("Chest"),Armor("Pants"),Armor("Boots"),Armor("Gloves"),Armor("Gloves"))))
       val enemies = Vector()
@@ -254,7 +254,61 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player = new Player(name = "Test",inventory = new Inventory(armor = Vector()))
         controller.equipArmor(1)
       }
+    }
+    "un-/equip weapons" should {
+      val smallLevel = new Level(10)
+      val player = new Player(name = "Test", inventory = new Inventory(weapons = Vector(Weapon("Sword"),Weapon("Sword"),Weapon("Sword"),Weapon("Sword"))))
+      val enemies = Vector()
+      val controller = new Controller(smallLevel,player,enemies)
 
+      "equip rightHand" in {
+        controller.player.rightHand should be(Weapon("rightFist"))
+        controller.equipWeapon(0,1)
+        controller.player.rightHand should be(Weapon("Sword"))
+      }
+
+      "equip leftHand" in {
+        controller.player.leftHand should be(Weapon("leftFist"))
+        controller.equipWeapon(1,1)
+        controller.player.leftHand should be(Weapon("Sword"))
+      }
+
+      "replace rightHand" in {
+        controller.player.rightHand should be(Weapon("Sword"))
+        controller.equipWeapon(0,1)
+        controller.player.rightHand should be(Weapon("Sword"))
+      }
+
+      "replace leftHand" in {
+        controller.player.leftHand should be(Weapon("Sword"))
+        controller.equipWeapon(1,1)
+        controller.player.leftHand should be(Weapon("Sword"))
+      }
+
+      "unequip rightHand" in {
+        controller.player.rightHand should be(Weapon("Sword"))
+        controller.unEquipRightHand()
+        controller.player.rightHand should be(Weapon("rightFist"))
+      }
+
+      "unequip leftHand" in {
+        controller.player.leftHand should be(Weapon("Sword"))
+        controller.unEquipLeftHand()
+        controller.player.leftHand should be(Weapon("leftFist"))
+      }
+
+      "do nothing when incorect index" in {
+        controller.player.leftHand should be(Weapon("leftFist"))
+        controller.equipWeapon(1,10000)
+        controller.player.leftHand should be(Weapon("leftFist"))
+      }
+
+      "do nothing when no weapons avaible" in {
+        controller.player = new Player(name = "Test",inventory = new Inventory(weapons = Vector()))
+        controller.player.leftHand should be(Weapon("leftFist"))
+        controller.equipWeapon(1,1)
+        controller.player.leftHand should be(Weapon("leftFist"))
+      }
     }
   }
 }
