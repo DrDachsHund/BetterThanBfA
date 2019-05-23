@@ -27,7 +27,7 @@ object Armor {
     case "Boots" => new Boots("Boots", 10, false, 10)
     case "Gloves" => new Gloves("Gloves", 10, false, 10)
     case "noHelmet" => new Helmet("Head", 0, false, 0,armorType = "nothing")
-    case "noChest" => new Chest("Upper Body", 0, false, 0,armorType = "nothing")
+    case "noChest" => new Chest("Body", 0, false, 0,armorType = "nothing")
     case "noPants" => new Pants("Legs", 0, false, 0,armorType = "nothing")
     case "noBoots" => new Boots("Feet", 0, false, 0,armorType = "nothing")
     case "noGloves" => new Gloves("Hands", 0, false, 0,armorType = "nothing")
