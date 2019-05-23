@@ -2,6 +2,11 @@ package de.htwg.se.roguelike.util
 
 import org.scalatest.{Matchers, WordSpec}
 
+import org.scalatest._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
+@RunWith(classOf[JUnitRunner])
 class UndoManagerSpec extends WordSpec with Matchers {
 
   "An UndoManager" should {
@@ -31,6 +36,14 @@ class UndoManagerSpec extends WordSpec with Matchers {
       command.state should be(0)
       undoManager.redoStep
       command.state should be(1)
+    }
+
+    "when empty should do nothing" in {
+      val command = new TestCommand
+      undoManager.undoStep
+      command.state should be(0)
+      undoManager.redoStep
+      command.state should be(0)
     }
   }
 }
