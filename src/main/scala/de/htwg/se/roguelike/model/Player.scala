@@ -10,13 +10,13 @@ case class Player(name: String,
                   exp:Int = 0,
                   posX:Int = 0, posY:Int = 0,
                   inventory:Inventory = new Inventory,
-                  helmet:Armor = Armor("Helmet"),
-                  chest:Armor = Armor("Chest"),
-                  pants:Armor = Armor("Pants"),
-                  boots:Armor = Armor("Boots"),
-                  gloves:Armor = Armor("Gloves"),
-                  rightHand:Weapon = Weapon("Sword"),
-                  leftHand:Weapon = Weapon("Sword")
+                  helmet:Armor = Armor("noHelmet"),
+                  chest:Armor = Armor("noChest"),
+                  pants:Armor = Armor("noPants"),
+                  boots:Armor = Armor("noBoots"),
+                  gloves:Armor = Armor("noGloves"),
+                  rightHand:Weapon = Weapon("rightFist"),
+                  leftHand:Weapon = Weapon("leftFist")
                  //helmet:Armor = new Helmet
                  ) extends Entity {
 

@@ -20,26 +20,16 @@ class FightTest extends WordSpec with Matchers{
         val enemies = Vector(new Enemy(posX = 1,posY = 0))
         fight.interaction(player,enemies) should be(false)
       }
-      /*
-      "when getEnemy" in {
-        val enemies = Vector(enemy)
-        fight.getEnemy(player,enemies) should be(enemy)
-      }
-      "when getEnemy not" in {
-        val enemies = Vector(new Enemy(posX = 1,posY = 0))
-        fight.getEnemy(player,enemies) should be(null)
-      }
-      */
       "when playerAttack" in {
         val enemy2 = fight.playerAttack(player,enemy)
-        enemy2.health should be(83)
+        enemy2.health should be(75)
       }
       "when enemyAttack" in {
         val player2 = fight.enemyAttack(player,enemy)
-        player2.health should be(85)
+        player2.health should be(90)
       }
       "have a nice String representation" in {
-        fight.toString should be("Fight:\n[1]Attack\n[2]:Block")
+        fight.toString should be("Fight:\n[1]Attack\n[2]:Block\n")
       }
     }}
 

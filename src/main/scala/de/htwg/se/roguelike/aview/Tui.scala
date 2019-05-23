@@ -38,10 +38,10 @@ class Tui(controller: Controller) extends Observer {
           print("Wrong Input!!!")
         }
       }
-      handle
+      handle()
     }
 
-    override def handle() = {
+    override def handle(): Unit = {
       val e = controller.gameStatus
       e match {
         case GameStatus.LEVEL => state = this
@@ -67,10 +67,10 @@ class Tui(controller: Controller) extends Observer {
           print("Wrong Input!!!")
         }
       }
-      handle
+      handle()
     }
 
-    override def handle() = {
+    override def handle(): Unit = {
       val e = controller.gameStatus
       e match {
         case GameStatus.LEVEL => state = new tuiMain
@@ -109,10 +109,10 @@ class Tui(controller: Controller) extends Observer {
         }
 
       }
-      handle
+      handle()
     }
 
-    override def handle() = {
+    override def handle(): Unit = {
       val e = controller.gameStatus
       e match {
         case GameStatus.INVENTORY => state = this
@@ -140,9 +140,9 @@ class Tui(controller: Controller) extends Observer {
           }
         }
       }
-      handle
+      handle()
     }
-    override def handle() = {
+    override def handle(): Unit = {
       val e = controller.gameStatus
       e match {
         case GameStatus.INVENTORYPOTION => state = this
@@ -158,6 +158,11 @@ class Tui(controller: Controller) extends Observer {
     override def processInputLine(input: String): Unit = {
       input match {
         case "x" => controller.setGameStatus(GameStatus.INVENTORY)
+        case "H" => controller.unEquipHelmet()
+        case "C" => controller.unEquipChest()
+        case "P" => controller.unEquipPants()
+        case "B" => controller.unEquipBoots()
+        case "G" => controller.unEquipGloves()
         case "q" =>
         case _ => {
           input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
@@ -166,9 +171,9 @@ class Tui(controller: Controller) extends Observer {
           }
         }
       }
-      handle
+      handle()
     }
-    override def handle() = {
+    override def handle(): Unit = {
       val e = controller.gameStatus
       e match {
         case GameStatus.INVENTORYARMOR => state = this
@@ -184,6 +189,8 @@ class Tui(controller: Controller) extends Observer {
     override def processInputLine(input: String): Unit = {
       input match {
         case "x" => controller.setGameStatus(GameStatus.INVENTORY)
+        case "R" => controller.unEquipRightHand()
+        case "L" => controller.unEquipLeftHand()
         case "q" =>
         case _ => {
           input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
@@ -192,9 +199,9 @@ class Tui(controller: Controller) extends Observer {
           }
         }
       }
-      handle
+      handle()
     }
-    override def handle() = {
+    override def handle(): Unit = {
       val e = controller.gameStatus
       e match {
         case GameStatus.INVENTORYWEAPON => state = this

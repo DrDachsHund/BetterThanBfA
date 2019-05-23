@@ -113,7 +113,10 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       player.inventory.potionsToString + "[x}Back\n"
   }
   class StrategyWeapons extends Strategy {
-    override def updateToString = player.inventory.weaponsToString + "[x}Back\n"
+    override def updateToString =
+      player.rightHand.name + ": " + player.rightHand.dmg + "\n" +
+      player.leftHand.name + ": " + player.leftHand.dmg + "\n" +
+      player.inventory.weaponsToString + "[x}Back\n"
   }
   class StrategyArmor extends Strategy {
     override def updateToString =

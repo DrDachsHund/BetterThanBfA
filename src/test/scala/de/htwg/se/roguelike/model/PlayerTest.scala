@@ -28,6 +28,10 @@ class PlayerTest extends WordSpec with Matchers {
       "when not alive" in {
         player2.isAlive() should be(false)
       }
+
+      "have a combinate armor value" in {
+        player.getArmor() should be(0)
+      }
   }}
 
 
