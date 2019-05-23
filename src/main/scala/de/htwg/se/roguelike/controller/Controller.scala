@@ -92,6 +92,17 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   class StrategyFightStatus extends Strategy {
     override def updateToString = fightStatus
   }
+  def fightStatus:String = {
+    var sb = new StringBuilder
+    sb ++= ("Player Health: <" + player.health + ">\n")
+    sb ++= "Enemy Health: "
+    for (enemyTest <- enemies) {
+      if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
+        sb ++= ("<" + enemyTest.health + ">")
+    }
+    sb ++= "\n"
+    sb.toString
+  }
   class StrategyInventory extends Strategy {
     override def updateToString =
         player.helmet.name + ": " + player.helmet.armor + "\n" +
@@ -130,16 +141,21 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   class StrategyGameOver extends Strategy {
     override def updateToString = "GAME OVER DUDE"
   }
-  def fightStatus:String = {
-    var sb = new StringBuilder
-    sb ++= ("Player Health: <" + player.health + ">\n")
-    sb ++= "Enemy Health: "
-    for (enemyTest <- enemies) {
-      if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
-        sb ++= ("<" + enemyTest.health + ">")
+
+
+  def setGameStatus(gameStatus: GameStatus.Value): Unit = {
+    this.gameStatus = gameStatus
+    gameStatus match {
+      case GameStatus.LEVEL => strategy = new StrategyLevel
+      case GameStatus.FIGHT => strategy = new StrategyFight
+      case GameStatus.FIGHTSTATUS => strategy = new StrategyFightStatus
+      case GameStatus.GAMEOVER => strategy = new StrategyGameOver
+      case GameStatus.INVENTORY => strategy = new StrategyInventory
+      case GameStatus.INVENTORYPOTION => strategy = new StrategyPotions
+      case GameStatus.INVENTORYWEAPON => strategy = new StrategyWeapons
+      case GameStatus.INVENTORYARMOR => strategy = new StrategyArmor
     }
-    sb ++= "\n"
-    sb.toString
+    notifyObservers
   }
   //Strategy Pattern toString---
 
@@ -328,20 +344,5 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers
   }
   //Inventory---
-
-  def setGameStatus(gameStatus: GameStatus.Value): Unit = {
-    this.gameStatus = gameStatus
-    gameStatus match {
-      case GameStatus.LEVEL => strategy = new StrategyLevel
-      case GameStatus.FIGHT => strategy = new StrategyFight
-      case GameStatus.FIGHTSTATUS => strategy = new StrategyFightStatus
-      case GameStatus.GAMEOVER => strategy = new StrategyGameOver
-      case GameStatus.INVENTORY => strategy = new StrategyInventory
-      case GameStatus.INVENTORYPOTION => strategy = new StrategyPotions
-      case GameStatus.INVENTORYWEAPON => strategy = new StrategyWeapons
-      case GameStatus.INVENTORYARMOR => strategy = new StrategyArmor
-    }
-    notifyObservers
-  }
 
 }

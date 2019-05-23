@@ -40,6 +40,7 @@ class UndoManagerSpec extends WordSpec with Matchers {
 
     "when empty should do nothing" in {
       val command = new TestCommand
+      val undoManager = new UndoManager
       undoManager.undoStep
       command.state should be(0)
       undoManager.redoStep
