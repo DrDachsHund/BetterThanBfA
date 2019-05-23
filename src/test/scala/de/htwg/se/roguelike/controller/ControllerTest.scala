@@ -291,8 +291,20 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.rightHand should be(Weapon("rightFist"))
       }
 
+      "dont unequip rightHand when nothing i hold" in {
+        controller.player.rightHand should be(Weapon("rightFist"))
+        controller.unEquipRightHand()
+        controller.player.rightHand should be(Weapon("rightFist"))
+      }
+
       "unequip leftHand" in {
         controller.player.leftHand should be(Weapon("Sword"))
+        controller.unEquipLeftHand()
+        controller.player.leftHand should be(Weapon("leftFist"))
+      }
+
+      "dont unequip leftHand when nothing i hold" in {
+        controller.player.leftHand should be(Weapon("leftFist"))
         controller.unEquipLeftHand()
         controller.player.leftHand should be(Weapon("leftFist"))
       }
