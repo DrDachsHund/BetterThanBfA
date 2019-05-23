@@ -15,8 +15,8 @@ case class Player(name: String,
                   pants:Armor = Armor("Pants"),
                   boots:Armor = Armor("Boots"),
                   gloves:Armor = Armor("Gloves"),
-                  rightHand:Weapon = new Weapon("RightFist",0,false,5,5),
-                  leftHand:Weapon = new Weapon("LeftFist",0,false,5,5)
+                  rightHand:Weapon = Weapon("Sword"),
+                  leftHand:Weapon = Weapon("Sword")
                  //helmet:Armor = new Helmet
                  ) extends Entity {
 

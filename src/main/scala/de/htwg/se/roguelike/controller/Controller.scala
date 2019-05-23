@@ -99,6 +99,8 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
         player.pants.name + ": " + player.pants.armor +  "\n" +
         player.boots.name + ": " + player.boots.armor +  "\n" +
         player.gloves.name + ": " + player.gloves.armor +  "\n" +
+        player.rightHand.name + ": " + player.rightHand.dmg + "\n" +
+        player.leftHand.name + ": " + player.leftHand.dmg + "\n" +
         "[1]Potions\n" +
         "[2]Weapons\n" +
         "[3]Armor\n" +
@@ -175,7 +177,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       var usedArmor = player.inventory.armor.filter(_ == playerArmor)
       usedArmor = usedArmor.drop(1)
 
-      var oldArmor:Armor = Armor("nothing")
+      var oldArmor:Armor = Armor("noHelmet")
       playerArmor.armorType match {
         case "Helmet" => oldArmor = equipHelmet(playerArmor)
         case "Chest" => oldArmor = equipChest(playerArmor)
@@ -275,7 +277,53 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers
   }
 
+  def unEquipRightHand():Unit = {
+    val weapon:Weapon = player.rightHand
+    if (weapon.name != "RightFist") {
+      var newWeapon = player.inventory.weapons
+      newWeapon ++= player.rightHand :: Nil
+      val newInventory = player.inventory.copy(weapons = newWeapon)
+      player = player.copy(rightHand = Weapon("rightFist"),inventory = newInventory)
+    }
+    notifyObservers
+  }
+  def unEquipLeftHand():Unit = {
+    val weapon: Weapon = player.leftHand
+    if (weapon.name != "LeftFist") {
+      var newWeapon = player.inventory.weapons
+      newWeapon ++= player.leftHand :: Nil
+      val newInventory = player.inventory.copy(weapons = newWeapon)
+      player = player.copy(leftHand = Weapon("leftFist"), inventory = newInventory)
+    }
+    notifyObservers
+  }
 
+  def equipWeapon(hand:Int, index:Int):Unit = {
+    if (player.inventory.weapons.size < 1 && hand <= 1 && hand >= 0) {
+      println("Keine Weapon Vorhanden!!!")
+    } else if (index <= player.inventory.weapons.size && index > 0) {
+      val playerWeapon = player.inventory.getWeapon(index)
+
+      var usedWeapon = player.inventory.weapons.filter(_ == playerWeapon)
+      usedWeapon = usedWeapon.drop(1)
+
+      var newWeapons = player.inventory.weapons.filterNot(_ == playerWeapon)
+      newWeapons ++= usedWeapon
+
+      if (hand == 0) {
+        if (player.rightHand.name != "RightFist") {
+          newWeapons ++= player.rightHand :: Nil
+        }
+        player = player.copy(rightHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
+      } else if (hand == 1) {
+        if (player.leftHand.name != "LeftFist") {
+          newWeapons ++= player.leftHand :: Nil
+        }
+        player = player.copy(leftHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
+      }
+    } else println("CONTROLLER INKOREKTER INDEX ODER HAND => " + index + "  " + hand)
+    notifyObservers
+  }
   //Inventory---
 
   def setGameStatus(gameStatus: GameStatus.Value): Unit = {

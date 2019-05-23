@@ -98,6 +98,9 @@ class Tui(controller: Controller) extends Observer {
         case "B" => controller.unEquipBoots()
         case "G" => controller.unEquipGloves()
 
+        case "R" => controller.unEquipRightHand()
+        case "L" => controller.unEquipLeftHand()
+
 
         case "x" => controller.setGameStatus(inventoryGameStatus)
         case "q" =>
@@ -117,6 +120,7 @@ class Tui(controller: Controller) extends Observer {
         case GameStatus.FIGHT => state = new tuiFight
         case GameStatus.INVENTORYPOTION => state = new tuiInventoryPotion
         case GameStatus.INVENTORYARMOR => state = new tuiInventoryArmor
+        case GameStatus.INVENTORYWEAPON => state = new tuiInventoryWeapon
         case _ => {
           print("Wrong GameStatus!!!")
         }
@@ -168,6 +172,32 @@ class Tui(controller: Controller) extends Observer {
       val e = controller.gameStatus
       e match {
         case GameStatus.INVENTORYARMOR => state = this
+        case GameStatus.INVENTORY => state = new tuiInventoryMain
+        case _ => {
+          print("Wrong GameStatus!!!")
+        }
+      }
+    }
+  }
+
+  class tuiInventoryWeapon extends State {
+    override def processInputLine(input: String): Unit = {
+      input match {
+        case "x" => controller.setGameStatus(GameStatus.INVENTORY)
+        case "q" =>
+        case _ => {
+          input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
+            case hand :: index :: Nil => controller.equipWeapon(hand,index)
+            case _ =>
+          }
+        }
+      }
+      handle
+    }
+    override def handle() = {
+      val e = controller.gameStatus
+      e match {
+        case GameStatus.INVENTORYWEAPON => state = this
         case GameStatus.INVENTORY => state = new tuiInventoryMain
         case _ => {
           print("Wrong GameStatus!!!")

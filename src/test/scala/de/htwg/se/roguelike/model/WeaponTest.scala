@@ -1,7 +1,7 @@
 package de.htwg.se.roguelike.model
 
 import org.scalatest.{Matchers, WordSpec}
-
+/*
 class WeaponTest extends WordSpec with Matchers {
   "A Weapon when new" should {
     val weapon1 = new Weapon("test1",100,true,10,10)
@@ -16,3 +16,4 @@ class WeaponTest extends WordSpec with Matchers {
   }
 
 }
+*/

@@ -18,6 +18,7 @@ trait Armor extends Item {
 }
 
 //FactoryMethod
+//noch schöner machen name = etc ...
 object Armor {
   def apply(kind: String) = kind match {
     case "Helmet" => new Helmet("Helmet",10,false,10) //.randomItem

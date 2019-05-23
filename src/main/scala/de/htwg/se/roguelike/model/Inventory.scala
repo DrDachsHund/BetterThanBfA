@@ -10,6 +10,10 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
     armor(index-1)
   }
 
+  def getWeapon(index:Int): Weapon = {
+    weapons(index-1)
+  }
+
   def potionsToString():String = {
     if (potions.size == 0) return "Keine Potions\n"
     var sb = new StringBuilder
