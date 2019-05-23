@@ -3,7 +3,7 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 import de.htwg.se.roguelike.util.Command
 
-class MoveCommand(lp: (Level,Player),enemies:Vector[Enemy], controller: Controller) extends Command {
+class LevelCommand(lp: (Level,Player), enemies:Vector[Enemy], controller: Controller) extends Command {
 
   var memento: (Level,Player) = lp
   var mementoE: Vector[Enemy] = enemies

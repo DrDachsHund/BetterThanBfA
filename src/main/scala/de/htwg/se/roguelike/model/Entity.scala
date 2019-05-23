@@ -15,6 +15,6 @@ trait Entity {
   def isAlive():Boolean = health > 0
 
   //Template Method
-  def getAttack():Int = attack + rightHand.dmg + (leftHand.dmg / 2)
+  def getAttack():Double = attack + rightHand.dmg + (leftHand.dmg / 2)
 
 }

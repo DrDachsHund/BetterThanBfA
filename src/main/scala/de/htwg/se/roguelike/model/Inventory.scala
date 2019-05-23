@@ -1,9 +1,13 @@
 package de.htwg.se.roguelike.model
 
-case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = Vector(Potion("Heal"),Potion("Heal"),Potion("Mana")),armor:Vector[Armor] = Vector()) {
+case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = Vector(Potion("Heal"),Potion("Heal"),Potion("Mana")),armor:Vector[Armor] = Vector(Armor("Gloves"))) {
 
   def getPotion(index:Int): Potion = {
     potions(index-1)
+  }
+
+  def getArmor(index:Int): Armor = {
+    armor(index-1)
   }
 
   def potionsToString():String = {

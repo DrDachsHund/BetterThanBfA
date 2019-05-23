@@ -11,6 +11,8 @@ class Tui(controller: Controller) extends Observer {
     def handle()
   }
 
+  //undo manager noch fehler zwei mal z um zurück zu kommen beim ersten mal
+
   controller.add(this)
   //State Pattern
   var state:State = new tuiMain
@@ -89,6 +91,14 @@ class Tui(controller: Controller) extends Observer {
         case "1" => controller.setGameStatus(GameStatus.INVENTORYPOTION)
         case "2" => controller.setGameStatus(GameStatus.INVENTORYWEAPON)
         case "3" => controller.setGameStatus(GameStatus.INVENTORYARMOR)
+
+        case "H" => controller.unEquipHelmet()
+        case "C" => controller.unEquipChest()
+        case "P" => controller.unEquipPants()
+        case "B" => controller.unEquipBoots()
+        case "G" => controller.unEquipGloves()
+
+
         case "x" => controller.setGameStatus(inventoryGameStatus)
         case "q" =>
         case _ => {
@@ -106,6 +116,7 @@ class Tui(controller: Controller) extends Observer {
         case GameStatus.LEVEL => state = new tuiMain
         case GameStatus.FIGHT => state = new tuiFight
         case GameStatus.INVENTORYPOTION => state = new tuiInventoryPotion
+        case GameStatus.INVENTORYARMOR => state = new tuiInventoryArmor
         case _ => {
           print("Wrong GameStatus!!!")
         }
@@ -117,6 +128,7 @@ class Tui(controller: Controller) extends Observer {
     override def processInputLine(input: String): Unit = {
       input match {
         case "x" => controller.setGameStatus(GameStatus.INVENTORY)
+        case "q" =>
         case _ => {
           input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
             case index :: Nil => controller.usePotion(index)
@@ -137,6 +149,34 @@ class Tui(controller: Controller) extends Observer {
       }
     }
   }
+
+  class tuiInventoryArmor extends State {
+    override def processInputLine(input: String): Unit = {
+      input match {
+        case "x" => controller.setGameStatus(GameStatus.INVENTORY)
+        case "q" =>
+        case _ => {
+          input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
+            case index :: Nil => controller.equipArmor(index)
+            case _ =>
+          }
+        }
+      }
+      handle
+    }
+    override def handle() = {
+      val e = controller.gameStatus
+      e match {
+        case GameStatus.INVENTORYARMOR => state = this
+        case GameStatus.INVENTORY => state = new tuiInventoryMain
+        case _ => {
+          print("Wrong GameStatus!!!")
+        }
+      }
+    }
+  }
+
+
   //GameOver Tui fürs REstarten des Games (Fehler bei Attacken nachdem man Stirbt)
 
   override def update: Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")

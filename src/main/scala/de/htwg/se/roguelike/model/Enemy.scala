@@ -12,7 +12,7 @@ package de.htwg.se.roguelike.model
 
 
     //Template Method
-    override def getAttack(): Int = super.getAttack() - 2
+    override def getAttack(): Double = super.getAttack() - 2
 
     override def toString: String =
       "Name: " + name +
