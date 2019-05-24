@@ -3,17 +3,16 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 import de.htwg.se.roguelike.util.Command
 
-class LevelCommand(lp: (Level,Player), enemies:Vector[Enemy], controller: Controller) extends Command {
+class LevelCommand(lpOld: (Level,Player),lpNew: (Level,Player), enemies:Vector[Enemy], controller: Controller) extends Command {
 
-  //maybe hier move und altes safen
-  var memento: (Level,Player) = lp
+  var memento: (Level,Player) = lpOld
   var mementoE: Vector[Enemy] = enemies
 
   override def doStep(): Unit = {
-    //memento = lp
-    //mementoE = enemies
-    controller.level = lp._1
-    controller.player = lp._2
+    memento = lpOld
+    mementoE = enemies
+    controller.level = lpNew._1
+    controller.player = lpNew._2
     controller.interaction()
   }
 

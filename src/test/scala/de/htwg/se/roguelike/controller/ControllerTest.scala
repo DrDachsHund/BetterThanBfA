@@ -171,7 +171,6 @@ class ControllerTest extends WordSpec with Matchers {
         controller.moveRight()
         controller.moveRight()
         controller.player.posX should be(2)
-        controller.undo() //warum 2 mal undo braucht ka noch fragen
         controller.undo()
         controller.player.posX should be(1)
       }

@@ -13,13 +13,13 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     val (level1,enemies1) = new LevelCreator(10).createRandom(player, 10)
     level = level1
     enemies = enemies1
-    undoManager.doStep(new LevelCommand((level,player),enemies,this))
+    undoManager.doStep(new LevelCommand((level,player),(level,player),enemies,this))
     notifyObservers()
   }
 
   def createLevel(): Unit = {
     level = new LevelCreator(10).createLevel(player, enemies)
-    undoManager.doStep(new LevelCommand((level,player),enemies,this))
+    undoManager.doStep(new LevelCommand((level,player),(level,player),enemies,this))
     notifyObservers()
   }
 
@@ -32,22 +32,22 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
 
   def moveUp(): Unit = {
-    undoManager.doStep(new LevelCommand(level.moveUp(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level,player),level.moveUp(player),enemies,this))
     notifyObservers()
   }
 
   def moveDown(): Unit = {
-    undoManager.doStep(new LevelCommand(level.moveDown(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level,player),level.moveDown(player),enemies,this))
     notifyObservers()
   }
 
   def moveLeft(): Unit = {
-    undoManager.doStep(new LevelCommand(level.moveLeft(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level,player),level.moveLeft(player),enemies,this))
     notifyObservers()
   }
 
   def moveRight(): Unit = {
-    undoManager.doStep(new LevelCommand(level.moveRight(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level,player),level.moveRight(player),enemies,this))
     notifyObservers()
   }
 
