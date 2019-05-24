@@ -20,7 +20,7 @@ case class Player(name: String,
                  //helmet:Armor = new Helmet
                  ) extends Entity {
 
-  def getArmor():Int = {
+  def getArmor:Int = {
     var armor:Int = 0
     armor += helmet.armor
     armor += chest.armor

@@ -6,14 +6,12 @@ class tuiFight(controller: Controller,tui: Tui) extends State {
   def processInputLine(input: String): Unit = {
     input match {
       case "q" =>
-      case "1" => controller.attack
-      case "i" => {
+      case "1" => controller.attack()
+      case "i" =>
         controller.setGameStatus(GameStatus.INVENTORY)
         tui.inventoryGameStatus = GameStatus.FIGHT
-      }
-      case _ => {
+      case _ =>
         print("Wrong Input!!!")
-      }
     }
     handle()
   }
@@ -26,9 +24,8 @@ class tuiFight(controller: Controller,tui: Tui) extends State {
       case GameStatus.FIGHTSTATUS => tui.state = this
       case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller,tui)
       case GameStatus.GAMEOVER => println("IS VORBEI MA DUDE")
-      case _ => {
+      case _ =>
         print("Wrong GameStatus!!!")
-      }
     }
   }
 }

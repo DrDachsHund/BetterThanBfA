@@ -15,7 +15,7 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
   }
 
   def potionsToString():String = {
-    if (potions.size == 0) return "Keine Potions\n"
+    if (potions.isEmpty) return "Keine Potions\n"
     var sb = new StringBuilder
     var index:Int = 1
     for (e <- potions) {
@@ -26,7 +26,7 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
   }
 
   def weaponsToString():String = {
-    if (weapons.size == 0) return "Keine Weapons\n"
+    if (weapons.isEmpty) return "Keine Weapons\n"
     var sb = new StringBuilder
     var index:Int = 1
     for (e <- weapons) {
@@ -37,7 +37,7 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
   }
 
   def armorToString():String = {
-    if (armor.size == 0) return "Keine Armor\n"
+    if (armor.isEmpty) return "Keine Armor\n"
     var sb = new StringBuilder
     var index:Int = 1
     for (e <- armor) {

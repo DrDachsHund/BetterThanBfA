@@ -12,9 +12,9 @@ trait Entity {
   val rightHand:Weapon
   val leftHand:Weapon
 
-  def isAlive():Boolean = health > 0
+  def isAlive:Boolean = health > 0
 
   //Template Method
-  def getAttack():Double = attack + rightHand.dmg + (leftHand.dmg / 2)
+  def getAttack:Double = attack + rightHand.dmg + (leftHand.dmg / 2)
 
 }

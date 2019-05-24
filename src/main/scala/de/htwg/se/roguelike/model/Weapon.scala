@@ -22,9 +22,9 @@ trait Weapon extends Item {
 
 
 object Weapon {
-  def apply(kind: String) = kind match {
-    case "rightFist" => new Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5,oneHanded = true)
-    case "leftFist" => new Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true)
-    case "Sword" => new Sword(name = "Sword", value = 10, usable = false, dmg = 10, block = 5, oneHanded = true)
+  def apply(kind: String): Weapon = kind match {
+    case "rightFist" => Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5,oneHanded = true)
+    case "leftFist" => Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true)
+    case "Sword" => Sword(name = "Sword", value = 10, usable = false, dmg = 10, block = 5, oneHanded = true)
   }
 }

@@ -9,8 +9,8 @@ case class Level(map: Land[Tile]) {
     }
 
     val player1 = player.copy(posY = player.posY - 1)
-    var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
-    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
+    var level = Level(map.replaceTile(player1.posY,player1.posX, Tile(5 + map.tile(player1.posY,player1.posX).value)))
+    level = Level(level.map.replaceTile(player.posY,player.posX, Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
     (level,player1)
   }
@@ -21,8 +21,8 @@ case class Level(map: Land[Tile]) {
     }
 
     val player1 = player.copy(posY = player.posY + 1)
-    var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
-    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
+    var level = Level(map.replaceTile(player1.posY,player1.posX, Tile(5 + map.tile(player1.posY,player1.posX).value)))
+    level = Level(level.map.replaceTile(player.posY,player.posX, Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
     (level,player1)
   }
@@ -33,8 +33,8 @@ case class Level(map: Land[Tile]) {
     }
 
     val player1 = player.copy(posX = player.posX - 1)
-    var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
-    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
+    var level = Level(map.replaceTile(player1.posY,player1.posX, Tile(5 + map.tile(player1.posY,player1.posX).value)))
+    level = Level(level.map.replaceTile(player.posY,player.posX, Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
     (level,player1)
   }
@@ -45,23 +45,23 @@ case class Level(map: Land[Tile]) {
     }
 
     val player1 = player.copy(posX = player.posX + 1)
-    var level = new Level(map.replaceTile(player1.posY,player1.posX,new Tile(5 + map.tile(player1.posY,player1.posX).value)))
-    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(level.map.tile(player.posY,player.posX).value - 5)))
+    var level = Level(map.replaceTile(player1.posY,player1.posX, Tile(5 + map.tile(player1.posY,player1.posX).value)))
+    level = Level(level.map.replaceTile(player.posY,player.posX, Tile(level.map.tile(player.posY,player.posX).value - 5)))
 
     (level,player1)
   }
 
   def removeElement(col:Int, row:Int, value:Int): Level = {
-    new Level(this.map.replaceTile(col,row,new Tile(value)))
+    Level(this.map.replaceTile(col,row, Tile(value)))
   }
 
   override def toString: String = {
     val sb = new StringBuilder
-    for (x <- 0 to map.size-1) {
-      for (y <- 0 to map.size - 1) {
+    for (x <- 0 until map.size) {
+      for (y <- 0 until map.size) {
         sb++=(map.tile(x,y).value + " ")
       }
-      sb++=("\n")
+      sb ++= "\n"
     }
     sb.toString
   }

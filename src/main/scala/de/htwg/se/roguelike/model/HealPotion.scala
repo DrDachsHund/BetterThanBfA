@@ -6,6 +6,6 @@ case class HealPotion(name:String,
                       power:Int) extends Potion {
 
   override def usePotion(player: Player): Player = {
-    super.usePotion(player.copy(health = (player.health + power)))
+    super.usePotion(player.copy(health = player.health + power))
   }
 }

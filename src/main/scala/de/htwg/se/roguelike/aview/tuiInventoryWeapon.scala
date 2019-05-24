@@ -9,12 +9,11 @@ class tuiInventoryWeapon(controller: Controller,tui: Tui) extends State {
       case "R" => controller.unEquipRightHand()
       case "L" => controller.unEquipLeftHand()
       case "q" =>
-      case _ => {
+      case _ =>
         input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
           case hand :: index :: Nil => controller.equipWeapon(hand,index)
           case _ =>
         }
-      }
     }
     handle()
   }
@@ -23,9 +22,8 @@ class tuiInventoryWeapon(controller: Controller,tui: Tui) extends State {
     e match {
       case GameStatus.INVENTORYWEAPON => tui.state = this
       case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller,tui)
-      case _ => {
+      case _ =>
         print("Wrong GameStatus!!!")
-      }
     }
   }
 }

@@ -7,12 +7,11 @@ class tuiInventoryPotion(controller: Controller,tui: Tui) extends State {
     input match {
       case "x" => controller.setGameStatus(GameStatus.INVENTORY)
       case "q" =>
-      case _ => {
+      case _ =>
         input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
           case index :: Nil => controller.usePotion(index)
           case _ =>
         }
-      }
     }
     handle()
   }
@@ -21,9 +20,8 @@ class tuiInventoryPotion(controller: Controller,tui: Tui) extends State {
     e match {
       case GameStatus.INVENTORYPOTION => tui.state = this
       case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller,tui)
-      case _ => {
+      case _ =>
         print("Wrong GameStatus!!!")
-      }
     }
   }
 }

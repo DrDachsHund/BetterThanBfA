@@ -21,9 +21,8 @@ class tuiInventoryMain(controller: Controller,tui: Tui) extends State {
 
       case "x" => controller.setGameStatus(tui.inventoryGameStatus)
       case "q" =>
-      case _ => {
+      case _ =>
         print("Wrong Input!!!")
-      }
 
     }
     handle()
@@ -38,9 +37,8 @@ class tuiInventoryMain(controller: Controller,tui: Tui) extends State {
       case GameStatus.INVENTORYPOTION => tui.state = new tuiInventoryPotion(controller,tui)
       case GameStatus.INVENTORYARMOR => tui.state = new tuiInventoryArmor(controller,tui)
       case GameStatus.INVENTORYWEAPON => tui.state = new tuiInventoryWeapon(controller,tui)
-      case _ => {
+      case _ =>
         print("Wrong GameStatus!!!")
-      }
     }
   }
 }

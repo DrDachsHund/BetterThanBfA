@@ -1,7 +1,6 @@
 package de.htwg.se.roguelike.aview
 
-import de.htwg.se.roguelike.controller.Controller
-import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.util.Observer
 
 class Tui(controller: Controller) extends Observer {
@@ -17,7 +16,7 @@ class Tui(controller: Controller) extends Observer {
   controller.add(this)
   //State Pattern
   var state:State = new tuiMain(controller,this)
-  var inventoryGameStatus = GameStatus.LEVEL
+  var inventoryGameStatus: GameStatus.Value = GameStatus.LEVEL
 /*
   class tuiMain extends State {
     def processInputLine(input: String): Unit = {
@@ -217,5 +216,5 @@ class Tui(controller: Controller) extends Observer {
 
   //GameOver Tui fürs REstarten des Games (Fehler bei Attacken nachdem man Stirbt)
 
-  override def update: Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")
+  override def update(): Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")
 }

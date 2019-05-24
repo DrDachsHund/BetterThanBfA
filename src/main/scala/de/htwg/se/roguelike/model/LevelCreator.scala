@@ -6,10 +6,10 @@ class LevelCreator(size:Int) {
 
   def createLevel(player: Player, enemies:Vector[Enemy]): Level = {
     var level = new Level(size)
-    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(5)))
+    level = Level(level.map.replaceTile(player.posY,player.posX, Tile(5)))
 
     for (x <- enemies) {
-      level = new Level(level.map.replaceTile(x.posX,x.posY,new Tile(3)))
+      level = Level(level.map.replaceTile(x.posX,x.posY, Tile(3)))
     }
 
     level
@@ -17,7 +17,7 @@ class LevelCreator(size:Int) {
 
   def createRandom(player: Player, enemyCount:Int): (Level,Vector[Enemy]) = {
     var level = new Level(size)
-    level = new Level(level.map.replaceTile(player.posY,player.posX,new Tile(5)))
+    level = Level(level.map.replaceTile(player.posY,player.posX, Tile(5)))
 
     var row:Int = 0
     var col:Int = 0
@@ -29,9 +29,9 @@ class LevelCreator(size:Int) {
         row = Random.nextInt(level.map.size)
       } while (level.map.tile(col,row).isSet)
 
-      val enemy = new Enemy(name = "RandomEnemy",posX = row, posY = col)
+      val enemy = Enemy(name = "RandomEnemy",posX = row, posY = col)
       enemies = enemies :+ enemy
-      level = new Level(level.map.replaceTile(col,row,new Tile(3)))
+      level = Level(level.map.replaceTile(col,row, Tile(3)))
     }
 
     (level,enemies)
