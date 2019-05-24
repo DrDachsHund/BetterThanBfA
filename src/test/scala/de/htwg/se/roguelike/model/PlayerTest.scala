@@ -22,15 +22,15 @@ class PlayerTest extends WordSpec with Matchers {
           "\nposY: " + "0")
     }
       "when... alive" in {
-        player.isAlive() should be(true)
+        player.isAlive should be(true)
       }
       val player2 = player.copy(health = 0)
       "when not alive" in {
-        player2.isAlive() should be(false)
+        player2.isAlive should be(false)
       }
 
       "have a combinate armor value" in {
-        player.getArmor() should be(0)
+        player.getArmor should be(0)
       }
   }}
 

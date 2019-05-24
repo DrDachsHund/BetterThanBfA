@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class UndoManagerSpec extends WordSpec with Matchers {
+class UndoManagerTest extends WordSpec with Matchers {
 
   "An UndoManager" should {
     val undoManager = new UndoManager
@@ -17,9 +17,9 @@ class UndoManagerSpec extends WordSpec with Matchers {
       command.state should be(0)
       undoManager.doStep(command)
       command.state should be(1)
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(0)
-      undoManager.redoStep
+      undoManager.redoStep()
       command.state should be(1)
     }
 
@@ -30,20 +30,20 @@ class UndoManagerSpec extends WordSpec with Matchers {
       command.state should be(1)
       undoManager.doStep(command)
       command.state should be(2)
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(1)
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(0)
-      undoManager.redoStep
+      undoManager.redoStep()
       command.state should be(1)
     }
 
     "when empty should do nothing" in {
       val command = new TestCommand
       val undoManager = new UndoManager
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(0)
-      undoManager.redoStep
+      undoManager.redoStep()
       command.state should be(0)
     }
   }

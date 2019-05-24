@@ -21,15 +21,15 @@ trait Armor extends Item {
 //noch schöner machen name = etc ...
 object Armor {
   def apply(kind: String):Armor = kind match {
-    case "Helmet" => Helmet("Helmet",10,usable = false,10) //.randomItem
-    case "Chest" => Chest("Chest", 10, usable = false, 10)
-    case "Pants" => Pants("Pants", 10, usable = false, 10)
-    case "Boots" => Boots("Boots", 10, usable = false, 10)
-    case "Gloves" => Gloves("Gloves", 10, usable = false, 10)
-    case "noHelmet" => Helmet("Head", 0, usable = false, 0,armorType = "nothing")
-    case "noChest" => Chest("Body", 0, usable = false, 0,armorType = "nothing")
-    case "noPants" => Pants("Legs", 0,usable =  false, 0,armorType = "nothing")
-    case "noBoots" => Boots("Feet", 0,usable =  false, 0,armorType = "nothing")
-    case "noGloves" => Gloves("Hands", 0,usable =  false, 0,armorType = "nothing")
+    case "Helmet" => Helmet(name = "Helmet", value = 10,usable = false, armor = 10) //.randomItem
+    case "Chest" => Chest(name = "Chest", value = 10, usable = false, armor = 10)
+    case "Pants" => Pants(name = "Pants", value = 10, usable = false, armor = 10)
+    case "Boots" => Boots(name = "Boots", value =10, usable = false, armor = 10)
+    case "Gloves" => Gloves(name = "Gloves", value = 10, usable = false, armor = 10)
+    case "noHelmet" => Helmet(name = "Head", value = 0, usable = false, armor = 0,armorType = "nothing")
+    case "noChest" => Chest(name = "Body", value = 0, usable = false, armor = 0,armorType = "nothing")
+    case "noPants" => Pants(name = "Legs", value = 0,usable =  false, armor = 0,armorType = "nothing")
+    case "noBoots" => Boots(name = "Feet", value = 0,usable =  false, armor = 0,armorType = "nothing")
+    case "noGloves" => Gloves(name = "Hands", value = 0,usable =  false,armor = 0,armorType = "nothing")
   }
 }

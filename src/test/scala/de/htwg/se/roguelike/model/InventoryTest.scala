@@ -6,7 +6,7 @@ class InventoryTest extends WordSpec with Matchers {
 
   "An Inventory" when {
     "new" should {
-      val inventory = new Inventory(
+      val inventory = Inventory(
         weapons = Vector(Weapon("Sword")),
         potions = Vector(Potion("SmallHeal")),
         armor = Vector(Armor("Gloves")))

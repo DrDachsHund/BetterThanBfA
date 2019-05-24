@@ -9,33 +9,33 @@ class ControllerTest extends WordSpec with Matchers {
   "A Controller" when {
     "observed by an Observer" should {
       val smallLevel = new Level(10)
-      val player1 = new Player("New Player",posX = 5,posY = 5)
-      val enemies = Vector(new Enemy("TestEnemy",posX = 5,posY = 6), new Enemy("TestEnemy2",posX = 7,posY = 8))
-      val enemies1 = Vector(new Enemy("TestEnemy",posX = 5,posY = 5), new Enemy("TestEnemy2",posX = 7,posY = 8))
+      val player1 = Player("New Player",posX = 5,posY = 5)
+      val enemies = Vector(Enemy("TestEnemy",posX = 5,posY = 6), Enemy("TestEnemy2",posX = 7,posY = 8))
+      val enemies1 = Vector(Enemy("TestEnemy",posX = 5,posY = 5), Enemy("TestEnemy2",posX = 7,posY = 8))
       val controller = new Controller(smallLevel,player1,enemies)
       val controller1 = new Controller(smallLevel,player1,enemies1)
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
-        override def update: Unit = {updated = true; updated}
+        override def update(): Unit = {updated = true; updated}
       }
       controller.add(observer)
 
       "notify its Observer after creating Level" in {
-        controller.createLevel
+        controller.createLevel()
         observer.updated should be (true)
         controller.level.map.size should be (10)
       }
 
       "notify its Observer after not interacting" in {
-        controller.interaction
+        controller.interaction()
         observer.updated should be (true)
-        controller.moveDown
+        controller.moveDown()
         //controller.interaction should be (true)
       }
 
       "notify its Observer after creating a random Level" in {
-        controller.createRandomLevel
+        controller.createRandomLevel()
         observer.updated should be (true)
         controller.level.map.size should be (10)
         controller.enemies.size should be (10)
@@ -43,7 +43,7 @@ class ControllerTest extends WordSpec with Matchers {
 
       "notify its Observer after moving Up" in {
         val old = controller.player.posY
-        controller.moveUp
+        controller.moveUp()
         observer.updated should be (true)
         controller.player.posX should be (5)
         controller.player.posY should be (old-1)
@@ -52,7 +52,7 @@ class ControllerTest extends WordSpec with Matchers {
 
       "notify its Observer after moving Down" in {
         val old = controller.player.posY
-        controller.moveDown
+        controller.moveDown()
         observer.updated should be (true)
         controller.player.posX should be (5)
         controller.player.posY should be (old+1)
@@ -60,7 +60,7 @@ class ControllerTest extends WordSpec with Matchers {
 
       "notify its Observer after moving Right" in {
         val old = controller.player.posX
-        controller.moveRight
+        controller.moveRight()
         observer.updated should be (true)
         controller.player.posX should be (old+1)
         controller.player.posY should be (6)
@@ -68,27 +68,27 @@ class ControllerTest extends WordSpec with Matchers {
 
       "notify its Observer after moving Left" in {
         val old = controller.player.posX
-        controller.moveLeft
+        controller.moveLeft()
         observer.updated should be (true)
         controller.player.posX should be (old-1)
         controller.player.posY should be (6)
       }
       "notify its Observer after atack" in {
-        controller1.interaction
+        controller1.interaction()
         controller1.gameStatus should be(GameStatus.FIGHT)
         controller1.attack()
         observer.updated should be(true)
       }
       "change game status when player dies" in {
         controller1.player = controller.player.copy(health = 1, posX = 5, posY = 5)
-        controller1.enemies = Vector(new Enemy("TestEnemy",health = 100, posX = 5, posY = 5))
+        controller1.enemies = Vector(Enemy("TestEnemy", posX = 5, posY = 5))
         controller1.attack()
         controller1.gameStatus should be(GameStatus.GAMEOVER)
       }
 
       "change game status when enemy dies" in {
         controller1.player = controller.player.copy(health = 100, posX = 5, posY = 5)
-        controller1.enemies = Vector(new Enemy("TestEnemy",health = 1, posX = 5, posY = 5))
+        controller1.enemies = Vector(Enemy("TestEnemy",health = 1, posX = 5, posY = 5))
         controller1.attack()
         controller1.gameStatus should be(GameStatus.LEVEL)
       }
@@ -109,7 +109,7 @@ class ControllerTest extends WordSpec with Matchers {
 
         "gameStatus is FIGHTSTATUS" in {
           controller.player = controller.player.copy(health = 1, posX = 5, posY = 5)
-          controller.enemies = Vector(new Enemy("TestEnemy",health = 100, posX = 5, posY = 5))
+          controller.enemies = Vector(Enemy("TestEnemy", posX = 5, posY = 5))
           controller.setGameStatus(GameStatus.FIGHTSTATUS)
           controller.strategy.updateToString should be(controller.fightStatus)
         }
@@ -167,32 +167,32 @@ class ControllerTest extends WordSpec with Matchers {
       //String Abfrage------
 
       "when undo after move" in {
-        controller.player = new Player(name = "Test", posX = 0, posY = 0)
-        controller.moveRight
-        controller.moveRight
+        controller.player = Player(name = "Test")
+        controller.moveRight()
+        controller.moveRight()
         controller.player.posX should be(2)
-        controller.undo //warum 2 mal undo braucht ka noch fragen
-        controller.undo
+        controller.undo() //warum 2 mal undo braucht ka noch fragen
+        controller.undo()
         controller.player.posX should be(1)
       }
       "when redo after undo" in {
-        controller.redo
+        controller.redo()
         controller.player.posX should be(2)
       }
 
       "use Potion" when {
         "do nothing if no potion available" in {
-          controller.player = new Player(name = "Test",health = 10,inventory = new Inventory(potions = Vector()))
+          controller.player = Player(name = "Test",health = 10,inventory = Inventory(potions = Vector()))
           controller.usePotion(1)
           controller.player.health should be(10)
         }
         "do nothing if no potion index is out of bounds" in {
-          controller.player = new Player(name = "Test",health = 10,inventory = new Inventory(potions = Vector(Potion("SmallHeal"))))
+          controller.player = Player(name = "Test",health = 10,inventory = Inventory(potions = Vector(Potion("SmallHeal"))))
           controller.usePotion(1000)
           controller.player.health should be(10)
         }
         "heal player" in {
-          controller.player = new Player(name = "Test",health = 10,inventory = new Inventory(potions = Vector(Potion("SmallHeal"))))
+          controller.player = Player(name = "Test",health = 10,inventory = Inventory(potions = Vector(Potion("SmallHeal"))))
           controller.usePotion(1)
           controller.player.health should be(35)
         }
@@ -200,7 +200,7 @@ class ControllerTest extends WordSpec with Matchers {
     }
     "un-/equip armor" should {
       val smallLevel = new Level(10)
-      val player = new Player(name = "Test", inventory = new Inventory(armor = Vector(Armor("Helmet"),Armor("Chest"),Armor("Pants"),Armor("Boots"),Armor("Gloves"),Armor("Gloves"))))
+      val player = Player(name = "Test", inventory = Inventory(armor = Vector(Armor("Helmet"),Armor("Chest"),Armor("Pants"),Armor("Boots"),Armor("Gloves"),Armor("Gloves"))))
       val enemies = Vector()
       val controller = new Controller(smallLevel,player,enemies)
       "equip Helmet" in {
@@ -251,13 +251,13 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.gloves should be(Armor("noGloves"))
       }
       "do nothing without armor" in {
-        controller.player = new Player(name = "Test",inventory = new Inventory(armor = Vector()))
+        controller.player = Player(name = "Test",inventory = Inventory(armor = Vector()))
         controller.equipArmor(1)
       }
     }
     "un-/equip weapons" should {
       val smallLevel = new Level(10)
-      val player = new Player(name = "Test", inventory = new Inventory(weapons = Vector(Weapon("Sword"),Weapon("Sword"),Weapon("Sword"),Weapon("Sword"))))
+      val player = Player(name = "Test", inventory = Inventory(weapons = Vector(Weapon("Sword"),Weapon("Sword"),Weapon("Sword"),Weapon("Sword"))))
       val enemies = Vector()
       val controller = new Controller(smallLevel,player,enemies)
 
@@ -316,7 +316,7 @@ class ControllerTest extends WordSpec with Matchers {
       }
 
       "do nothing when no weapons avaible" in {
-        controller.player = new Player(name = "Test",inventory = new Inventory(weapons = Vector()))
+        controller.player = Player(name = "Test",inventory = Inventory(weapons = Vector()))
         controller.player.leftHand should be(Weapon("leftFist"))
         controller.equipWeapon(1,1)
         controller.player.leftHand should be(Weapon("leftFist"))

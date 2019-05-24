@@ -9,14 +9,14 @@ import org.scalatest.junit.JUnitRunner
 class EnemyTest extends WordSpec with Matchers {
   "A Enemy" when {
     "new" should {
-    val enemy1 = new Enemy(posX = 0,posY = 0)
+    val enemy1 = Enemy()
     "have a name and stats"  in {
       enemy1.name should be("Skeleton")
       enemy1.health should be(100)
       enemy1.attack should be(10)
       enemy1.exp should be(100)
     }
-      val enemy2 = Enemy("Enemy Name",500,100,100,0,0)
+      val enemy2 = Enemy("Enemy Name",500,100,100,0)
       "when set with a name and stats" in {
         enemy2.name should be("Enemy Name")
         enemy2.health should be(500)

@@ -13,13 +13,13 @@ class LevelTest extends WordSpec with Matchers{
     "new" should {
       val level = new Level(2)
 
-      var upLvl = new Level(level.map.replaceTile(1,0,Tile(5)))
-      var downLvl = new Level(level.map.replaceTile(0,0,Tile(5)))
-      var rightLvl = new Level(level.map.replaceTile(0,0,Tile(5)))
-      var leftLvl = new Level(level.map.replaceTile(0,1,Tile(5)))
+      val upLvl = Level(level.map.replaceTile(1,0,Tile(5)))
+      val downLvl = Level(level.map.replaceTile(0,0,Tile(5)))
+      val rightLvl = Level(level.map.replaceTile(0,0,Tile(5)))
+      val leftLvl = Level(level.map.replaceTile(0,1,Tile(5)))
 
       "moveUp" in {
-        var up = upLvl.moveUp(new Player("Test",posX = 0, posY = 1))
+        val up = upLvl.moveUp(Player("Test", posY = 1))
         up._1.map.tile(0,1).value should be(0)
         up._1.map.tile(1,1).value should be(0)
         up._1.map.tile(1,0).value should be(0)
@@ -28,7 +28,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "moveDown" in {
-        var down = downLvl.moveDown(new Player("Test",posX = 0, posY = 0))
+        val down = downLvl.moveDown(Player("Test"))
         down._1.map.tile(0,0).value should be(0)
         down._1.map.tile(0,1).value should be(0)
         down._1.map.tile(1,1).value should be(0)
@@ -37,7 +37,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "moveRight" in {
-        var right = rightLvl.moveRight(new Player("Test",posX = 0, posY = 0))
+        val right = rightLvl.moveRight(Player("Test" ))
         right._1.map.tile(0,0).value should be(0)
         right._1.map.tile(1,0).value should be(0)
         right._1.map.tile(1,1).value should be(0)
@@ -46,7 +46,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "moveLeft" in {
-        var left = leftLvl.moveLeft(new Player("Test",posX = 1, posY = 0))
+        val left = leftLvl.moveLeft(Player("Test",posX = 1))
         left._1.map.tile(0,1).value should be(0)
         left._1.map.tile(1,0).value should be(0)
         left._1.map.tile(1,1).value should be(0)
@@ -56,7 +56,7 @@ class LevelTest extends WordSpec with Matchers{
 
 
       "cant moveUp" in {
-        var up = downLvl.moveUp(new Player("Test",posX = 0, posY = 0))
+        val up = downLvl.moveUp(Player("Test"))
         up._1.map.tile(0,1).value should be(0)
         up._1.map.tile(1,0).value should be(0)
         up._1.map.tile(1,1).value should be(0)
@@ -65,7 +65,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "cant moveDown" in {
-        var down = upLvl.moveDown(new Player("Test",posX = 0, posY = 1))
+        val down = upLvl.moveDown(Player("Test", posY = 1))
         down._1.map.tile(0,0).value should be(0)
         down._1.map.tile(0,1).value should be(0)
         down._1.map.tile(1,1).value should be(0)
@@ -74,7 +74,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "cant moveRight" in {
-        var right = leftLvl.moveRight(new Player("Test",posX = 1, posY = 0))
+        val right = leftLvl.moveRight(Player("Test",posX = 1))
         right._1.map.tile(0,0).value should be(0)
         right._1.map.tile(1,0).value should be(0)
         right._1.map.tile(1,1).value should be(0)
@@ -83,7 +83,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "cant moveLeft" in {
-        var left = rightLvl.moveLeft(new Player("Test",posX = 0, posY = 0))
+        val left = rightLvl.moveLeft(Player("Test"))
         left._1.map.tile(0,1).value should be(0)
         left._1.map.tile(1,0).value should be(0)
         left._1.map.tile(1,1).value should be(0)
@@ -94,7 +94,7 @@ class LevelTest extends WordSpec with Matchers{
       "remove a Tile" in {
         var level2 = new Level(2)
         level2 = level2.removeElement(0,0,1)
-        level2.map.tile(0,0) should be(new Tile(1))
+        level2.map.tile(0,0) should be(Tile(1))
       }
 
       "have a nice String representation" in {

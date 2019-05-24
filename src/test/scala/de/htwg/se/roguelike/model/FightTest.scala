@@ -9,15 +9,15 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class FightTest extends WordSpec with Matchers{
   "The Class Fight" when {
-    val player = new Player(name = "Test",posX = 0,posY = 0)
-    val enemy = new Enemy(posX = 0,posY = 0)
+    val player = Player(name = "Test")
+    val enemy = Enemy()
     "new" should {
       val fight = new Fight
       "when interaction" in {
         fight.interaction(player,Vector(enemy)) should be(true)
       }
       "when no interaction" in {
-        val enemies = Vector(new Enemy(posX = 1,posY = 0))
+        val enemies = Vector(Enemy(posX = 1))
         fight.interaction(player,enemies) should be(false)
       }
       "when playerAttack" in {

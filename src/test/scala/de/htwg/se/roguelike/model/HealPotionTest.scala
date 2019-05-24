@@ -5,8 +5,8 @@ import org.scalatest.{Matchers, WordSpec}
 class HealPotionTest extends WordSpec with Matchers {
 
       val healPotion = Potion("SmallHeal")
-      var player = new Player(name = "TestPlayer",health = 90)
-      var player2 = new Player(name = "TestPlayer",health = 10)
+      var player = Player(name = "TestPlayer",health = 90)
+      var player2 = Player(name = "TestPlayer",health = 10)
 
       "should heal and cap at 100 when used" in {
         player = healPotion.usePotion(player)

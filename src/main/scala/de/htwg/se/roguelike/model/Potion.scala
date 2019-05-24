@@ -18,8 +18,8 @@ trait Potion extends Item {
 //FactoryMethod
 object Potion {
   def apply(kind: String):Potion = kind match {
-    case "SmallHeal" => HealPotion("Small-Heal-Potion",10,usable = true,25) //.randomItem
-    case "BigHeal" => HealPotion("Big-Heal-Potion",10,usable = true,50)
+    case "SmallHeal" => HealPotion(name = "Small-Heal-Potion", value = 10,usable = true, power = 25) //.randomItem
+    case "BigHeal" => HealPotion(name = "Big-Heal-Potion", value = 10,usable = true, power = 50)
     //case "Mana" => new ManaPotion("ManaPotion",10,false,50)
   }
 }
