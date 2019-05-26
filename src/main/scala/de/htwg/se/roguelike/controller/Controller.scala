@@ -52,28 +52,34 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
 
   //Fight----
-  def attack():Unit = {
-      var enemy:Enemy = Enemy()
-      for (enemyTest <- enemies) {
-        if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
-          enemy = enemyTest
-      }
+  def attack(): Unit = {
+    var enemy: Enemy = Enemy()
+    for (enemyTest <- enemies) {
+      if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
+        enemy = enemyTest
+    }
 
-      enemies = enemies.filterNot(_ == enemy)
+    enemies = enemies.filterNot(_ == enemy)
 
-      enemy = fight.playerAttack(player, enemy)
-      player = fight.enemyAttack(player, enemy)
+    enemy = fight.playerAttack(player, enemy)
 
-      if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
-      else if (!enemy.isAlive) {
-        level = level.removeElement(enemy.posY, enemy.posX, 5)
-        setGameStatus(GameStatus.LEVEL)
-        //loot einfügen
-      } else {
-        enemies = enemies :+ enemy
-        setGameStatus(GameStatus.FIGHTSTATUS)
-        setGameStatus(GameStatus.FIGHT)
-      }
+    if (enemy.isAlive) player = fight.enemyAttack(player, enemy)
+
+    if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
+    else if (!enemy.isAlive) {
+      level = level.removeElement(enemy.posY, enemy.posX, 5)
+      setGameStatus(GameStatus.LEVEL) // auch eig ers nach lvl
+      player = player.lvlUp(enemy.exp)
+      /*
+      if (lvlUp._1) {
+        //setGameStatus(GameStatus.PLAYERLEVELUP)
+      }*/
+      //loot einfügen
+    } else {
+      enemies = enemies :+ enemy
+      setGameStatus(GameStatus.FIGHTSTATUS)
+      setGameStatus(GameStatus.FIGHT)
+    }
   }
   //Fight----
 

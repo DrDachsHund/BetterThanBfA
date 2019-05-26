@@ -9,7 +9,7 @@ object TestMain {
     var weapon = Weapon("random")
     println(weapon.toString)
     player = player.copy(lvl = 10)
-    println(weapon.getScaledWeapon(player))
+    println(weapon.getScaledWeapon(player.lvl))
 
 
     /*

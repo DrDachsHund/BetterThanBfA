@@ -19,7 +19,7 @@ trait Weapon extends Item {
   }
   */
 
-  def getScaledWeapon(player: Player): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt
+  def getScaledWeapon(lvl:Int): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
 }
 
 object Weapon {
@@ -38,7 +38,7 @@ object Weapon {
 }
 
 private object RandomWeapon {
-  //stats noch anpassen
+  //stats noch anpassen maybe je nach waffenart extra stats also extra def getWeaponStats(weaponType:String)
   def getStats(rarity: String): (Int,Int,Int) = { //(value,dmg,block)
     val random = new Random()
     rarity match {

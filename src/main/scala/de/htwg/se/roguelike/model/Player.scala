@@ -8,6 +8,7 @@ case class Player(name: String,
                   attack:Int = 10,
                   lvl:Int = 1,
                   exp:Int = 0,
+                  maxExp:Int = 100,
                   posX:Int = 0, posY:Int = 0,
                   inventory:Inventory = new Inventory,
                   helmet:Armor = Armor("noHelmet"),
@@ -17,18 +18,32 @@ case class Player(name: String,
                   gloves:Armor = Armor("noGloves"),
                   rightHand:Weapon = Weapon("rightFist"),
                   leftHand:Weapon = Weapon("leftFist")
-                 //helmet:Armor = new Helmet
                  ) extends Entity {
 
-  def getArmor:Int = {
-    var armor:Int = 0
-    armor += helmet.armor
-    armor += chest.armor
-    armor += pants.armor
-    armor += boots.armor
-    armor += gloves.armor
-    armor
+  def getArmor:Int = helmet.armor + chest.armor + pants.armor + boots.armor + gloves.armor
+
+  //muss dan in controller zu Gamestatus levelup wechseln um dann auszuwählen was geändert werden will
+  def lvlUp(collectedExp :Int):Player = {
+    var newExp = exp + collectedExp
+    var newLvl = 0
+    var newMaxExp = 0
+    var lvlUp = false
+    while (newExp > maxExp) {
+      newExp = newExp - maxExp
+      newMaxExp = (maxExp * 1.5).toInt
+      newLvl += 1
+      lvlUp = true
+      println("LEVELUP YAAAAAAAAAAAAAAAS QUEEEEN SLAY")
+    }
+    if (lvlUp) this.copy(exp = newExp, lvl = newLvl, maxExp = newMaxExp,mana = maxMana, health = maxHealth)
+    this.copy(exp = newExp)
   }
+
+  def lvlUpHealth:Player = this.copy(maxHealth = maxHealth + 10, health = maxHealth)
+
+  def lvlUpMana:Player = this.copy(maxMana = maxMana + 10, mana = maxMana)
+
+  def lvlUpAttack:Player = this.copy(attack = attack + 10)
 
    override def toString: String =
       "Name: " + name +

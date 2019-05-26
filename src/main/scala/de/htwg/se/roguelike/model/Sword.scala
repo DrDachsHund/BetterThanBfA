@@ -9,12 +9,12 @@ case class Sword(name: String,
                 rarity:String) extends Weapon {
 
 
-  override def getScaledWeapon(player: Player): Weapon = {
+  override def getScaledWeapon(lvl:Int): Weapon = {
     this.copy(name,
-      value = value * player.lvl,
+      value = value * lvl,
       usable,
-      dmg = dmg * player.lvl,
-      block = block * player.lvl,
+      dmg = dmg * lvl,
+      block = block * lvl,
       oneHanded, rarity)
   }
 
