@@ -9,6 +9,8 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
   private val undoManager = new UndoManager
 
+  var enemyLoot:Vector[Item] = Vector()
+
   def createRandomLevel(): Unit = {
     val (level1,enemies1) = new LevelCreator(10).createRandom(player, 10)
     level = level1
@@ -51,6 +53,52 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers()
   }
 
+  //LvlUP---
+  def lvlUpHealth():Unit = {
+    player = player.lvlUpHealth
+    setGameStatus(GameStatus.LOOTENEMY)
+  }
+  def lvlUpMana():Unit = {
+    player = player.lvlUpMana
+    setGameStatus(GameStatus.LOOTENEMY)
+  }
+  def lvlUpAttack():Unit = {
+    player = player.lvlUpAttack
+    setGameStatus(GameStatus.LOOTENEMY)
+  }
+  //LvlUP---
+
+  //Looting---
+  def lootingEnemy(index:Int):Unit = {
+
+    if (enemyLoot.size < 1) setGameStatus(GameStatus.LEVEL)
+    else if (index > 0 && index < enemyLoot.size) {
+      val loot = enemyLoot(index-1)
+
+      loot match {
+        case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
+        case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
+        case _ => "MASIVER FEHLER AM BEEN SEIN"
+      }
+
+      var usedItem = enemyLoot.filter(_ == loot)
+      usedItem = usedItem.drop(1)
+      var newLoot = enemyLoot.filterNot(_ == loot)
+      newLoot ++= usedItem
+      enemyLoot = newLoot
+
+      if (enemyLoot.size == 0) {
+        setGameStatus(GameStatus.LEVEL)
+        return
+      }
+
+    } else println("CONTROLLER INKOREKTER INDEX => " + index)
+    notifyObservers()
+  }
+
+  //Looting---
+
   //Fight----
   def attack(): Unit = {
     var enemy: Enemy = Enemy()
@@ -67,14 +115,17 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
 
     if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
     else if (!enemy.isAlive) {
+      val oldLvl:Int = player.lvl
       level = level.removeElement(enemy.posY, enemy.posX, 5)
-      setGameStatus(GameStatus.LEVEL) // auch eig ers nach lvl
       player = player.lvlUp(enemy.exp)
-      /*
-      if (lvlUp._1) {
-        //setGameStatus(GameStatus.PLAYERLEVELUP)
-      }*/
-      //loot einfügen
+      enemyLoot = enemy.inventory.weapons //für loot
+      enemyLoot = enemyLoot ++ enemy.inventory.potions
+      enemyLoot = enemyLoot ++ enemy.inventory.armor
+
+      println(enemyLoot.toString())
+
+      if (oldLvl < player.lvl) setGameStatus(GameStatus.PLAYERLEVELUP)
+      else setGameStatus(GameStatus.LOOTENEMY)
     } else {
       enemies = enemies :+ enemy
       setGameStatus(GameStatus.FIGHTSTATUS)
@@ -147,7 +198,23 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   class StrategyGameOver extends Strategy {
     override def updateToString = "GAME OVER DUDE"
   }
-
+  class StrategyPlayerLevelUp extends Strategy {
+    override def updateToString: String = "Level-Up:\n[1]Health\n[2]Mana\n[3]Attack"
+  }
+  class StrategyLootEnemy extends Strategy {
+    override def updateToString: String = lootEnemy()
+  }
+  private def lootEnemy():String = {
+    var sb = new StringBuilder
+    sb ++= "Looting from Slayn Enemy:\n"
+    var index = 1
+    for (loot <- enemyLoot) {
+      sb ++= ("[" + index + "]" + loot + "\n")
+      index += 1
+    }
+    sb ++= "\n"
+    sb.toString
+  }
 
   def setGameStatus(gameStatus: GameStatus.Value): Unit = {
     this.gameStatus = gameStatus
@@ -160,6 +227,8 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       case GameStatus.INVENTORYPOTION => strategy = new StrategyPotions
       case GameStatus.INVENTORYWEAPON => strategy = new StrategyWeapons
       case GameStatus.INVENTORYARMOR => strategy = new StrategyArmor
+      case GameStatus.PLAYERLEVELUP => strategy = new StrategyPlayerLevelUp
+      case GameStatus.LOOTENEMY => strategy = new StrategyLootEnemy
     }
     notifyObservers()
   }

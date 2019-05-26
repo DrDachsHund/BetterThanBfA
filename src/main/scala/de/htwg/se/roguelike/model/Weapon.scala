@@ -6,7 +6,7 @@ import scala.util.Random
 trait Weapon extends Item {
   val name: String
   val value: Int
-  val usable: Boolean
+  val usable: Boolean //vll als wert um die waffe benutzen zu können maybe??????????
   val dmg: Int
   val block: Int
   val oneHanded:Boolean

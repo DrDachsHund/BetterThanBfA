@@ -5,7 +5,7 @@ import de.htwg.se.roguelike.model.{Player, Weapon}
 object TestMain {
   def main(args: Array[String]): Unit = {
 
-    var player:Player = new Player(name = "Test",lvl = 1)
+    var player:Player = new Player(name = "Test",health = 1)
     var weapon = Weapon("random")
     println(weapon.toString)
     player = player.copy(lvl = 10)

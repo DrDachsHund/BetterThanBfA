@@ -14,6 +14,9 @@ package de.htwg.se.roguelike.model
     //Template Method
     override def getAttack: Double = super.getAttack - 2
 
+
+    //def setLoot():Unit = {}
+
     override def toString: String =
       "Name: " + name +
         "\nhealth: " + health +

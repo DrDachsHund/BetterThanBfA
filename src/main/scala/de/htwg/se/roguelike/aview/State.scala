@@ -15,6 +15,10 @@ trait State {
 
 
 /*TODO !!!!!!!!!!!!!!!:
+
+WICHTIG BEIM EINLESEN VON INDEX GEHTS NICHT ÜBER 10 MASIVER FEHLER RIPRIP
+
+
 1: LOOT - 50 Wichtig-
   => Random Weapons/Armor/Potion/(BOSS ITEMS) durch einlesen von TXT !!!!!!!!!!!!
       =>Random Weapon gemacht nur noch kopieren in andere klassen und verändern stats anpassen!!

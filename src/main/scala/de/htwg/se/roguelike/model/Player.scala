@@ -25,17 +25,15 @@ case class Player(name: String,
   //muss dan in controller zu Gamestatus levelup wechseln um dann auszuwählen was geändert werden will
   def lvlUp(collectedExp :Int):Player = {
     var newExp = exp + collectedExp
-    var newLvl = 0
     var newMaxExp = 0
     var lvlUp = false
     while (newExp > maxExp) {
       newExp = newExp - maxExp
       newMaxExp = (maxExp * 1.5).toInt
-      newLvl += 1
       lvlUp = true
-      println("LEVELUP YAAAAAAAAAAAAAAAS QUEEEEN SLAY")
+      //println("LEVELUP YAAAAAAAAAAAAAAAS QUEEEEN SLAY")
     }
-    if (lvlUp) this.copy(exp = newExp, lvl = newLvl, maxExp = newMaxExp,mana = maxMana, health = maxHealth)
+    if (lvlUp) return this.copy(exp = newExp, lvl = (lvl + 1), maxExp = newMaxExp,mana = maxMana, health = maxHealth)
     this.copy(exp = newExp)
   }
 

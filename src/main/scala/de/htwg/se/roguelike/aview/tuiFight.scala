@@ -24,6 +24,8 @@ class tuiFight(controller: Controller,tui: Tui) extends State {
       case GameStatus.FIGHTSTATUS => tui.state = this
       case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller,tui)
       case GameStatus.GAMEOVER => println("IS VORBEI MA DUDE")
+      case GameStatus.PLAYERLEVELUP => tui.state = new tuiPlayerLevelUp(controller,tui)
+      case GameStatus.LOOTENEMY => tui.state = new tuiLootEnemy(controller,tui)
       case _ =>
         print("Wrong GameStatus!!!")
     }
