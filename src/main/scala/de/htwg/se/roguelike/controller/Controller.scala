@@ -72,7 +72,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   def lootingEnemy(index:Int):Unit = {
 
     if (enemyLoot.size < 1) setGameStatus(GameStatus.LEVEL)
-    else if (index > 0 && index < enemyLoot.size) {
+    else if (index > 0 && index <= enemyLoot.size) {
       val loot = enemyLoot(index-1)
 
       loot match {
@@ -151,7 +151,8 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
   def fightStatus:String = {
     var sb = new StringBuilder
-    sb ++= ("Player Health: <" + player.health + ">\n")
+    sb ++= ("Player Health: <" + player.health + "/" + player.maxHealth + "> " +
+            "Mana: <" + player.mana + "/" + player.maxMana + ">\n")
     sb ++= "Enemy Health: "
     for (enemyTest <- enemies) {
       if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
@@ -162,6 +163,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
   class StrategyInventory extends Strategy {
     override def updateToString: String =
+        "L or R to remove Weapon\n" +
         player.helmet.name + ": " + player.helmet.armor + "\n" +
         player.chest.name + ": " + player.chest.armor +  "\n" +
         player.pants.name + ": " + player.pants.armor +  "\n" +
@@ -176,14 +178,15 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
   class StrategyPotions extends Strategy {
     override def updateToString: String =
-      "Player Health: <" + player.health + ">\n" +
-      "Player Mana: <" + player.mana + ">\n" +
+      "Player Health: <" + player.health + "/" + player.maxHealth + ">\n" +
+      "Player Mana: <" + player.mana + "/" + player.maxMana + ">\n" +
       player.inventory.potionsToString + "[x}Back\n"
   }
   class StrategyWeapons extends Strategy {
     override def updateToString: String =
-      player.rightHand.name + ": " + player.rightHand.dmg + "\n" +
-      player.leftHand.name + ": " + player.leftHand.dmg + "\n" +
+      "[Hand(0,1)][WeaponIndex]\n" +
+      player.rightHand.toString + "\n" +
+      player.leftHand.toString + "\n" +
       player.inventory.weaponsToString + "[x}Back\n"
   }
   class StrategyArmor extends Strategy {
@@ -199,7 +202,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     override def updateToString = "GAME OVER DUDE"
   }
   class StrategyPlayerLevelUp extends Strategy {
-    override def updateToString: String = "Level-Up:\n[1]Health\n[2]Mana\n[3]Attack"
+    override def updateToString: String = "Level-Up:\n[1]Health\n[2]Mana\n[3]Attack\n"
   }
   class StrategyLootEnemy extends Strategy {
     override def updateToString: String = lootEnemy()
@@ -209,7 +212,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     sb ++= "Looting from Slayn Enemy:\n"
     var index = 1
     for (loot <- enemyLoot) {
-      sb ++= ("[" + index + "]" + loot + "\n")
+      sb ++= ("[" + index + "]" + loot.toString + "\n")
       index += 1
     }
     sb ++= "\n"

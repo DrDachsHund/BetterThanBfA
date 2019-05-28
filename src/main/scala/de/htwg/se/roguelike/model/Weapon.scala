@@ -20,6 +20,8 @@ trait Weapon extends Item {
   */
 
   def getScaledWeapon(lvl:Int): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
+
+  override def toString: String = "[" + rarity + "]" + name + " " + dmg + ":Damage " + block + ":Block"
 }
 
 object Weapon {
@@ -33,7 +35,8 @@ object Weapon {
       val (value,dmg,block) = RandomWeapon.getStats(rarity)
 
       //hier match case mit allen waffen arten und dann zufällig ein auswählen
-      Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity)
+      //Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity)
+      RandomWeapon.getWeaponType(name,value,dmg,block,rarity) // actualy besser da dann ewentuel 1-2 händer in weapontype gemacht wird
   }
 }
 
@@ -63,6 +66,20 @@ private object RandomWeapon {
     val random = new Random()
     val index = random.nextInt(nameList.size)
     nameList(index)
+  }
+
+  def getWeaponType(name:String,value:Int,dmg:Int,block:Int,rarity:String): Weapon = {
+    val random = Random //geht auch so zu schreiben lul wierd
+    val weaponType = 1//random.nextInt(0) + 1 // => ersma 1 weil ja nur Sword derzeit gibt => easy expandable
+    weaponType match {
+      case 1 => Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity)
+      //case 2 => Bow(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
+      //case 3 => Hammer(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
+      //etc..
+      case _ =>
+        println("Error on loading Weapon type!!!\n\t=> Check Weapon.scala for more info")
+        Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5,oneHanded = true, rarity = "") //fals fasch sei  sollte
+    }
   }
 
   def getRarity(): String = {

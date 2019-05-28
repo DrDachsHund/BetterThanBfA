@@ -11,13 +11,13 @@ case class Fight() {
   }
 
   def playerAttack(player:Player, enemy: Enemy): Enemy = {
-    println("PlayerAttack") //zum testen
+    println("PlayerAttack: " + player.getAttack) //zum testen
     val enemy2 = enemy.copy(health = enemy.health - player.getAttack.toInt)
     enemy2
   }
 
   def enemyAttack(player:Player, enemy: Enemy): Player = {
-    println("EnemyAttack")//zum testen
+    println("EnemyAttack: " + calcAttack(enemy.getAttack,player.getArmor))//zum testen
     val player2 = player.copy(health = player.health - calcAttack(enemy.getAttack,player.getArmor))
     player2
   }

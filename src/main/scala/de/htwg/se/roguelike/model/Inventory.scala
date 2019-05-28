@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model
 
-case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = Vector(Potion("SmallHeal"),Potion("SmallHeal"),Potion("BigHeal")),armor:Vector[Armor] = Vector(Armor("Gloves"))) {
+case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = Vector(Potion("SmallHeal"),Potion("SmallHeal"),Potion("BigHeal")),armor:Vector[Armor] = Vector()) {
 
   def getPotion(index:Int): Potion = {
     potions(index-1)
@@ -19,7 +19,7 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
     var sb = new StringBuilder
     var index:Int = 1
     for (e <- potions) {
-      sb ++= "[" + index + "]" + e.name + "\n"
+      sb ++= "[" + index + "]" + e.toString + "\n"
       index = index+1
     }
     sb.toString
@@ -30,7 +30,7 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
     var sb = new StringBuilder
     var index:Int = 1
     for (e <- weapons) {
-      sb ++= "[" + index + "]" + e.name + "\n"
+      sb ++= "[" + index + "]" + e.toString + "\n"
       index = index+1
     }
     sb.toString
@@ -41,7 +41,7 @@ case class Inventory(weapons:Vector[Weapon] = Vector(),potions:Vector[Potion] = 
     var sb = new StringBuilder
     var index:Int = 1
     for (e <- armor) {
-      sb ++= "[" + index + "]" + e.name + "\n"
+      sb ++= "[" + index + "]" + e.toString + "\n"
       index = index+1
     }
     sb.toString
