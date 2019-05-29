@@ -45,7 +45,7 @@ object Armor {
 
 private object RandomArmor {
   //stats noch anpassen maybe je nach waffenart extra stats also extra def getWeaponStats(weaponType:String)
-  def getStats(rarity: String): (Int, Int) = { //(value,dmg,block)
+  def getStats(rarity: String): (Int, Int) = { //(value,armor)
     val random = new Random()
     rarity match {
       case "Common" => (random.nextInt(10) + 1, random.nextInt(5) + 1)

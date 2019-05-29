@@ -41,11 +41,11 @@ private object RandomPotion {
     val random = Random //geht auch so zu schreiben lul wierd
     val armorType = random.nextInt(8) + 1
     armorType match {
-      case 1 => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common") //.randomItem
+      case 1 => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common")
       case 2 => HealPotion(name = "Medium-Heal-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon")
       case 3 => HealPotion(name = "Big-Heal-Potion", value = 75, usable = true, power = 75, rarity = "Rare")
       case 4 => HealPotion(name = "Full-Heal-Potion", value = 100, usable = true, power = 100, rarity = "Epic")
-      case 5 => ManaPotion(name = "Small-Mana-Potion", value = 25, usable = true, power = 25, rarity = "Common") //.randomItem
+      case 5 => ManaPotion(name = "Small-Mana-Potion", value = 25, usable = true, power = 25, rarity = "Common")
       case 6 => ManaPotion(name = "Medium-Mana-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon")
       case 7 => ManaPotion(name = "Big-Mana-Potion", value = 75, usable = true, power = 75, rarity = "Rare")
       case 8 => ManaPotion(name = "Full-Mana-Potion", value = 100, usable = true, power = 100, rarity = "Epic")

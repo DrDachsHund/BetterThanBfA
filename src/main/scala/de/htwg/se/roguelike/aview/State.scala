@@ -18,8 +18,8 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
       =>Weapon ersma nur auf Sword becheänken damit einfacher ist bzw                                             [✓}
           => mit match case random eine zurück geben schonmal vorbereiten aber nicht implementieren               [✓}
       =>Random Weapon gemacht nur noch kopieren in andere klassen und verändern stats anpassen!!                  [✓}
-  => Inventory Enemies mit Methode füllen (Loot Drop/Gold) !!!!                                                   [✓}=> implementieren
-      => Skalieren mit Enemy LVL                                                                                  [✓}=> implementieren
+  => Inventory Enemies mit Methode füllen (Loot Drop/Gold) !!!!                                                   [✓} //LOOOT => Nach neuem fight nochmal schauen!!!!!!!!!!
+      => Skalieren mit Enemy LVL                                                                                  [✓}
           => da jetzt nur lvl übergen wird viel einfacher da ich enemy.lvl einfach übergen kann unabhängiger      [✓}
 
 
