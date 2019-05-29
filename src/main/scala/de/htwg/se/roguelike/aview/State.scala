@@ -12,8 +12,6 @@ trait State {
 
 
 
-
-
 /*TODO !!!!!!!!!!!!!!!:
 
 WICHTIG BEIM EINLESEN VON INDEX GEHTS NICHT ÜBER 10 MASIVER FEHLER RIPRIP

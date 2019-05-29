@@ -36,11 +36,10 @@ object Armor {
     case "noBoots" => Boots(name = "Feet", value = 0,usable =  false, armor = 0,armorType = "nothing",rarity = "Common")
     case "noGloves" => Gloves(name = "Hands", value = 0,usable =  false,armor = 0,armorType = "nothing",rarity = "Common")
     case "random" =>
-      val name:String = RandomArmor.getArmorName()
       val rarity:String = RandomArmor.getRarity()
       val (value,armor) = RandomArmor.getStats(rarity)
 
-      RandomArmor.getArmorType(name,value,armor,rarity)
+      RandomArmor.getArmorType(value,armor,rarity)
   }
 }
 
@@ -62,8 +61,47 @@ private object RandomArmor {
     }
   }
 
-  def getArmorName(): String = {
-    val fileStream = getClass.getResourceAsStream("Armor.txt")
+  def getHelmetName(): String = {
+    val fileStream = getClass.getResourceAsStream("Helmet.txt")
+    val lines = Source.fromInputStream(fileStream).getLines
+    var nameList = Vector("")
+    lines.foreach(line => nameList = nameList :+ line)
+    val random = new Random()
+    val index = random.nextInt(nameList.size)
+    nameList(index)
+  }
+
+  def getChestName(): String = {
+    val fileStream = getClass.getResourceAsStream("Chest.txt")
+    val lines = Source.fromInputStream(fileStream).getLines
+    var nameList = Vector("")
+    lines.foreach(line => nameList = nameList :+ line)
+    val random = new Random()
+    val index = random.nextInt(nameList.size)
+    nameList(index)
+  }
+
+  def getPantsName(): String = {
+    val fileStream = getClass.getResourceAsStream("Pants.txt")
+    val lines = Source.fromInputStream(fileStream).getLines
+    var nameList = Vector("")
+    lines.foreach(line => nameList = nameList :+ line)
+    val random = new Random()
+    val index = random.nextInt(nameList.size)
+    nameList(index)
+  }
+  def getBootsName(): String = {
+    val fileStream = getClass.getResourceAsStream("Boots.txt")
+    val lines = Source.fromInputStream(fileStream).getLines
+    var nameList = Vector("")
+    lines.foreach(line => nameList = nameList :+ line)
+    val random = new Random()
+    val index = random.nextInt(nameList.size)
+    nameList(index)
+  }
+
+  def getGlovesName(): String = {
+    val fileStream = getClass.getResourceAsStream("Gloves.txt")
     val lines = Source.fromInputStream(fileStream).getLines
     var nameList = Vector("")
     lines.foreach(line => nameList = nameList :+ line)
@@ -73,15 +111,15 @@ private object RandomArmor {
   }
 
   //einzeln get name aufrufen
-  def getArmorType(name:String,value:Int,armor:Int,rarity:String): Armor = {
+  def getArmorType(value:Int,armor:Int,rarity:String): Armor = {
     val random = Random //geht auch so zu schreiben lul wierd
     val armorType = random.nextInt(5) + 1
     armorType match {
-      case 1 => Helmet(name, value,usable = false, armor,rarity = rarity)
-      case 2 => Chest(name, value, usable = false, armor,rarity = rarity)
-      case 3 => Pants(name, value, usable = false, armor,rarity = rarity)
-      case 4 => Boots(name, value, usable = false, armor,rarity = rarity)
-      case 5 => Gloves(name, value, usable = false, armor,rarity = rarity)
+      case 1 => Helmet(name = getHelmetName(), value,usable = false, armor,rarity = rarity)
+      case 2 => Chest(name = getChestName(), value, usable = false, armor,rarity = rarity)
+      case 3 => Pants(name = getPantsName(), value, usable = false, armor,rarity = rarity)
+      case 4 => Boots(name = getBootsName(), value, usable = false, armor,rarity = rarity)
+      case 5 => Gloves(name = getGlovesName(), value, usable = false, armor,rarity = rarity)
     }
   }
 
