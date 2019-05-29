@@ -27,8 +27,8 @@ class tuiMain(controller: Controller, tui: Tui) extends State {
     val e = controller.gameStatus
     e match {
       case GameStatus.LEVEL => tui.state = this
-      case GameStatus.FIGHT => tui.state = new tuiFight(controller,tui)
-      case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller,tui)
+      case GameStatus.FIGHT => tui.state = new tuiFight(controller, tui)
+      case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller, tui)
       case _ =>
         print("Wrong GameStatus!!!")
     }

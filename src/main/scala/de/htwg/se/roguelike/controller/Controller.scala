@@ -3,30 +3,30 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.util.{Observable, UndoManager}
 
-class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] = Vector()) extends Observable {
+class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Observable {
 
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
   private val undoManager = new UndoManager
 
-  var enemyLoot:Vector[Item] = Vector()
+  var enemyLoot: Vector[Item] = Vector()
 
   def createRandomLevel(): Unit = {
-    val (level1,enemies1) = new LevelCreator(10).createRandom(player, 10)
+    val (level1, enemies1) = new LevelCreator(10).createRandom(player, 10)
     level = level1
     enemies = enemies1
-    undoManager.doStep(new LevelCommand((level,player),(level,player),enemies,this))
+    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     notifyObservers()
   }
 
   def createLevel(): Unit = {
     level = new LevelCreator(10).createLevel(player, enemies)
-    undoManager.doStep(new LevelCommand((level,player),(level,player),enemies,this))
+    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     notifyObservers()
   }
 
   def interaction(): Unit = {
-    if (fight.interaction(player,enemies)) {
+    if (fight.interaction(player, enemies)) {
       gameStatus = GameStatus.FIGHT
       strategy = new StrategyFight
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
@@ -34,46 +34,49 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
   }
 
   def moveUp(): Unit = {
-    undoManager.doStep(new LevelCommand((level,player),level.moveUp(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, this))
     notifyObservers()
   }
 
   def moveDown(): Unit = {
-    undoManager.doStep(new LevelCommand((level,player),level.moveDown(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies, this))
     notifyObservers()
   }
 
   def moveLeft(): Unit = {
-    undoManager.doStep(new LevelCommand((level,player),level.moveLeft(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies, this))
     notifyObservers()
   }
 
   def moveRight(): Unit = {
-    undoManager.doStep(new LevelCommand((level,player),level.moveRight(player),enemies,this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies, this))
     notifyObservers()
   }
 
   //LvlUP---
-  def lvlUpHealth():Unit = {
+  def lvlUpHealth(): Unit = {
     player = player.lvlUpHealth
     setGameStatus(GameStatus.LOOTENEMY)
   }
-  def lvlUpMana():Unit = {
+
+  def lvlUpMana(): Unit = {
     player = player.lvlUpMana
     setGameStatus(GameStatus.LOOTENEMY)
   }
-  def lvlUpAttack():Unit = {
+
+  def lvlUpAttack(): Unit = {
     player = player.lvlUpAttack
     setGameStatus(GameStatus.LOOTENEMY)
   }
+
   //LvlUP---
 
   //Looting---
-  def lootingEnemy(index:Int):Unit = {
+  def lootingEnemy(index: Int): Unit = {
 
     if (enemyLoot.size < 1) setGameStatus(GameStatus.LEVEL)
     else if (index > 0 && index <= enemyLoot.size) {
-      val loot = enemyLoot(index-1)
+      val loot = enemyLoot(index - 1)
 
       loot match {
         case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
@@ -133,27 +136,32 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       setGameStatus(GameStatus.FIGHT)
     }
   }
+
   //Fight----
 
   //Strategy Pattern toString---
   var strategy: Strategy = new StrategyLevel
 
   trait Strategy {
-    def updateToString:String
+    def updateToString: String
   }
+
   class StrategyLevel extends Strategy {
     override def updateToString: String = level.toString
   }
+
   class StrategyFight extends Strategy {
     override def updateToString: String = fight.toString + "[i]Inventory\n"
   }
+
   class StrategyFightStatus extends Strategy {
     override def updateToString: String = fightStatus
   }
-  def fightStatus:String = {
+
+  def fightStatus: String = {
     var sb = new StringBuilder
     sb ++= ("Player Health: <" + player.health + "/" + player.maxHealth + "> " +
-            "Mana: <" + player.mana + "/" + player.maxMana + ">\n")
+      "Mana: <" + player.mana + "/" + player.maxMana + ">\n")
     sb ++= "Enemy Health: "
     for (enemyTest <- enemies) {
       if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
@@ -162,14 +170,15 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     sb ++= "\n"
     sb.toString
   }
+
   class StrategyInventory extends Strategy {
     override def updateToString: String =
-        "L or R to remove Weapon\n" +
+      "L or R to remove Weapon\n" +
         player.helmet.name + ": " + player.helmet.armor + "\n" +
-        player.chest.name + ": " + player.chest.armor +  "\n" +
-        player.pants.name + ": " + player.pants.armor +  "\n" +
-        player.boots.name + ": " + player.boots.armor +  "\n" +
-        player.gloves.name + ": " + player.gloves.armor +  "\n" +
+        player.chest.name + ": " + player.chest.armor + "\n" +
+        player.pants.name + ": " + player.pants.armor + "\n" +
+        player.boots.name + ": " + player.boots.armor + "\n" +
+        player.gloves.name + ": " + player.gloves.armor + "\n" +
         player.rightHand.name + ": " + player.rightHand.dmg + "\n" +
         player.leftHand.name + ": " + player.leftHand.dmg + "\n" +
         "[1]Potions\n" +
@@ -177,38 +186,45 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
         "[3]Armor\n" +
         "[x]Back\n"
   }
+
   class StrategyPotions extends Strategy {
     override def updateToString: String =
       "Player Health: <" + player.health + "/" + player.maxHealth + ">\n" +
-      "Player Mana: <" + player.mana + "/" + player.maxMana + ">\n" +
-      player.inventory.potionsToString + "[x}Back\n"
+        "Player Mana: <" + player.mana + "/" + player.maxMana + ">\n" +
+        player.inventory.potionsToString + "[x}Back\n"
   }
+
   class StrategyWeapons extends Strategy {
     override def updateToString: String =
       "[Hand(0,1)][WeaponIndex]\n" +
-      player.rightHand.toString + "\n" +
-      player.leftHand.toString + "\n" +
-      player.inventory.weaponsToString + "[x}Back\n"
+        player.rightHand.toString + "\n" +
+        player.leftHand.toString + "\n" +
+        player.inventory.weaponsToString + "[x}Back\n"
   }
+
   class StrategyArmor extends Strategy {
     override def updateToString: String =
-        player.helmet.name + ": " + player.helmet.armor + "\n" +
-        player.chest.name + ": " + player.chest.armor +  "\n" +
-        player.pants.name + ": " + player.pants.armor +  "\n" +
-        player.boots.name + ": " + player.boots.armor +  "\n" +
-        player.gloves.name + ": " + player.gloves.armor +  "\n" +
+      player.helmet.name + ": " + player.helmet.armor + "\n" +
+        player.chest.name + ": " + player.chest.armor + "\n" +
+        player.pants.name + ": " + player.pants.armor + "\n" +
+        player.boots.name + ": " + player.boots.armor + "\n" +
+        player.gloves.name + ": " + player.gloves.armor + "\n" +
         player.inventory.armorToString + "[x}Back\n"
   }
+
   class StrategyGameOver extends Strategy {
     override def updateToString = "GAME OVER DUDE"
   }
+
   class StrategyPlayerLevelUp extends Strategy {
     override def updateToString: String = "Level-Up:\n[1]Health\n[2]Mana\n[3]Attack\n"
   }
+
   class StrategyLootEnemy extends Strategy {
     override def updateToString: String = lootEnemy()
   }
-  private def lootEnemy():String = {
+
+  private def lootEnemy(): String = {
     var sb = new StringBuilder
     sb ++= "Looting from Slayn Enemy:\n"
     var index = 1
@@ -236,6 +252,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     }
     notifyObservers()
   }
+
   //Strategy Pattern toString---
 
   //UndoManager---
@@ -248,10 +265,11 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     undoManager.redoStep()
     notifyObservers()
   }
+
   //UndoManager---
 
   //Inventory---
-  def usePotion(index:Int): Unit = {
+  def usePotion(index: Int): Unit = {
     if (player.inventory.potions.size < 1) {
       println("Keine Potion Vorhanden!!!")
     } else if (index <= player.inventory.potions.size && index > 0) {
@@ -266,7 +284,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers()
   }
 
-  def equipArmor(index:Int):Unit = {
+  def equipArmor(index: Int): Unit = {
     if (player.inventory.armor.size < 1) {
       println("Keine Armor Vorhanden!!!")
     } else if (index <= player.inventory.armor.size && index > 0) {
@@ -275,7 +293,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       var usedArmor = player.inventory.armor.filter(_ == playerArmor)
       usedArmor = usedArmor.drop(1)
 
-      var oldArmor:Armor = Armor("noHelmet")
+      var oldArmor: Armor = Armor("noHelmet")
       playerArmor.armorType match {
         case "Helmet" => oldArmor = equipHelmet(playerArmor)
         case "Chest" => oldArmor = equipChest(playerArmor)
@@ -287,7 +305,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
       var newArmor = player.inventory.armor.filterNot(_ == playerArmor)
       newArmor ++= usedArmor
       if (oldArmor.armorType != "nothing") {
-       newArmor ++= oldArmor :: Nil
+        newArmor ++= oldArmor :: Nil
       }
 
 
@@ -296,96 +314,99 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers()
   }
 
-  private def equipHelmet(newHelmet:Armor): Armor = {
+  private def equipHelmet(newHelmet: Armor): Armor = {
     val oldHelmet = player.helmet
     player = player.copy(helmet = newHelmet)
     oldHelmet
   }
 
-  private def equipChest(newChest:Armor): Armor = {
+  private def equipChest(newChest: Armor): Armor = {
     val oldHelmet = player.chest
     player = player.copy(chest = newChest)
     oldHelmet
   }
 
-  private def equipPants(newPants:Armor): Armor = {
+  private def equipPants(newPants: Armor): Armor = {
     val oldHelmet = player.pants
     player = player.copy(pants = newPants)
     oldHelmet
   }
 
-  private def equipBoots(newBoots:Armor): Armor = {
+  private def equipBoots(newBoots: Armor): Armor = {
     val oldHelmet = player.boots
     player = player.copy(boots = newBoots)
     oldHelmet
   }
 
-  private def equipGloves(newGloves:Armor): Armor = {
+  private def equipGloves(newGloves: Armor): Armor = {
     val oldHelmet = player.gloves
     player = player.copy(gloves = newGloves)
     oldHelmet
   }
 
 
-
-
-  def unEquipHelmet():Unit = {
+  def unEquipHelmet(): Unit = {
     if (player.helmet.armorType != "nothing") {
       var newArmor = player.inventory.armor
       newArmor ++= player.helmet :: Nil
       val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(helmet = Armor("noHelmet"),inventory = newInventory)
-    }
-    notifyObservers()
-  }
-  def unEquipChest():Unit = {
-    if (player.chest.armorType != "nothing") {
-      var newArmor = player.inventory.armor
-      newArmor ++= player.chest :: Nil
-      val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(chest = Armor("noChest"),inventory = newInventory)
-    }
-    notifyObservers()
-  }
-  def unEquipPants():Unit = {
-    if (player.pants.armorType != "nothing") {
-      var newArmor = player.inventory.armor
-      newArmor ++= player.pants :: Nil
-      val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(pants = Armor("noPants"),inventory = newInventory)
-    }
-    notifyObservers()
-  }
-  def unEquipBoots():Unit = {
-    if (player.boots.armorType != "nothing") {
-      var newArmor = player.inventory.armor
-      newArmor ++= player.boots :: Nil
-      val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(boots = Armor("noBoots"),inventory = newInventory)
-    }
-    notifyObservers()
-  }
-  def unEquipGloves():Unit = {
-    if (player.gloves.armorType != "nothing") {
-      var newArmor = player.inventory.armor
-      newArmor ++= player.gloves :: Nil
-      val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(gloves = Armor("noGloves"),inventory = newInventory)
+      player = player.copy(helmet = Armor("noHelmet"), inventory = newInventory)
     }
     notifyObservers()
   }
 
-  def unEquipRightHand():Unit = {
-    val weapon:Weapon = player.rightHand
+  def unEquipChest(): Unit = {
+    if (player.chest.armorType != "nothing") {
+      var newArmor = player.inventory.armor
+      newArmor ++= player.chest :: Nil
+      val newInventory = player.inventory.copy(armor = newArmor)
+      player = player.copy(chest = Armor("noChest"), inventory = newInventory)
+    }
+    notifyObservers()
+  }
+
+  def unEquipPants(): Unit = {
+    if (player.pants.armorType != "nothing") {
+      var newArmor = player.inventory.armor
+      newArmor ++= player.pants :: Nil
+      val newInventory = player.inventory.copy(armor = newArmor)
+      player = player.copy(pants = Armor("noPants"), inventory = newInventory)
+    }
+    notifyObservers()
+  }
+
+  def unEquipBoots(): Unit = {
+    if (player.boots.armorType != "nothing") {
+      var newArmor = player.inventory.armor
+      newArmor ++= player.boots :: Nil
+      val newInventory = player.inventory.copy(armor = newArmor)
+      player = player.copy(boots = Armor("noBoots"), inventory = newInventory)
+    }
+    notifyObservers()
+  }
+
+  def unEquipGloves(): Unit = {
+    if (player.gloves.armorType != "nothing") {
+      var newArmor = player.inventory.armor
+      newArmor ++= player.gloves :: Nil
+      val newInventory = player.inventory.copy(armor = newArmor)
+      player = player.copy(gloves = Armor("noGloves"), inventory = newInventory)
+    }
+    notifyObservers()
+  }
+
+  def unEquipRightHand(): Unit = {
+    val weapon: Weapon = player.rightHand
     if (weapon.name != "RightFist") {
       var newWeapon = player.inventory.weapons
       newWeapon ++= player.rightHand :: Nil
       val newInventory = player.inventory.copy(weapons = newWeapon)
-      player = player.copy(rightHand = Weapon("rightFist"),inventory = newInventory)
+      player = player.copy(rightHand = Weapon("rightFist"), inventory = newInventory)
     }
     notifyObservers()
   }
-  def unEquipLeftHand():Unit = {
+
+  def unEquipLeftHand(): Unit = {
     val weapon: Weapon = player.leftHand
     if (weapon.name != "LeftFist") {
       var newWeapon = player.inventory.weapons
@@ -396,7 +417,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     notifyObservers()
   }
 
-  def equipWeapon(hand:Int, index:Int):Unit = {
+  def equipWeapon(hand: Int, index: Int): Unit = {
     if (player.inventory.weapons.size < 1 && hand <= 1 && hand >= 0) {
       println("Keine Weapon Vorhanden!!!")
     } else if (index <= player.inventory.weapons.size && index > 0) {
@@ -422,6 +443,7 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
     } else println("CONTROLLER INKOREKTER INDEX ODER HAND => " + index + "  " + hand)
     notifyObservers()
   }
+
   //Inventory---
 
 }

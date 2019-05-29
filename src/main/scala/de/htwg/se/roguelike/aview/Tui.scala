@@ -8,7 +8,7 @@ class Tui(controller: Controller) extends Observer {
   controller.add(this)
 
   //State Pattern
-  var state:State = new tuiMain(controller,this)
+  var state: State = new tuiMain(controller, this)
   var inventoryGameStatus: GameStatus.Value = GameStatus.LEVEL
 
   //GameOver Tui fürs REstarten des Games

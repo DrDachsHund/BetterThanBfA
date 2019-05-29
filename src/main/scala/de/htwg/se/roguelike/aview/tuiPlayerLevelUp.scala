@@ -2,7 +2,7 @@ package de.htwg.se.roguelike.aview
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-case class tuiPlayerLevelUp(controller: Controller,tui: Tui) extends State {
+case class tuiPlayerLevelUp(controller: Controller, tui: Tui) extends State {
   def processInputLine(input: String): Unit = {
     input match {
       case "q" =>
@@ -18,7 +18,7 @@ case class tuiPlayerLevelUp(controller: Controller,tui: Tui) extends State {
   override def handle(): Unit = {
     val e = controller.gameStatus
     e match {
-      case GameStatus.LOOTENEMY => tui.state = new tuiLootEnemy(controller,tui)
+      case GameStatus.LOOTENEMY => tui.state = new tuiLootEnemy(controller, tui)
       case GameStatus.PLAYERLEVELUP => tui.state = this
       case _ =>
         print("Wrong GameStatus!!!")

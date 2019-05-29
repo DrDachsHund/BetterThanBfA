@@ -2,7 +2,7 @@ package de.htwg.se.roguelike.aview
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-class tuiInventoryPotion(controller: Controller,tui: Tui) extends State {
+class tuiInventoryPotion(controller: Controller, tui: Tui) extends State {
   override def processInputLine(input: String): Unit = {
     input match {
       case "x" => controller.setGameStatus(GameStatus.INVENTORY)
@@ -15,11 +15,12 @@ class tuiInventoryPotion(controller: Controller,tui: Tui) extends State {
     }
     handle()
   }
+
   override def handle(): Unit = {
     val e = controller.gameStatus
     e match {
       case GameStatus.INVENTORYPOTION => tui.state = this
-      case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller,tui)
+      case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller, tui)
       case _ =>
         print("Wrong GameStatus!!!")
     }

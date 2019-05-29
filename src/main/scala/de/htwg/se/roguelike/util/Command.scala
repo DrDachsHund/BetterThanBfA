@@ -2,15 +2,17 @@ package de.htwg.se.roguelike.util
 
 trait Command {
 
-  def doStep():Unit
-  def undoStep():Unit
-  def redoStep():Unit
+  def doStep(): Unit
+
+  def undoStep(): Unit
+
+  def redoStep(): Unit
 
 }
 
 class TestCommand() extends Command {
 
-  var state:Int = 0
+  var state: Int = 0
 
   override def doStep(): Unit = {
     state = state + 1

@@ -3,9 +3,9 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 import de.htwg.se.roguelike.util.Command
 
-class LevelCommand(lpOld: (Level,Player),lpNew: (Level,Player), enemies:Vector[Enemy], controller: Controller) extends Command {
+class LevelCommand(lpOld: (Level, Player), lpNew: (Level, Player), enemies: Vector[Enemy], controller: Controller) extends Command {
 
-  var memento: (Level,Player) = lpOld
+  var memento: (Level, Player) = lpOld
   var mementoE: Vector[Enemy] = enemies
 
   override def doStep(): Unit = {
@@ -17,7 +17,7 @@ class LevelCommand(lpOld: (Level,Player),lpNew: (Level,Player), enemies:Vector[E
   }
 
   override def undoStep(): Unit = {
-    val new_memento = (controller.level,controller.player)
+    val new_memento = (controller.level, controller.player)
     val new_mementoE = controller.enemies
     controller.level = memento._1
     controller.player = memento._2
@@ -30,7 +30,7 @@ class LevelCommand(lpOld: (Level,Player),lpNew: (Level,Player), enemies:Vector[E
   }
 
   override def redoStep(): Unit = {
-    val new_memento = (controller.level,controller.player)
+    val new_memento = (controller.level, controller.player)
     val new_mementoE = controller.enemies
     controller.level = memento._1
     controller.player = memento._2
