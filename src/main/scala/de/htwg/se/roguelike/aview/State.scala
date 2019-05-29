@@ -54,4 +54,9 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 
 6: Enemy Resistance + Weapon Interaction (FIRE 2x DMG to ICE RES)
 
+
+GAME OVER SCREEN
+
+ARMOR/Weapon vergleichen ROT die Schlecht sind Grün gut (WoW)
+
 */

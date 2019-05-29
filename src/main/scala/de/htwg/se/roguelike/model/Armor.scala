@@ -126,17 +126,17 @@ private object RandomArmor {
 
   def getRarity(): String = {
     val random = new Random()
-    val rarity = random.nextInt(100) + 1 //zwischen 0 und zahl-1 => (0-99) + 1
+    val rarity = random.nextInt(1000) + 1 //zwischen 0 und zahl-1 => (0-99) + 1
     rarity match {
-      case x if 1 until 41 contains x => "Common" //White                            40%
-      case x if 41 until 61 contains x => "Uncommon" //Green                          20%
-      case x if 61 until 76 contains x => "Rare" //Blue                               15%
-      case x if 76 until 86 contains x => "Epic" //Purple                             10%
-      case x if 86 until 91 contains x => "Legendary" //Orange                        5%
-      case x if 91 until 95 contains x => "Golden-Legendary" //Gold (E-tech Magenta)  4%
-      case x if 95 until 98 contains x => "Seraph" //Pink                             3%
-      case x if 98 until 100 contains x => "Pearlescent" //Cyan                        2%
-      case x if x == 100 => "Unknown" //Rainbow                         1%
+      case x if 1 until 501 contains x => "Common" //White                              50%
+      case x if 501 until 751 contains x => "Uncommon" //Green                          25%
+      case x if 751 until 851 contains x => "Rare" //Blue                               10%
+      case x if 851 until 901 contains x => "Epic" //Purple                             5%
+      case x if 901 until 941 contains x => "Legendary" //Orange                        4%
+      case x if 941 until 971 contains x => "Golden-Legendary" //Gold (E-tech Magenta)  3%
+      case x if 971 until 991 contains x => "Seraph" //Pink                             2%
+      case x if 991 until 999 contains x => "Pearlescent" //Cyan                       0.9%
+      case x if x == 1000 => "Unknown" //Rainbow                         0.1%
       case _ => println(rarity)
         "FEHLER"
     }

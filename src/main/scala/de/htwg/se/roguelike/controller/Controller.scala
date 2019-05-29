@@ -11,6 +11,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   var enemyLoot: Vector[Item] = Vector()
 
+  //-----------LEVEL----------------
+
   def createRandomLevel(): Unit = {
     val (level1, enemies1) = new LevelCreator(10).createRandom(player, 10)
     level = level1
@@ -33,6 +35,11 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     }
   }
 
+  //-----------LEVEL----------------
+
+
+  //-----------MOVE----------------
+
   def moveUp(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, this))
     notifyObservers()
@@ -53,7 +60,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
-  //LvlUP---
+  //-----------MOVE----------------
+
+  //-----------LVLUP----------------
+
   def lvlUpHealth(): Unit = {
     player = player.lvlUpHealth
     setGameStatus(GameStatus.LOOTENEMY)
@@ -69,9 +79,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     setGameStatus(GameStatus.LOOTENEMY)
   }
 
-  //LvlUP---
+  //-----------LVLUP----------------
 
-  //Looting---
+  //-----------LOOTING----------------
+
   def lootingEnemy(index: Int): Unit = {
 
     if (enemyLoot.size < 1) setGameStatus(GameStatus.LEVEL)
@@ -82,7 +93,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
         case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
         case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
-        case _ => "MASIVER FEHLER AM BEEN SEIN"
+        case _ => "LOOT FEHLER !!!!"
       }
 
       var usedItem = enemyLoot.filter(_ == loot)
@@ -100,9 +111,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
-  //Looting---
+  //-----------LOOTING----------------
 
-  //Fight----
+  //-----------FIGHT----------------
+
   def attack(): Unit = {
     var enemy: Enemy = Enemy()
     for (enemyTest <- enemies) {
@@ -137,9 +149,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     }
   }
 
-  //Fight----
+  //-----------FIGHT----------------
 
-  //Strategy Pattern toString---
+  //-----------STRATEGY PATTERN TO STRING----------------
+
   var strategy: Strategy = new StrategyLevel
 
   trait Strategy {
@@ -213,7 +226,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   class StrategyGameOver extends Strategy {
-    override def updateToString = "GAME OVER DUDE"
+    override def updateToString = "GAME OVER"
   }
 
   class StrategyPlayerLevelUp extends Strategy {
@@ -221,12 +234,12 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   class StrategyLootEnemy extends Strategy {
-    override def updateToString: String = lootEnemy()
+    override def updateToString: String = lootEnemyString()
   }
 
-  private def lootEnemy(): String = {
+  private def lootEnemyString(): String = {
     var sb = new StringBuilder
-    sb ++= "Looting from Slayn Enemy:\n"
+    sb ++= "Looting slain Enemy:\n"
     var index = 1
     for (loot <- enemyLoot) {
       sb ++= ("[" + index + "]" + loot.toString + "\n")
@@ -253,9 +266,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
-  //Strategy Pattern toString---
+  //-----------STRATEGY PATTERN TO STRING----------------
 
-  //UndoManager---
+  //-----------UNDO MANAGER----------------
+
   def undo(): Unit = {
     undoManager.undoStep()
     notifyObservers()
@@ -266,9 +280,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
-  //UndoManager---
+  //-----------UNDO MANAGER----------------
 
-  //Inventory---
+  //-----------INVENTORY----------------
+
   def usePotion(index: Int): Unit = {
     if (player.inventory.potions.size < 1) {
       println("Keine Potion Vorhanden!!!")
@@ -444,6 +459,6 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
-  //Inventory---
+  //-----------INVENTORY----------------
 
 }
