@@ -37,6 +37,15 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   //-----------LEVEL----------------
 
+  //----------New-Game--------------
+
+  def newGame(): Unit = {
+    player = Player(name = "Player", posX = 5, posY = 5)
+    createRandomLevel()
+    setGameStatus(GameStatus.LEVEL)
+  }
+
+  //----------New-Game--------------
 
   //-----------MOVE----------------
 
@@ -226,7 +235,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   class StrategyGameOver extends Strategy {
-    override def updateToString = "GAME OVER"
+    override def updateToString = "GAME OVER" + player.getScore(0) + "\n[n}New Game\n[q]Quit\n"
   }
 
   class StrategyPlayerLevelUp extends Strategy {
