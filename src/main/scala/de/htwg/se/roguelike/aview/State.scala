@@ -33,29 +33,7 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
   => Zukunft Klassen (VLLT nur Methode); Abilities?????  !                                                         [X}
   => Währung                                                                                                       [✓}
   => Kill Counter                                                                                                  [✓}
-  => SCORE(KC + EXP + etc.) für Leaderboard                                                                        [X}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  => SCORE(KC + EXP + etc.) für Leaderboard                                                                        [✓}
 
 
 
