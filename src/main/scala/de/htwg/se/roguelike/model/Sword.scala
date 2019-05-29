@@ -8,10 +8,12 @@ case class Sword(name: String,
                  oneHanded:Boolean,
                 rarity:String) extends Weapon {
 
+  //Weapon lvl hinzufügen
+  //random 1-5 um player lvl herum
 
   override def getScaledWeapon(lvl:Int): Weapon = {
     this.copy(name,
-      value = value * lvl,
+      value = value * (lvl/50),
       usable,
       dmg = dmg * lvl,
       block = block * lvl,
