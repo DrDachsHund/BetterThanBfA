@@ -11,6 +11,7 @@ trait Entity {
   val inventory:Inventory
   val rightHand:Weapon
   val leftHand:Weapon
+  val gulden:Int
 
   def isAlive:Boolean = health > 0
 

@@ -8,7 +8,8 @@ package de.htwg.se.roguelike.model
                    posX:Int = 0, posY:Int = 0,
                    inventory:Inventory = new Inventory,
                    rightHand:Weapon = Weapon("rightFist"),
-                   leftHand:Weapon = Weapon("leftFist")) extends Entity {
+                   leftHand:Weapon = Weapon("leftFist"),
+                   gulden:Int = 10) extends Entity {
 
 
     //Template Method

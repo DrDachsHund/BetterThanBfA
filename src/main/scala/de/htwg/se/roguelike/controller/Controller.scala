@@ -115,9 +115,10 @@ class Controller(var level:Level, var player:Player, var enemies:Vector[Enemy] =
 
     if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
     else if (!enemy.isAlive) {
-      val oldLvl:Int = player.lvl
+      val oldLvl: Int = player.lvl
       level = level.removeElement(enemy.posY, enemy.posX, 5)
       player = player.lvlUp(enemy.exp)
+      player = player.copy(killCounter = player.killCounter + 1)
       enemyLoot = enemy.inventory.weapons //für loot
       enemyLoot = enemyLoot ++ enemy.inventory.potions
       enemyLoot = enemyLoot ++ enemy.inventory.armor
