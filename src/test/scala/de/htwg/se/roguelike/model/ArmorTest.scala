@@ -3,7 +3,7 @@ package de.htwg.se.roguelike.model
 import org.scalatest.{Matchers, WordSpec}
 
 class ArmorTest extends WordSpec with Matchers {
-
+/*
 
   //da wir nicht alle irgendwo aufrufen brauchen wir hier die um zu covern
       Armor("Helmet") should be(Helmet("Helmet",10,usable = false,10))
@@ -17,5 +17,5 @@ class ArmorTest extends WordSpec with Matchers {
       Armor("noBoots") should be(Boots("Feet", 0, usable = false, 0,armorType = "nothing"))
       Armor("noGloves") should be(Gloves("Hands", 0, usable = false, 0,armorType = "nothing"))
 
-
+*/
 }

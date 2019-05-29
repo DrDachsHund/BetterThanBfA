@@ -4,4 +4,5 @@ case class Boots(name:String,
                  value: Int,
                  usable: Boolean,
                  armor:Int,
-                 armorType:String = "Boots") extends Armor {}
+                 armorType:String = "Boots",
+                 rarity: String) extends Armor {}
