@@ -11,15 +11,14 @@ case class Sword(name: String,
                  rarity: String,
                  itemLevel: Int = 1) extends Weapon {
 
-
   private def setItemLevel(lvl: Int): Sword = {
     val random = new Random()
-    val coinflip = random.nextInt(1)
+    val coinflip = random.nextInt(2)
     val randomItemLevel2 = random.nextInt(5)
     var randomItemLevel = 1
     coinflip match {
-      case 0 => randomItemLevel = random.nextInt(lvl) + randomItemLevel2
-      case 1 => randomItemLevel = random.nextInt(lvl) - randomItemLevel2
+      case 0 => randomItemLevel = lvl + randomItemLevel2
+      case 1 => randomItemLevel = lvl - randomItemLevel2
         if (randomItemLevel < 1) randomItemLevel = 1
     }
     this.copy(itemLevel = randomItemLevel)
@@ -28,7 +27,7 @@ case class Sword(name: String,
 
   override def getScaledWeapon(lvl: Int): Weapon = {
     val weapon = setItemLevel(lvl)
-    val scale: Double = (weapon.itemLevel / 25) + 1
+    val scale: Double = (weapon.itemLevel.toDouble / 25.0) + 1.0
     weapon.copy(name,
       value = (value * scale).toInt, //Rechnung maybe Falsch, scaling nochmal überschauen/überarbeiten
       usable,
