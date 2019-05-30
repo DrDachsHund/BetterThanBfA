@@ -11,6 +11,6 @@ case class HealPotion(name: String,
   }
 
   override def toString: String = {
-    rarity + "Name: " + name + " Value: " + value + "Power: " + power
+    rarity + " " + name + " Value: " + value + "Power: " + power
   }
 }

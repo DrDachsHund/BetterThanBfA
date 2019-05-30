@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.model
 
+import java.io.InputStream
+
 import scala.io.Source
 import scala.util.Random
 
@@ -62,53 +64,98 @@ private object RandomArmor {
   }
 
   def getHelmetName(): String = {
-    val fileStream = getClass.getResourceAsStream("Helmet.txt")
-    val lines = Source.fromInputStream(fileStream).getLines
-    var nameList = Vector("")
-    lines.foreach(line => nameList = nameList :+ line)
-    val random = new Random()
-    val index = random.nextInt(nameList.size)
-    nameList(index)
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Helmet.txt"))
+
+    fileStream match {
+      case None => return "Helmet-Name-Fehler-Beim-Laden"
+
+      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
+        case None => return "Helmet-Name-Fehler-Beim-Laden"
+
+        case Some(l) => val lines = l
+          var nameList = Vector("")
+          lines.foreach(line => nameList = nameList :+ line)
+          val random = new Random()
+          val index = random.nextInt(nameList.size)
+          nameList(index)
+      }
+    }
   }
 
   def getChestName(): String = {
-    val fileStream = getClass.getResourceAsStream("Chest.txt")
-    val lines = Source.fromInputStream(fileStream).getLines
-    var nameList = Vector("")
-    lines.foreach(line => nameList = nameList :+ line)
-    val random = new Random()
-    val index = random.nextInt(nameList.size)
-    nameList(index)
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Chest.txt"))
+
+    fileStream match {
+      case None => return "Chest-Name-Fehler-Beim-Laden"
+
+      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
+        case None => return "Chest-Name-Fehler-Beim-Laden"
+
+        case Some(l) => val lines = l
+          var nameList = Vector("")
+          lines.foreach(line => nameList = nameList :+ line)
+          val random = new Random()
+          val index = random.nextInt(nameList.size)
+          nameList(index)
+      }
+    }
   }
 
   def getPantsName(): String = {
-    val fileStream = getClass.getResourceAsStream("Pants.txt")
-    val lines = Source.fromInputStream(fileStream).getLines
-    var nameList = Vector("")
-    lines.foreach(line => nameList = nameList :+ line)
-    val random = new Random()
-    val index = random.nextInt(nameList.size)
-    nameList(index)
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Pants.txt"))
+
+    fileStream match {
+      case None => return "Pants-Name-Fehler-Beim-Laden"
+
+      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
+        case None => return "Pants-Name-Fehler-Beim-Laden"
+
+        case Some(l) => val lines = l
+          var nameList = Vector("")
+          lines.foreach(line => nameList = nameList :+ line)
+          val random = new Random()
+          val index = random.nextInt(nameList.size)
+          nameList(index)
+      }
+    }
   }
 
   def getBootsName(): String = {
-    val fileStream = getClass.getResourceAsStream("Boots.txt")
-    val lines = Source.fromInputStream(fileStream).getLines
-    var nameList = Vector("")
-    lines.foreach(line => nameList = nameList :+ line)
-    val random = new Random()
-    val index = random.nextInt(nameList.size)
-    nameList(index)
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Boots.txt"))
+
+    fileStream match {
+      case None => return "Boots-Name-Fehler-Beim-Laden"
+
+      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
+        case None => return "Boots-Name-Fehler-Beim-Laden"
+
+        case Some(l) => val lines = l
+          var nameList = Vector("")
+          lines.foreach(line => nameList = nameList :+ line)
+          val random = new Random()
+          val index = random.nextInt(nameList.size)
+          nameList(index)
+      }
+    }
   }
 
   def getGlovesName(): String = {
-    val fileStream = getClass.getResourceAsStream("Gloves.txt")
-    val lines = Source.fromInputStream(fileStream).getLines
-    var nameList = Vector("")
-    lines.foreach(line => nameList = nameList :+ line)
-    val random = new Random()
-    val index = random.nextInt(nameList.size)
-    nameList(index)
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Gloves.txt"))
+
+    fileStream match {
+      case None => return "Gloves-Name-Fehler-Beim-Laden"
+
+      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
+        case None => return "Gloves-Name-Fehler-Beim-Laden"
+
+        case Some(l) => val lines = l
+          var nameList = Vector("")
+          lines.foreach(line => nameList = nameList :+ line)
+          val random = new Random()
+          val index = random.nextInt(nameList.size)
+          nameList(index)
+      }
+    }
   }
 
   //einzeln get name aufrufen

@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.model
 
+import java.io.InputStream
+
 import scala.io.Source
 import scala.util.Random
 
@@ -60,13 +62,22 @@ private object RandomWeapon {
   }
 
   def getWeaponName(): String = {
-    val fileStream = getClass.getResourceAsStream("Weapons.txt")
-    val lines = Source.fromInputStream(fileStream).getLines
-    var nameList = Vector("")
-    lines.foreach(line => nameList = nameList :+ line)
-    val random = new Random()
-    val index = random.nextInt(nameList.size)
-    nameList(index)
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Weapons.txt"))
+
+    fileStream match {
+      case None => return "Waffen-Name-Fehler-Beim-Laden"
+
+      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
+        case None => return "Waffen-Name-Fehler-Beim-Laden"
+
+        case Some(l) => val lines = l
+          var nameList = Vector("")
+          lines.foreach(line => nameList = nameList :+ line)
+          val random = new Random()
+          val index = random.nextInt(nameList.size)
+          nameList(index)
+      }
+    }
   }
 
   def getWeaponType(name: String, value: Int, dmg: Int, block: Int, rarity: String): Weapon = {
