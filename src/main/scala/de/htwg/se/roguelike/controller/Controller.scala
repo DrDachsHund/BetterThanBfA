@@ -10,6 +10,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
   private val undoManager = new UndoManager
+  var portal = new Portal()
+  var lvlDepth = 0
 
   //--FIGHT--
   var enemyLoot: Vector[Item] = Vector()
@@ -34,15 +36,36 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
+  def createPortal():(Level,Portal) = {
+    var row: Int = 0
+    var col: Int = 0
+    do {
+      col = Random.nextInt(level.map.size)
+      row = Random.nextInt(level.map.size)
+    } while (level.map.tile(col, row).isSet)
+
+    level = level.removeElement(col,row,1)
+    portal = portal.copy(portalX = row)
+    portal = portal.copy(portalY = col)
+    (level,portal)
+  }
+
   def interaction(): Unit = {
     if (fight.interaction(player, enemies)) {
       for (enemyTest <- enemies) {
-        if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
+        if (player.posX == enemyTest.posX && player.posY == enemyTest.posY) {
           currentEnemy = enemyTest
+        }
       }
       gameStatus = GameStatus.FIGHT
       strategy = new StrategyFight
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
+    }
+    if (player.posX == portal.portalX && player.posY == portal.portalY) {
+      portal = Portal()
+      createRandomLevel()
+      lvlDepth += 1
+      notifyObservers()
     }
   }
 
@@ -193,7 +216,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     println("Enemy Thinking => " + enemyAction)
     enemies = enemies.filterNot(_ == currentEnemy)
 
-    if (playerAction == "attack") currentEnemy = fight.playerAttack(player, currentEnemy, enemyAction)
+    if (playerAction == "attack") {
+      currentEnemy = fight.playerAttack(player, currentEnemy, enemyAction)
+    }
     else if (playerAction == "special") currentEnemy = fight.playerSpecial(player, currentEnemy) //player mana reduzieren
 
     if (currentEnemy.isAlive && enemyAction != "block") {
@@ -211,6 +236,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
     if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
     else if (!currentEnemy.isAlive) {
+      if (enemies.length == 5) {
+        createPortal()
+      }
       val oldLvl: Int = player.lvl
       level = level.removeElement(currentEnemy.posY, currentEnemy.posX, 5)
       player = player.lvlUp(currentEnemy.exp)
@@ -282,7 +310,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     override def updateToString: String =
       "Player Health: <" + player.health + "/" + player.maxHealth + ">\n" +
         "Player Mana: <" + player.mana + "/" + player.maxMana + ">\n" +
-        player.inventory.potionsToString + "[x}Back\n"
+        player.inventory.potionsToString + "[x]Back\n"
   }
 
   class StrategyWeapons extends Strategy {
@@ -290,7 +318,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       "[Hand(0,1)][WeaponIndex]\n" +
         player.rightHand.toString + "\n" +
         player.leftHand.toString + "\n" +
-        player.inventory.weaponsToString + "[x}Back\n"
+        player.inventory.weaponsToString + "[x]Back\n"
   }
 
   class StrategyArmor extends Strategy {
@@ -300,11 +328,11 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         player.pants.name + ": " + player.pants.armor + "\n" +
         player.boots.name + ": " + player.boots.armor + "\n" +
         player.gloves.name + ": " + player.gloves.armor + "\n" +
-        player.inventory.armorToString + "[x}Back\n"
+        player.inventory.armorToString + "[x]Back\n"
   }
 
   class StrategyGameOver extends Strategy {
-    override def updateToString = "GAME OVER" + player.getScore(0) + "\n[n}New Game\n[q]Quit\n"
+    override def updateToString = "GAME OVER" + player.getScore(lvlDepth) + "\n[n]New Game\n[q]Quit\n"
   }
 
   class StrategyPlayerLevelUp extends Strategy {

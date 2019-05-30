@@ -1,6 +1,7 @@
 package de.htwg.se.roguelike.model
 
 case class Fight() {
+
   def interaction(player: Player, enemies: Vector[Enemy]): Boolean = {
     for (enemy <- enemies) {
       if (player.posX == enemy.posX && player.posY == enemy.posY)
@@ -11,7 +12,7 @@ case class Fight() {
 
   def playerAttack(player: Player, enemy: Enemy, enemyAction: String): Enemy = {
     var enemy2 = enemy
-    if (enemyAction != "block") enemy2 = enemy.copy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor))
+    if (enemyAction != "block")  enemy2 = enemy.copy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor))
     else enemy2 = enemy.copy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor + enemy.rightHand.block + enemy.leftHand.block * 2))
     enemy2
   }

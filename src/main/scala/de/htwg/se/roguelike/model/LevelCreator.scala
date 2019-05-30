@@ -19,6 +19,7 @@ class LevelCreator(size: Int) {
     var level = new Level(size)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
+
     var row: Int = 0
     var col: Int = 0
     var enemies: Vector[Enemy] = Vector()
