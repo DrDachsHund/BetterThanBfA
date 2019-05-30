@@ -64,9 +64,32 @@ class EnemyTest extends WordSpec with Matchers {
       }
 
       val enemy5 = Enemy(lvl = 1)
-      "can have loot" in {
+      "have loot" in {
         val enemyLoot = enemy5.setLoot()
-        enemyLoot.inventory should not be Inventory(Vector(), Vector(), Vector())
+        enemyLoot.inventory should not be(new Inventory(Vector(), Vector(), Vector()))
+      }
+
+      var enemy6 = Enemy(lvl = 1)
+      "when getting a piece of armor" in {
+        while (enemy6.helmet == Armor("noHelmet"))
+          enemy6 = enemy6.setLoot()
+        enemy6.helmet should not be(Armor("noHelmet"))
+
+        while (enemy6.chest == Armor("noChest"))
+          enemy6 = enemy6.setLoot()
+        enemy6.chest should not be(Armor("noChest"))
+
+        while (enemy6.pants == Armor("noPants"))
+          enemy6 = enemy6.setLoot()
+        enemy6.pants should not be(Armor("noPants"))
+
+        while (enemy6.boots == Armor("noBoots"))
+          enemy6 = enemy6.setLoot()
+        enemy6.boots should not be(Armor("noBoots"))
+
+        while (enemy6.gloves == Armor("noGloves"))
+          enemy6 = enemy6.setLoot()
+        enemy6.gloves should not be(Armor("noGloves"))
       }
 
     }
