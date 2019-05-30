@@ -1,7 +1,7 @@
 package de.htwg.se.roguelike.model
 
 import org.scalatest.{Matchers, WordSpec}
-
+/*
 class InventoryTest extends WordSpec with Matchers {
 
   "An Inventory" when {
@@ -39,3 +39,4 @@ class InventoryTest extends WordSpec with Matchers {
   }
 
 }
+*/
