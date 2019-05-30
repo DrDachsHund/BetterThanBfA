@@ -56,7 +56,7 @@ case class Enemy(name: String = "Skeleton",
   def setScale(lvl: Int): Enemy = {
     val random = new Random()
     val lvlBuffer = random.nextInt(4) //0-3
-    random.nextInt(1) match {
+    random.nextInt(2) match {
       case 0 => this.copy(lvl = lvl + lvlBuffer, exp = exp * (lvl + lvlBuffer), gulden = gulden * (lvl + lvlBuffer))
       case 1 =>
         if (lvl - lvlBuffer < 1)
