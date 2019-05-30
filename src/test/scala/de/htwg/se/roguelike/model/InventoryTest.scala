@@ -1,7 +1,7 @@
 package de.htwg.se.roguelike.model
 
 import org.scalatest.{Matchers, WordSpec}
-/*
+
 class InventoryTest extends WordSpec with Matchers {
 
   "An Inventory" when {
@@ -24,19 +24,18 @@ class InventoryTest extends WordSpec with Matchers {
       }
 
       "should have a nice String representation for Potions" in {
-        inventory.potionsToString() should be("[1]"+Potion("SmallHeal").name+"\n")
+        inventory.potionsToString() should be("[1]"+Potion("SmallHeal").toString+"\n")
       }
 
       "should have a nice String representation for Armor" in {
-        inventory.armorToString() should be("[1]"+Armor("Gloves").name+"\n")
+        inventory.armorToString() should be("[1]"+Armor("Gloves").toString+"\n")
       }
 
       "should have a nice String representation for Weapons" in {
-        inventory.weaponsToString() should be("[1]"+Weapon("Sword").name+"\n")
+        inventory.weaponsToString() should be("[1]"+Weapon("Sword").toString+"\n")
       }
 
     }
   }
 
 }
-*/

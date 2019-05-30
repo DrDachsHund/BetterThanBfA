@@ -9,4 +9,8 @@ case class HealPotion(name: String,
   override def usePotion(player: Player): Player = {
     super.usePotion(player.copy(health = player.health + (player.maxHealth / 100 * power)))
   }
+
+  override def toString: String = {
+    rarity + "Name: " + name + " Value: " + value + "Power: " + power
+  }
 }
