@@ -9,6 +9,7 @@ class tuiFight(controller: Controller, tui: Tui) extends State {
       case "1" => controller.attack()
       case "2" => controller.block()
       case "3" => controller.special()
+      case "r" => controller.run()
       case "i" =>
         controller.setGameStatus(GameStatus.INVENTORY)
         tui.inventoryGameStatus = GameStatus.FIGHT

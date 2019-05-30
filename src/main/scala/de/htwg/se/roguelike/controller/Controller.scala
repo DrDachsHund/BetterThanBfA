@@ -173,7 +173,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def run(): Unit = {
-    //
+    val runPlayer = player
+    setGameStatus(GameStatus.LEVEL)
+    undo()
+    player = runPlayer.copy(posX = player.posX, posY = player.posY)
   }
 
   def enemyThinking(playerAction: String): Unit = {
@@ -274,7 +277,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   class StrategyFight extends Strategy {
-    override def updateToString: String = fight.toString + "[i]Inventory\n"
+    override def updateToString: String = fight.toString + "[i]Inventory\n[r]:Run\n"
   }
 
   class StrategyFightStatus extends Strategy {
