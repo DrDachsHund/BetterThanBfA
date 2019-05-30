@@ -42,10 +42,11 @@ class SwordTest extends WordSpec with Matchers {
         sword.rarity should be("Common")
       }
       "not get a Itemlevel under 1" in {
+        val player3: Player = Player(name = "Player1",lvl = 2)
         var sword = Weapon("Sword")
-        while (sword.itemLevel > 1) {
+        while (sword.itemLevel != 1) {
           sword = Weapon("Sword")
-          sword = sword.getScaledWeapon(player.lvl)
+          sword = sword.getScaledWeapon(player3.lvl)
         }
         sword.itemLevel should be (1)
       }
