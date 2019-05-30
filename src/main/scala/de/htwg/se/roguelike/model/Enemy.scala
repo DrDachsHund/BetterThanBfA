@@ -4,11 +4,17 @@ import scala.util.Random
 
 case class Enemy(name: String = "Skeleton",
                  health: Int = 100,
+                 mana: Int = 100,
                  attack: Int = 10,
                  lvl: Int = 0,
                  exp: Int = 20,
                  posX: Int = 0, posY: Int = 0,
-                 inventory: Inventory = new Inventory(Vector(),Vector(),Vector()),
+                 inventory: Inventory = new Inventory(Vector(), Vector(), Vector()),
+                 helmet: Armor = Armor("noHelmet"),
+                 chest: Armor = Armor("noChest"),
+                 pants: Armor = Armor("noPants"),
+                 boots: Armor = Armor("noBoots"),
+                 gloves: Armor = Armor("noGloves"),
                  rightHand: Weapon = Weapon("rightFist"),
                  leftHand: Weapon = Weapon("leftFist"),
                  gulden: Int = 1) extends Entity {
@@ -35,7 +41,15 @@ case class Enemy(name: String = "Skeleton",
         val randomWeapon = Weapon("random").getScaledWeapon(lvl) //vll noch while weapon rarity hoch nochmal rollen
         this.copy(rightHand = randomWeapon, inventory = inventory.copy(weapons = inventory.weapons :+ randomWeapon))
       case 2 => this.copy(inventory = inventory.copy(potions = inventory.potions :+ Potion("random")))
-      case 3 => this.copy(inventory = inventory.copy(armor = inventory.armor :+ Armor("random"))) //Evemtuel noch sclae hinzufügen
+      case 3 =>
+        val armor = Armor("random")
+        armor match {
+          case helm: Helmet => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), helmet = armor) //Evemtuel noch sclae hinzufügen
+          case chest: Chest => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), chest = armor)
+          case pants: Pants => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), pants = armor)
+          case boots: Boots => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), boots = armor)
+          case gloves: Gloves => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), gloves = armor)
+        }
     }
   }
 

@@ -25,8 +25,6 @@ case class Player(name: String,
                   //mage/archer etc ...
                  ) extends Entity {
 
-  def getArmor: Int = helmet.armor + chest.armor + pants.armor + boots.armor + gloves.armor
-
   //muss dan in controller zu Gamestatus levelup wechseln um dann auszuwählen was geändert werden will
   def lvlUp(collectedExp: Int): Player = {
     var newExp = exp + collectedExp

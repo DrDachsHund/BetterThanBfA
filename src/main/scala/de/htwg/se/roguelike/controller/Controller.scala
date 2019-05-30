@@ -3,13 +3,20 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.util.{Observable, UndoManager}
 
+import scala.util.Random
+
 class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Observable {
 
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
   private val undoManager = new UndoManager
 
+  //--FIGHT--
   var enemyLoot: Vector[Item] = Vector()
+  var currentEnemy: Enemy = Enemy("ControlerFehler")
+  //var currentAction: String = "nothing"
+  //--FIGHT--
+
 
   //-----------LEVEL----------------
 
@@ -29,6 +36,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def interaction(): Unit = {
     if (fight.interaction(player, enemies)) {
+      for (enemyTest <- enemies) {
+        if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
+          currentEnemy = enemyTest
+      }
       gameStatus = GameStatus.FIGHT
       strategy = new StrategyFight
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
@@ -125,37 +136,99 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   //-----------FIGHT----------------
 
   def attack(): Unit = {
-    var enemy: Enemy = Enemy()
-    for (enemyTest <- enemies) {
-      if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
-        enemy = enemyTest
+    println("PlayerAttack: " + player.getAttack)
+    enemyThinking("attack")
+  }
+
+  def block(): Unit = {
+    println("PlayerBlock: " + (player.getArmor + player.rightHand.block + player.leftHand.block * 2))
+    enemyThinking("block")
+  }
+
+  def special(): Unit = {
+    enemyThinking("special")
+  }
+
+  def run(): Unit = {
+    //
+  }
+
+  def enemyThinking(playerAction: String): Unit = {
+    val random = Random
+    playerAction match {
+      case "attack" =>
+        fight.shouldBlock(player, currentEnemy) match {
+          case "yes" => enemyTurn(playerAction, "block")
+          case "maybe" =>
+            if (random.nextInt(2) == 0)
+              enemyTurn(playerAction, "block")
+            else
+              enemyTurn(playerAction, "attack")
+          case "no" => enemyTurn(playerAction, "attack")
+        }
+      case "block" =>
+        if (currentEnemy.inventory.potions.size > 0)
+          random.nextInt(10) + 1 match {
+            case 1 => enemyTurn(playerAction, "special")
+            case 2 => enemyTurn(playerAction, "heal")
+            case 3 => enemyTurn(playerAction, "block")
+            case _ => enemyTurn(playerAction, "attack")
+          }
+        else {
+          if (random.nextInt(2) == 0)
+            enemyTurn(playerAction, "attack")
+          else
+            enemyTurn(playerAction, "special")
+        }
+      case "special" =>
+        random.nextInt(10) + 1 match {
+          case 1 => enemyTurn(playerAction, "special")
+          case x if 2 until 5 contains x => enemyTurn(playerAction, "attack")
+          case _ => enemyTurn(playerAction, "block")
+        }
+    }
+  }
+
+  def enemyTurn(playerAction: String, enemyAction: String): Unit = {
+    println("Enemy Thinking => " + enemyAction)
+    enemies = enemies.filterNot(_ == currentEnemy)
+
+    if (playerAction == "attack") currentEnemy = fight.playerAttack(player, currentEnemy, enemyAction)
+    else if (playerAction == "special") currentEnemy = fight.playerSpecial(player, currentEnemy) //player mana reduzieren
+
+    if (currentEnemy.isAlive && enemyAction != "block") {
+      enemyAction match {
+        case "attack" => player = fight.enemyAttack(player, currentEnemy, playerAction)
+        case "heal" => currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl)
+        case "special" =>
+          if (currentEnemy.mana >= 50) {
+            println("Enemy did Special Attack")
+            currentEnemy = currentEnemy.copy(mana = currentEnemy.mana - 50)
+            player = fight.enemySpecial(player, currentEnemy)
+          } else return enemyThinking(playerAction)
+      }
     }
 
-    enemies = enemies.filterNot(_ == enemy)
-
-    enemy = fight.playerAttack(player, enemy)
-
-    if (enemy.isAlive) player = fight.enemyAttack(player, enemy)
-
     if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
-    else if (!enemy.isAlive) {
+    else if (!currentEnemy.isAlive) {
       val oldLvl: Int = player.lvl
-      level = level.removeElement(enemy.posY, enemy.posX, 5)
-      player = player.lvlUp(enemy.exp)
+      level = level.removeElement(currentEnemy.posY, currentEnemy.posX, 5)
+      player = player.lvlUp(currentEnemy.exp)
       player = player.copy(killCounter = player.killCounter + 1)
-      enemyLoot = enemy.inventory.weapons //für loot
-      enemyLoot = enemyLoot ++ enemy.inventory.potions
-      enemyLoot = enemyLoot ++ enemy.inventory.armor
+      enemyLoot = currentEnemy.inventory.weapons //für loot
+      enemyLoot = enemyLoot ++ currentEnemy.inventory.potions
+      enemyLoot = enemyLoot ++ currentEnemy.inventory.armor
 
       println(enemyLoot.toString())
 
       if (oldLvl < player.lvl) setGameStatus(GameStatus.PLAYERLEVELUP)
       else setGameStatus(GameStatus.LOOTENEMY)
     } else {
-      enemies = enemies :+ enemy
+      enemies = enemies :+ currentEnemy
       setGameStatus(GameStatus.FIGHTSTATUS)
       setGameStatus(GameStatus.FIGHT)
     }
+
   }
 
   //-----------FIGHT----------------
@@ -184,11 +257,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     var sb = new StringBuilder
     sb ++= ("Player Health: <" + player.health + "/" + player.maxHealth + "> " +
       "Mana: <" + player.mana + "/" + player.maxMana + ">\n")
-    sb ++= "Enemy Health: "
-    for (enemyTest <- enemies) {
-      if (player.posX == enemyTest.posX && player.posY == enemyTest.posY)
-        sb ++= ("<" + enemyTest.health + ">")
-    }
+    sb ++= "Enemy Health: " + currentEnemy.health + " Mana: " + currentEnemy.mana
     sb ++= "\n"
     sb.toString
   }

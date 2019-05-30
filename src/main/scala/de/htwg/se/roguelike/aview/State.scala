@@ -13,9 +13,12 @@ WICHTIG BEIM EINLESEN VON INDEX GEHTS NICHT ÜBER 10 MASIVER FEHLER RIPRIP
 
 Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfachere behandlung und ausgaben!!!!
 
-GUI:
-  => Start Screen
 
+FIGHT + LEVEL:
+  => GUI:
+    => Start Screen
+
+MUSIC!!! => geht nur mit javaFX maybe same änlich wie ScalaFx für gui
 
 LOOT: - 50 Wichtig-
   => Boss                                                                                                            [X}
