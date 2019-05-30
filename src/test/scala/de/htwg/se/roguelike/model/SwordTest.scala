@@ -13,13 +13,13 @@ class SwordTest extends WordSpec with Matchers {
       val player2: Player = Player(name = "Player1", lvl = 10)
       "get a scaled Weapon in Positive Range" in {
         var sword2 = Weapon("Sword")
-        while (sword2.itemLevel < player.lvl) {
+        while (sword2.itemLevel <= player.lvl) {
           sword2 = Weapon("Sword")
           sword2 = sword2.getScaledWeapon(player.lvl)
         }
         sword2.name should be("Sword")
         sword2.value should (be >= 10 and be <= 12)
-        sword2.itemLevel should (be >= 1 and be <= 5)
+        sword2.itemLevel should (be > 1 and be <= 5)
         sword2.usable should be(false)
         sword2.dmg should (be >= 10 and be <= 12)
         sword2.block should (be >= 5 and be <= 6)
@@ -32,8 +32,6 @@ class SwordTest extends WordSpec with Matchers {
           sword = Weapon("Sword")
           sword = sword.getScaledWeapon(player2.lvl)
         }
-        println("\nWeaponItemLevel: " + sword.itemLevel)
-        println("\n" + sword.toString)
         sword.name should be("Sword")
         sword.value should (be >= 10 and be <= 14)
         sword.itemLevel should (be >= 6 and be <= 10)
@@ -42,6 +40,14 @@ class SwordTest extends WordSpec with Matchers {
         sword.block should (be >= 6 and be <= 7)
         sword.oneHanded should be(true)
         sword.rarity should be("Common")
+      }
+      "not get a Itemlevel under 1" in {
+        var sword = Weapon("Sword")
+        while (sword.itemLevel > 1) {
+          sword = Weapon("Sword")
+          sword = sword.getScaledWeapon(player.lvl)
+        }
+        sword.itemLevel should be (1)
       }
     }
   }
