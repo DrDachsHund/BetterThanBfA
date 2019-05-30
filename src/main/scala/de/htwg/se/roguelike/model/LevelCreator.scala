@@ -31,6 +31,7 @@ class LevelCreator(size: Int) {
       } while (level.map.tile(col, row).isSet)
 
 
+      //maybe hier noch ändern wgen this ka ob so richtig alles
       val newEnemy = Enemy(name = "RandomEnemy", posX = row, posY = col)
       val enemy = newEnemy.setScale(player.lvl).setLoot() //Name vll noch anpassen idk wie grad => Inventory hinzugefügt random
 
