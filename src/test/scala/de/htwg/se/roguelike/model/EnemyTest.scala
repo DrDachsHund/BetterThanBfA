@@ -62,6 +62,13 @@ class EnemyTest extends WordSpec with Matchers {
         }
         enemy4.lvl should be(1)
       }
+
+      val enemy5 = Enemy(lvl = 1)
+      "can have loot" in {
+        val enemyLoot = enemy5.setLoot()
+        enemyLoot.inventory should not be Inventory(Vector(), Vector(), Vector())
+      }
+
     }
   }
 
