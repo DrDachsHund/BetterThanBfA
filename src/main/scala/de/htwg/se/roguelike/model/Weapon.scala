@@ -57,7 +57,6 @@ private object RandomWeapon {
       case "Seraph" => (random.nextInt(100) + 1000, random.nextInt(100) + 100, random.nextInt(50) + 25)
       case "Pearlescent" => (random.nextInt(1000) + 10000, random.nextInt(200) + 200, random.nextInt(100) + 50)
       case "Unknown" => (random.nextInt(9999999) + 9999999, random.nextInt(999) + 999, random.nextInt(999) + 999)
-      case _ => (0, 0, 0)
     }
   }
 
@@ -88,9 +87,6 @@ private object RandomWeapon {
       //case 2 => Bow(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
       //case 3 => Hammer(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
       //etc..
-      case _ =>
-        println("Error on loading Weapon type!!!\n\t=> Check Weapon.scala for more info")
-        Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "") //fals fasch sei  sollte
     }
   }
 
@@ -105,10 +101,8 @@ private object RandomWeapon {
       case x if 86 until 91 contains x => "Legendary" //Orange                       5%
       case x if 91 until 95 contains x => "Golden-Legendary" //Gold                  4%
       case x if 95 until 98 contains x => "Seraph" //Pink                            3%
-      case x if 98 until 100 contains x => "Pearlescent" //Cyan                       2%
-      case x if x == 100 => "Unknown" //Rainbow                          1%
-      case _ => println(rarity)
-        "FEHLER"
+      case x if 98 until 100 contains x => "Pearlescent" //Cyan                      2%
+      case x if x == 100 => "Unknown" //Rainbow                                      1%
     }
   }
 }

@@ -80,11 +80,6 @@ class ArmorTest extends WordSpec with Matchers {
         }
         armor.rarity should be("Golden-Legendary")
 
-        while (armor.rarity != "Golden-Legendary") {
-          armor = Armor("random")
-        }
-        armor.rarity should be("Golden-Legendary")
-
         while (armor.rarity != "Seraph") {
           armor = Armor("random")
         }
