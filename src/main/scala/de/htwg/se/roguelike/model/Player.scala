@@ -30,7 +30,7 @@ case class Player(name: String,
     var newExp = exp + collectedExp
     var newMaxExp = 0
     var lvlUp = false
-    while (newExp > maxExp) {
+    while (newExp >= maxExp) {
       newExp = newExp - maxExp
       newMaxExp = (maxExp * 1.5).toInt
       lvlUp = true
@@ -40,9 +40,9 @@ case class Player(name: String,
     this.copy(exp = newExp)
   }
 
-  def lvlUpHealth: Player = this.copy(maxHealth = maxHealth + 10, health = maxHealth)
+  def lvlUpHealth: Player = this.copy(maxHealth = maxHealth + 10, health = maxHealth + 10)
 
-  def lvlUpMana: Player = this.copy(maxMana = maxMana + 10, mana = maxMana)
+  def lvlUpMana: Player = this.copy(maxMana = maxMana + 10, mana = maxMana + 10)
 
   def lvlUpAttack: Player = this.copy(attack = attack + 10)
 
