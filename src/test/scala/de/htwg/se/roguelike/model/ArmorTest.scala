@@ -101,6 +101,10 @@ class ArmorTest extends WordSpec with Matchers {
         armor.rarity should be("Unknown")
       }
 
+      "give a error when not able to load name" in {
+        RandomArmor.getArmorName("FEHLER.TXT") should be("Error-Loading-Armor-Name")
+      }
+
     }
   }
 }

@@ -59,94 +59,17 @@ private object RandomArmor {
       case "Seraph" => (random.nextInt(100) + 1000, random.nextInt(100) + 100)
       case "Pearlescent" => (random.nextInt(1000) + 10000, random.nextInt(200) + 200)
       case "Unknown" => (random.nextInt(9999999) + 9999999, random.nextInt(999) + 999)
-      case _ => (0, 0)
     }
   }
 
-  def getHelmetName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Helmet.txt"))
+  def getArmorName(fileName:String): String = {
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream(fileName))
 
     fileStream match {
-      case None => return "Helmet-Name-Fehler-Beim-Laden"
+      case None => return "Error-Loading-Armor-Name"
 
       case Some(s) => Option(Source.fromInputStream(s).getLines) match {
-        case None => return "Helmet-Name-Fehler-Beim-Laden"
-
-        case Some(l) => val lines = l
-          var nameList = Vector("")
-          lines.foreach(line => nameList = nameList :+ line)
-          val random = new Random()
-          val index = random.nextInt(nameList.size)
-          nameList(index)
-      }
-    }
-  }
-
-  def getChestName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Chest.txt"))
-
-    fileStream match {
-      case None => return "Chest-Name-Fehler-Beim-Laden"
-
-      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
-        case None => return "Chest-Name-Fehler-Beim-Laden"
-
-        case Some(l) => val lines = l
-          var nameList = Vector("")
-          lines.foreach(line => nameList = nameList :+ line)
-          val random = new Random()
-          val index = random.nextInt(nameList.size)
-          nameList(index)
-      }
-    }
-  }
-
-  def getPantsName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Pants.txt"))
-
-    fileStream match {
-      case None => return "Pants-Name-Fehler-Beim-Laden"
-
-      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
-        case None => return "Pants-Name-Fehler-Beim-Laden"
-
-        case Some(l) => val lines = l
-          var nameList = Vector("")
-          lines.foreach(line => nameList = nameList :+ line)
-          val random = new Random()
-          val index = random.nextInt(nameList.size)
-          nameList(index)
-      }
-    }
-  }
-
-  def getBootsName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Boots.txt"))
-
-    fileStream match {
-      case None => return "Boots-Name-Fehler-Beim-Laden"
-
-      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
-        case None => return "Boots-Name-Fehler-Beim-Laden"
-
-        case Some(l) => val lines = l
-          var nameList = Vector("")
-          lines.foreach(line => nameList = nameList :+ line)
-          val random = new Random()
-          val index = random.nextInt(nameList.size)
-          nameList(index)
-      }
-    }
-  }
-
-  def getGlovesName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Gloves.txt"))
-
-    fileStream match {
-      case None => return "Gloves-Name-Fehler-Beim-Laden"
-
-      case Some(s) => Option(Source.fromInputStream(s).getLines) match {
-        case None => return "Gloves-Name-Fehler-Beim-Laden"
+        case None => return "Error-Loading-Armor-Name"
 
         case Some(l) => val lines = l
           var nameList = Vector("")
@@ -163,11 +86,11 @@ private object RandomArmor {
     val random = Random //geht auch so zu schreiben lul wierd
     val armorType = random.nextInt(5) + 1
     armorType match {
-      case 1 => Helmet(name = getHelmetName(), value, usable = false, armor, rarity = rarity)
-      case 2 => Chest(name = getChestName(), value, usable = false, armor, rarity = rarity)
-      case 3 => Pants(name = getPantsName(), value, usable = false, armor, rarity = rarity)
-      case 4 => Boots(name = getBootsName(), value, usable = false, armor, rarity = rarity)
-      case 5 => Gloves(name = getGlovesName(), value, usable = false, armor, rarity = rarity)
+      case 1 => Helmet(name = getArmorName("Helmet.txt"), value, usable = false, armor, rarity = rarity)
+      case 2 => Chest(name = getArmorName("Chest.txt"), value, usable = false, armor, rarity = rarity)
+      case 3 => Pants(name = getArmorName("Pants.txt"), value, usable = false, armor, rarity = rarity)
+      case 4 => Boots(name = getArmorName("Boots.txt"), value, usable = false, armor, rarity = rarity)
+      case 5 => Gloves(name = getArmorName("Gloves.txt"), value, usable = false, armor, rarity = rarity)
     }
   }
 
@@ -182,10 +105,9 @@ private object RandomArmor {
       case x if 901 until 941 contains x => "Legendary" //Orange                        4%
       case x if 941 until 971 contains x => "Golden-Legendary" //Gold (E-tech Magenta)  3%
       case x if 971 until 991 contains x => "Seraph" //Pink                             2%
-      case x if 991 until 999 contains x => "Pearlescent" //Cyan                       0.9%
-      case x if x == 1000 => "Unknown" //Rainbow                         0.1%
-      case _ => println(rarity)
-        "FEHLER"
+      case x if 991 until 1000 contains x => "Pearlescent" //Cyan                       0.9%
+      case x if x == 1000 => "Unknown" //Rainbow                                        0.1%
     }
+    //FÜR ANDRE HIER WAHR FEHLER WEIL UNTIL EXCLUSIVE IST ALSO 999 WAHR NICHT DRIN MUSS 1000 SEIN
   }
 }
