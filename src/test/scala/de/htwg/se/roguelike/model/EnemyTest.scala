@@ -42,7 +42,7 @@ class EnemyTest extends WordSpec with Matchers {
         while (enemy4.lvl <= 5) {
           enemy4 = Enemy()
           enemy4 = enemy4.setScale(5)
-          println("ENEMY LVL" + enemy4.lvl)
+          //println("ENEMY LVL" + enemy4.lvl)
         }
         enemy4.lvl should (be <= 8 and be >= 6)
       }
@@ -50,7 +50,7 @@ class EnemyTest extends WordSpec with Matchers {
         while (enemy4.lvl >= 5) {
           enemy4 = Enemy()
           enemy4 = enemy4.setScale(5)
-          println("ENEMY LVL" + enemy4.lvl)
+          //println("ENEMY LVL" + enemy4.lvl)
         }
         enemy4.lvl should (be >= 2 and be <= 4)
       }
@@ -58,7 +58,7 @@ class EnemyTest extends WordSpec with Matchers {
         while (enemy4.lvl != 1) {
           enemy4 = Enemy()
           enemy4 = enemy4.setScale(0)
-          println("-LEVEL ENEMY LVL" + enemy4.lvl)
+          //println("-LEVEL ENEMY LVL" + enemy4.lvl)
         }
         enemy4.lvl should be(1)
       }

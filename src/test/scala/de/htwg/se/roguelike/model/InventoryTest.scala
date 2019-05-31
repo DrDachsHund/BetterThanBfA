@@ -35,6 +35,19 @@ class InventoryTest extends WordSpec with Matchers {
         inventory.weaponsToString() should be("[1]"+Weapon("Sword").toString+"\n")
       }
 
+      val inventory2 = new Inventory(Vector(),Vector(),Vector())
+      "should have a nice String representation for Potions when empty" in {
+        inventory2.potionsToString() should be("Keine Potions\n")
+      }
+
+      "should have a nice String representation for Armor when empty" in {
+        inventory2.armorToString() should be("Keine Armor\n")
+      }
+
+      "should have a nice String representation for Weapons when empty" in {
+        inventory2.weaponsToString() should be("Keine Weapons\n")
+      }
+
     }
   }
 
