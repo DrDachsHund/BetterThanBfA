@@ -36,7 +36,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     notifyObservers()
   }
 
-  def createPortal():(Level,Portal) = {
+  def createPortal(): (Level, Portal) = {
     var row: Int = 0
     var col: Int = 0
     do {
@@ -44,10 +44,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       row = Random.nextInt(level.map.size)
     } while (level.map.tile(col, row).isSet)
 
-    level = level.removeElement(col,row,1)
+    level = level.removeElement(col, row, 1)
     portal = portal.copy(portalX = row)
     portal = portal.copy(portalY = col)
-    (level,portal)
+    (level, portal)
   }
 
   def interaction(): Unit = {
