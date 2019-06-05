@@ -1,6 +1,9 @@
 package de.htwg.se.roguelike.aview.gui
 
+import java.awt.{Canvas, Graphics2D}
+
 import de.htwg.se.roguelike.controller.{Controller, FightEvent, LevelSizeChanged, TileChanged}
+import javax.imageio.ImageIO
 
 import scala.swing._
 
@@ -8,12 +11,23 @@ class SwingGui(controller: Controller) extends Frame {
 
   listenTo(controller)
 
+  //---GUI--
 
   title = "Pog Game"
-  preferredSize = new Dimension(720, 480)
-  contents = Button("Press me, please") {
-    controller.createRandomLevel()
+
+  val img = ImageIO.read(getClass.getResource("./Test.png"))
+
+  val ig:Graphics2D = img.createGraphics()
+  val c = new Canvas()
+
+  contents = new BoxPanel(Orientation.Vertical) {
+    contents += new Label("Test") {
+
+    }
   }
+
+  //--GUI--
+
   visible = true
 
 
