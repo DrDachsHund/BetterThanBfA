@@ -7,6 +7,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
+libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.1.1"
+
 //*******************************************************************************//
 //Libraries that we will use in later lectures compatible with this scala version
 // uncomment to use!!

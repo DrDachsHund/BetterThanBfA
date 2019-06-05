@@ -1,7 +1,8 @@
 package de.htwg.se.roguelike
 
 import de.htwg.se.roguelike.aview._
-import de.htwg.se.roguelike.controller.Controller
+import de.htwg.se.roguelike.aview.gui.SwingGui
+import de.htwg.se.roguelike.controller.{Controller, TileChanged}
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 
 import scala.io.StdIn.readLine
@@ -13,9 +14,10 @@ object RogueLike {
       Enemy(name = "TestE2", posX = 1),
       Enemy(name = "TestE3", posY = 1)),
     level = new Level(10))
-  var tui: Tui = new Tui(controller)
-
-  controller.notifyObservers()
+  val tui: Tui = new Tui(controller)
+  val gui = new SwingGui(controller)
+  //controller.notifyObservers()
+  controller.publish(new TileChanged)
 
 
   def main(args: Array[String]): Unit = {

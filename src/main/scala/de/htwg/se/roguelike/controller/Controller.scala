@@ -3,9 +3,10 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.util.{Observable, UndoManager}
 
+import scala.swing.Publisher
 import scala.util.Random
 
-class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Observable {
+class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Observable with Publisher {
 
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
@@ -27,13 +28,15 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     level = level1
     enemies = enemies1
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def createLevel(): Unit = {
     level = new LevelCreator(10).createLevel(player, enemies)
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     notifyObservers()
+    publish(new LevelSizeChanged(10))
   }
 
   def createPortal(): (Level, Portal) = {
@@ -60,12 +63,14 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       gameStatus = GameStatus.FIGHT
       strategy = new StrategyFight
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
+      publish(new FightEvent)
     }
     if (player.posX == portal.portalX && player.posY == portal.portalY) {
       portal = Portal()
       createRandomLevel()
       lvlDepth += 1
       notifyObservers()
+      publish(new TileChanged)
     }
   }
 
@@ -86,21 +91,25 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   def moveUp(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, this))
     notifyObservers()
+    publish(new TileChanged)
   }
 
   def moveDown(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies, this))
     notifyObservers()
+    publish(new TileChanged)
   }
 
   def moveLeft(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies, this))
     notifyObservers()
+    publish(new TileChanged)
   }
 
   def moveRight(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies, this))
     notifyObservers()
+    publish(new TileChanged)
   }
 
   //-----------MOVE----------------
