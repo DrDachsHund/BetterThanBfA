@@ -20,11 +20,11 @@ class ControllerTest extends WordSpec with Matchers {
         def isUpdated: Boolean = updated
 
         override def update(): Unit = {
-          updated = true;
+          updated = true
           updated
         }
       }
-      controller.add(observer)
+      //controller.add(observer)
 
       "notify its Observer after creating Level" in {
         controller.createLevel()

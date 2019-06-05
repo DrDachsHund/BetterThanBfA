@@ -1,12 +1,12 @@
 package de.htwg.se.roguelike.controller
 
 import de.htwg.se.roguelike.model._
-import de.htwg.se.roguelike.util.{Observable, UndoManager}
+import de.htwg.se.roguelike.util.UndoManager
 
 import scala.swing.Publisher
 import scala.util.Random
 
-class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Observable with Publisher {
+class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Publisher { //with Observer
 
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
@@ -35,7 +35,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   def createLevel(): Unit = {
     level = new LevelCreator(10).createLevel(player, enemies)
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
-    notifyObservers()
+    //notifyObservers()
     publish(new LevelSizeChanged(10))
   }
 
@@ -63,13 +63,13 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       gameStatus = GameStatus.FIGHT
       strategy = new StrategyFight
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
-      publish(new FightEvent)
+      //publish(new FightEvent)
     }
     if (player.posX == portal.portalX && player.posY == portal.portalY) {
       portal = Portal()
       createRandomLevel()
       lvlDepth += 1
-      notifyObservers()
+      //notifyObservers()
       publish(new TileChanged)
     }
   }
@@ -90,25 +90,25 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def moveUp(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, this))
-    notifyObservers()
+    //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveDown(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies, this))
-    notifyObservers()
+    //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveLeft(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies, this))
-    notifyObservers()
+    //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveRight(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies, this))
-    notifyObservers()
+    //notifyObservers()
     publish(new TileChanged)
   }
 
@@ -160,7 +160,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       }
 
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   //-----------LOOTING----------------
@@ -381,7 +382,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       case GameStatus.PLAYERLEVELUP => strategy = new StrategyPlayerLevelUp
       case GameStatus.LOOTENEMY => strategy = new StrategyLootEnemy
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   //-----------STRATEGY PATTERN TO STRING----------------
@@ -390,12 +392,14 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def undo(): Unit = {
     undoManager.undoStep()
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def redo(): Unit = {
     undoManager.redoStep()
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   //-----------UNDO MANAGER----------------
@@ -414,7 +418,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       newPotions ++= usedPotion
       player = player.copy(inventory = player.inventory.copy(potions = newPotions))
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def equipArmor(index: Int): Unit = {
@@ -444,7 +449,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
       player = player.copy(inventory = player.inventory.copy(armor = newArmor))
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   private def equipHelmet(newHelmet: Armor): Armor = {
@@ -485,7 +491,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(armor = newArmor)
       player = player.copy(helmet = Armor("noHelmet"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def unEquipChest(): Unit = {
@@ -495,7 +502,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(armor = newArmor)
       player = player.copy(chest = Armor("noChest"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def unEquipPants(): Unit = {
@@ -505,7 +513,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(armor = newArmor)
       player = player.copy(pants = Armor("noPants"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def unEquipBoots(): Unit = {
@@ -515,7 +524,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(armor = newArmor)
       player = player.copy(boots = Armor("noBoots"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def unEquipGloves(): Unit = {
@@ -525,7 +535,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(armor = newArmor)
       player = player.copy(gloves = Armor("noGloves"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def unEquipRightHand(): Unit = {
@@ -536,7 +547,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(weapons = newWeapon)
       player = player.copy(rightHand = Weapon("rightFist"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def unEquipLeftHand(): Unit = {
@@ -547,7 +559,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val newInventory = player.inventory.copy(weapons = newWeapon)
       player = player.copy(leftHand = Weapon("leftFist"), inventory = newInventory)
     }
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   def equipWeapon(hand: Int, index: Int): Unit = {
@@ -574,7 +587,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         player = player.copy(leftHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
       }
     } else println("CONTROLLER INKOREKTER INDEX ODER HAND => " + index + "  " + hand)
-    notifyObservers()
+    //notifyObservers()
+    publish(new TileChanged)
   }
 
   //-----------INVENTORY----------------
