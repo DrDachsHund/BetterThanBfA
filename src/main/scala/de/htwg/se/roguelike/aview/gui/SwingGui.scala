@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage
 import java.awt.{BorderLayout, Canvas, Graphics2D}
 import java.io.IOException
 
-import de.htwg.se.roguelike.controller.{Controller, FightEvent, LevelSizeChanged, TileChanged}
+import de.htwg.se.roguelike.controller._
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 
@@ -63,17 +63,45 @@ class SwingGui(controller: Controller) extends Reactor {
     frame.peer.setSize(new Dimension(width, height))
   }
 
+
   frame.peer.addKeyListener(new KeyListener() {
     def keyPressed(e: KeyEvent) {
-      println("key pressed")
+
+      if (controller.gameStatus == GameStatus.LEVEL) {
+        e.getKeyChar match {
+          case 'w' => controller.moveUp()
+          case 'a' => controller.moveLeft()
+          case 's' => controller.moveDown()
+          case 'd' => controller.moveRight()
+          case 'r' => controller.createRandomLevel()
+          case _ => println("FEHLER IN GUI")
+        }
+      } else if (controller.gameStatus == GameStatus.FIGHT) {
+        e.getKeyChar match {
+          case '1' => controller.attack()
+          case '2' => controller.block()
+          case '3' => controller.special()
+          case '4' => controller.run()
+          case _ => println("FEHLER IN GUI")
+      }}else if (controller.gameStatus == GameStatus.GAMEOVER) {
+        e.getKeyChar match {
+          case 'n' => controller.newGame()
+          case _ => println("FEHLER IN GUI")
+        }
+      }else if (controller.gameStatus == GameStatus.LOOTENEMY) {
+        e.getKeyChar match {
+          case 'x' => controller.setGameStatus(GameStatus.LEVEL)
+          case _ => println("FEHLER IN GUI")
+        }
+      }
     }
 
     def keyReleased(e: KeyEvent) {
-      println("key released")
+      //println("key released")
     }
 
     def keyTyped(e: KeyEvent) {
-      println("key typed")
+      //println("key typed")
     }
   })
 

@@ -21,9 +21,18 @@ class Tui(controller: Controller) extends Reactor { //with Observer
 //  override def update(): Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")
 
   reactions += {
-    case _: TileChanged => tuidraw()
-    case _: LevelSizeChanged => tuidraw()
-    case _: FightEvent => tuidraw()
+    case _: TileChanged => {
+      tuidraw()
+      state.handle()
+    }
+    case _: LevelSizeChanged =>{
+      tuidraw()
+      state.handle()
+    }
+    case _: FightEvent => {
+      tuidraw()
+      state.handle()
+    }
   }
 
   def tuidraw(): Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")
