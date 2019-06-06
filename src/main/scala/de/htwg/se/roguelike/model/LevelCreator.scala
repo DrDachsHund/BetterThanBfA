@@ -38,7 +38,19 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
 
       enemies = enemies :+ enemy
       level = Level(level.map.replaceTile(col, row, Tile(3)))
+
     }
+
+    for (_ <- 1 to 30) {
+      do {
+        col = Random.nextInt(level.map.sizeX)
+        row = Random.nextInt(level.map.sizeY)
+      } while (level.map.tile(col, row).isSet)
+
+      level = Level(level.map.replaceTile(col, row, Tile(2)))
+    }
+
+
 
     (level, enemies)
   }

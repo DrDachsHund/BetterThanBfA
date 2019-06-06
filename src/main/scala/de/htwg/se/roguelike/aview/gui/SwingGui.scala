@@ -2,16 +2,17 @@ package de.htwg.se.roguelike.aview.gui
 
 import java.awt.event.{KeyEvent, KeyListener}
 import java.awt.image.BufferedImage
-import java.awt.{BorderLayout, Canvas, Graphics2D}
+import java.awt.Graphics2D
 import java.io.IOException
 
 import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.controller.{Controller, FightEvent, LevelSizeChanged, TileChanged}
+import de.htwg.se.roguelike.model.Tile
 import javax.imageio.ImageIO
-import javax.swing.ImageIcon
 
-import scala.swing.Swing.LineBorder
 import scala.swing._
 import scala.swing.event.Key
+import scala.util.Random
 
 class SwingGui(controller: Controller) extends Reactor {
 
@@ -33,6 +34,8 @@ class SwingGui(controller: Controller) extends Reactor {
   }
 
   frame.menuBar = new GMenueBar(controller)
+
+
 
   //--GUI--
 
@@ -149,9 +152,13 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
   val playerSpriteSheet = new SpriteSheet("Player.png")
   val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
 
-  val levelTexture = backgroundSpriteSheet.getSprite(16, 0)
+  val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0)
+  val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0)
+  val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16)
   val playerTexture = playerSpriteSheet.getSprite(16, 0)
-  val enemiesTexture = enemiesSpriteSheet.getSprite(0,32)
+  val enemyTextureBlue = enemiesSpriteSheet.getSprite(0,32)
+ // val enemyTextureRed = enemiesSpriteSheet.getSprite(0,16)
+ // val enemyTextureGreen = enemiesSpriteSheet.getSprite(0,0)
 
   val canvas = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB)
 
@@ -162,20 +169,32 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
   override def paint(g: Graphics2D): Unit = {
 
     //---LEVEL
-    for (x <- 0 until controller.level.map.sizeX) {// hier noch random background
+    for (x <- 0 until controller.level.map.sizeX) {
       for (y <- 0 until controller.level.map.sizeY) {
-        g.drawImage(levelTexture,y * 16 * SCALE,x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        if (controller.level.map.tile(x, y) == Tile(0)) {
+          g.drawImage(levelTextureGrass, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        } else if (controller.level.map.tile(x, y) == Tile(2)) {
+          g.drawImage(levelTextureFlower, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        } else {
+          g.drawImage(levelTextureGrass, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        }
       }
     }
 
     //--PLAYER
-    g.drawImage(playerTexture,controller.player.posX * 16 * SCALE,controller.player.posY *  16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+    g.drawImage(playerTexture, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
 
-    for (x <- controller.enemies) { //hier noch random color enemies
-      g.drawImage(enemiesTexture,x.posX * 16 * SCALE,x.posY *  16 * SCALE, 12 * SCALE, 12 * SCALE, null)
+    //--Enemies
+    for (x <- controller.enemies) {
+      g.drawImage(enemyTextureBlue, x.posX * 16 * SCALE, x.posY * 16 * SCALE, 12 * SCALE, 12 * SCALE, null)
     }
 
+    //--Portal
+    g.drawImage(levelTexturePortal, controller.portal.portalX * 16 * SCALE, controller.portal.portalY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+
+
   }
+
   repaint()
 }
 
