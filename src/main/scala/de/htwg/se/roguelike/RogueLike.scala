@@ -13,7 +13,7 @@ object RogueLike {
     , enemies = Vector(Enemy(name = "TestE1"),
       Enemy(name = "TestE2", posX = 1),
       Enemy(name = "TestE3", posY = 1)),
-    level = new Level(10))
+    level = new Level(20,30))
   val tui: Tui = new Tui(controller)
   val gui = new SwingGui(controller)
   //controller.notifyObservers()

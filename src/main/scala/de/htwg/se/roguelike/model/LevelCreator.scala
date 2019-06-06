@@ -2,10 +2,10 @@ package de.htwg.se.roguelike.model
 
 import scala.util.Random
 
-class LevelCreator(size: Int) {
+class LevelCreator(sizeY: Int,sizeX:Int) {
 
   def createLevel(player: Player, enemies: Vector[Enemy]): Level = {
-    var level = new Level(size)
+    var level = new Level(sizeY,sizeX)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
     for (x <- enemies) {
@@ -16,7 +16,7 @@ class LevelCreator(size: Int) {
   }
 
   def createRandom(player: Player, enemyCount: Int): (Level, Vector[Enemy]) = {
-    var level = new Level(size)
+    var level = new Level(sizeY,sizeX)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
 
@@ -26,8 +26,8 @@ class LevelCreator(size: Int) {
 
     for (_ <- 1 to enemyCount) {
       do {
-        col = Random.nextInt(level.map.size)
-        row = Random.nextInt(level.map.size)
+        col = Random.nextInt(level.map.sizeX)
+        row = Random.nextInt(level.map.sizeY)
       } while (level.map.tile(col, row).isSet)
 
 

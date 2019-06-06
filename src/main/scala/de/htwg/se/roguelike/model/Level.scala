@@ -1,7 +1,7 @@
 package de.htwg.se.roguelike.model
 
 case class Level(map: Land[Tile]) {
-  def this(size: Int) = this(new Land[Tile](size, Tile(0)))
+  def this(sizeY: Int,sizeX:Int) = this(new Land[Tile](sizeY,sizeX, Tile(0)))
 
   def moveUp(player: Player): (Level, Player) = {
     if (player.posY - 1 < 0) {
@@ -16,7 +16,7 @@ case class Level(map: Land[Tile]) {
   }
 
   def moveDown(player: Player): (Level, Player) = {
-    if (player.posY + 1 > map.size - 1) {
+    if (player.posY + 1 > map.sizeY - 1) {
       return (this, player)
     }
 
@@ -40,7 +40,7 @@ case class Level(map: Land[Tile]) {
   }
 
   def moveRight(player: Player): (Level, Player) = {
-    if (player.posX + 1 > map.size - 1) {
+    if (player.posX + 1 > map.sizeX - 1) {
       return (this, player)
     }
 
@@ -57,8 +57,8 @@ case class Level(map: Land[Tile]) {
 
   override def toString: String = {
     val sb = new StringBuilder
-    for (x <- 0 until map.size) {
-      for (y <- 0 until map.size) {
+    for (x <- 0 until map.sizeX) {
+      for (y <- 0 until map.sizeY) {
         sb ++= (map.tile(x, y).value + " ")
       }
       sb ++= "\n"
