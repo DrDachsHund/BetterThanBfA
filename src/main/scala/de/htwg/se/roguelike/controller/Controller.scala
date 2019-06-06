@@ -24,7 +24,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   //-----------LEVEL----------------
 
   def createRandomLevel(): Unit = {
-    val (level1, enemies1) = new LevelCreator(20,10).createRandom(player, 10)
+    val (level1, enemies1) = new LevelCreator(9,16).createRandom(player, 10)
     level = level1
     enemies = enemies1
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
@@ -33,7 +33,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def createLevel(): Unit = {
-    level = new LevelCreator(10,10).createLevel(player, enemies)
+    level = new LevelCreator(9,16).createLevel(player, enemies)
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     //notifyObservers()
     publish(new LevelSizeChanged(10))

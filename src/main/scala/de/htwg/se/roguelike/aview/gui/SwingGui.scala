@@ -7,6 +7,7 @@ import java.io.IOException
 
 import de.htwg.se.roguelike.controller.{Controller, FightEvent, LevelSizeChanged, TileChanged}
 import javax.imageio.ImageIO
+import javax.swing.ImageIcon
 
 import scala.swing.Swing.LineBorder
 import scala.swing._
@@ -20,12 +21,12 @@ class SwingGui(controller: Controller) extends Reactor {
 
 
   val frame = new MainFrame()
-  val SCALE = 8 // eig in controller but for testing here
+  val SCALE = 4 // eig in controller but for testing here
 
   frame.title = "Pog Game"
   setSize
 
-  frame.peer.requestFocus()
+  //frame.peer.requestFocus() //noch testen
 
   frame.contents = new BorderPanel {
     add(new GPanelLevel(controller, SCALE), BorderPanel.Position.Center)
@@ -35,7 +36,7 @@ class SwingGui(controller: Controller) extends Reactor {
 
   //--GUI--
 
-  frame.peer.setResizable(false)
+  //frame.peer.setResizable(false)
   frame.peer.setLocationRelativeTo(null)
   frame.visible = true
 
@@ -60,19 +61,6 @@ class SwingGui(controller: Controller) extends Reactor {
     val width = 256 * SCALE
     val height = 144 * SCALE + 20
     frame.peer.setSize(new Dimension(width, height))
-  }
-
-  def level = new GridPanel(10, 10) {
-    border = LineBorder(java.awt.Color.BLACK, 1)
-    background = java.awt.Color.BLACK
-    for {
-      outerRow <- 0 to 10
-      outerColumn <- 0 to 10
-    } {
-      contents += new GridPanel(10, 10) {
-        border = LineBorder(java.awt.Color.BLACK, 1)
-      }
-    }
   }
 
   frame.peer.addKeyListener(new KeyListener() {
@@ -130,24 +118,36 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
   //val img = ImageIO.read(getClass.getResource("Test.png"))
 
   val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
+  val playerSpriteSheet = new SpriteSheet("Player.png")
+  val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
 
-  val img = backgroundSpriteSheet.getSprite(16, 0)
+  val levelTexture = backgroundSpriteSheet.getSprite(16, 0)
+  val playerTexture = playerSpriteSheet.getSprite(16, 0)
+  val enemiesTexture = enemiesSpriteSheet.getSprite(0,32)
 
-  val g = img.getGraphics
+  val canvas = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB)
+
+  val g = canvas.createGraphics()
 
   preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
   override def paint(g: Graphics2D): Unit = {
 
-    for (x <- 0 until controller.level.map.sizeX) {
+    //---LEVEL
+    for (x <- 0 until controller.level.map.sizeX) {// hier noch random background
       for (y <- 0 until controller.level.map.sizeY) {
-        g.drawImage(img,y * 16 * SCALE,x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        g.drawImage(levelTexture,y * 16 * SCALE,x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
       }
     }
 
+    //--PLAYER
+    g.drawImage(playerTexture,controller.player.posX * 16 * SCALE,controller.player.posY *  16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+
+    for (x <- controller.enemies) { //hier noch random color enemies
+      g.drawImage(enemiesTexture,x.posX * 16 * SCALE,x.posY *  16 * SCALE, 12 * SCALE, 12 * SCALE, null)
+    }
+
   }
-
-
   repaint()
 }
 

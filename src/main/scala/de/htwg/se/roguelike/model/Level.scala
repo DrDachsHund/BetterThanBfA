@@ -16,7 +16,7 @@ case class Level(map: Land[Tile]) {
   }
 
   def moveDown(player: Player): (Level, Player) = {
-    if (player.posY + 1 > map.sizeY - 1) {
+    if (player.posY + 1 > map.sizeX - 1) {
       return (this, player)
     }
 
@@ -40,7 +40,7 @@ case class Level(map: Land[Tile]) {
   }
 
   def moveRight(player: Player): (Level, Player) = {
-    if (player.posX + 1 > map.sizeX - 1) {
+    if (player.posX + 1 > map.sizeY - 1) {
       return (this, player)
     }
 
