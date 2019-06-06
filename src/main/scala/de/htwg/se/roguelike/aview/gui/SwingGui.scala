@@ -7,7 +7,6 @@ import java.io.IOException
 
 import de.htwg.se.roguelike.controller.{Controller, FightEvent, LevelSizeChanged, TileChanged}
 import javax.imageio.ImageIO
-import javax.swing.ImageIcon
 
 import scala.swing.Swing.LineBorder
 import scala.swing._
@@ -21,7 +20,7 @@ class SwingGui(controller: Controller) extends Reactor {
 
 
   val frame = new MainFrame()
-  val SCALE = 2 // eig in controller but for testing here
+  val SCALE = 8 // eig in controller but for testing here
 
   frame.title = "Pog Game"
   setSize
@@ -57,14 +56,18 @@ class SwingGui(controller: Controller) extends Reactor {
     System.exit(0)
   }
 
-  def setSize(): Unit = frame.preferredSize = new Dimension(480 * SCALE, 337 * SCALE)
+  def setSize(): Unit = {
+    val width = 256 * SCALE
+    val height = 144 * SCALE + 20
+    frame.peer.setSize(new Dimension(width, height))
+  }
 
   def level = new GridPanel(10, 10) {
     border = LineBorder(java.awt.Color.BLACK, 1)
     background = java.awt.Color.BLACK
     for {
-      outerRow <- 0 until 10
-      outerColumn <- 0 until 10
+      outerRow <- 0 to 10
+      outerColumn <- 0 to 10
     } {
       contents += new GridPanel(10, 10) {
         border = LineBorder(java.awt.Color.BLACK, 1)
@@ -91,11 +94,13 @@ class SwingGui(controller: Controller) extends Reactor {
 
 
 private class GMenueBar(controller: Controller) extends MenuBar {
+  this.peer.setSize(new Dimension(0,20))
   contents += new Menu("File") {
     mnemonic = Key.F //Dose not work
     contents += new MenuItem(Action("New") {
       controller.createLevel()
     })
+    mnemonic = Key.R
     contents += new MenuItem(Action("Random") {
       controller.createRandomLevel()
     })
@@ -130,12 +135,12 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
 
   val g = img.getGraphics
 
-  preferredSize = new Dimension(480 * SCALE, 320 * SCALE)
+  preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
   override def paint(g: Graphics2D): Unit = {
 
-    for (x <- 0 to controller.level.map.sizeX-1) {
-      for (y <- 0 to controller.level.map.sizeY-1) {
+    for (x <- 0 until controller.level.map.sizeX) {
+      for (y <- 0 until controller.level.map.sizeY) {
         g.drawImage(img,y * 16 * SCALE,x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
       }
     }
