@@ -201,14 +201,17 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
 
 private class SpriteSheet(val path: String) {
 
-  private var sheet: BufferedImage = _
+  var loaded:Boolean = false
 
-  try
-    sheet = ImageIO.read(getClass.getResourceAsStream(path))
-  catch {
-    case e: IOException =>
-      e.printStackTrace()
+  var sheet:BufferedImage = _
+
+  var sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
+  sheetLoad match {
+    case None =>  println("Fehler beim Einlesen bei GUI Spreadsheet!!")
+    case Some(s) => {
+      sheet = s
+      loaded = true
+    }
   }
-
   def getSprite(x: Int, y: Int): BufferedImage = sheet.getSubimage(x, y, 16, 16)
 }
