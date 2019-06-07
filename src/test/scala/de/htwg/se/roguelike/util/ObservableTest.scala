@@ -1,7 +1,7 @@
 package de.htwg.se.roguelike.util
 
 import org.scalatest.{Matchers, WordSpec}
-/*
+
 class ObservableTest extends WordSpec with Matchers{
 
   "An Observable" should {
@@ -30,4 +30,3 @@ class ObservableTest extends WordSpec with Matchers{
 
   }
 }
-*/

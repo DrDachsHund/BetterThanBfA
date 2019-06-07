@@ -3,7 +3,7 @@ package de.htwg.se.roguelike.model
 import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-/*
+
 @RunWith(classOf[JUnitRunner])
 class LevelCreatorTest extends WordSpec with Matchers {
   "A LevelCreater creates a specific or random Level. A LevelCreator" should {
@@ -17,8 +17,7 @@ class LevelCreatorTest extends WordSpec with Matchers {
     }
     var test = false
     val level2 = new LevelCreator(2,2).
-      createRandom(new Player(name = "TestPlayer",posX = 0,posY = 0)
-        ,1)
+      createRandom(new Player(name = "TestPlayer",posX = 0,posY = 0),1)
 
     "createRandom" in {
       for (x <- 0 to level2._1.map.sizeY) {
@@ -28,4 +27,3 @@ class LevelCreatorTest extends WordSpec with Matchers {
     }
   }
 }
-*/

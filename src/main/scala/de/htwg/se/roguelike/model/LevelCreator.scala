@@ -41,7 +41,16 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
 
     }
 
-    for (_ <- 1 to 30) {
+    var freeTiles:Int = 0
+    for (x <- 0 until level.map.sizeX) {
+      for (y <- 0 until level.map.sizeY) {
+          if (!level.map.tile(x,y).isSet) {
+            freeTiles += 1
+          }
+      }
+    }
+
+    for (_ <- 1 to (freeTiles/4)) {
       do {
         col = Random.nextInt(level.map.sizeX)
         row = Random.nextInt(level.map.sizeY)
