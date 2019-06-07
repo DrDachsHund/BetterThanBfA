@@ -20,7 +20,6 @@ class SwingGui(controller: Controller) extends Reactor {
 
   //---GUI--
 
-
   val frame = new MainFrame()
   val SCALE = 7 // eig in controller but for testing here
 
@@ -33,15 +32,14 @@ class SwingGui(controller: Controller) extends Reactor {
     add(new GPanelLevel(controller, SCALE), BorderPanel.Position.Center)
   }
 
-  frame.menuBar = new GMenueBar(controller)
-
-
-
-  //--GUI--
+  frame.menuBar = new GMenuBar(controller)
 
   frame.peer.setResizable(false)
   frame.peer.setLocationRelativeTo(null)
   frame.visible = true
+
+  //--GUI--
+
 
 
   reactions += {
@@ -52,7 +50,7 @@ class SwingGui(controller: Controller) extends Reactor {
 
   def redraw(): Unit = {
     //zeugs
-
+    //handler
     frame.repaint
   }
 
@@ -86,12 +84,13 @@ class SwingGui(controller: Controller) extends Reactor {
           case '3' => controller.special()
           case '4' => controller.run()
           case _ => println("FEHLER IN GUI")
-      }}else if (controller.gameStatus == GameStatus.GAMEOVER) {
+        }
+      } else if (controller.gameStatus == GameStatus.GAMEOVER) {
         e.getKeyChar match {
           case 'n' => controller.newGame()
           case _ => println("FEHLER IN GUI")
         }
-      }else if (controller.gameStatus == GameStatus.LOOTENEMY) {
+      } else if (controller.gameStatus == GameStatus.LOOTENEMY) {
         e.getKeyChar match {
           case 'x' => controller.setGameStatus(GameStatus.LEVEL)
           case _ => println("FEHLER IN GUI")
@@ -112,8 +111,8 @@ class SwingGui(controller: Controller) extends Reactor {
 }
 
 
-private class GMenueBar(controller: Controller) extends MenuBar {
-  this.peer.setSize(new Dimension(0,20))
+private class GMenuBar(controller: Controller) extends MenuBar {
+  this.peer.setSize(new Dimension(0, 20))
   contents += new Menu("File") {
     mnemonic = Key.F //Dose not work
     contents += new MenuItem(Action("New") {
@@ -156,14 +155,12 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
   val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0)
   val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16)
   val playerTexture = playerSpriteSheet.getSprite(16, 0)
-  val enemyTextureBlue = enemiesSpriteSheet.getSprite(0,32)
- // val enemyTextureRed = enemiesSpriteSheet.getSprite(0,16)
- // val enemyTextureGreen = enemiesSpriteSheet.getSprite(0,0)
+  val enemyTextureBlue = enemiesSpriteSheet.getSprite(0, 32)
+  val enemyTextureRed = enemiesSpriteSheet.getSprite(0,16)
+  val enemyTextureGreen = enemiesSpriteSheet.getSprite(0,0)
 
   val canvas = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB)
-
   val g = canvas.createGraphics()
-
   preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
   override def paint(g: Graphics2D): Unit = {
@@ -193,25 +190,8 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
     //--Portal
     g.drawImage(levelTexturePortal, controller.portal.portalX * 16 * SCALE, controller.portal.portalY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
 
-
   }
-
   repaint()
 }
 
-private class SpriteSheet(val path: String) {
 
-  var loaded:Boolean = false
-
-  var sheet:BufferedImage = _
-
-  var sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
-  sheetLoad match {
-    case None =>  println("Fehler beim Einlesen bei GUI Spreadsheet!!")
-    case Some(s) => {
-      sheet = s
-      loaded = true
-    }
-  }
-  def getSprite(x: Int, y: Int): BufferedImage = sheet.getSubimage(x, y, 16, 16)
-}
