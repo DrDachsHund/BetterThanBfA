@@ -22,7 +22,7 @@ class SwingGui(controller: Controller) extends Reactor {
 
 
   val frame = new MainFrame()
-  val SCALE = 4 // eig in controller but for testing here
+  val SCALE = 7 // eig in controller but for testing here
 
   frame.title = "Pog Game"
   setSize
@@ -39,7 +39,7 @@ class SwingGui(controller: Controller) extends Reactor {
 
   //--GUI--
 
-  //frame.peer.setResizable(false)
+  frame.peer.setResizable(false)
   frame.peer.setLocationRelativeTo(null)
   frame.visible = true
 
@@ -130,10 +130,10 @@ private class GMenueBar(controller: Controller) extends MenuBar {
   contents += new Menu("Edit") {
     mnemonic = Key.E
     contents += new MenuItem(Action("Undo") {
-      controller.undo
+      controller.undo()
     })
     contents += new MenuItem(Action("Redo") {
-      controller.redo
+      controller.redo()
     })
   }
   contents += new Menu("Options") {
@@ -183,6 +183,7 @@ private class GPanelLevel(controller: Controller, SCALE: Int) extends Panel {
 
     //--PLAYER
     g.drawImage(playerTexture, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+    //Variable bei Player um Postition zu checken
 
     //--Enemies
     for (x <- controller.enemies) {

@@ -3,12 +3,12 @@ package de.htwg.se.roguelike.controller
 import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.util.Observer
 import org.scalatest.{Matchers, WordSpec}
-/*
+
 class ControllerTest extends WordSpec with Matchers {
 
   "A Controller" when {
     "observed by an Observer" should {
-      val smallLevel = new Level(10)
+      val smallLevel = new Level(10,10)
       val player1 = Player("New Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy("TestEnemy", posX = 5, posY = 6), Enemy("TestEnemy2", posX = 7, posY = 8))
       val enemies1 = Vector(Enemy("TestEnemy", posX = 5, posY = 5), Enemy("TestEnemy2", posX = 7, posY = 8))
@@ -29,7 +29,7 @@ class ControllerTest extends WordSpec with Matchers {
       "notify its Observer after creating Level" in {
         controller.createLevel()
         observer.updated should be(true)
-        controller.level.map.size should be(10)
+        controller.level.map.sizeX should be(10)
       }
 
       "notify its Observer after not interacting" in {
@@ -42,7 +42,7 @@ class ControllerTest extends WordSpec with Matchers {
       "notify its Observer after creating a random Level" in {
         controller.createRandomLevel()
         observer.updated should be(true)
-        controller.level.map.size should be(10)
+        controller.level.map.sizeY should be(10)
         controller.enemies.size should be(10)
       }
 
@@ -205,7 +205,7 @@ class ControllerTest extends WordSpec with Matchers {
       }
     }
     "un-/equip armor" should {
-      val smallLevel = new Level(10)
+      val smallLevel = new Level(10,10)
       val player = Player(name = "Test", inventory = Inventory(armor = Vector(Armor("Helmet"), Armor("Chest"), Armor("Pants"), Armor("Boots"), Armor("Gloves"), Armor("Gloves"))))
       val enemies = Vector()
       val controller = new Controller(smallLevel, player, enemies)
@@ -262,7 +262,7 @@ class ControllerTest extends WordSpec with Matchers {
       }
     }
     "un-/equip weapons" should {
-      val smallLevel = new Level(10)
+      val smallLevel = new Level(10,10)
       val player = Player(name = "Test", inventory = Inventory(weapons = Vector(Weapon("Sword"), Weapon("Sword"), Weapon("Sword"), Weapon("Sword"))))
       val enemies = Vector()
       val controller = new Controller(smallLevel, player, enemies)
@@ -330,4 +330,3 @@ class ControllerTest extends WordSpec with Matchers {
     }
   }
 }
-*/

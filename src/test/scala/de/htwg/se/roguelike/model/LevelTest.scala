@@ -5,13 +5,13 @@ import org.scalatest.WordSpec
 import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-/*
+
 @RunWith(classOf[JUnitRunner])
 class LevelTest extends WordSpec with Matchers{
 
   "LevelTest" when {
     "new" should {
-      val level = new Level(2)
+      val level = new Level(2,2)
 
       val upLvl = Level(level.map.replaceTile(1,0,Tile(5)))
       val downLvl = Level(level.map.replaceTile(0,0,Tile(5)))
@@ -92,7 +92,7 @@ class LevelTest extends WordSpec with Matchers{
       }
 
       "remove a Tile" in {
-        var level2 = new Level(2)
+        var level2 = new Level(2,2)
         level2 = level2.removeElement(0,0,1)
         level2.map.tile(0,0) should be(Tile(1))
       }
@@ -104,4 +104,3 @@ class LevelTest extends WordSpec with Matchers{
     }
   }
 }
-*/

@@ -3,20 +3,20 @@ package de.htwg.se.roguelike.aview
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model.{Enemy, Level, LevelCreator, Player}
 import org.scalatest.{Matchers, WordSpec}
-/*
+
 class TuiTest extends WordSpec with Matchers{
 
   "A Rogue-Like TuiMain" should {
     val player = Player(name = "Player",posX = 5, posY = 5)
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2",posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies ,level = new Level(10))
+    val controller = new Controller(player = player, enemies = enemies ,level = new Level(10,10))
     val tui = new Tui(controller)
     "do nothing  on input 'q'" in {
       tui.state.processInputLine("q")
     }
     "create a Level on input 'n'" in {
       tui.state.processInputLine("n")
-      controller.level should be(new LevelCreator(10).createLevel(player,enemies))
+      controller.level should be(new LevelCreator(10,10).createLevel(player,enemies))
     }
     "move up with input 'w'" in {
       val old = controller.player.posY
@@ -46,7 +46,8 @@ class TuiTest extends WordSpec with Matchers{
     }
     "create a random Level on input 'r'" in {
       tui.state.processInputLine("r")
-      controller.level.map.size should be(10)
+      controller.level.map.sizeY should be(10)
+      controller.level.map.sizeX should be(10)
       controller.enemies.size should be(10)
     }
   }
@@ -67,7 +68,7 @@ class TuiTest extends WordSpec with Matchers{
         }
 
   }
-
-}
 */
-* */
+}
+
+

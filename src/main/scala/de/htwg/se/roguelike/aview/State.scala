@@ -17,6 +17,12 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 Tests:
   => GUI:
     => Start Screen
+    => Game Over Screen
+    => Fight Section
+    => Inventory
+
+
+Player Tile auf (1)
 
 MUSIC!!! => geht nur mit javaFX maybe same änlich wie ScalaFx für gui
 
