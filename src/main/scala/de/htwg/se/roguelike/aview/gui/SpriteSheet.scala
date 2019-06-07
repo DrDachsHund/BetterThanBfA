@@ -26,4 +26,15 @@ private class SpriteSheet(val path: String) {
       new BufferedImage(0,0,BufferedImage.TYPE_INT_RGB)
     }
   }
+
+  def horizontalFlip(img: BufferedImage): BufferedImage = {
+    val w = img.getWidth
+    val h = img.getHeight
+    val flippedImage = new BufferedImage(w, h, img.getType)
+    val g = flippedImage.createGraphics
+    g.drawImage(img, 0, 0, w, h, w, 0, 0, h, null)
+    g.dispose()
+    flippedImage
+  }
 }
+
