@@ -86,11 +86,11 @@ private object RandomArmor {
     val random = Random //geht auch so zu schreiben lul wierd
     val armorType = random.nextInt(5) + 1
     armorType match {
-      case 1 => Helmet(name = getArmorName("Helmet.txt"), value, usable = false, armor, rarity = rarity)
-      case 2 => Chest(name = getArmorName("Chest.txt"), value, usable = false, armor, rarity = rarity)
-      case 3 => Pants(name = getArmorName("Pants.txt"), value, usable = false, armor, rarity = rarity)
-      case 4 => Boots(name = getArmorName("Boots.txt"), value, usable = false, armor, rarity = rarity)
-      case 5 => Gloves(name = getArmorName("Gloves.txt"), value, usable = false, armor, rarity = rarity)
+      case 1 => Helmet(name = getArmorName("./Helmet.txt"), value, usable = false, armor, rarity = rarity)
+      case 2 => Chest(name = getArmorName("./Chest.txt"), value, usable = false, armor, rarity = rarity)
+      case 3 => Pants(name = getArmorName("./Pants.txt"), value, usable = false, armor, rarity = rarity)
+      case 4 => Boots(name = getArmorName("./Boots.txt"), value, usable = false, armor, rarity = rarity)
+      case 5 => Gloves(name = getArmorName("./Gloves.txt"), value, usable = false, armor, rarity = rarity)
     }
   }
 

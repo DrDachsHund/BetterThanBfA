@@ -59,8 +59,6 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
       level = Level(level.map.replaceTile(col, row, Tile(2)))
     }
 
-
-
     (level, enemies)
   }
 

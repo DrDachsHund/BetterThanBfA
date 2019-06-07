@@ -21,7 +21,7 @@ class SwingGui(controller: Controller) extends Reactor {
   //---GUI--
 
   val frame = new MainFrame()
-  val SCALE = 7 // eig in controller but for testing here
+  val SCALE = 5 // eig in controller but for testing here
 
   frame.title = "Pog Game"
   setSize
