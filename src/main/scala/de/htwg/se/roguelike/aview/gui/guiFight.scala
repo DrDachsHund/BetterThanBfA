@@ -3,11 +3,9 @@ package de.htwg.se.roguelike.aview.gui
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
-import de.htwg.se.roguelike.aview.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
-import javax.imageio.ImageIO
 
-import scala.swing.{Button, Dimension, Panel}
+import scala.swing.{Dimension, Label, Panel}
 
 case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
@@ -17,6 +15,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       case "2" => controller.block()
       case "3" => controller.special()
       case "r" => controller.run()
+      //case "enter" match
       case "i" =>
         controller.setGameStatus(GameStatus.INVENTORY)
       //tui.inventoryGameStatus = GameStatus.FIGHT
@@ -65,6 +64,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.drawImage(playerTexture, 10 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
         g.drawImage(enemyTextureBlue, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)
+
 
       }
 

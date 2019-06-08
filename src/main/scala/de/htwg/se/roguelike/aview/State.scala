@@ -21,9 +21,6 @@ Tests:
     => Fight Section
     => Inventory
 
-
-Player Tile auf (1)
-
 MUSIC!!! => geht nur mit javaFX maybe same änlich wie ScalaFx für gui
 
 
@@ -37,8 +34,8 @@ LOOT: - 50 Wichtig-
 
 
 Player: -10 Wichtig-
-  => SkillPunkte????  !!                                                                                             [X}
-  => Zukunft Klassen (VLLT nur Methode); Abilities?????  !                                                           [X}
+  => SkillPunkte????  !!                    (Andrê)                                                                                [X}
+  => Zukunft Klassen (VLLT nur Methode); Abilities?????  !      (Andrê)                                                            [X}
 
 
 Fight: - 50 Wichtig-
@@ -46,14 +43,14 @@ Fight: - 50 Wichtig-
 
 
 Level: - 10 Wichtig-
-  => Truhen                                                                                                          [X}
+  => Truhen    (Andrê)                                                                                                      [X}
   => Maybe Boss Level alle 5 (BOSS ITEMS), Portale/Höhlen etc. ! => in Interact anpassen                 [X}
   => MAYBE Hindernisse BIG FRAGEZEICHEN ????????????????????????                                                     [X}
   => Eingang Häuser,Shop                                                                                             [X}
 
 
 Merchant: - 0 Wichtig-
-  => Shop
+  => Shop (Marvin)
   => Random Items (Mehr/Bessere Items bei größerer Level Tiefe)
 
 Enemy Resistance + Weapon Interaction (FIRE 2x DMG to ICE RES)
