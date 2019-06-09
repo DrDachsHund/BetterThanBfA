@@ -2,6 +2,7 @@ package de.htwg.se.roguelike.aview.gui
 
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
+import java.awt.Font
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
@@ -40,7 +41,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
   }
 
   override def drawPanel(SCALE: Int): Panel = {
-    //val img = ImageIO.read(getClass.getResource("Test.png"))
+
     val panel = new Panel {
 
       //ersma so aber eig eigene texturen für fihgt
@@ -65,6 +66,10 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.drawImage(enemyTextureBlue, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 10 * SCALE))
+        //g.drawString(controller.strategy.updateToString, 10 * SCALE, 125 * SCALE)
+        g.drawString("[1]Attack   [2]:Block   [3]:Special   [i]Inventory    [r]:Run", 5 * SCALE, 125 * SCALE)
 
       }
 

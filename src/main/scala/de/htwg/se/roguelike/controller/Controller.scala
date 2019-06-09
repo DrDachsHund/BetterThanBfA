@@ -14,17 +14,26 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var portal = new Portal()
   var lvlDepth = 0
 
+  var SCALE: Int = 3
+
   //--FIGHT--
   var enemyLoot: Vector[Item] = Vector()
   var currentEnemy: Enemy = Enemy("ControlerFehler")
   //var currentAction: String = "nothing"
   //--FIGHT--
 
+  //--SCALE-for-GUI
+  def setSCALE(newSCALE: Int): Unit = {
+    SCALE = newSCALE
+    publish(new ResolutionEvent)
+  }
+
+  //--SCALE-for-GUI
 
   //-----------LEVEL----------------
 
   def createRandomLevel(): Unit = {
-    val (level1, enemies1) = new LevelCreator(9,16).createRandom(player, 10)
+    val (level1, enemies1) = new LevelCreator(9, 16).createRandom(player, 10)
     level = level1
     enemies = enemies1
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
@@ -33,7 +42,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def createLevel(): Unit = {
-    level = new LevelCreator(9,16).createLevel(player, enemies)
+    level = new LevelCreator(9, 16).createLevel(player, enemies)
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     //notifyObservers()
     publish(new LevelSizeChanged(10))

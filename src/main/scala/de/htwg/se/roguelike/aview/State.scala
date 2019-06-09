@@ -16,7 +16,7 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 
 Tests:
   => GUI:
-    => Start Screen
+    => Start Screen (Marvin)
     => Game Over Screen
     => Fight Section
     => Inventory
