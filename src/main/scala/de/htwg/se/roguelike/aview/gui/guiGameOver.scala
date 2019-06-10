@@ -1,14 +1,13 @@
 package de.htwg.se.roguelike.aview.gui
 
-import de.htwg.se.roguelike.aview.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-import scala.swing.Panel
+import scala.swing.{Dimension, Panel}
 
 case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
     input match {
-      case "q" =>
+      case "q" => System.exit(0)
       case "n" => controller.newGame()
       case _ => println("Wrong Input!!!")
     }
@@ -23,5 +22,9 @@ case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
     }
   }
 
-  override def drawPanel(Scale: Int): Panel = ???
+  override def drawPanel(SCALE: Int): Panel = {
+    new Panel {
+      preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+    }
+  }
 }

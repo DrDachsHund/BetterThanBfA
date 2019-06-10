@@ -3,7 +3,7 @@ package de.htwg.se.roguelike.aview.gui
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
-import de.htwg.se.roguelike.aview.State
+import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model.Tile
 
@@ -17,6 +17,7 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
       case "a" => controller.moveLeft()
       case "s" => controller.moveDown()
       case "d" => controller.moveRight()
+      case "r" => controller.createRandomLevel()
       case "z" => controller.undo()
       case "y" => controller.redo()
       case _ => println("FEHLER IN GUI")
@@ -44,10 +45,16 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
       val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0)
       val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0)
       val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16)
+      val levelTextureMerchant = backgroundSpriteSheet.getSprite(16, 16)
+
+      val errorTexture = backgroundSpriteSheet.getSprite(32,16)
+
       val playerTexture = playerSpriteSheet.getSprite(16, 0)
+
       val enemyTextureBlue = enemiesSpriteSheet.getSprite(0, 32)
       val enemyTextureRed = enemiesSpriteSheet.getSprite(0, 16)
       val enemyTextureGreen = enemiesSpriteSheet.getSprite(0, 0)
+
 
       val canvas = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB)
       val g = canvas.createGraphics()
@@ -58,28 +65,32 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
         //---LEVEL
         for (x <- 0 until controller.level.map.sizeX) {
           for (y <- 0 until controller.level.map.sizeY) {
-            if (controller.level.map.tile(x, y) == Tile(0)) {
-              g.drawImage(levelTextureGrass, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
-            } else if (controller.level.map.tile(x, y) == Tile(2)) {
-              g.drawImage(levelTextureFlower, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
-            } else {
-              g.drawImage(levelTextureGrass, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+            controller.level.map.tile(x, y) match { //match case statt if else
+              case Tile(0) => g.drawImage(levelTextureGrass, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+              case Tile(2) => g.drawImage(levelTextureFlower, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+              case _ => g.drawImage(levelTextureGrass, y * 16 * SCALE, x * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
             }
           }
         }
 
-        //--PLAYER
-        g.drawImage(playerTexture, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
-        //Variable bei Player um Postition zu checken
-
         //--Enemies
         for (x <- controller.enemies) {
-          g.drawImage(enemyTextureBlue, x.posX * 16 * SCALE, x.posY * 16 * SCALE, 12 * SCALE, 12 * SCALE, null)
+          x.enemyType match {
+            case 1 => g.drawImage(enemyTextureBlue, (x.posX * 16 + 2) * SCALE, (x.posY * 16 + 2) * SCALE, 12 * SCALE, 12 * SCALE, null)
+            case 2 => g.drawImage(enemyTextureRed, (x.posX * 16 + 2) * SCALE, (x.posY * 16 + 2) * SCALE, 12 * SCALE, 12 * SCALE, null)
+            case 3 => g.drawImage(enemyTextureGreen, (x.posX * 16 + 2) * SCALE, (x.posY * 16 + 2) * SCALE, 12 * SCALE, 12 * SCALE, null)
+            case _ => g.drawImage(errorTexture, (x.posX * 16 + 2) * SCALE, (x.posY * 16 + 2) * SCALE, 12 * SCALE, 12 * SCALE, null)
+          }
         }
 
         //--Portal
-        g.drawImage(levelTexturePortal, controller.portal.portalX * 16 * SCALE, controller.portal.portalY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        g.drawImage(levelTexturePortal, controller.portal.posX * 16 * SCALE, controller.portal.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
 
+        //--Merchant
+        g.drawImage(levelTextureMerchant, controller.merchant.posX * 16 * SCALE, controller.merchant.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+
+        //--PLAYER
+        g.drawImage(playerTexture, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
       }
 
       repaint()

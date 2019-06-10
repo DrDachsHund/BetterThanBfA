@@ -2,6 +2,7 @@ package de.htwg.se.roguelike
 
 import de.htwg.se.roguelike.aview._
 import de.htwg.se.roguelike.aview.gui.SwingGui
+import de.htwg.se.roguelike.aview.tui.Tui
 import de.htwg.se.roguelike.controller.{Controller, TileChanged}
 import de.htwg.se.roguelike.model.{Enemy, Level, Player}
 

@@ -46,12 +46,16 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
       //ersma so aber eig eigene texturen für fihgt
       val playerSpriteSheet = new SpriteSheet("Player.png")
-      val fightSpriteSheet = new SpriteSheet("Fight.png")
+      val fightSpriteSheet = new SpriteSheet("TextBar.png")
       val fightBackgroundSpriteSheet = new SpriteSheet("FightBackground1.png")
       val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
+      val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
 
       val playerTexture = playerSpriteSheet.getSprite(16, 0)
       val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32)) //zum flippen vll in eigene klasse?!?!?!?
+      val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16))
+      val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0))
+      val errorTexture = backgroundSpriteSheet.getSprite(32,16)
       val fight = fightSpriteSheet.sheet
       val fightBackground = fightBackgroundSpriteSheet.sheet
 
@@ -63,7 +67,15 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
         g.drawImage(fightBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
         g.drawImage(playerTexture, 10 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
-        g.drawImage(enemyTextureBlue, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
+
+        controller.currentEnemy.enemyType match {
+          case 1 => g.drawImage(enemyTextureBlue, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
+          case 2 => g.drawImage(enemyTextureRed, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
+          case 3 => g.drawImage(enemyTextureGreen, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
+          case _ => g.drawImage(errorTexture, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
+        }
+
+
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
 

@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.aview
+package de.htwg.se.roguelike.aview.tui
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 

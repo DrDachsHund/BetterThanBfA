@@ -17,7 +17,8 @@ case class Enemy(name: String = "Skeleton",
                  gloves: Armor = Armor("noGloves"),
                  rightHand: Weapon = Weapon("rightFist"),
                  leftHand: Weapon = Weapon("leftFist"),
-                 gulden: Int = 1) extends Entity {
+                 gulden: Int = 1,
+                 enemyType: Int = 0) extends Entity {
 
 
   //Template Method

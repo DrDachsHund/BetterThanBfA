@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.aview
+package de.htwg.se.roguelike.aview.tui
 
 trait State {
   def processInputLine(input: String)
@@ -13,6 +13,7 @@ WICHTIG BEIM EINLESEN VON INDEX GEHTS NICHT ÜBER 10 MASIVER FEHLER RIPRIP
 
 Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfachere behandlung und ausgaben!!!!
 
+//0 Grass,1 Portal, 2 Flowers, 3 Enemy, 4 Merchant
 
 Tests:
   => GUI:

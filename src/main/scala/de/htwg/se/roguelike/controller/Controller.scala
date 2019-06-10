@@ -11,7 +11,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
   private val undoManager = new UndoManager
-  var portal = new Portal()
+  var portal = Portal()
+  var merchant = Merchant(inventory = new Inventory(Vector(),Vector(),Vector()))
   var lvlDepth = 0
 
   var SCALE: Int = 3
@@ -36,6 +37,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     val (level1, enemies1) = new LevelCreator(9, 16).createRandom(player, 10)
     level = level1
     enemies = enemies1
+    createMerchant()
+    createPortal()
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     //notifyObservers()
     publish(new TileChanged)
@@ -48,7 +51,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     publish(new LevelSizeChanged(10))
   }
 
-  def createPortal(): (Level, Portal) = {
+  def createPortal():Unit = {
     var row: Int = 0
     var col: Int = 0
     do {
@@ -57,9 +60,21 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     } while (level.map.tile(col, row).isSet)
 
     level = level.removeElement(col, row, 1)
-    portal = portal.copy(portalX = row)
-    portal = portal.copy(portalY = col)
-    (level, portal)
+    portal = portal.copy(posX = row)
+    portal = portal.copy(posY = col)
+  }
+
+  def createMerchant(): Unit = {
+    var row: Int = 0
+    var col: Int = 0
+    do {
+      col = Random.nextInt(level.map.sizeX)
+      row = Random.nextInt(level.map.sizeY)
+    } while (level.map.tile(col, row).isSet)
+
+    level = level.removeElement(col, row, 4)
+    merchant = merchant.copy(posX = row)
+    merchant = merchant.copy(posY = col)
   }
 
   def interaction(): Unit = {
@@ -74,12 +89,15 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
       //publish(new FightEvent)
     }
-    if (player.posX == portal.portalX && player.posY == portal.portalY) {
+    if (player.posX == portal.posX && player.posY == portal.posY) {
       portal = Portal()
       createRandomLevel()
       lvlDepth += 1
       //notifyObservers()
       publish(new TileChanged)
+    }
+    if (player.posX == merchant.posX && player.posY == merchant.posY) {
+      println("DXDXXDXDDXDXDX")
     }
   }
 
@@ -91,6 +109,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     player = Player(name = "Player", posX = 5, posY = 5)
     createRandomLevel()
     setGameStatus(GameStatus.LEVEL)
+    publish(new TileChanged)
   }
 
   //----------New-Game--------------

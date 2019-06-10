@@ -32,7 +32,8 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
 
 
       //maybe hier noch ändern wgen this ka ob so richtig alles
-      val newEnemy = Enemy(name = "RandomEnemy", posX = row, posY = col)
+      val enemyType = Random.nextInt(3) + 1 //ersma so vll noch ändern
+      val newEnemy = Enemy(name = "RandomEnemy", posX = row, posY = col, enemyType = enemyType)
       val enemy = newEnemy.setScale(player.lvl).setLoot() //Name vll noch anpassen idk wie grad => Inventory hinzugefügt random
 
 
@@ -50,16 +51,28 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
       }
     }
 
-    for (_ <- 1 to (freeTiles/4)) {
-      do {
-        col = Random.nextInt(level.map.sizeX)
-        row = Random.nextInt(level.map.sizeY)
-      } while (level.map.tile(col, row).isSet)
-
-      level = Level(level.map.replaceTile(col, row, Tile(2)))
-    }
+    level = spawnRandomTile(level,Tile(2), freeTiles/4)
 
     (level, enemies)
+  }
+
+  def spawnRandomTile(level: Level,tile:Tile,numberOfTiles:Int): Level = {
+
+    var newLevel = level
+
+    var row: Int = 0
+    var col: Int = 0
+
+    for (_ <- 1 to numberOfTiles) {
+      do {
+        col = Random.nextInt(newLevel.map.sizeX)
+        row = Random.nextInt(newLevel.map.sizeY)
+      } while (newLevel.map.tile(col, row).isSet)
+
+      newLevel = Level(newLevel.map.replaceTile(col, row, tile))
+    }
+
+    newLevel
   }
 
 }
