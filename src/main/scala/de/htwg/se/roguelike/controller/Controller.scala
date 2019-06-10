@@ -12,7 +12,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var gameStatus: GameStatus.Value = GameStatus.LEVEL
   private val undoManager = new UndoManager
   var portal = Portal()
-  var merchant = Merchant(inventory = new Inventory(Vector(),Vector(),Vector()))
+  var merchant = Merchant(inventory = new Inventory(Vector(), Vector(), Vector()))
   var lvlDepth = 0
 
   var SCALE: Int = 3
@@ -51,7 +51,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     publish(new LevelSizeChanged(10))
   }
 
-  def createPortal():Unit = {
+  def createPortal(): Unit = {
     var row: Int = 0
     var col: Int = 0
     do {
@@ -207,7 +207,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def special(): Unit = {
-    enemyThinking("special")
+    if (player.mana >= 25) {
+      player = player.copy(mana = player.mana - 25)
+      enemyThinking("special")
+    } else println("Not enough mana")
   }
 
   def run(): Unit = {
@@ -260,7 +263,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     if (playerAction == "attack") {
       currentEnemy = fight.playerAttack(player, currentEnemy, enemyAction)
     }
-    else if (playerAction == "special") currentEnemy = fight.playerSpecial(player, currentEnemy) //player mana reduzieren
+    else if (playerAction == "special") currentEnemy = fight.playerSpecial(player, currentEnemy)
 
     if (currentEnemy.isAlive && enemyAction != "block") {
       enemyAction match {

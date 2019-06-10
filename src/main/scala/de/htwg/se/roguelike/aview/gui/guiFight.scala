@@ -1,8 +1,7 @@
 package de.htwg.se.roguelike.aview.gui
 
-import java.awt.Graphics2D
+import java.awt.{Color, Font, Graphics2D}
 import java.awt.image.BufferedImage
-import java.awt.Font
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
@@ -55,7 +54,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32)) //zum flippen vll in eigene klasse?!?!?!?
       val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16))
       val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0))
-      val errorTexture = backgroundSpriteSheet.getSprite(32,16)
+      val errorTexture = backgroundSpriteSheet.getSprite(32, 16)
       val fight = fightSpriteSheet.sheet
       val fightBackground = fightBackgroundSpriteSheet.sheet
 
@@ -78,9 +77,41 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
+        //HealthBar
+        g.setColor(Color.BLACK)
+        g.fillRect(4 * SCALE, 20 * SCALE, 25 * SCALE, 5 * SCALE)
+        g.setColor(Color.RED)
+        val HealthHelp1 = controller.player.maxHealth / 100
+        val HealthHelp2 = controller.player.health / HealthHelp1
+        val healthbarWidth = HealthHelp2 * 25 / 100
+        g.fillRect(4 * SCALE, 20 * SCALE, healthbarWidth * SCALE, 5 * SCALE)
+        g.setColor(Color.BLACK)
+        g.drawRect(4 * SCALE, 20 * SCALE, 25 * SCALE, 5 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString(controller.player.health + "/" + controller.player.maxHealth, 8 * SCALE, 24 * SCALE)
+        //g.drawString(help2 + "%", 8 * SCALE, 24 * SCALE) für prozentAnzeige
+
+        //ManaBar
+        g.setColor(Color.BLACK)
+        g.fillRect(4 * SCALE, 30 * SCALE, 25 * SCALE, 5 * SCALE)
+        g.setColor(Color.BLUE)
+        val ManaHelp1 = controller.player.maxMana / 100
+        val ManaHelp2 = controller.player.mana / ManaHelp1
+        val manabarWidth = ManaHelp2 * 25 / 100
+        g.fillRect(4 * SCALE, 30 * SCALE, manabarWidth * SCALE, 5 * SCALE)
+        g.setColor(Color.BLACK)
+        g.drawRect(4 * SCALE, 30 * SCALE, 25 * SCALE, 5 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString(controller.player.mana + "/" + controller.player.maxMana, 8 * SCALE, 34 * SCALE)
+
+        //--Name--LEVEL--
+        g.setColor(Color.BLACK)
+        g.setFont(new Font("TimesRoman", Font.BOLD, 5 * SCALE))
+        g.drawString(controller.player.name, 5 * SCALE, 10 * SCALE)
+        g.drawString("Level:  " + controller.player.lvl, 5 * SCALE, 15 * SCALE)
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 10 * SCALE))
-        //g.drawString(controller.strategy.updateToString, 10 * SCALE, 125 * SCALE)
+        //g.drawString("Health", 5 * SCALE, 10 * SCALE)
         g.drawString("[1]Attack   [2]:Block   [3]:Special   [i]Inventory    [r]:Run", 5 * SCALE, 125 * SCALE)
 
       }
