@@ -4,7 +4,7 @@ import java.awt.{Color, Font, Graphics2D}
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-import scala.swing.{Dimension, Panel}
+import scala.swing.{Button, Dimension, Panel}
 
 case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {

@@ -58,8 +58,6 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       val fight = fightSpriteSheet.sheet
       val fightBackground = fightBackgroundSpriteSheet.sheet
 
-      val canvas = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB)
-      val g = canvas.createGraphics()
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
       override def paint(g: Graphics2D): Unit = {

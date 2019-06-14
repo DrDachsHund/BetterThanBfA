@@ -36,7 +36,7 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
   }
 
   override def drawPanel(SCALE: Int): Panel = {
-    //val img = ImageIO.read(getClass.getResource("Test.png"))
+
     val panel = new Panel {
       val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
       val playerSpriteSheet = new SpriteSheet("Player.png")
@@ -55,9 +55,6 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
       val enemyTextureRed = enemiesSpriteSheet.getSprite(0, 16)
       val enemyTextureGreen = enemiesSpriteSheet.getSprite(0, 0)
 
-
-      val canvas = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB)
-      val g = canvas.createGraphics()
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
       override def paint(g: Graphics2D): Unit = {

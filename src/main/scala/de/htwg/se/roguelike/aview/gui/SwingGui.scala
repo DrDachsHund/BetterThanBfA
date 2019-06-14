@@ -57,6 +57,7 @@ class SwingGui(controller: Controller) extends Reactor {
     state.handle()
     frame.contents = state.drawPanel(controller.SCALE)
     frame.repaint
+    frame.peer.requestFocus()
   }
 
   def closeOperation() {

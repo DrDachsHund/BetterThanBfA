@@ -4,7 +4,7 @@ import de.htwg.se.roguelike.aview._
 import de.htwg.se.roguelike.aview.gui.SwingGui
 import de.htwg.se.roguelike.aview.tui.Tui
 import de.htwg.se.roguelike.controller.{Controller, TileChanged}
-import de.htwg.se.roguelike.model.{Enemy, Level, Player}
+import de.htwg.se.roguelike.model._
 
 import scala.io.StdIn.readLine
 
@@ -13,7 +13,7 @@ object RogueLike {
   val controller = new Controller(player = Player(name = "Player", posX = 5, posY = 5)
     , enemies = Vector(Enemy(name = "TestE1"),
       Enemy(name = "TestE2", posX = 1),
-      Enemy(name = "TestE3", posY = 1)),
+      Enemy(name = "TestE3", posY = 1,inventory = new Inventory(Vector(Weapon("random"),Weapon("random"),Weapon("random")),Vector(),Vector()))),
     level = new Level(9,16))
   val tui: Tui = new Tui(controller)
   val gui = new SwingGui(controller)
