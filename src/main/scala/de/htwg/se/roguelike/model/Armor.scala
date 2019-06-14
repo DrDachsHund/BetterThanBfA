@@ -89,8 +89,8 @@ private object RandomArmor {
       case 1 => Helmet(name = getArmorName("./Helmet.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(2) + 1) //maybe 1-5 und e nach arrity noch +5 ??!?!??!?!?!
       case 2 => Chest(name = getArmorName("./Chest.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(1) + 1)
       case 3 => Pants(name = getArmorName("./Pants.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(1) + 1)
-      case 4 => Boots(name = getArmorName("./Boots.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(9) + 1)
-      case 5 => Gloves(name = getArmorName("./Gloves.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(1) + 1)
+      case 4 => Boots(name = getArmorName("./Boots.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(1) + 1)
+      case 5 => Gloves(name = getArmorName("./Gloves.txt"), value, usable = false, armor, rarity = rarity, textureIndex = Random.nextInt(9) + 1)
     }
   }
 

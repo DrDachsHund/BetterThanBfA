@@ -42,10 +42,15 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
       peer.setLayout(null)
 
+      //enemyItems.peer.setDragEnabled(true) maybe iwi bei inventory?!?!??!?!?
+      //enemyItems.peer.getDragEnabled maybe iwi bei inventory?!?!??!?!?
+
+      val scrollBar = new ScrollPane(enemyItems)
+      scrollBar.peer.setBounds(0, 0, 128 * SCALE, 144 * SCALE)
 
       enemyItems.peer.setBounds(0, 0, 128 * SCALE, 144 * SCALE)
       listenTo(enemyItems.selection)
-      contents += enemyItems
+      contents += scrollBar
 
       val lootButton = new Button("Loot")
       listenTo(lootButton)
