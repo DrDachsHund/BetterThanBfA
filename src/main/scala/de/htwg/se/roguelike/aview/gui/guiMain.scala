@@ -42,18 +42,18 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
       val playerSpriteSheet = new SpriteSheet("Player.png")
       val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
 
-      val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0)
-      val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0)
-      val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16)
-      val levelTextureMerchant = backgroundSpriteSheet.getSprite(16, 16)
+      val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0, 16)
+      val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0, 16)
+      val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16, 16)
+      val levelTextureMerchant = backgroundSpriteSheet.getSprite(16, 16, 16)
 
-      val errorTexture = backgroundSpriteSheet.getSprite(32,16)
+      val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
-      val playerTexture = playerSpriteSheet.getSprite(16, 0)
+      val playerTexture = playerSpriteSheet.getSprite(16, 0, 16)
 
-      val enemyTextureBlue = enemiesSpriteSheet.getSprite(0, 32)
-      val enemyTextureRed = enemiesSpriteSheet.getSprite(0, 16)
-      val enemyTextureGreen = enemiesSpriteSheet.getSprite(0, 0)
+      val enemyTextureBlue = enemiesSpriteSheet.getSprite(0, 32, 16)
+      val enemyTextureRed = enemiesSpriteSheet.getSprite(0, 16, 16)
+      val enemyTextureGreen = enemiesSpriteSheet.getSprite(0, 0, 16)
 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 

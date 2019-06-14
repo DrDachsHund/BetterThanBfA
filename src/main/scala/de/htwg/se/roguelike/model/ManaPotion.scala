@@ -4,7 +4,8 @@ case class ManaPotion(name: String,
                       value: Int,
                       usable: Boolean,
                       power: Int,
-                      rarity: String) extends Potion {
+                      rarity: String,
+                      textureIndex:Int = 0) extends Potion {
 
   override def usePotion(player: Player): Player = {
     super.usePotion(player.copy(mana = player.mana + (player.maxMana / 100 * power)))

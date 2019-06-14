@@ -8,7 +8,7 @@ import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
 import javax.swing.{BoxLayout, ListSelectionModel}
 
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{BorderPanel, BoxPanel, Button, Component, Dimension, FlowPanel, ListView, Orientation, Panel, ScrollBar, ScrollPane}
 
 case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui {
@@ -43,13 +43,13 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       peer.setLayout(null)
 
 
-
       enemyItems.peer.setBounds(0, 0, 128 * SCALE, 144 * SCALE)
+      listenTo(enemyItems.selection)
       contents += enemyItems
 
       val lootButton = new Button("Loot")
       listenTo(lootButton)
-      lootButton.peer.setBounds(128 * SCALE, 124 * SCALE, 100 * SCALE, 20 * SCALE)
+      lootButton.peer.setBounds(128 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += lootButton
 
 
@@ -57,34 +57,42 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
         case ButtonClicked(lb) if lb == lootButton => {
           controller.lootingEnemy(enemyItems.peer.getSelectedIndex + 1)
         }
+        case SelectionChanged(_) => controller.repaint()
       }
 
-      override def paint(g: Graphics2D): Unit = {
+      override def paintComponent(g: Graphics2D): Unit = {
 
         val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
-        val errorTexture = backgroundSpriteSheet.getSprite(32,16)
+        val errorTexture = backgroundSpriteSheet.getSprite(32, 16,16)
 
         enemyItems.peer.getSelectedValue match {
-          case armor:Armor => {
-            case helm: Helmet =>
-            case chest: Chest =>
-            case pants: Pants =>
-            case boots: Boots =>
-            case gloves: Gloves =>
+          case armor: Armor => armor match {
+            case helm: Helmet => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 32 * SCALE, 32 * SCALE, null)
+            case chest: Chest => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
+            case pants: Pants => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
+            case boots: Boots => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
+            case gloves: Gloves => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
           }
-          case weapon:Weapon =>
-          case potion:Potion => {
-            case healPotion:HealPotion =>
-            case manaPotion:ManaPotion =>
-        }
+          case weapon: Weapon => g.drawImage(getWeaponTexture(weapon.textureIndex), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case potion: Potion => potion match {
+            case healPotion: HealPotion => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
+            case manaPotion: ManaPotion => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
+          }
+          case _ => {
+            g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            println("NichtsAusgewählt")
+          }
         }
 
       }
-/*
-      def getHelmTexture(index:Int): BufferedImage = {
-        val helmTexture = new SpriteSheet("HelmTextures.png")
+
+      def getWeaponTexture(index: Int): BufferedImage = {
+        val weaponTextures = new SpriteSheet("WeaponTextures.png")
+        val x = index % 5
+        val y = index / 5
+        weaponTextures.getSprite(32 * x, 32 * y,32)
       }
-      */
+
     }
     panel
   }

@@ -5,4 +5,5 @@ case class Helmet(name: String,
                   usable: Boolean,
                   armor: Int,
                   armorType: String = "Helmet",
-                  rarity: String) extends Armor {}
+                  rarity: String,
+                  textureIndex:Int = 0) extends Armor {}

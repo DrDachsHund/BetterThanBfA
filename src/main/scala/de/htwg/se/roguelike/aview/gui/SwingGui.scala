@@ -43,6 +43,7 @@ class SwingGui(controller: Controller) extends Reactor {
     case _: LevelSizeChanged => redraw
     case _: FightEvent => redraw
     case _: ResolutionEvent => resize
+    case _: RepaintEvent => frame.repaint()
   }
 
   def resize(): Unit = {

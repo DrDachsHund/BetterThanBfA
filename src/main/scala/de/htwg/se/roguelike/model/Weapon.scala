@@ -83,7 +83,7 @@ private object RandomWeapon {
     val random = Random //geht auch so zu schreiben lul wierd
     val weaponType = 1 //random.nextInt(0) + 1 // => ersma 1 weil ja nur Sword derzeit gibt => easy expandable
     weaponType match {
-      case 1 => Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity)
+      case 1 => Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity, textureIndex = (Random.nextInt(3) + 1))
       //case 2 => Bow(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
       //case 3 => Hammer(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
       //etc..

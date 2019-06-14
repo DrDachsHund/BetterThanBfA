@@ -29,6 +29,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     publish(new ResolutionEvent)
   }
 
+  def repaint(): Unit = {
+    publish(new RepaintEvent)
+  }
+
   //--SCALE-for-GUI
 
   //-----------LEVEL----------------

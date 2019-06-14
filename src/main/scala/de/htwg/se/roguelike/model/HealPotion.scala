@@ -4,7 +4,8 @@ case class HealPotion(name: String,
                       value: Int,
                       usable: Boolean,
                       power: Int,
-                      rarity: String) extends Potion {
+                      rarity: String,
+                      textureIndex:Int = 0) extends Potion {
 
   override def usePotion(player: Player): Player = {
     super.usePotion(player.copy(health = player.health + (player.maxHealth / 100 * power)))

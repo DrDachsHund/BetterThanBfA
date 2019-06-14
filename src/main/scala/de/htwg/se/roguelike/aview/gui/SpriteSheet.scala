@@ -6,24 +6,25 @@ import javax.imageio.ImageIO
 
 private class SpriteSheet(val path: String) {
 
-  var loaded:Boolean = false
+  var loaded: Boolean = false
 
-  var sheet:BufferedImage = _
+  var sheet: BufferedImage = _
 
   var sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
   sheetLoad match {
-    case None =>  println("Fehler beim Einlesen bei GUI Spreadsheet!!")
+    case None => println("Fehler beim Einlesen bei GUI Spreadsheet!!")
     case Some(s) => {
       sheet = s
       loaded = true
     }
   }
-  def getSprite(x: Int, y: Int): BufferedImage = {
+
+  def getSprite(x: Int, y: Int, pixelDensity: Int): BufferedImage = {
     if (loaded) {
-      sheet.getSubimage(x, y, 16, 16)
+      sheet.getSubimage(x, y, pixelDensity, pixelDensity)
     } else {
       println("Topkek sollte nicht vorkommen ")
-      new BufferedImage(0,0,BufferedImage.TYPE_INT_RGB)
+      new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB)
     }
   }
 

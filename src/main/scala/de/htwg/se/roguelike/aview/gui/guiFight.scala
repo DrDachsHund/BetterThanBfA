@@ -50,11 +50,11 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
       val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
 
-      val playerTexture = playerSpriteSheet.getSprite(16, 0)
-      val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32)) //zum flippen vll in eigene klasse?!?!?!?
-      val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16))
-      val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0))
-      val errorTexture = backgroundSpriteSheet.getSprite(32, 16)
+      val playerTexture = playerSpriteSheet.getSprite(16, 0,16)
+      val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32,16)) //zum flippen vll in eigene klasse?!?!?!?
+      val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16,16))
+      val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0,16))
+      val errorTexture = backgroundSpriteSheet.getSprite(32, 16,16)
       val fight = fightSpriteSheet.sheet
       val fightBackground = fightBackgroundSpriteSheet.sheet
 

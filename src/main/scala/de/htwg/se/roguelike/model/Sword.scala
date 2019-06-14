@@ -9,7 +9,8 @@ case class Sword(name: String,
                  block: Int,
                  oneHanded: Boolean,
                  rarity: String,
-                 itemLevel: Int = 1) extends Weapon {
+                 itemLevel: Int = 1,
+                 textureIndex:Int = 0) extends Weapon {
 
   private def setItemLevel(lvl: Int): Sword = {
     val random = new Random()

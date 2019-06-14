@@ -5,5 +5,6 @@ case class Chest(name: String,
                  usable: Boolean,
                  armor: Int,
                  armorType: String = "Chest",
-                 rarity: String) extends Armor {}
+                 rarity: String,
+                 textureIndex:Int = 0) extends Armor {}
 
