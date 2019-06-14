@@ -13,7 +13,7 @@ object RogueLike {
   val controller = new Controller(player = Player(name = "Player", posX = 5, posY = 5)
     , enemies = Vector(Enemy(name = "TestE1"),
       Enemy(name = "TestE2", posX = 1),
-      Enemy(name = "TestE3", posY = 1,inventory = new Inventory(Vector(Weapon("random"),Weapon("random"),Weapon("random")),Vector(),Vector()))),
+      Enemy(name = "TestE3", posY = 1,inventory = new Inventory(Vector(Weapon("random"),Weapon("random"),Weapon("random")),Vector(Potion("random")),Vector()))),
     level = new Level(9,16))
   val tui: Tui = new Tui(controller)
   val gui = new SwingGui(controller)

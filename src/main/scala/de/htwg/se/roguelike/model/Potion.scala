@@ -22,14 +22,14 @@ trait Potion extends Item {
 //FactoryMethod
 object Potion {
   def apply(kind: String): Potion = kind match {
-    case "SmallHeal" => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common")
-    case "MediumHeal" => HealPotion(name = "Medium-Heal-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon")
-    case "BigHeal" => HealPotion(name = "Big-Heal-Potion", value = 75, usable = true, power = 75, rarity = "Rare")
-    case "FullHeal" => HealPotion(name = "Full-Heal-Potion", value = 100, usable = true, power = 100, rarity = "Epic")
-    case "SmallMana" => ManaPotion(name = "Small-Mana-Potion", value = 25, usable = false, power = 25, rarity = "Common") // Power noch nicht final, könnte OP sein
-    case "MediumMana" => ManaPotion(name = "Medium-Mana-Potion", value = 50, usable = false, power = 50, rarity = "Uncommon")
-    case "BigMana" => ManaPotion(name = "Big-Mana-Potion", value = 75, usable = false, power = 75, rarity = "Rare")
-    case "FullMana" => ManaPotion(name = "Full-Mana-Potion", value = 100, usable = false, power = 100, rarity = "Epic")
+    case "SmallHeal" => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common",textureIndex = 4)
+    case "MediumHeal" => HealPotion(name = "Medium-Heal-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon",textureIndex = 3)
+    case "BigHeal" => HealPotion(name = "Big-Heal-Potion", value = 75, usable = true, power = 75, rarity = "Rare",textureIndex = 2)
+    case "FullHeal" => HealPotion(name = "Full-Heal-Potion", value = 100, usable = true, power = 100, rarity = "Epic",textureIndex = 1)
+    case "SmallMana" => ManaPotion(name = "Small-Mana-Potion", value = 25, usable = false, power = 25, rarity = "Common",textureIndex = 8) // Power noch nicht final, könnte OP sein
+    case "MediumMana" => ManaPotion(name = "Medium-Mana-Potion", value = 50, usable = false, power = 50, rarity = "Uncommon",textureIndex = 7)
+    case "BigMana" => ManaPotion(name = "Big-Mana-Potion", value = 75, usable = false, power = 75, rarity = "Rare",textureIndex = 6)
+    case "FullMana" => ManaPotion(name = "Full-Mana-Potion", value = 100, usable = false, power = 100, rarity = "Epic",textureIndex = 5)
     case "random" => RandomPotion.getRandomPotion()
 
   }
@@ -41,14 +41,14 @@ private object RandomPotion {
     val random = Random //geht auch so zu schreiben lul wierd
     val armorType = random.nextInt(8) + 1
     armorType match {
-      case 1 => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common")
-      case 2 => HealPotion(name = "Medium-Heal-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon")
-      case 3 => HealPotion(name = "Big-Heal-Potion", value = 75, usable = true, power = 75, rarity = "Rare")
-      case 4 => HealPotion(name = "Full-Heal-Potion", value = 100, usable = true, power = 100, rarity = "Epic")
-      case 5 => ManaPotion(name = "Small-Mana-Potion", value = 25, usable = true, power = 25, rarity = "Common")
-      case 6 => ManaPotion(name = "Medium-Mana-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon")
-      case 7 => ManaPotion(name = "Big-Mana-Potion", value = 75, usable = true, power = 75, rarity = "Rare")
-      case 8 => ManaPotion(name = "Full-Mana-Potion", value = 100, usable = true, power = 100, rarity = "Epic")
+      case 1 => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common",textureIndex = 4)
+      case 2 => HealPotion(name = "Medium-Heal-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon",textureIndex = 3)
+      case 3 => HealPotion(name = "Big-Heal-Potion", value = 75, usable = true, power = 75, rarity = "Rare",textureIndex = 2)
+      case 4 => HealPotion(name = "Full-Heal-Potion", value = 100, usable = true, power = 100, rarity = "Epic",textureIndex = 1)
+      case 5 => ManaPotion(name = "Small-Mana-Potion", value = 25, usable = true, power = 25, rarity = "Common",textureIndex = 8)
+      case 6 => ManaPotion(name = "Medium-Mana-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon",textureIndex = 7)
+      case 7 => ManaPotion(name = "Big-Mana-Potion", value = 75, usable = true, power = 75, rarity = "Rare",textureIndex = 6)
+      case 8 => ManaPotion(name = "Full-Mana-Potion", value = 100, usable = true, power = 100, rarity = "Epic",textureIndex = 5)
     }
   }
 

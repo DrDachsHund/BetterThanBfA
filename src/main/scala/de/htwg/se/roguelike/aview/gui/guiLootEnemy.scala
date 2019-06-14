@@ -63,7 +63,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       override def paintComponent(g: Graphics2D): Unit = {
 
         val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
-        val errorTexture = backgroundSpriteSheet.getSprite(32, 16,16)
+        val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
         enemyItems.peer.getSelectedValue match {
           case armor: Armor => armor match {
@@ -74,10 +74,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
             case gloves: Gloves => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
           }
           case weapon: Weapon => g.drawImage(getWeaponTexture(weapon.textureIndex), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-          case potion: Potion => potion match {
-            case healPotion: HealPotion => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
-            case manaPotion: ManaPotion => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
-          }
+          case potion: Potion => g.drawImage(getPotionTexture(potion.textureIndex), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case _ => {
             g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
             println("NichtsAusgewählt")
@@ -90,7 +87,14 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
         val weaponTextures = new SpriteSheet("WeaponTextures.png")
         val x = index % 5
         val y = index / 5
-        weaponTextures.getSprite(32 * x, 32 * y,32)
+        weaponTextures.getSprite(32 * x, 32 * y, 32)
+      }
+
+      def getPotionTexture(index: Int): BufferedImage = {
+        val weaponTextures = new SpriteSheet("PotionTextures.png")
+        val x = index % 5
+        val y = index / 5
+        weaponTextures.getSprite(32 * x, 32 * y, 32)
       }
 
     }
