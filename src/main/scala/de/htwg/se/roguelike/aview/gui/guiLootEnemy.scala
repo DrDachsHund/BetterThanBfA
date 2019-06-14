@@ -67,14 +67,14 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
         enemyItems.peer.getSelectedValue match {
           case armor: Armor => armor match {
-            case helm: Helmet => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 32 * SCALE, 32 * SCALE, null)
-            case chest: Chest => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
-            case pants: Pants => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
-            case boots: Boots => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
-            case gloves: Gloves => g.drawImage(errorTexture, 130 * SCALE, 0 * SCALE, 16 * SCALE, 16 * SCALE, null)
+            case helm: Helmet => g.drawImage(getTexture(helm.textureIndex,"HelmTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case chest: Chest => g.drawImage(getTexture(chest.textureIndex,"ChestTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case pants: Pants => g.drawImage(getTexture(pants.textureIndex,"PantsTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case boots: Boots => g.drawImage(getTexture(boots.textureIndex,"BootsTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex,"GlovesTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           }
-          case weapon: Weapon => g.drawImage(getWeaponTexture(weapon.textureIndex), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-          case potion: Potion => g.drawImage(getPotionTexture(potion.textureIndex), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex,"WeaponTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case potion: Potion => g.drawImage(getTexture(potion.textureIndex,"PotionTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case _ => {
             g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
             println("NichtsAusgewählt")
@@ -83,20 +83,12 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
       }
 
-      def getWeaponTexture(index: Int): BufferedImage = {
-        val weaponTextures = new SpriteSheet("WeaponTextures.png")
+      def getTexture(index: Int,path:String): BufferedImage = {
+        val weaponTextures = new SpriteSheet(path)
         val x = index % 5
         val y = index / 5
         weaponTextures.getSprite(32 * x, 32 * y, 32)
       }
-
-      def getPotionTexture(index: Int): BufferedImage = {
-        val weaponTextures = new SpriteSheet("PotionTextures.png")
-        val x = index % 5
-        val y = index / 5
-        weaponTextures.getSprite(32 * x, 32 * y, 32)
-      }
-
     }
     panel
   }
