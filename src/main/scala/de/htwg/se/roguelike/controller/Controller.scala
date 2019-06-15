@@ -167,6 +167,27 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   //-----------LOOTING----------------
 
+  def lootAll(): Unit = {
+    while (enemyLoot.size != 0) {
+      val loot = enemyLoot(0)
+
+      loot match {
+        case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
+        case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
+        case _ => "LOOT FEHLER !!!!"
+      }
+
+      var usedItem = enemyLoot.filter(_ == loot)
+      usedItem = usedItem.drop(1)
+      var newLoot = enemyLoot.filterNot(_ == loot)
+      newLoot ++= usedItem
+      enemyLoot = newLoot
+
+    }
+    setGameStatus(GameStatus.LEVEL)
+  }
+
   def lootingEnemy(index: Int): Unit = {
 
     if (enemyLoot.size < 1) setGameStatus(GameStatus.LEVEL)

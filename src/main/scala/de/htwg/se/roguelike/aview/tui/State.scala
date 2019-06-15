@@ -15,6 +15,8 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 
 //0 Grass,1 Portal, 2 Flowers, 3 Enemy, 4 Merchant
 //textures maybe 1-5 und je nach rarity noch +5 ??!?!??!?!?!
+//pause with esc anstatt toolbar für besseres scaling maybe??
+
 
 Tests:
   => GUI:

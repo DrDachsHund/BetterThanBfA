@@ -57,10 +57,18 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       lootButton.peer.setBounds(128 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += lootButton
 
+      val lootAllButton = new Button("Loot All")
+      listenTo(lootAllButton)
+      lootAllButton.peer.setBounds(128 * SCALE, 104 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += lootAllButton
+
 
       reactions += {
         case ButtonClicked(lb) if lb == lootButton => {
           controller.lootingEnemy(enemyItems.peer.getSelectedIndex + 1)
+        }
+        case ButtonClicked(lab) if lab == lootAllButton => {
+          controller.lootAll()
         }
         case SelectionChanged(_) => controller.repaint()
       }
