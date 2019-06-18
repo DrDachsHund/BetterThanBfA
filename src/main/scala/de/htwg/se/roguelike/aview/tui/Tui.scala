@@ -13,7 +13,6 @@ class Tui(controller: Controller) extends Reactor { //with Observer
 
   //State Pattern
   var state: State = new tuiMain(controller, this)
-  var inventoryGameStatus: GameStatus.Value = GameStatus.LEVEL
 
   //GameOver Tui fürs REstarten des Games
   //Start screen tui

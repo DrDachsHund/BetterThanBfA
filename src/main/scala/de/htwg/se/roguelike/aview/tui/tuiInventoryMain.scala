@@ -19,7 +19,7 @@ class tuiInventoryMain(controller: Controller, tui: Tui) extends State {
       case "L" => controller.unEquipLeftHand()
 
 
-      case "x" => controller.setGameStatus(tui.inventoryGameStatus)
+      case "x" => controller.setGameStatus(controller.inventoryGameStatus)
       case "q" =>
       case _ =>
         print("Wrong Input!!!")

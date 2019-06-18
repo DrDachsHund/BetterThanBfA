@@ -16,9 +16,10 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       case "3" => controller.special()
       case "r" => controller.run()
       //case "enter" match
-      case "i" =>
+      case "i" => {
         controller.setGameStatus(GameStatus.INVENTORY)
-      //tui.inventoryGameStatus = GameStatus.FIGHT
+        controller.inventoryGameStatus = GameStatus.FIGHT
+      }
       case _ =>
         print("Wrong Input!!!")
     }
@@ -44,19 +45,19 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
     val panel = new Panel {
 
       //ersma so aber eig eigene texturen für fihgt
-      val playerSpriteSheet = new SpriteSheet("Player.png")
-      val fightSpriteSheet = new SpriteSheet("TextBar.png")
-      val fightBackgroundSpriteSheet = new SpriteSheet("FightBackground1.png")
-      val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
-      val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
+      val playerSpriteSheet = new SpriteSheet("./resources/Player.png")
+      val fightSpriteSheet = new SpriteSheet("./resources/TextBar.png")
+      val fightBackgroundSpriteSheet = new SpriteSheet("./resources/FightBackground1.png")
+      val enemiesSpriteSheet = new SpriteSheet("./resources/Enemy.png")
+      val backgroundSpriteSheet = new SpriteSheet("./resources/16bitSpritesBackground.png")
 
       val playerTexture = playerSpriteSheet.getSprite(16, 0,16)
       val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32,16)) //zum flippen vll in eigene klasse?!?!?!?
       val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16,16))
       val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0,16))
       val errorTexture = backgroundSpriteSheet.getSprite(32, 16,16)
-      val fight = fightSpriteSheet.sheet
-      val fightBackground = fightBackgroundSpriteSheet.sheet
+      val fight = fightSpriteSheet.getImage()
+      val fightBackground = fightBackgroundSpriteSheet.getImage()
 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
@@ -75,6 +76,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
+        g.setFont(new Font("TimesRoman", Font.BOLD, 4 * SCALE))
         //HealthBar
         g.setColor(Color.BLACK)
         g.fillRect(4 * SCALE, 22 * SCALE, 25 * SCALE, 5 * SCALE)

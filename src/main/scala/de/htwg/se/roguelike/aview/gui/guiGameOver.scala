@@ -29,7 +29,7 @@ case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
     new Panel {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
 
-      val gameOver = new SpriteSheet("GameOver.png").sheet
+      val gameOver = new SpriteSheet("./resources/GameOver.png").getImage()
 
       override def paint(g: Graphics2D): Unit = {
         g.drawImage(gameOver, 0, 0, 256 * SCALE, 144 * SCALE, null)

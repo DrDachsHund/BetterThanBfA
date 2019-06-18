@@ -16,7 +16,7 @@ class tuiMain(controller: Controller, tui: Tui) extends State {
       case "y" => controller.redo()
       case "i" =>
         controller.setGameStatus(GameStatus.INVENTORY)
-        tui.inventoryGameStatus = GameStatus.LEVEL
+        controller.inventoryGameStatus = GameStatus.LEVEL
       case _ =>
         print("Wrong Input!!!")
     }

@@ -18,6 +18,10 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
       case "s" => controller.moveDown()
       case "d" => controller.moveRight()
       case "r" => controller.createRandomLevel()
+      case "i" => {
+        controller.inventoryGameStatus = GameStatus.LEVEL
+        controller.setGameStatus(GameStatus.INVENTORY)
+      }
       case "z" => controller.undo()
       case "y" => controller.redo()
       case _ => println("FEHLER IN GUI")
@@ -38,9 +42,9 @@ case class guiMain(controller: Controller, gui: SwingGui) extends StateGui {
   override def drawPanel(SCALE: Int): Panel = {
 
     val panel = new Panel {
-      val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
-      val playerSpriteSheet = new SpriteSheet("Player.png")
-      val enemiesSpriteSheet = new SpriteSheet("Enemy.png")
+      val backgroundSpriteSheet = new SpriteSheet("./resources/16bitSpritesBackground.png")
+      val playerSpriteSheet = new SpriteSheet("./resources/Player.png")
+      val enemiesSpriteSheet = new SpriteSheet("./resources/Enemy.png")
 
       val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0, 16)
       val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0, 16)

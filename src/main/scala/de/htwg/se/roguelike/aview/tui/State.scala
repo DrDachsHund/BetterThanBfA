@@ -38,8 +38,8 @@ LOOT: - 50 Wichtig-
 
 
 Player: -10 Wichtig-
-  => SkillPunkte????  !!                    (Andrê)                                                                                [X}
-  => Zukunft Klassen (VLLT nur Methode); Abilities?????  !      (Andrê)                                                            [X}
+  => SkillPunkte????  !!                    (Andrê)                                                                  [X}
+  => Zukunft Klassen (VLLT nur Methode); Abilities?????  !      (Andrê)                                              [X}
 
 
 Fight: - 50 Wichtig-
@@ -47,8 +47,8 @@ Fight: - 50 Wichtig-
 
 
 Level: - 10 Wichtig-
-  => Truhen    (Andrê)                                                                                                      [X}
-  => Maybe Boss Level alle 5 (BOSS ITEMS), Portale/Höhlen etc. ! => in Interact anpassen                 [X}
+  => Truhen    (Andrê)                                                                                               [X}
+  => Maybe Boss Level alle 5 (BOSS ITEMS), Portale/Höhlen etc. ! => in Interact anpassen                             [X}
   => MAYBE Hindernisse BIG FRAGEZEICHEN ????????????????????????                                                     [X}
   => Eingang Häuser,Shop                                                                                             [X}
 

@@ -17,6 +17,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   var SCALE: Int = 3
 
+  var inventoryGameStatus: GameStatus.Value = GameStatus.LEVEL
+
   //--FIGHT--
   var enemyLoot: Vector[Item] = Vector()
   var currentEnemy: Enemy = Enemy("ControlerFehler")

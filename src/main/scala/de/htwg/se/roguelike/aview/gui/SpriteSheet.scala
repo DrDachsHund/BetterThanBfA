@@ -6,16 +6,27 @@ import javax.imageio.ImageIO
 
 private class SpriteSheet(val path: String) {
 
-  var loaded: Boolean = false
+  private var loaded: Boolean = false
 
-  var sheet: BufferedImage = _
+  private var sheet: BufferedImage = _ //hier maybe noch abfrage wegen fals falsch ist idk
 
-  var sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
+  private var sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
   sheetLoad match {
     case None => println("Fehler beim Einlesen bei GUI Spreadsheet!!")
     case Some(s) => {
       sheet = s
       loaded = true
+    }
+  }
+
+  def isLoaded:Boolean = loaded
+
+  def getImage(): BufferedImage = {
+    if (loaded) {
+      sheet
+    } else {
+      println("Topkek sollte nicht vorkommen ")
+      new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB)
     }
   }
 

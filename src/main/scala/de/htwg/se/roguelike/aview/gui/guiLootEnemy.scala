@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.aview.gui
 
-import java.awt.Graphics2D
+import java.awt.{Color, Font, Graphics2D}
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.aview.tui.State
@@ -42,9 +42,6 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
       peer.setLayout(null)
 
-      //enemyItems.peer.setDragEnabled(true) maybe iwi bei inventory?!?!??!?!?
-      //enemyItems.peer.getDragEnabled maybe iwi bei inventory?!?!??!?!?
-
       val scrollBar = new ScrollPane(enemyItems)
       scrollBar.peer.setBounds(0, 0, 128 * SCALE, 144 * SCALE)
 
@@ -54,40 +51,58 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
       val lootButton = new Button("Loot")
       listenTo(lootButton)
-      lootButton.peer.setBounds(128 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
+      lootButton.peer.setBounds(128 * SCALE, 64 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += lootButton
 
       val lootAllButton = new Button("Loot All")
       listenTo(lootAllButton)
-      lootAllButton.peer.setBounds(128 * SCALE, 104 * SCALE, 128 * SCALE, 20 * SCALE)
+      lootAllButton.peer.setBounds(128 * SCALE, 94 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += lootAllButton
+
+      val exitButton = new Button("Exit")
+      listenTo(exitButton)
+      exitButton.peer.setBounds(128 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += exitButton
 
 
       reactions += {
-        case ButtonClicked(lb) if lb == lootButton => {
-          controller.lootingEnemy(enemyItems.peer.getSelectedIndex + 1)
-        }
-        case ButtonClicked(lab) if lab == lootAllButton => {
-          controller.lootAll()
-        }
+        case ButtonClicked(lb) if lb == lootButton => controller.lootingEnemy(enemyItems.peer.getSelectedIndex + 1)
+        case ButtonClicked(lab) if lab == lootAllButton => controller.lootAll()
+        case ButtonClicked(e) if e == exitButton => controller.setGameStatus(GameStatus.LEVEL)
         case SelectionChanged(_) => controller.repaint()
       }
 
       override def paintComponent(g: Graphics2D): Unit = {
 
-        val backgroundSpriteSheet = new SpriteSheet("16bitSpritesBackground.png")
+        val backgroundSpriteSheet = new SpriteSheet("./resources/16bitSpritesBackground.png")
         val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
+        g.setColor(Color.WHITE)
+        g.fillRect(192 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE)
+        /*
+        g.setColor(Color.BLACK)
+        g.setFont(new Font("TimesRoman", Font.BOLD, 5 * SCALE))
+        enemyItems.peer.getSelectedValue match {
+          case armor: Armor => g.drawString("DEF: " + armor.armor, 222 * SCALE, 0 * SCALE)
+          case weapon: Weapon => g.drawString("ATK: " + weapon.dmg, 202 * SCALE, 0 * SCALE)
+          case potion: Potion => potion match {
+            case hp:HealPotion => g.drawString("HP: " + hp.power, 202 * SCALE, 0 * SCALE)
+            case mp:ManaPotion => g.drawString("MP: " + mp.power, 202 * SCALE, 0 * SCALE)
+          }
+          case _ => g.fillRect(202 * SCALE, 0 * SCALE,100,100)
+        }
+        //geht nict ka zeichnet den string nicht
+        */
         enemyItems.peer.getSelectedValue match {
           case armor: Armor => armor match {
-            case helm: Helmet => g.drawImage(getTexture(helm.textureIndex,"HelmTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case chest: Chest => g.drawImage(getTexture(chest.textureIndex,"ChestTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case pants: Pants => g.drawImage(getTexture(pants.textureIndex,"PantsTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case boots: Boots => g.drawImage(getTexture(boots.textureIndex,"BootsTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex,"GlovesTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case helm: Helmet => g.drawImage(getTexture(helm.textureIndex, "./resources/HelmTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case chest: Chest => g.drawImage(getTexture(chest.textureIndex, "./resources/ChestTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case pants: Pants => g.drawImage(getTexture(pants.textureIndex, "./resources/PantsTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case boots: Boots => g.drawImage(getTexture(boots.textureIndex, "./resources/BootsTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex, "./resources/GlovesTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           }
-          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex,"WeaponTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-          case potion: Potion => g.drawImage(getTexture(potion.textureIndex,"PotionTextures.png"), 130 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex, "./resources/WeaponTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "./resources/PotionTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case _ => {
             g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
             println("NichtsAusgewählt")
@@ -96,7 +111,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
       }
 
-      def getTexture(index: Int,path:String): BufferedImage = {
+      def getTexture(index: Int, path: String): BufferedImage = {
         val weaponTextures = new SpriteSheet(path)
         val x = index % 5
         val y = index / 5

@@ -10,9 +10,10 @@ class tuiFight(controller: Controller, tui: Tui) extends State {
       case "2" => controller.block()
       case "3" => controller.special()
       case "r" => controller.run()
-      case "i" =>
+      case "i" => {
         controller.setGameStatus(GameStatus.INVENTORY)
-        tui.inventoryGameStatus = GameStatus.FIGHT
+        controller.inventoryGameStatus = GameStatus.FIGHT
+      }
       case _ =>
         print("Wrong Input!!!")
     }
