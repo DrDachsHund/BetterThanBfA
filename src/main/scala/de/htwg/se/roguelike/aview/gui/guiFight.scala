@@ -28,7 +28,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
   override def handle(): Unit = {
     val e = controller.gameStatus
     e match {
-      case GameStatus.LEVEL => gui.state = new guiMain(controller, gui)
+      case GameStatus.LEVEL => gui.state = new guiLevel(controller, gui)
       case GameStatus.FIGHT => gui.state = this
       case GameStatus.FIGHTSTATUS => gui.state = this
       case GameStatus.INVENTORY => gui.state = new guiInventoryMain(controller, gui)

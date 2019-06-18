@@ -19,7 +19,7 @@ case class tuiLootEnemy(controller: Controller, tui: Tui) extends State {
   override def handle(): Unit = {
     val e = controller.gameStatus
     e match {
-      case GameStatus.LEVEL => tui.state = new tuiMain(controller, tui)
+      case GameStatus.LEVEL => tui.state = new tuiLevel(controller, tui)
       case GameStatus.LOOTENEMY => tui.state = this
       case _ =>
         print("Wrong GameStatus!!!")

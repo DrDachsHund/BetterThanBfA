@@ -17,7 +17,7 @@ class SwingGui(controller: Controller) extends Reactor {
   val frame = new MainFrame()
   //var SCALE = 3 // jetzt in controller
 
-  var state: StateGui = new guiMain(controller, this)
+  var state: StateGui = new guiLevel(controller, this)
 
   frame.title = "Pog Game"
   setSize
@@ -34,6 +34,8 @@ class SwingGui(controller: Controller) extends Reactor {
   frame.peer.setLocationRelativeTo(null)
   frame.visible = true
   frame.peer.requestFocus() //noch testen
+
+  //playSound()
 
   //--GUI--
 
@@ -85,10 +87,6 @@ class SwingGui(controller: Controller) extends Reactor {
       //println("key typed")
     }
   })
-
-
-  //MouseListener
-
 
 }
 

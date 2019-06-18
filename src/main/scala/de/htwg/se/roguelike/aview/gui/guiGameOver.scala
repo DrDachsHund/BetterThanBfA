@@ -19,7 +19,7 @@ case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
     val e = controller.gameStatus
     e match {
       case GameStatus.GAMEOVER => gui.state = this
-      case GameStatus.LEVEL => gui.state = new guiMain(controller, gui)
+      case GameStatus.LEVEL => gui.state = new guiLevel(controller, gui)
       case _ =>
         print("Wrong GameStatus!!!")
     }

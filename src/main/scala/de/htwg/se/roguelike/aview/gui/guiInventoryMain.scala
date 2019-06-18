@@ -38,7 +38,7 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
     val e = controller.gameStatus
     e match {
       case GameStatus.INVENTORY => gui.state = this
-      case GameStatus.LEVEL => gui.state = new guiMain(controller, gui)
+      case GameStatus.LEVEL => gui.state = new guiLevel(controller, gui)
       case GameStatus.FIGHT => gui.state = new guiFight(controller, gui)
       case GameStatus.INVENTORYPOTION => gui.state = new guiInventoryPotion(controller, gui)
       case GameStatus.INVENTORYARMOR => gui.state = new guiInventoryArmor(controller, gui)

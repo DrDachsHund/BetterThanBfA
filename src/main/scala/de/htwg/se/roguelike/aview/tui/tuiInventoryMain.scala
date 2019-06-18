@@ -32,7 +32,7 @@ class tuiInventoryMain(controller: Controller, tui: Tui) extends State {
     val e = controller.gameStatus
     e match {
       case GameStatus.INVENTORY => tui.state = this
-      case GameStatus.LEVEL => tui.state = new tuiMain(controller, tui)
+      case GameStatus.LEVEL => tui.state = new tuiLevel(controller, tui)
       case GameStatus.FIGHT => tui.state = new tuiFight(controller, tui)
       case GameStatus.INVENTORYPOTION => tui.state = new tuiInventoryPotion(controller, tui)
       case GameStatus.INVENTORYARMOR => tui.state = new tuiInventoryArmor(controller, tui)

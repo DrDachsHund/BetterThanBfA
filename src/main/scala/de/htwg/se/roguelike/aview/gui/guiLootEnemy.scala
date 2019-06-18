@@ -27,7 +27,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
   override def handle(): Unit = {
     val e = controller.gameStatus
     e match {
-      case GameStatus.LEVEL => gui.state = new guiMain(controller, gui)
+      case GameStatus.LEVEL => gui.state = new guiLevel(controller, gui)
       case GameStatus.LOOTENEMY => gui.state = this
       case _ =>
         print("Wrong GameStatus!!!")

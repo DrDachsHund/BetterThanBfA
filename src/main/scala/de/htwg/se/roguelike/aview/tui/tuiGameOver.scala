@@ -16,7 +16,7 @@ case class tuiGameOver(controller: Controller, tui: Tui) extends State {
     val e = controller.gameStatus
     e match {
       case GameStatus.GAMEOVER => tui.state = this
-      case GameStatus.LEVEL => tui.state = new tuiMain(controller, tui)
+      case GameStatus.LEVEL => tui.state = new tuiLevel(controller, tui)
       case _ =>
         print("Wrong GameStatus!!!")
     }
