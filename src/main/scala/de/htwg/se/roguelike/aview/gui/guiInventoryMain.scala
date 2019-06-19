@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.aview.gui
 
-import java.awt.Graphics2D
+import java.awt.{Color, Font, Graphics2D}
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.aview.tui.State
@@ -53,19 +53,18 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
   override def drawPanel(SCALE: Int): Panel = {
 
     val potionButtonImage = new SpriteSheet("resources/potionButtonIcon.png")
-    val potionIcon = new ImageIcon(potionButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
+    val potionIcon = new ImageIcon(potionButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
     val weaponButtonImage = new SpriteSheet("resources/weaponButtonIcon.png")
-    val weaponIcon = new ImageIcon(weaponButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
+    val weaponIcon = new ImageIcon(weaponButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
     val armorButtonImage = new SpriteSheet("resources/armorButtonIcon.png")
-    val armorIcon = new ImageIcon(armorButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
+    val armorIcon = new ImageIcon(armorButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
     val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
-    val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
+    val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
-    def getImageIcon(item:Item):ImageIcon =
-    {
+    def getImageIcon(item: Item): ImageIcon = {
       item match {
         case armor: Armor => armor match {
           case helm: Helmet => getTexture(helm.textureIndex, "resources/HelmTextures.png")
@@ -78,13 +77,13 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
         case potion: Potion => getTexture(potion.textureIndex, "resources/PotionTextures.png")
       }
     }
+
     def getTexture(index: Int, path: String): ImageIcon = {
       val weaponTextures = new SpriteSheet(path)
       val x = index % 5
       val y = index / 5
-      new ImageIcon(weaponTextures.getSprite(32 * x, 32 * y, 32).getScaledInstance(30 * SCALE, 30 * SCALE,java.awt.Image.SCALE_SMOOTH))
+      new ImageIcon(weaponTextures.getSprite(32 * x, 32 * y, 32).getScaledInstance(30 * SCALE, 30 * SCALE, java.awt.Image.SCALE_SMOOTH))
     }
-
 
 
     val panel = new FlowPanel() {
@@ -168,11 +167,36 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
       override def paintComponent(g: Graphics2D): Unit = {
         val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
 
-        g.drawImage(inventoryBackground,0,0,256*SCALE,144*SCALE,null)
+        g.drawImage(inventoryBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
+        //-HealthBar
+        g.setFont(new Font("TimesRoman", Font.BOLD, 7 * SCALE))
+        g.setColor(Color.BLACK)
+        g.fillRect(4 * SCALE, 22 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.RED)
+        val HealthHelp1 = controller.player.maxHealth / 100
+        val HealthHelp2 = controller.player.health / HealthHelp1
+        val healthbarWidth = HealthHelp2 * 105 / 100
+        g.fillRect(4 * SCALE, 22 * SCALE, healthbarWidth * SCALE, 15 * SCALE)
+        g.drawRect(4 * SCALE, 22 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString("Health: " + controller.player.health + "/" + controller.player.maxHealth, 30 * SCALE, 32 * SCALE)
 
+        //-ManaBar
+        g.setColor(Color.BLACK)
+        g.fillRect(4 * SCALE, 40 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.BLUE)
+        val ManaHelp1 = controller.player.maxMana / 100
+        val ManaHelp2 = controller.player.mana / ManaHelp1
+        val manabarWidth = ManaHelp2 * 105 / 100
+        g.fillRect(4 * SCALE, 40 * SCALE, manabarWidth * SCALE, 15 * SCALE)
+        g.drawRect(4 * SCALE, 40 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString("Mana: " + controller.player.mana + "/" + controller.player.maxMana, 30 * SCALE, 50 * SCALE)
 
-
+        //-Level
+        g.setFont(new Font("TimesRoman", Font.BOLD, 10 * SCALE))
+        g.drawString("Level: " + controller.player.lvl, 10 * SCALE, 15 * SCALE)
 
       }
     }
