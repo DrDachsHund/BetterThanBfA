@@ -29,8 +29,8 @@ trait Weapon extends Item {
 
 object Weapon {
   def apply(kind: String): Weapon = kind match {
-    case "rightFist" => Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "")
-    case "leftFist" => Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "")
+    case "rightFist" => Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "",textureIndex = 24)
+    case "leftFist" => Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "",textureIndex = 24)
     case "Sword" => Sword(name = "Sword", value = 10, usable = false, dmg = 10, block = 5, oneHanded = true, rarity = "Common")
     case "random" =>
       val name: String = RandomWeapon.getWeaponName()

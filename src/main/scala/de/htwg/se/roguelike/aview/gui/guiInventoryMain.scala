@@ -1,9 +1,11 @@
 package de.htwg.se.roguelike.aview.gui
 
 import java.awt.Graphics2D
+import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import de.htwg.se.roguelike.model._
 import javax.swing.ImageIcon
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}
@@ -62,6 +64,29 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
     val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
     val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
 
+    def getImageIcon(item:Item):ImageIcon =
+    {
+      item match {
+        case armor: Armor => armor match {
+          case helm: Helmet => getTexture(helm.textureIndex, "resources/HelmTextures.png")
+          case chest: Chest => getTexture(chest.textureIndex, "resources/ChestTextures.png")
+          case pants: Pants => getTexture(pants.textureIndex, "resources/PantsTextures.png")
+          case boots: Boots => getTexture(boots.textureIndex, "resources/BootsTextures.png")
+          case gloves: Gloves => getTexture(gloves.textureIndex, "resources/GlovesTextures.png")
+        }
+        case weapon: Weapon => getTexture(weapon.textureIndex, "resources/WeaponTextures.png")
+        case potion: Potion => getTexture(potion.textureIndex, "resources/PotionTextures.png")
+      }
+    }
+    def getTexture(index: Int, path: String): ImageIcon = {
+      val weaponTextures = new SpriteSheet(path)
+      val x = index % 5
+      val y = index / 5
+      new ImageIcon(weaponTextures.getSprite(32 * x, 32 * y, 32).getScaledInstance(30 * SCALE, 30 * SCALE,java.awt.Image.SCALE_SMOOTH))
+    }
+
+
+
     val panel = new FlowPanel() {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
       peer.setLayout(null)
@@ -91,6 +116,43 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
       exitButton.peer.setBounds(0 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += exitButton
 
+      //---RightSideCurrentEquipped
+
+      val helmetButton = new Button()
+      helmetButton.peer.setIcon(getImageIcon(controller.player.helmet))
+      helmetButton.peer.setBounds(177 * SCALE, 5 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += helmetButton
+
+      val chestButton = new Button()
+      chestButton.peer.setIcon(getImageIcon(controller.player.chest))
+      chestButton.peer.setBounds(177 * SCALE, 40 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += chestButton
+
+      val pantsButton = new Button()
+      pantsButton.peer.setIcon(getImageIcon(controller.player.pants))
+      pantsButton.peer.setBounds(177 * SCALE, 75 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += pantsButton
+
+      val bootsButton = new Button()
+      bootsButton.peer.setIcon(getImageIcon(controller.player.boots))
+      bootsButton.peer.setBounds(177 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += bootsButton
+
+      val glovesButton = new Button()
+      glovesButton.peer.setIcon(getImageIcon(controller.player.gloves))
+      glovesButton.peer.setBounds(137 * SCALE, 5 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += glovesButton
+
+      val weaponRightHandButton = new Button()
+      weaponRightHandButton.peer.setIcon(getImageIcon(controller.player.rightHand))
+      weaponRightHandButton.peer.setBounds(217 * SCALE, 40 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += weaponRightHandButton
+
+      val weaponLeftHandButton = new Button()
+      weaponLeftHandButton.peer.setIcon(getImageIcon(controller.player.leftHand))
+      weaponLeftHandButton.peer.setBounds(137 * SCALE, 40 * SCALE, 30 * SCALE, 30 * SCALE)
+      contents += weaponLeftHandButton
+
       reactions += {
         case ButtonClicked(pb) if pb == potionButton => controller.setGameStatus(GameStatus.INVENTORYPOTION)
         case ButtonClicked(wb) if wb == weaponButton => controller.setGameStatus(GameStatus.INVENTORYWEAPON)
@@ -107,6 +169,11 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
         val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
 
         g.drawImage(inventoryBackground,0,0,256*SCALE,144*SCALE,null)
+
+
+
+
+
       }
     }
     panel
