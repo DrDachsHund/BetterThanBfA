@@ -45,11 +45,11 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
     val panel = new Panel {
 
       //ersma so aber eig eigene texturen für fihgt
-      val playerSpriteSheet = new SpriteSheet("./resources/Player.png")
-      val fightSpriteSheet = new SpriteSheet("./resources/TextBar.png")
-      val fightBackgroundSpriteSheet = new SpriteSheet("./resources/FightBackground1.png")
-      val enemiesSpriteSheet = new SpriteSheet("./resources/Enemy.png")
-      val backgroundSpriteSheet = new SpriteSheet("./resources/16bitSpritesBackground.png")
+      val playerSpriteSheet = new SpriteSheet("resources/Player.png")
+      val fightSpriteSheet = new SpriteSheet("resources/TextBar.png")
+      val fightBackgroundSpriteSheet = new SpriteSheet("resources/FightBackground1.png")
+      val enemiesSpriteSheet = new SpriteSheet("resources/Enemy.png")
+      val backgroundSpriteSheet = new SpriteSheet("resources/16bitSpritesBackground.png")
 
       val playerTexture = playerSpriteSheet.getSprite(16, 0,16)
       val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32,16)) //zum flippen vll in eigene klasse?!?!?!?

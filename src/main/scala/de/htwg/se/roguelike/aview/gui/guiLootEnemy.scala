@@ -74,7 +74,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
       override def paintComponent(g: Graphics2D): Unit = {
 
-        val backgroundSpriteSheet = new SpriteSheet("./resources/16bitSpritesBackground.png")
+        val backgroundSpriteSheet = new SpriteSheet("resources/16bitSpritesBackground.png")
         val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
         g.setColor(Color.WHITE)
@@ -95,14 +95,14 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
         */
         enemyItems.peer.getSelectedValue match {
           case armor: Armor => armor match {
-            case helm: Helmet => g.drawImage(getTexture(helm.textureIndex, "./resources/HelmTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case chest: Chest => g.drawImage(getTexture(chest.textureIndex, "./resources/ChestTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case pants: Pants => g.drawImage(getTexture(pants.textureIndex, "./resources/PantsTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case boots: Boots => g.drawImage(getTexture(boots.textureIndex, "./resources/BootsTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-            case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex, "./resources/GlovesTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case helm: Helmet => g.drawImage(getTexture(helm.textureIndex, "resources/HelmTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case chest: Chest => g.drawImage(getTexture(chest.textureIndex, "resources/ChestTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case pants: Pants => g.drawImage(getTexture(pants.textureIndex, "resources/PantsTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case boots: Boots => g.drawImage(getTexture(boots.textureIndex, "resources/BootsTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex, "resources/GlovesTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           }
-          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex, "./resources/WeaponTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
-          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "./resources/PotionTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex, "resources/WeaponTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case _ => {
             g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
             println("NichtsAusgewählt")

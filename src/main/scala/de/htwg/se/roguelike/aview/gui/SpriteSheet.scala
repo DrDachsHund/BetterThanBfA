@@ -8,9 +8,9 @@ private class SpriteSheet(val path: String) {
 
   private var loaded: Boolean = false
 
-  private var sheet: BufferedImage = _ //hier maybe noch abfrage wegen fals falsch ist idk
+  private var sheet: BufferedImage = _
 
-  private var sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
+  private val sheetLoad: Option[BufferedImage] = Option(ImageIO.read(getClass.getResourceAsStream(path)))
   sheetLoad match {
     case None => println("Fehler beim Einlesen bei GUI Spreadsheet!!")
     case Some(s) => {

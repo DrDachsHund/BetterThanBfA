@@ -50,16 +50,16 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
 
   override def drawPanel(SCALE: Int): Panel = {
 
-    val potionButtonImage = new SpriteSheet("./resources/potionButtonIcon.png")
+    val potionButtonImage = new SpriteSheet("resources/potionButtonIcon.png")
     val potionIcon = new ImageIcon(potionButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
 
-    val weaponButtonImage = new SpriteSheet("./resources/weaponButtonIcon.png")
+    val weaponButtonImage = new SpriteSheet("resources/weaponButtonIcon.png")
     val weaponIcon = new ImageIcon(weaponButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
 
-    val armorButtonImage = new SpriteSheet("./resources/armorButtonIcon.png")
+    val armorButtonImage = new SpriteSheet("resources/armorButtonIcon.png")
     val armorIcon = new ImageIcon(armorButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
 
-    val exitButtonImage = new SpriteSheet("./resources/exitButtonIcon.png")
+    val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
     val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE,java.awt.Image.SCALE_SMOOTH))
 
     val panel = new FlowPanel() {
@@ -104,7 +104,7 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
 
 
       override def paintComponent(g: Graphics2D): Unit = {
-        val inventoryBackground = new SpriteSheet("./resources/inventoryBackground.png").getImage()
+        val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
 
         g.drawImage(inventoryBackground,0,0,256*SCALE,144*SCALE,null)
       }

@@ -42,9 +42,9 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
   override def drawPanel(SCALE: Int): Panel = {
 
     val panel = new Panel {
-      val backgroundSpriteSheet = new SpriteSheet("./resources/16bitSpritesBackground.png")
-      val playerSpriteSheet = new SpriteSheet("./resources/Player.png")
-      val enemiesSpriteSheet = new SpriteSheet("./resources/Enemy.png")
+      val backgroundSpriteSheet = new SpriteSheet("resources/16bitSpritesBackground.png")
+      val playerSpriteSheet = new SpriteSheet("resources/Player.png")
+      val enemiesSpriteSheet = new SpriteSheet("resources/Enemy.png")
 
       val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0, 16)
       val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0, 16)
