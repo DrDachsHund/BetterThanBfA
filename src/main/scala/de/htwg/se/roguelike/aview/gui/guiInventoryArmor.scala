@@ -155,6 +155,16 @@ case class guiInventoryArmor(controller: Controller, gui: SwingGui) extends Stat
       override def paintComponent(g: Graphics2D): Unit = {
         val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
         g.drawImage(inventoryBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
+
+        g.setFont(new Font("TimesRoman", Font.BOLD, 7 * SCALE))
+        g.setColor(Color.WHITE)
+        g.drawString("Helmet: " + controller.player.helmet.armor, 5 * SCALE, 80 * SCALE)
+        g.drawString("Chest: " + controller.player.chest.armor, 50 * SCALE, 80 * SCALE)
+        g.drawString("Pants: " + controller.player.pants.armor, 95 * SCALE, 80 * SCALE)
+        g.drawString("Boots: " + controller.player.boots.armor, 5 * SCALE, 95 * SCALE)
+        g.drawString("Gloves: " + controller.player.gloves.armor, 50 * SCALE, 95 * SCALE)
+        g.drawString("R-Hand: " + controller.player.rightHand.dmg, 95 * SCALE, 90 * SCALE)
+        g.drawString("L-Hand: " + controller.player.leftHand.dmg, 95 * SCALE, 100 * SCALE)
       }
     }
     panel
