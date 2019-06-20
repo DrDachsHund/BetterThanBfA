@@ -79,10 +79,10 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
     }
 
     def getTexture(index: Int, path: String): ImageIcon = {
-      val weaponTextures = new SpriteSheet(path)
+      val textures = new SpriteSheet(path)
       val x = index % 5
       val y = index / 5
-      new ImageIcon(weaponTextures.getSprite(32 * x, 32 * y, 32).getScaledInstance(30 * SCALE, 30 * SCALE, java.awt.Image.SCALE_SMOOTH))
+      new ImageIcon(textures.getSprite(32 * x, 32 * y, 32).getScaledInstance(30 * SCALE, 30 * SCALE, java.awt.Image.SCALE_SMOOTH))
     }
 
 

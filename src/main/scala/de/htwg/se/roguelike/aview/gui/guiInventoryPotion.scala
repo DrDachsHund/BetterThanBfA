@@ -1,9 +1,16 @@
 package de.htwg.se.roguelike.aview.gui
 
+import java.awt.image.BufferedImage
+import java.awt.{Color, Font, Graphics2D}
+
 import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import de.htwg.se.roguelike.model._
+import javax.swing.ImageIcon
+import javax.xml.ws.handler.MessageContext.Scope
 
-import scala.swing.{Dimension, Panel}
+import scala.swing.event.{ButtonClicked, SelectionChanged}
+import scala.swing.{Button, Dimension, FlowPanel, ListView, Panel, ScrollPane}
 
 case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
@@ -29,8 +36,107 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
   }
 
   override def drawPanel(SCALE: Int): Panel = {
-    new Panel {
+
+    val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
+    val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val panel = new FlowPanel() {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+      peer.setLayout(null)
+
+
+      var playerItems = new ListView(controller.player.inventory.potions)
+      val scrollBar = new ScrollPane(playerItems)
+      scrollBar.peer.setBounds(128 * SCALE, 0, 128 * SCALE, 72 * SCALE)
+
+      playerItems.peer.setBounds(128 * SCALE, 0, 128 * SCALE, 72 * SCALE)
+      listenTo(playerItems.selection)
+      contents += scrollBar
+
+      val use = new Button()
+      //equip.peer.setIcon(equipIcon)
+      listenTo(use)
+      use.peer.setBounds(0 * SCALE, 104 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += use
+
+      val exitButton = new Button()
+      exitButton.peer.setIcon(exitIcon)
+      listenTo(exitButton)
+      exitButton.peer.setBounds(0 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += exitButton
+
+      reactions += {
+        case ButtonClicked(e) if e == use => controller.usePotion(playerItems.peer.getSelectedIndex + 1)
+        case ButtonClicked(e) if e == exitButton => controller.setGameStatus(GameStatus.INVENTORY)
+        case SelectionChanged(_) => controller.repaint()
+      }
+
+      //enemyItems.peer.setDragEnabled(true) maybe iwi bei inventory?!?!??!?!?
+      //enemyItems.peer.getDragEnabled maybe iwi bei inventory?!?!??!?!?
+
+
+      override def paintComponent(g: Graphics2D): Unit = {
+        val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
+        g.drawImage(inventoryBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
+
+        //-HealthBar
+        g.setFont(new Font("TimesRoman", Font.BOLD, 7 * SCALE))
+        g.setColor(Color.BLACK)
+        g.fillRect(4 * SCALE, 22 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.RED)
+        val HealthHelp1 = controller.player.maxHealth / 100
+        val HealthHelp2 = controller.player.health / HealthHelp1
+        val healthbarWidth = HealthHelp2 * 105 / 100
+        g.fillRect(4 * SCALE, 22 * SCALE, healthbarWidth * SCALE, 15 * SCALE)
+        g.drawRect(4 * SCALE, 22 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString("Health: " + controller.player.health + "/" + controller.player.maxHealth, 30 * SCALE, 32 * SCALE)
+
+        //-ManaBar
+        g.setColor(Color.BLACK)
+        g.fillRect(4 * SCALE, 40 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.BLUE)
+        val ManaHelp1 = controller.player.maxMana / 100
+        val ManaHelp2 = controller.player.mana / ManaHelp1
+        val manabarWidth = ManaHelp2 * 105 / 100
+        g.fillRect(4 * SCALE, 40 * SCALE, manabarWidth * SCALE, 15 * SCALE)
+        g.drawRect(4 * SCALE, 40 * SCALE, 105 * SCALE, 15 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString("Mana: " + controller.player.mana + "/" + controller.player.maxMana, 30 * SCALE, 50 * SCALE)
+
+        //-Level
+        g.setFont(new Font("TimesRoman", Font.BOLD, 10 * SCALE))
+        g.drawString("Level: " + controller.player.lvl, 10 * SCALE, 15 * SCALE)
+
+        //-Stats
+        g.setFont(new Font("TimesRoman", Font.BOLD, 7 * SCALE))
+        g.setColor(Color.WHITE)
+        g.drawString("Helmet: " + controller.player.helmet.armor, 5 * SCALE, 80 * SCALE)
+        g.drawString("Chest: " + controller.player.chest.armor, 50 * SCALE, 80 * SCALE)
+        g.drawString("Pants: " + controller.player.pants.armor, 95 * SCALE, 80 * SCALE)
+        g.drawString("Boots: " + controller.player.boots.armor, 5 * SCALE, 95 * SCALE)
+        g.drawString("Gloves: " + controller.player.gloves.armor, 50 * SCALE, 95 * SCALE)
+        g.drawString("R-Hand: " + controller.player.rightHand.dmg, 95 * SCALE, 90 * SCALE)
+        g.drawString("L-Hand: " + controller.player.leftHand.dmg, 95 * SCALE, 100 * SCALE)
+
+
+        //-PotionIcon
+        playerItems.peer.getSelectedValue match {
+          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 160 * SCALE, 75 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case _ => {
+            g.drawImage(getTexture(24, "resources/PotionTextures.png"), 160 * SCALE, 75 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            println("NichtsAusgewählt")
+          }
+        }
+      }
+
+      def getTexture(index: Int, path: String): BufferedImage = {
+        val textures = new SpriteSheet(path)
+        val x = index % 5
+        val y = index / 5
+        textures.getSprite(32 * x, 32 * y, 32)
+      }
     }
+    panel
   }
 }
