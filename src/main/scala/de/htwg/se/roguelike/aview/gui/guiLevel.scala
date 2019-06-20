@@ -34,6 +34,7 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
       case GameStatus.LEVEL => gui.state = this
       case GameStatus.FIGHT => gui.state = new guiFight(controller, gui)
       case GameStatus.INVENTORY => gui.state = new guiInventoryMain(controller, gui)
+      case GameStatus.MERCHANT => gui.state = new guiMerchant(controller, gui)
       case _ =>
         print("Wrong GameStatus!!!")
     }

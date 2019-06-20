@@ -29,6 +29,7 @@ class tuiLevel(controller: Controller, tui: Tui) extends State {
       case GameStatus.LEVEL => tui.state = this
       case GameStatus.FIGHT => tui.state = new tuiFight(controller, tui)
       case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller, tui)
+      case GameStatus.MERCHANT => tui.state = new tuiMerchant(controller, tui)
       case _ =>
         print("Wrong GameStatus!!!")
     }

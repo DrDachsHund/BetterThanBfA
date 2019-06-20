@@ -94,16 +94,15 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       strategy = new StrategyFight
       //setGameStatus(GameStatus.FIGHT) //schreibt sonst 2 mal fight
       //publish(new FightEvent)
-    }
-    if (player.posX == portal.posX && player.posY == portal.posY) {
+    } else if (player.posX == portal.posX && player.posY == portal.posY) {
       portal = Portal()
       createRandomLevel()
       lvlDepth += 1
       //notifyObservers()
       publish(new TileChanged)
-    }
-    if (player.posX == merchant.posX && player.posY == merchant.posY) {
-      println("DXDXXDXDDXDXDX")
+    } else if (player.posX == merchant.posX && player.posY == merchant.posY) {
+      setGameStatus(GameStatus.MERCHANT)
+      publish(new TileChanged)
     }
   }
 
@@ -440,6 +439,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       case GameStatus.INVENTORYARMOR => strategy = new StrategyArmor
       case GameStatus.PLAYERLEVELUP => strategy = new StrategyPlayerLevelUp
       case GameStatus.LOOTENEMY => strategy = new StrategyLootEnemy
+      case _ => println("Fehlender GAMESTATUS!!!!!!!!!!!!")
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -651,5 +651,43 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   //-----------INVENTORY----------------
+
+  def inventoryAsOneVector(): Vector[Item] = {
+    var items: Vector[Item] = player.inventory.weapons
+    items ++= player.inventory.armor
+    items ++= player.inventory.potions
+    items
+  }
+
+  def sellItem(index: Int): Unit = {
+    val items = inventoryAsOneVector()
+
+    if (items.size < 1) {
+      println("Keine Items Vorhanden!!!")
+    } else if (index <= items.size && index > 0) {
+      val itemToSell = items(index)
+
+
+      var usedItem = player.inventory.armor.filter(_ == itemToSell)
+      var newItems = items.filterNot(_ == itemToSell)
+      newItems ++= usedItem
+
+      var newWeapons: Vector[Weapon] = Vector()
+      var newArmor: Vector[Armor] = Vector()
+      var newPotion: Vector[Potion] = Vector()
+
+      while (newItems.size > 0) {
+        newItems(0) match {
+          case w: Weapon => newWeapons ++= w :: Nil
+          case a: Armor => newArmor ++= a :: Nil
+          case p: Potion => newPotion ++= p :: Nil
+        }
+      }
+
+      player = player.copy(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden + itemToSell.value)
+    } else println("CONTROLLER INKOREKTER INDEX => " + index)
+    //notifyObservers()
+    publish(new TileChanged)
+  }
 
 }
