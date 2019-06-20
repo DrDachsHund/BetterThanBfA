@@ -46,7 +46,7 @@ case class Player(name: String,
 
   def lvlUpAttack: Player = this.copy(attack = attack + 10)
 
-  def getScore(levelDepth: Int): Int = killCounter + lvl * levelDepth
+  def getScore(levelDepth: Int): Int = gulden * killCounter + lvl * levelDepth
 
   override def toString: String =
     "Name: " + name +

@@ -313,7 +313,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val oldLvl: Int = player.lvl
       level = level.removeElement(currentEnemy.posY, currentEnemy.posX, 5)
       player = player.lvlUp(currentEnemy.exp)
-      player = player.copy(killCounter = player.killCounter + 1)
+      player = player.copy(killCounter = player.killCounter + 1, gulden = player.gulden + currentEnemy.gulden)
       enemyLoot = currentEnemy.inventory.weapons //für loot
       enemyLoot = enemyLoot ++ currentEnemy.inventory.potions
       enemyLoot = enemyLoot ++ currentEnemy.inventory.armor

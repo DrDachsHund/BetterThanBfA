@@ -21,12 +21,14 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 
 Tests:
   => GUI:
-    => Start Screen mit options and load maybe(Marvin)
-    => Game Over Screen
-    => Fight Section
-    => Inventory
+    => Start Screen mit options and load maybe                                                               (Marvin)[X}
+    => Game Over Screen => noch buttons und eventuel generell bessermachen
+    => Fight Section => noch buttons und maybe iwi animation anzeige ka wie viel dmg gegner player macht
+    => Inventory => noch ein paar buttons mit ImageIcon versehen
 
-MUSIC!!! => geht nur mit javaFX maybe same änlich wie ScalaFx für gui
+    => maybe noch ne methode in inventory die die items automatisch nach wert atk oder rarity sortiert für bessere übersicht
+
+MUSIC!!! => geht mit eventuel clip da kann mann dan auch iwi ton einstellen und loopen!??!?!!?!?
 
 
 EXTRA FÜR SPÄTER:
@@ -39,8 +41,8 @@ LOOT: - 50 Wichtig-
 
 
 Player: -10 Wichtig-
-  => SkillPunkte????  !!                    (Andrê)                                                                  [X}
-  => Zukunft Klassen (VLLT nur Methode); Abilities?????  !      (Andrê)                                              [X}
+  => SkillPunkte????  !!                                                                                      (Andrê)[X}
+  => Zukunft Klassen (VLLT nur Methode); Abilities?????  !                                                    (Andrê)[X}
 
 
 Fight: - 50 Wichtig-
@@ -48,14 +50,14 @@ Fight: - 50 Wichtig-
 
 
 Level: - 10 Wichtig-
-  => Truhen    (Andrê)                                                                                               [X}
+  => Truhen                                                                                                   (Andrê)[X}
   => Maybe Boss Level alle 5 (BOSS ITEMS), Portale/Höhlen etc. ! => in Interact anpassen                             [X}
   => MAYBE Hindernisse BIG FRAGEZEICHEN ????????????????????????                                                     [X}
   => Eingang Häuser,Shop                                                                                             [X}
 
 
 Merchant: - 0 Wichtig-
-  => Shop (Marvin)
+  => Shop                                                                                                    (Marvin)[X}
   => Random Items (Mehr/Bessere Items bei größerer Level Tiefe)
 
 Enemy Resistance + Weapon Interaction (FIRE 2x DMG to ICE RES)

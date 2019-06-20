@@ -211,7 +211,9 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
 
         //-Level
         g.setFont(new Font("TimesRoman", Font.BOLD, 10 * SCALE))
-        g.drawString("Level: " + controller.player.lvl + "       ATK: " + controller.player.attack, 10 * SCALE, 15 * SCALE)
+        g.drawString("Level: " + controller.player.lvl, 10 * SCALE, 15 * SCALE)
+        g.drawString("ATK: " + controller.player.attack, 70 * SCALE, 10 * SCALE)
+        g.drawString("Gold: " + controller.player.gulden, 70 * SCALE, 20 * SCALE)
 
       }
     }
