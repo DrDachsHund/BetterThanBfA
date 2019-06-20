@@ -106,7 +106,7 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
 
         //-Level
         g.setFont(new Font("TimesRoman", Font.BOLD, 10 * SCALE))
-        g.drawString("Level: " + controller.player.lvl, 10 * SCALE, 15 * SCALE)
+        g.drawString("Level: " + controller.player.lvl + "       ATK: " + controller.player.attack, 10 * SCALE, 15 * SCALE)
 
         //-Stats
         g.setFont(new Font("TimesRoman", Font.BOLD, 7 * SCALE))

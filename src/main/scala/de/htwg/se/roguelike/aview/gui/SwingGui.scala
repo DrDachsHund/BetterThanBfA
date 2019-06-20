@@ -96,7 +96,7 @@ private class GMenuBar(controller: Controller) extends MenuBar {
   contents += new Menu("File") {
     mnemonic = Key.F //Dose not work
     contents += new MenuItem(Action("New") {
-      controller.createLevel()
+      controller.createLevel() //hier eig noch controller neues game aufrufen und nicht einfach neue bzw gleiche map
     })
     mnemonic = Key.R
     contents += new MenuItem(Action("Random") {

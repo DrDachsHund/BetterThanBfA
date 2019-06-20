@@ -137,6 +137,8 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.setFont(new Font("TimesRoman", Font.BOLD, 5 * SCALE))
         g.drawString(controller.player.name, 5 * SCALE, 10 * SCALE)
         g.drawString("Level:  " + controller.player.lvl, 5 * SCALE, 15 * SCALE)
+        g.drawString(controller.currentEnemy.name, 226 * SCALE, 10 * SCALE)
+        g.drawString("Level:  " + controller.currentEnemy.lvl, 226 * SCALE, 15 * SCALE)
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 10 * SCALE))
         //g.drawString("Health", 5 * SCALE, 10 * SCALE)

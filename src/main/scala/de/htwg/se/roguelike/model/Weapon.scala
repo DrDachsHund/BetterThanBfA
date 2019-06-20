@@ -24,7 +24,7 @@ trait Weapon extends Item {
 
   def getScaledWeapon(lvl: Int): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
 
-  override def toString: String = {
+  override def toString: String = { //eig unnötig da auf 3nachkommastellen lul und nicht in gui für zahl benutzt werden kann
     var sb = new StringBuilder
     sb.append("(" + rarity + ") " + name + " dmg: ")
     if (dmg >= 1000) {

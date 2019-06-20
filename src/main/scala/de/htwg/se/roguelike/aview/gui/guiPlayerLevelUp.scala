@@ -1,9 +1,12 @@
 package de.htwg.se.roguelike.aview.gui
 
+import java.awt.{Color, Font, Graphics2D}
+
 import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-import scala.swing.{Dimension, Panel}
+import scala.swing.event.ButtonClicked
+import scala.swing.{Button, Dimension, FlowPanel, Panel}
 
 case class guiPlayerLevelUp(controller: Controller, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
@@ -28,8 +31,65 @@ case class guiPlayerLevelUp(controller: Controller, gui: SwingGui) extends State
   }
 
   override def drawPanel(SCALE: Int): Panel = {
-    new Panel {
+    val panel = new FlowPanel() {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+      peer.setLayout(null)
+
+      val health = new Button()
+      //health.peer.setIcon(healthIcon)
+      listenTo(health)
+      health.peer.setBounds(64 * SCALE, 34 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += health
+
+      val mana = new Button()
+      //mana.peer.setIcon(manaIcon)
+      listenTo(mana)
+      mana.peer.setBounds(64 * SCALE, 64 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += mana
+
+      val attack = new Button()
+      //attack.peer.setIcon(attackIcon)
+      listenTo(attack)
+      attack.peer.setBounds(64 * SCALE, 94 * SCALE, 128 * SCALE, 20 * SCALE)
+      contents += attack
+
+      reactions += {
+        case ButtonClicked(h) if h == health => controller.lvlUpHealth()
+        case ButtonClicked(m) if m == mana => controller.lvlUpMana()
+        case ButtonClicked(a) if a == attack => controller.lvlUpAttack()
+      }
+
+      override def paintComponent(g: Graphics2D): Unit = {
+        val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
+
+        g.drawImage(inventoryBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
+
+        //-HealthBar
+        g.setFont(new Font("TimesRoman", Font.BOLD, 7 * SCALE))
+        g.setColor(Color.BLACK)
+        g.fillRect(64 * SCALE, 9 * SCALE, 128 * SCALE, 15 * SCALE)
+        g.setColor(Color.RED)
+        val HealthHelp1 = controller.player.maxHealth / 100
+        val HealthHelp2 = controller.player.health / HealthHelp1
+        val healthbarWidth = HealthHelp2 * 128 / 100
+        g.fillRect(64 * SCALE, 9 * SCALE, healthbarWidth * SCALE, 15 * SCALE)
+        g.drawRect(64 * SCALE, 9 * SCALE, 128 * SCALE, 15 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString("Health: " + controller.player.health + "/" + controller.player.maxHealth, 96 * SCALE, 19 * SCALE)
+
+        //-ManaBar
+        g.setColor(Color.BLACK)
+        g.fillRect(64 * SCALE, 124 * SCALE, 128 * SCALE, 15 * SCALE)
+        g.setColor(Color.BLUE)
+        val ManaHelp1 = controller.player.maxMana / 100
+        val ManaHelp2 = controller.player.mana / ManaHelp1
+        val manabarWidth = ManaHelp2 * 128 / 100
+        g.fillRect(64 * SCALE, 124 * SCALE, manabarWidth * SCALE, 15 * SCALE)
+        g.drawRect(64 * SCALE, 124 * SCALE, 128 * SCALE, 15 * SCALE)
+        g.setColor(Color.WHITE)
+        g.drawString("Mana: " + controller.player.mana + "/" + controller.player.maxMana, 96 * SCALE, 134 * SCALE)
+      }
     }
+    panel
   }
 }
