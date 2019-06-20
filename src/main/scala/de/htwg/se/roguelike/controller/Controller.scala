@@ -9,7 +9,7 @@ import scala.util.Random
 class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Publisher { //with Observer
 
   val fight = new Fight
-  var gameStatus: GameStatus.Value = GameStatus.LEVEL
+  var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
   var portal = Portal()
   var merchant = Merchant(inventory = new Inventory(Vector(), Vector(), Vector()))

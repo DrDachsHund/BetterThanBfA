@@ -17,7 +17,7 @@ class SwingGui(controller: Controller) extends Reactor {
   val frame = new MainFrame()
   //var SCALE = 3 // jetzt in controller
 
-  var state: StateGui = new guiLevel(controller, this)
+  var state: StateGui = new guiStartScreen(controller, this)
 
   frame.title = "Pog Game"
   setSize
