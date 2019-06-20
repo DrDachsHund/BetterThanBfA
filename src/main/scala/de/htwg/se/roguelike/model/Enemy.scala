@@ -61,7 +61,7 @@ case class Enemy(name: String = "Skeleton",
       case 0 => this.copy(lvl = lvl + lvlBuffer, exp = exp * (lvl + lvlBuffer), gulden = gulden * (lvl + lvlBuffer))
       case 1 =>
         if (lvl - lvlBuffer < 1)
-          this.copy(lvl = 1, exp = exp * (lvl - lvlBuffer), gulden = gulden * (lvl - lvlBuffer))
+          return this.copy(lvl = 1, exp = exp * (lvl - lvlBuffer), gulden = gulden * (lvl - lvlBuffer))
         return this.copy(lvl = lvl - lvlBuffer, exp = exp * (lvl - lvlBuffer), gulden = gulden * (lvl - lvlBuffer))
     }
   }

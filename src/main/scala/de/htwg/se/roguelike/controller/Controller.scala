@@ -113,6 +113,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def newGame(): Unit = {
     player = Player(name = "Player", posX = 5, posY = 5)
+    lvlDepth = 0
     createRandomLevel()
     setGameStatus(GameStatus.LEVEL)
     publish(new TileChanged)
