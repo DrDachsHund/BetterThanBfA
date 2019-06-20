@@ -120,36 +120,43 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
       val helmetButton = new Button()
       helmetButton.peer.setIcon(getImageIcon(controller.player.helmet))
       helmetButton.peer.setBounds(177 * SCALE, 5 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(helmetButton)
       contents += helmetButton
 
       val chestButton = new Button()
       chestButton.peer.setIcon(getImageIcon(controller.player.chest))
       chestButton.peer.setBounds(177 * SCALE, 40 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(chestButton)
       contents += chestButton
 
       val pantsButton = new Button()
       pantsButton.peer.setIcon(getImageIcon(controller.player.pants))
       pantsButton.peer.setBounds(177 * SCALE, 75 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(pantsButton)
       contents += pantsButton
 
       val bootsButton = new Button()
       bootsButton.peer.setIcon(getImageIcon(controller.player.boots))
       bootsButton.peer.setBounds(177 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(bootsButton)
       contents += bootsButton
 
       val glovesButton = new Button()
       glovesButton.peer.setIcon(getImageIcon(controller.player.gloves))
       glovesButton.peer.setBounds(137 * SCALE, 5 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(glovesButton)
       contents += glovesButton
 
       val weaponRightHandButton = new Button()
       weaponRightHandButton.peer.setIcon(getImageIcon(controller.player.rightHand))
       weaponRightHandButton.peer.setBounds(217 * SCALE, 40 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(weaponRightHandButton)
       contents += weaponRightHandButton
 
       val weaponLeftHandButton = new Button()
       weaponLeftHandButton.peer.setIcon(getImageIcon(controller.player.leftHand))
       weaponLeftHandButton.peer.setBounds(137 * SCALE, 40 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(weaponLeftHandButton)
       contents += weaponLeftHandButton
 
       reactions += {
@@ -157,6 +164,14 @@ case class guiInventoryMain(controller: Controller, gui: SwingGui) extends State
         case ButtonClicked(wb) if wb == weaponButton => controller.setGameStatus(GameStatus.INVENTORYWEAPON)
         case ButtonClicked(ab) if ab == armorButton => controller.setGameStatus(GameStatus.INVENTORYARMOR)
         case ButtonClicked(e) if e == exitButton => controller.setGameStatus(controller.inventoryGameStatus)
+        case ButtonClicked(b) if b == helmetButton => controller.unEquipHelmet()
+        case ButtonClicked(b) if b == chestButton => controller.unEquipChest()
+        case ButtonClicked(b) if b == pantsButton => controller.unEquipPants()
+        case ButtonClicked(b) if b == bootsButton => controller.unEquipBoots()
+        case ButtonClicked(b) if b == glovesButton => controller.unEquipGloves()
+        case ButtonClicked(b) if b == weaponRightHandButton => controller.unEquipRightHand()
+        case ButtonClicked(b) if b == weaponLeftHandButton => controller.unEquipLeftHand()
+
         //case SelectionChanged(_) => controller.repaint()
       }
 

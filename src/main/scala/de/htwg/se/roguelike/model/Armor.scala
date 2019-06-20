@@ -21,6 +21,8 @@ trait Armor extends Item {
   //var special = specaial random!!!!
   //
   //def specals1 ... usw
+
+  override def toString: String = armorType + ": (" + rarity + ") " + name + " armor: " + armor + " value: " + value
 }
 
 //FactoryMethod
@@ -32,11 +34,11 @@ object Armor {
     case "Pants" => Pants(name = "Pants", value = 10, usable = false, armor = 10, rarity = "Common")
     case "Boots" => Boots(name = "Boots", value = 10, usable = false, armor = 10, rarity = "Common")
     case "Gloves" => Gloves(name = "Gloves", value = 10, usable = false, armor = 10, rarity = "Common")
-    case "noHelmet" => Helmet(name = "Head", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common",textureIndex = 24)
-    case "noChest" => Chest(name = "Body", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common",textureIndex = 24)
-    case "noPants" => Pants(name = "Legs", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common",textureIndex = 24)
-    case "noBoots" => Boots(name = "Feet", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common",textureIndex = 24)
-    case "noGloves" => Gloves(name = "Hands", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common",textureIndex = 24)
+    case "noHelmet" => Helmet(name = "Head", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24)
+    case "noChest" => Chest(name = "Body", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24)
+    case "noPants" => Pants(name = "Legs", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24)
+    case "noBoots" => Boots(name = "Feet", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24)
+    case "noGloves" => Gloves(name = "Hands", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24)
     case "random" =>
       val rarity: String = RandomArmor.getRarity()
       val (value, armor) = RandomArmor.getStats(rarity)
