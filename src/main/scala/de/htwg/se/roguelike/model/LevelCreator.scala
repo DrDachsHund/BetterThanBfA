@@ -9,7 +9,7 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
     for (x <- enemies) {
-      level = Level(level.map.replaceTile(x.posX, x.posY, Tile(3)))
+      level = Level(level.map.replaceTile(x.posY, x.posX, Tile(3)))
     }
 
     level
