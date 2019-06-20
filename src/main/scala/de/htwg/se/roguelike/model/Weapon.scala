@@ -80,7 +80,7 @@ private object RandomWeapon {
   }
 
   def getWeaponName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("Weapons.txt"))
+    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("resources/Weapons.txt"))
 
     fileStream match {
       case None => return "Waffen-Name-Fehler-Beim-Laden"
