@@ -3,7 +3,9 @@ package de.htwg.se.roguelike.model
 trait Entity {
   val name: String
   val health: Int
+  val maxHealth: Int
   val mana: Int
+  val maxMana:Int
   val attack: Int
   val lvl: Int
   val exp: Int

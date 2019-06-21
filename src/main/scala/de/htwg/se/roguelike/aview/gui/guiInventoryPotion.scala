@@ -3,11 +3,11 @@ package de.htwg.se.roguelike.aview.gui
 import java.awt.image.BufferedImage
 import java.awt.{Color, Font, Graphics2D}
 
-import de.htwg.se.roguelike.aview.tui.State
+//import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
 import javax.swing.ImageIcon
-import javax.xml.ws.handler.MessageContext.Scope
+//import javax.xml.ws.handler.MessageContext.Scope
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{Button, Dimension, FlowPanel, ListView, Panel, ScrollPane}
@@ -84,9 +84,18 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
         g.setColor(Color.BLACK)
         g.fillRect(4 * SCALE, 22 * SCALE, 105 * SCALE, 15 * SCALE)
         g.setColor(Color.RED)
-        val HealthHelp1 = controller.player.maxHealth / 100
-        val HealthHelp2 = controller.player.health / HealthHelp1
-        val healthbarWidth = HealthHelp2 * 105 / 100
+
+        var HealthHelp1 = 0
+        var healthbarWidth = 0
+        if (controller.player.maxHealth < 200) {
+          HealthHelp1 = controller.player.maxHealth / 100
+          val HealthHelp2 = controller.player.health / HealthHelp1
+          healthbarWidth = HealthHelp2 * 105 / controller.player.maxHealth
+        } else {
+          HealthHelp1 = controller.player.maxHealth / 100
+          healthbarWidth = controller.player.health * 105 / controller.player.maxHealth
+        }
+
         g.fillRect(4 * SCALE, 22 * SCALE, healthbarWidth * SCALE, 15 * SCALE)
         g.drawRect(4 * SCALE, 22 * SCALE, 105 * SCALE, 15 * SCALE)
         g.setColor(Color.WHITE)
@@ -96,9 +105,18 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
         g.setColor(Color.BLACK)
         g.fillRect(4 * SCALE, 40 * SCALE, 105 * SCALE, 15 * SCALE)
         g.setColor(Color.BLUE)
-        val ManaHelp1 = controller.player.maxMana / 100
-        val ManaHelp2 = controller.player.mana / ManaHelp1
-        val manabarWidth = ManaHelp2 * 105 / 100
+
+        var ManaHelp1 = 0
+        var manabarWidth = 0
+        if (controller.player.maxMana < 200) {
+          ManaHelp1 = controller.player.maxMana / 100
+          val ManaHelp2 = controller.player.mana / ManaHelp1
+          manabarWidth = ManaHelp2 * 105 / controller.player.maxMana
+        } else {
+          ManaHelp1 = controller.player.maxMana / 100
+          manabarWidth = controller.player.mana * 105 / controller.player.maxMana
+        }
+
         g.fillRect(4 * SCALE, 40 * SCALE, manabarWidth * SCALE, 15 * SCALE)
         g.drawRect(4 * SCALE, 40 * SCALE, 105 * SCALE, 15 * SCALE)
         g.setColor(Color.WHITE)

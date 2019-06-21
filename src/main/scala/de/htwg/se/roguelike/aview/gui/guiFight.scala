@@ -81,9 +81,18 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.setColor(Color.BLACK)
         g.fillRect(4 * SCALE, 22 * SCALE, 25 * SCALE, 5 * SCALE)
         g.setColor(Color.RED)
-        val HealthHelp1 = controller.player.maxHealth / 100
-        val HealthHelp2 = controller.player.health / HealthHelp1
-        val healthbarWidth = HealthHelp2 * 25 / 100
+
+        var HealthHelp1 = 0
+        var healthbarWidth = 0
+        if (controller.player.maxHealth < 200) {
+          HealthHelp1 = controller.player.maxHealth / 100
+          val HealthHelp2 = controller.player.health / HealthHelp1
+          healthbarWidth = HealthHelp2 * 25 / controller.player.maxHealth
+        } else {
+          HealthHelp1 = controller.player.maxHealth / 100
+          healthbarWidth = controller.player.health * 25 / controller.player.maxHealth
+        }
+
         g.fillRect(4 * SCALE, 22 * SCALE, healthbarWidth * SCALE, 5 * SCALE)
         g.setColor(Color.BLACK)
         g.drawRect(4 * SCALE, 22 * SCALE, 25 * SCALE, 5 * SCALE)
@@ -95,23 +104,39 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.setColor(Color.BLACK)
         g.fillRect(226 * SCALE, 22 * SCALE, 25 * SCALE, 5 * SCALE)
         g.setColor(Color.RED)
-        val EHealthHelp1 = 100 / 100 //ersma so da enemy kein maxHealth
-        val EHealthHelp2 = controller.currentEnemy.health / EHealthHelp1
-        val EhealthbarWidth = EHealthHelp2 * 25 / 100
+
+        var EHealthHelp1 = 0
+        var EhealthbarWidth = 0
+        if (controller.currentEnemy.maxHealth < 200) {
+          EHealthHelp1 = controller.currentEnemy.maxHealth / 100
+          val EHealthHelp2 = controller.currentEnemy.health / EHealthHelp1
+          EhealthbarWidth = EHealthHelp2 * 25 / controller.currentEnemy.maxHealth
+        } else {
+          EHealthHelp1 = controller.currentEnemy.maxHealth / 100
+          EhealthbarWidth = controller.currentEnemy.health * 25 / controller.currentEnemy.maxHealth
+        }
+
         g.fillRect(226 * SCALE, 22 * SCALE, EhealthbarWidth * SCALE, 5 * SCALE)
         g.setColor(Color.BLACK)
         g.drawRect(226 * SCALE, 22 * SCALE, 25 * SCALE, 5 * SCALE)
         g.drawString("Health", 226 * SCALE, 21 * SCALE)
         g.setColor(Color.WHITE)
-        g.drawString(controller.currentEnemy.health + "/" + 100, 230 * SCALE, 26 * SCALE)
+        g.drawString(controller.currentEnemy.health + "/" + controller.currentEnemy.maxHealth, 230 * SCALE, 26 * SCALE)
 
         //ManaBar
         g.setColor(Color.BLACK)
         g.fillRect(4 * SCALE, 35 * SCALE, 25 * SCALE, 5 * SCALE)
         g.setColor(Color.BLUE)
-        val ManaHelp1 = controller.player.maxMana / 100
-        val ManaHelp2 = controller.player.mana / ManaHelp1
-        val manabarWidth = ManaHelp2 * 25 / 100
+        var ManaHelp1 = 0
+        var manabarWidth = 0
+        if (controller.player.maxMana < 200) {
+          ManaHelp1 = controller.player.maxMana / 100
+          val ManaHelp2 = controller.player.mana / ManaHelp1
+          manabarWidth = ManaHelp2 * 25 / controller.player.maxMana
+        } else {
+          ManaHelp1 = controller.player.maxMana / 100
+          manabarWidth = controller.player.mana * 25 / controller.player.maxMana
+        }
         g.fillRect(4 * SCALE, 35 * SCALE, manabarWidth * SCALE, 5 * SCALE)
         g.setColor(Color.BLACK)
         g.drawRect(4 * SCALE, 35 * SCALE, 25 * SCALE, 5 * SCALE)
@@ -122,9 +147,16 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.setColor(Color.BLACK)
         g.fillRect(226 * SCALE, 35 * SCALE, 25 * SCALE, 5 * SCALE)
         g.setColor(Color.BLUE)
-        val EManaHelp1 = 100 / 100 //enemy maxMana fehltnoch
-        val EManaHelp2 = controller.currentEnemy.mana / EManaHelp1
-        val EmanabarWidth = EManaHelp2 * 25 / 100
+        var EManaHelp1 = 0
+        var EmanabarWidth = 0
+        if (controller.currentEnemy.maxMana < 200) {
+          EManaHelp1 = controller.currentEnemy.maxMana / 100
+          val EManaHelp2 = controller.currentEnemy.mana / EManaHelp1
+          EmanabarWidth = EManaHelp2 * 25 / controller.currentEnemy.maxMana
+        } else {
+          EManaHelp1 = controller.currentEnemy.maxMana / 100
+          EmanabarWidth = controller.currentEnemy.mana * 25 / controller.currentEnemy.maxMana
+        }
         g.fillRect(226 * SCALE, 35 * SCALE, EmanabarWidth * SCALE, 5 * SCALE)
         g.setColor(Color.BLACK)
         g.drawRect(226 * SCALE, 35 * SCALE, 25 * SCALE, 5 * SCALE)
