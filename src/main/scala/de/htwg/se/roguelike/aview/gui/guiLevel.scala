@@ -35,6 +35,7 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
       case GameStatus.FIGHT => gui.state = new guiFight(controller, gui)
       case GameStatus.INVENTORY => gui.state = new guiInventoryMain(controller, gui)
       case GameStatus.MERCHANT => gui.state = new guiMerchant(controller, gui)
+      case GameStatus.CRATE => gui.state = new guiCrate(controller, gui)
       case _ =>
         print("Wrong GameStatus!!!")
     }
@@ -51,6 +52,7 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
       val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0, 16)
       val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16, 16)
       val levelTextureMerchant = backgroundSpriteSheet.getSprite(16, 16, 16)
+      val levelTextureCrate = backgroundSpriteSheet.getSprite(48,16,16)
 
       val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
@@ -90,6 +92,9 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
 
         //--Merchant
         g.drawImage(levelTextureMerchant, controller.merchant.posX * 16 * SCALE, controller.merchant.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+
+        //--Crate
+        g.drawImage(levelTextureCrate,controller.crate.posX * 16 * SCALE, controller.crate.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
 
         //--PLAYER
         g.drawImage(playerTexture, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)

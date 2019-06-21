@@ -12,6 +12,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
   var portal = Portal()
+  var crate = Crate(inventory = new Inventory(Vector(), Vector(), Vector()))
   var merchant = Merchant(inventory = new Inventory(Vector(), Vector(), Vector()))
   var lvlDepth = 0
 
@@ -45,6 +46,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     enemies = enemies1
     createMerchant()
     createPortal()
+    createCrateDepth(lvlDepth)
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     //notifyObservers()
     publish(new TileChanged)
@@ -55,6 +57,37 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     //notifyObservers()
     publish(new LevelSizeChanged(10))
+  }
+
+  def createCrate(): Unit = {
+    var row: Int = 0
+    var col: Int = 0
+    do {
+      col = Random.nextInt(level.map.sizeX)
+      row = Random.nextInt(level.map.sizeY)
+    } while (level.map.tile(col, row).isSet)
+
+    level = level.removeElement(col, row, 8)
+    crate = crate.copy(posX = row, posY = col)
+    crate.fillCrate(crate)
+    print(crateInventoryAsOneVector())
+  }
+
+  def createCrateDepth(depth: Int): Unit = {
+    var times:Int = 0
+    val random = new Random()
+    val crateRandom = random.nextInt(100) + depth
+    println(crateRandom)
+    crateRandom match {
+      case x if 1 until 50 contains x => times = 1
+      case x if 51 until 85 contains x => times = 2
+      case x if 86 until 100 contains x => times = 3
+      case _ => times = 5
+    }
+
+    for (x <- 1 to times) {
+      createCrate()
+    }
   }
 
   def createPortal(): Unit = {
@@ -102,6 +135,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       publish(new TileChanged)
     } else if (player.posX == merchant.posX && player.posY == merchant.posY) {
       setGameStatus(GameStatus.MERCHANT)
+      publish(new TileChanged)
+    } else if (player.posX == crate.posX && player.posY == crate.posY) {
+      setGameStatus(GameStatus.CRATE)
       publish(new TileChanged)
     }
   }
@@ -656,6 +692,13 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     var items: Vector[Item] = player.inventory.weapons
     items ++= player.inventory.armor
     items ++= player.inventory.potions
+    items
+  }
+
+  def crateInventoryAsOneVector(): Vector[Item] = {
+    var items: Vector[Item] = crate.inventory.weapons
+    items ++= crate.inventory.armor
+    items ++= crate.inventory.potions
     items
   }
 

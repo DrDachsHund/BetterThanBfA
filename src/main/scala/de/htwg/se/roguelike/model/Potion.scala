@@ -38,7 +38,7 @@ object Potion {
 private object RandomPotion {
 
   def getRandomPotion(): Potion = {
-    val random = Random //geht auch so zu schreiben lul wierd
+    val random = Random
     val armorType = random.nextInt(8) + 1
     armorType match {
       case 1 => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common",textureIndex = 4)
