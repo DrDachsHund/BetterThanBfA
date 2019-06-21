@@ -41,7 +41,7 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
     val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
     val panel = new FlowPanel() {
-      preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+      preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
       peer.setLayout(null)
 
 

@@ -60,7 +60,7 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
       val enemyTextureRed = enemiesSpriteSheet.getSprite(0, 16, 16)
       val enemyTextureGreen = enemiesSpriteSheet.getSprite(0, 0, 16)
 
-      preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+      preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
 
       override def paint(g: Graphics2D): Unit = {
 

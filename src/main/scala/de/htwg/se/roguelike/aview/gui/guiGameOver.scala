@@ -27,7 +27,7 @@ case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
 
   override def drawPanel(SCALE: Int): Panel = {
     new Panel {
-      preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+      preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
 
       val gameOver = new SpriteSheet("resources/GameOver.png").getImage()
 

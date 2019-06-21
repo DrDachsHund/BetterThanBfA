@@ -69,7 +69,7 @@ class SwingGui(controller: Controller) extends Reactor {
 
   def setSize(): Unit = {
     val width = 256 * controller.SCALE
-    val height = 144 * controller.SCALE + 20
+    val height = 144 * controller.SCALE
     frame.peer.setSize(new Dimension(width, height))
   }
 
@@ -118,14 +118,14 @@ private class GMenuBar(controller: Controller) extends MenuBar {
   contents += new Menu("Options") {
     mnemonic = Key.O
     contents += new Menu("Resolution") {
-      contents += new MenuItem(Action("256x164") {controller.setSCALE(1)})
-      contents += new MenuItem(Action("512x308") {controller.setSCALE(2)})
-      contents += new MenuItem(Action("768x452") {controller.setSCALE(3)})
-      contents += new MenuItem(Action("1024x596") {controller.setSCALE(4)})
-      contents += new MenuItem(Action("1280x740") {controller.setSCALE(5)})
-      contents += new MenuItem(Action("1536x884") {controller.setSCALE(6)})
-      contents += new MenuItem(Action("1792x1028") {controller.setSCALE(7)})
-      contents += new MenuItem(Action("2048x1172") {controller.setSCALE(8)})
+      contents += new MenuItem(Action("256x144") {controller.setSCALE(1)})
+      contents += new MenuItem(Action("512x288") {controller.setSCALE(2)})
+      contents += new MenuItem(Action("768x432") {controller.setSCALE(3)})
+      contents += new MenuItem(Action("1024x576") {controller.setSCALE(4)})
+      contents += new MenuItem(Action("1280x720") {controller.setSCALE(5)})
+      contents += new MenuItem(Action("1536x864") {controller.setSCALE(6)})
+      contents += new MenuItem(Action("1792x1008") {controller.setSCALE(7)})
+      contents += new MenuItem(Action("2048x1152") {controller.setSCALE(8)})
     }
     contents += new MenuItem(Action("OPTIONS") {})
     contents += new MenuItem(Action("LUL") {})

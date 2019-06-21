@@ -65,7 +65,7 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
 
 
     val panel = new FlowPanel() {
-      preferredSize = new Dimension(256 * SCALE, 144 * SCALE + 20)
+      preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
       peer.setLayout(null)
 
 
