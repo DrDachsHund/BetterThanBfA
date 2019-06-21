@@ -64,14 +64,44 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
 
+
       val attack = new Button()
       attack.peer.setBounds(10 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
       listenTo(attack)
       contents += attack
 
+      val block = new Button()
+      block.peer.setBounds(60 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(block)
+      contents += block
+
+      val special = new Button()
+      special.peer.setBounds(105 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(special)
+      contents += special
+
+      val inventory = new Button()
+      inventory.peer.setBounds(160 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(inventory)
+      contents += inventory
+
+      val run = new Button()
+      run.peer.setBounds(210 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(run)
+      contents += run
+
       reactions += {
-        case ButtonClicked(a) if a == attack => controller.attack()
+        case ButtonClicked(a) =>
+          if (a == attack) controller.attack()
+          else if (a == block) controller.block()
+          else if (a == special) controller.special()
+          else if (a == inventory) {
+            controller.setGameStatus(GameStatus.INVENTORY)
+            controller.inventoryGameStatus = GameStatus.FIGHT
+          }
+          else if (a == run) controller.run()
       }
+
 
       override def paintComponent(g: Graphics2D): Unit = {
 
