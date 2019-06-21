@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-import scala.swing.{Dimension, Label, Panel}
+import scala.swing.event.ButtonClicked
+import scala.swing.{Button, Dimension, FlowPanel, Label, Panel}
 
 case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
@@ -42,7 +43,9 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
   override def drawPanel(SCALE: Int): Panel = {
 
-    val panel = new Panel {
+    val panel = new FlowPanel() {
+
+      peer.setLayout(null)
 
       //ersma so aber eig eigene texturen für fihgt
       val playerSpriteSheet = new SpriteSheet("resources/Player.png")
@@ -61,7 +64,16 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
 
-      override def paint(g: Graphics2D): Unit = {
+      val attack = new Button()
+      attack.peer.setBounds(10 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      listenTo(attack)
+      contents += attack
+
+      reactions += {
+        case ButtonClicked(a) if a == attack => controller.attack()
+      }
+
+      override def paintComponent(g: Graphics2D): Unit = {
 
         g.drawImage(fightBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
         g.drawImage(playerTexture, 10 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
