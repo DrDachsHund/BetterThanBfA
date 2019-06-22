@@ -17,6 +17,8 @@ trait Potion extends Item {
     }
     player
   }
+
+  override def toString: String = name + " (" + rarity + ") PW:" + power + " VAlue: " + value
 }
 
 //FactoryMethod

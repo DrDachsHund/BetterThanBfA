@@ -13,8 +13,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   private val undoManager = new UndoManager
   var portal = Portal()
   var crate = Crate(inventory = new Inventory(Vector(), Vector(), Vector()))
-  var merchant = Merchant(inventory = new Inventory(Vector(), Vector(), Vector()))
-  var lvlDepth = 0
+  var merchant = Merchant()
+  var lvlDepth = 1
 
   var SCALE: Int = 3
 
@@ -69,12 +69,12 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
     level = level.removeElement(col, row, 8)
     crate = crate.copy(posX = row, posY = col)
-    crate.fillCrate(crate)
+    //crate.fillCrate(crate)
     print(crateInventoryAsOneVector())
   }
 
   def createCrateDepth(depth: Int): Unit = {
-    var times:Int = 0
+    var times: Int = 0
     val random = new Random()
     val crateRandom = random.nextInt(100) + depth
     println(crateRandom)
@@ -99,8 +99,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     } while (level.map.tile(col, row).isSet)
 
     level = level.removeElement(col, row, 1)
-    portal = portal.copy(posX = row)
-    portal = portal.copy(posY = col)
+    portal = portal.copy(posX = row, posY = col)
   }
 
   def createMerchant(): Unit = {
@@ -112,8 +111,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     } while (level.map.tile(col, row).isSet)
 
     level = level.removeElement(col, row, 4)
-    merchant = merchant.copy(posX = row)
-    merchant = merchant.copy(posY = col)
+    merchant = Merchant()
+    merchant = merchant.copy(posX = row, posY = col, gulden = merchant.gulden * lvlDepth)
   }
 
   def interaction(): Unit = {
@@ -148,7 +147,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def newGame(): Unit = {
     player = Player(name = "Player", posX = 5, posY = 5)
-    lvlDepth = 0
+    lvlDepth = 1
     createRandomLevel()
     setGameStatus(GameStatus.LEVEL)
     publish(new TileChanged)
@@ -707,11 +706,15 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
     if (items.size < 1) {
       println("Keine Items Vorhanden!!!")
-    } else if (index <= items.size && index > 0) {
+    } else if (index <= items.size && index >= 0) {
       val itemToSell = items(index)
 
+      if (merchant.gulden < itemToSell.value) {
+        return
+      }
 
-      var usedItem = player.inventory.armor.filter(_ == itemToSell)
+      var usedItem = items.filter(_ == itemToSell)
+      usedItem = usedItem.drop(1)
       var newItems = items.filterNot(_ == itemToSell)
       newItems ++= usedItem
 
@@ -719,18 +722,66 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newArmor: Vector[Armor] = Vector()
       var newPotion: Vector[Potion] = Vector()
 
-      while (newItems.size > 0) {
-        newItems(0) match {
+      for (x <- newItems) {
+        x match {
           case w: Weapon => newWeapons ++= w :: Nil
           case a: Armor => newArmor ++= a :: Nil
           case p: Potion => newPotion ++= p :: Nil
         }
       }
 
+      var merchantNewInventory = merchant.inventory
+      merchantNewInventory ++= itemToSell :: Nil
+      merchant = merchant.copy(inventory = merchantNewInventory, gulden = merchant.gulden - itemToSell.value)
       player = player.copy(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden + itemToSell.value)
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
     publish(new TileChanged)
+  }
+
+  def buyItem(index: Int): Unit = {
+    val items = merchant.inventory
+
+    if (items.size < 1) {
+      println("Keine Items Vorhanden!!!")
+    } else if (index <= items.size && index >= 0) {
+      val itemToBuy = items(index)
+      if (itemToBuy.value > player.gulden) {
+        return
+      }
+
+
+      var usedItem = items.filter(_ == itemToBuy)
+      usedItem = usedItem.drop(1)
+      var newItems = items.filterNot(_ == itemToBuy)
+      newItems ++= usedItem
+
+      var newWeapons: Vector[Weapon] = player.inventory.weapons
+      var newArmor: Vector[Armor] = player.inventory.armor
+      var newPotion: Vector[Potion] = player.inventory.potions
+
+      itemToBuy match {
+        case w: Weapon => newWeapons ++= w :: Nil
+        case a: Armor => newArmor ++= a :: Nil
+        case p: Potion => newPotion ++= p :: Nil
+      }
+
+      merchant = merchant.copy(inventory = newItems, gulden = merchant.gulden + itemToBuy.value)
+      player = player.copy(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden - itemToBuy.value)
+    } else println("CONTROLLER INKOREKTER INDEX => " + index)
+    //notifyObservers()
+    publish(new TileChanged)
+  }
+
+  def restock(): Boolean = {
+    if (player.gulden < 250)
+      false
+    else {
+      player = player.copy(gulden = player.gulden - 250)
+      merchant = merchant.restock()
+      publish(new TileChanged)
+      true
+    }
   }
 
 }
