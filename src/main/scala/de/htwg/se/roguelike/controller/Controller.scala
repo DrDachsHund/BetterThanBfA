@@ -187,17 +187,29 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def lvlUpHealth(): Unit = {
     player = player.lvlUpHealth
-    setGameStatus(GameStatus.LOOTENEMY)
+    checkLvlUp()
   }
 
   def lvlUpMana(): Unit = {
     player = player.lvlUpMana
-    setGameStatus(GameStatus.LOOTENEMY)
+    checkLvlUp()
   }
 
   def lvlUpAttack(): Unit = {
     player = player.lvlUpAttack
-    setGameStatus(GameStatus.LOOTENEMY)
+    checkLvlUp()
+  }
+
+  def checkLvlUp(): Unit = {
+    if (player.lvl < player.lvlUp(0).lvl) {
+      player = player.lvlUp(0)
+      setGameStatus(GameStatus.PLAYERLEVELUP)
+    }
+    else {
+      setGameStatus(GameStatus.LOOTENEMY)
+    }
+    println("lvlUP exp:"+ player.exp)
+    repaint()
   }
 
   //-----------LVLUP----------------

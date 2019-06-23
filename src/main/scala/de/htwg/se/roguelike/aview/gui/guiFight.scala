@@ -54,11 +54,11 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       val enemiesSpriteSheet = new SpriteSheet("resources/Enemy.png")
       val backgroundSpriteSheet = new SpriteSheet("resources/16bitSpritesBackground.png")
 
-      val playerTexture = playerSpriteSheet.getSprite(16, 0,16)
-      val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32,16)) //zum flippen vll in eigene klasse?!?!?!?
-      val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16,16))
-      val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0,16))
-      val errorTexture = backgroundSpriteSheet.getSprite(32, 16,16)
+      val playerTexture = playerSpriteSheet.getSprite(16, 0, 16)
+      val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32, 16)) //zum flippen vll in eigene klasse?!?!?!?
+      val enemyTextureRed = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 16, 16))
+      val enemyTextureGreen = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 0, 16))
+      val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
       val fight = fightSpriteSheet.getImage()
       val fightBackground = fightBackgroundSpriteSheet.getImage()
 
@@ -66,27 +66,27 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
 
       val attack = new Button()
-      attack.peer.setBounds(10 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      attack.peer.setBounds(10 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
       listenTo(attack)
       contents += attack
 
       val block = new Button()
-      block.peer.setBounds(60 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      block.peer.setBounds(60 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
       listenTo(block)
       contents += block
 
       val special = new Button()
-      special.peer.setBounds(105 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      special.peer.setBounds(105 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
       listenTo(special)
       contents += special
 
       val inventory = new Button()
-      inventory.peer.setBounds(160 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      inventory.peer.setBounds(160 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
       listenTo(inventory)
       contents += inventory
 
       val run = new Button()
-      run.peer.setBounds(210 * SCALE,110 * SCALE, 30 * SCALE, 30 * SCALE)
+      run.peer.setBounds(210 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
       listenTo(run)
       contents += run
 
@@ -204,7 +204,7 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.drawRect(226 * SCALE, 35 * SCALE, 25 * SCALE, 5 * SCALE)
         g.drawString("Mana", 226 * SCALE, 34 * SCALE)
         g.setColor(Color.WHITE)
-        g.drawString(controller.currentEnemy.mana + "/" + 100, 230 * SCALE, 39 * SCALE)
+        g.drawString(controller.currentEnemy.mana + "/" + controller.currentEnemy.maxMana, 230 * SCALE, 39 * SCALE)
 
         //--Name--LEVEL--
         g.setColor(Color.BLACK)
@@ -217,6 +217,10 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 10 * SCALE))
         //g.drawString("Health", 5 * SCALE, 10 * SCALE)
         g.drawString("[1]Attack   [2]:Block   [3]:Special   [i]Inventory    [r]:Run", 5 * SCALE, 125 * SCALE)
+        g.setFont(new Font("TimesRoman", Font.BOLD, 5 * SCALE))
+        g.setColor(Color.WHITE)
+        g.drawString("ATK: " + controller.player.getAttack + " DEF: " + controller.player.getArmor, 5 * SCALE, 97 * SCALE)
+        g.drawString("ATK: " + controller.currentEnemy.getAttack + " DEF: " + controller.currentEnemy.getArmor, 200 * SCALE, 97 * SCALE)
 
       }
 

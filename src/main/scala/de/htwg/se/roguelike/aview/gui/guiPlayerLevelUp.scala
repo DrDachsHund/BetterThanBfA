@@ -116,6 +116,9 @@ case class guiPlayerLevelUp(controller: Controller, gui: SwingGui) extends State
         g.drawRect(64 * SCALE, 124 * SCALE, 128 * SCALE, 15 * SCALE)
         g.setColor(Color.WHITE)
         g.drawString("Mana: " + controller.player.mana + "/" + controller.player.maxMana, 96 * SCALE, 134 * SCALE)
+
+        g.drawString("LVL: " + controller.player.lvl, 5 * SCALE, 20 * SCALE)
+        g.drawString("EXP: " + controller.player.exp + "/" + controller.player.maxExp, 5 * SCALE, 30 * SCALE)
       }
     }
     panel

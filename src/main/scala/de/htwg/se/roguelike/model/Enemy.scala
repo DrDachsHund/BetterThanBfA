@@ -63,7 +63,7 @@ case class Enemy(name: String = "Skeleton",
       case 0 => this.copy(lvl = lvl + lvlBuffer, health = 100 + (lvl + lvlBuffer) * 25, maxHealth = 100 + (lvl + lvlBuffer) * 25, exp = exp * (lvl + lvlBuffer), gulden = gulden * (lvl + lvlBuffer))
       case 1 =>
         if (lvl - lvlBuffer < 1) {
-          return this.copy(lvl = 9999, exp = 50, gulden = 25, name = "Special", inventory = new Inventory(Vector(Weapon("random")), Vector(Potion("random")), Vector(Armor("random"))))
+          return this.copy(lvl = 15, exp = 251,health = 250,maxHealth = 250,mana = 250,maxMana = 250, gulden = 250, name = "Special", inventory = new Inventory(Vector(Weapon("random")), Vector(Potion("random")), Vector(Armor("random"))))
         }
         return this.copy(lvl = lvl - lvlBuffer, health = 100 + (lvl - lvlBuffer) * 25, maxHealth = 100 + (lvl - lvlBuffer) * 25, exp = exp * (lvl - lvlBuffer), gulden = gulden * (lvl - lvlBuffer))
     }

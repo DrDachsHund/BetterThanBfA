@@ -7,7 +7,7 @@ case class Player(name: String,
                   maxMana: Int = 100,
                   attack: Int = 10,
                   lvl: Int = 1,
-                  exp: Int = 0,
+                  exp: Int = 100000,
                   maxExp: Int = 100,
                   posX: Int = 0, posY: Int = 0,
                   inventory: Inventory = new Inventory,
@@ -30,11 +30,10 @@ case class Player(name: String,
     var newExp = exp + collectedExp
     var newMaxExp = 0
     var lvlUp = false
-    while (newExp >= maxExp) {
+    if (newExp >= maxExp) {
       newExp = newExp - maxExp
-      newMaxExp = (maxExp * 1.5).toInt
+      newMaxExp = maxExp + (10 * lvl)
       lvlUp = true
-      //println("LEVELUP YAAAAAAAAAAAAAAAS QUEEEEN SLAY")
     }
     if (lvlUp) return this.copy(exp = newExp, lvl = (lvl + 1), maxExp = newMaxExp, mana = maxMana, health = maxHealth)
     this.copy(exp = newExp)
