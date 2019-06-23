@@ -18,7 +18,6 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 //pause with esc anstatt toolbar für besseres scaling maybe??
   => da dann maybe auch safe
 
-
 Tests:
   => GUI:
     => Start Screen mit options and load maybe                                                               (Marvin)[X}
@@ -30,35 +29,25 @@ Tests:
 
 MUSIC!!! => geht mit eventuel clip da kann mann dan auch iwi ton einstellen und loopen!??!?!!?!?
 
-
 EXTRA FÜR SPÄTER:
 
 LOOT: - 50 Wichtig-
   => Boss                                                                                                            [X}
     => BossItem                                                                                                      [X}
         => Special                                                                                                   [X}
-  => Inventory Enemies mit Methode füllen (Loot Drop/Gold) !!!!                                                      [✓} //LOOOT => Nach neuem fight nochmal schauen!!!!!!!!!!
-
 
 Player: -10 Wichtig-
   => SkillPunkte????  !!                                                                                      (Andrê)[X}
   => Zukunft Klassen (VLLT nur Methode); Abilities?????  !                                                    (Andrê)[X}
 
-
 Fight: - 50 Wichtig-
   => Armor/Weapon Specials !!!                                                                                       [X}
-
 
 Level: - 10 Wichtig-
   => Truhen                                                                                                   (Andrê)[X}
   => Maybe Boss Level alle 5 (BOSS ITEMS), Portale/Höhlen etc. ! => in Interact anpassen                             [X}
   => MAYBE Hindernisse BIG FRAGEZEICHEN ????????????????????????                                                     [X}
   => Eingang Häuser,Shop                                                                                             [X}
-
-
-Merchant: - 0 Wichtig-
-  => Shop                                                                                                    (Marvin)[X}
-  => Random Items (Mehr/Bessere Items bei größerer Level Tiefe)
 
 Enemy Resistance + Weapon Interaction (FIRE 2x DMG to ICE RES)
 

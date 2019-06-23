@@ -11,7 +11,7 @@ class EnemyTest extends WordSpec with Matchers {
     "new" should {
       val enemy1 = Enemy()
       "have a name and stats" in {
-        enemy1.name should be("Skeleton")
+        enemy1.name should be("Empty-Name")
         enemy1.health should be(100)
         enemy1.mana should be(100)
         enemy1.attack should be(10)
@@ -25,7 +25,7 @@ class EnemyTest extends WordSpec with Matchers {
         enemy3.isAlive should be(false)
       }
       "have a nice String representation" in {
-        enemy1.toString should be("Name: " + "Skeleton" +
+        enemy1.toString should be("Name: " + "Empty-Name" +
           "\nhealth: " + "100" +
           "\nAttack: " + "10" +
           "\nExperience: " + "20" +

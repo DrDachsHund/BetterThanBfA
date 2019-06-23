@@ -39,7 +39,7 @@ class PlayerTest extends WordSpec with Matchers {
         player3.lvl should be(2)
         player3.health should be(100)
         player3.exp should be(0)
-        player3.maxExp should be(150)
+        player3.maxExp should be(110)
       }
 
       "can collect exp but not level up" in {
@@ -74,7 +74,7 @@ class PlayerTest extends WordSpec with Matchers {
       "have a score" in {
         val player3 = new Player(name = "Test", killCounter = 2)
         val score = player3.getScore(2)
-        score should be(4)
+        score should be(2)
       }
 
     }

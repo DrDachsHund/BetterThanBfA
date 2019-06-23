@@ -13,11 +13,11 @@ class ArmorTest extends WordSpec with Matchers {
         Armor("Pants") should be(Pants(name = "Pants", value = 10, usable = false, armor = 10, rarity = "Common"))
         Armor("Boots") should be(Boots(name = "Boots", value = 10, usable = false, armor = 10, rarity = "Common"))
         Armor("Gloves") should be(Gloves(name = "Gloves", value = 10, usable = false, armor = 10, rarity = "Common"))
-        Armor("noHelmet") should be(Helmet(name = "Head", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common"))
-        Armor("noChest") should be(Chest(name = "Body", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common"))
-        Armor("noPants") should be(Pants(name = "Legs", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common"))
-        Armor("noBoots") should be(Boots(name = "Feet", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common"))
-        Armor("noGloves") should be(Gloves(name = "Hands", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common"))
+        Armor("noHelmet") should be(Helmet(name = "Head", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24))
+        Armor("noChest") should be(Chest(name = "Body", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24))
+        Armor("noPants") should be(Pants(name = "Legs", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24))
+        Armor("noBoots") should be(Boots(name = "Feet", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24))
+        Armor("noGloves") should be(Gloves(name = "Hands", value = 0, usable = false, armor = 0, armorType = "nothing", rarity = "Common", textureIndex = 24))
       }
 
       "can be random" in {
