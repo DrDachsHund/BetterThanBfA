@@ -22,22 +22,7 @@ trait Armor extends Item {
   //
   //def specals1 ... usw
 
-  override def toString: String = {
-    var sb = new StringBuilder
-    sb.append(armorType + ": (" + rarity + ") " + name + " armor: ")
-    if (armor >= 1000) {
-      val armorInK = armor / 1000.0
-      sb.append((armorInK - (armorInK % 0.1)) + "K")
-    } else sb.append("" + armor)
-
-    /*
-    if (value >= 1000) { ersma weglassen wegen kaufen sellen
-      val valueInK = value / 1000.0
-      sb.append(" value: " + (valueInK - (valueInK % 0.1)) + "K")
-    } else*/ sb.append(" value: " + value)
-
-    sb.toString()
-  }
+  override def toString: String = armorType + ": (" + rarity + ") " + name + " armor: " + armor + " value: " + value
 }
 
 //FactoryMethod

@@ -24,27 +24,7 @@ trait Weapon extends Item {
 
   def getScaledWeapon(lvl: Int): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
 
-  override def toString: String = {
-    var sb = new StringBuilder
-    sb.append("(" + rarity + ") " + name + " dmg: ")
-    if (dmg >= 1000) {
-      val dmgInK = dmg / 1000.0
-      sb.append((dmgInK - (dmgInK % 0.1)) + "K")
-    } else sb.append("" + dmg)
-
-    if (block >= 1000) {
-      val blockInK = block / 1000.0
-      sb.append(" block: " + (blockInK - (blockInK % 0.1)) + "K")
-    } else sb.append(" block: " + block)
-
-    /*
-    if (value >= 1000) {
-      val valueInK = value / 1000.0
-      sb.append(" value: " + (valueInK - (valueInK % 0.1)) + "K")
-    } else*/ sb.append(" value: " + value)
-
-    sb.toString()
-  }
+  override def toString: String = "(" + rarity + ") " + name + " dmg: " + dmg + " block: " + block + " value: " + value
 }
 
 object Weapon {
