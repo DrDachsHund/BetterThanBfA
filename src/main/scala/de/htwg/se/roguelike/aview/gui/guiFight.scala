@@ -66,27 +66,27 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
 
       val attack = new Button()
-      attack.peer.setBounds(10 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      attack.peer.setBounds(2 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
       listenTo(attack)
       contents += attack
 
       val block = new Button()
-      block.peer.setBounds(60 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      block.peer.setBounds(53 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
       listenTo(block)
       contents += block
 
       val special = new Button()
-      special.peer.setBounds(105 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      special.peer.setBounds(104 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
       listenTo(special)
       contents += special
 
       val inventory = new Button()
-      inventory.peer.setBounds(160 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      inventory.peer.setBounds(155 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
       listenTo(inventory)
       contents += inventory
 
       val run = new Button()
-      run.peer.setBounds(210 * SCALE, 110 * SCALE, 30 * SCALE, 30 * SCALE)
+      run.peer.setBounds(206 * SCALE, 104 * SCALE, 48 * SCALE, 38 * SCALE)
       listenTo(run)
       contents += run
 
