@@ -1,8 +1,10 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.controller.GameStatus.Value
+
 import scala.util.Random
 
-case class Enemy(name: String = "Skeleton",
+case class Enemy(name: String = "Empty-Name",
                  health: Int = 100,
                  maxHealth: Int = 100,
                  mana: Int = 100,
@@ -21,6 +23,12 @@ case class Enemy(name: String = "Skeleton",
                  leftHand: Weapon = Weapon("leftFist"),
                  gulden: Int = 1,
                  enemyType: Int = 0) extends Entity {
+
+  def setName(): String = {
+    enemyNames(enemyType)
+  }
+
+  val enemyNames = Array("Test","Blue-Slime","Red-Slime","Green-Slime")
 
 
   //Template Method

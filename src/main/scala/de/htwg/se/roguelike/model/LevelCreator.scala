@@ -2,10 +2,10 @@ package de.htwg.se.roguelike.model
 
 import scala.util.Random
 
-class LevelCreator(sizeY: Int,sizeX:Int) {
+class LevelCreator(sizeY: Int, sizeX: Int) {
 
   def createLevel(player: Player, enemies: Vector[Enemy]): Level = {
-    var level = new Level(sizeY,sizeX)
+    var level = new Level(sizeY, sizeX)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
     for (x <- enemies) {
@@ -16,7 +16,7 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
   }
 
   def createRandom(player: Player, enemyCount: Int): (Level, Vector[Enemy]) = {
-    var level = new Level(sizeY,sizeX)
+    var level = new Level(sizeY, sizeX)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
 
@@ -33,7 +33,8 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
 
       //maybe hier noch ändern wgen this ka ob so richtig alles
       val enemyType = Random.nextInt(3) + 1 //ersma so vll noch ändern
-      val newEnemy = Enemy(name = "RandomEnemy", posX = row, posY = col, enemyType = enemyType)
+      var newEnemy = Enemy(posX = row, posY = col, enemyType = enemyType)
+      newEnemy = newEnemy.copy(name = newEnemy.setName())
       val enemy = newEnemy.setScale(player.lvl).setLoot() //Name vll noch anpassen idk wie grad => Inventory hinzugefügt random
 
 
@@ -42,21 +43,21 @@ class LevelCreator(sizeY: Int,sizeX:Int) {
 
     }
 
-    var freeTiles:Int = 0
+    var freeTiles: Int = 0
     for (x <- 0 until level.map.sizeX) {
       for (y <- 0 until level.map.sizeY) {
-          if (!level.map.tile(x,y).isSet) {
-            freeTiles += 1
-          }
+        if (!level.map.tile(x, y).isSet) {
+          freeTiles += 1
+        }
       }
     }
 
-    level = spawnRandomTile(level,Tile(2), freeTiles/4)
+    level = spawnRandomTile(level, Tile(2), freeTiles / 4)
 
     (level, enemies)
   }
 
-  def spawnRandomTile(level: Level,tile:Tile,numberOfTiles:Int): Level = {
+  def spawnRandomTile(level: Level, tile: Tile, numberOfTiles: Int): Level = {
 
     var newLevel = level
 

@@ -303,15 +303,20 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         fight.shouldBlock(player, currentEnemy) match {
           case "yes" => enemyTurn(playerAction, "block")
           case "maybe" =>
-            if (random.nextInt(2) == 0)
-              enemyTurn(playerAction, "block")
-            else
-              enemyTurn(playerAction, "attack")
+            random.nextInt(10) + 1 match {
+              case x if 1 until 4 contains(x) => enemyTurn(playerAction, "block")
+              case x if 4 until 6 contains(x) => {
+                if (currentEnemy.inventory.potions.size > 0)
+                  enemyTurn(playerAction, "heal")
+                else enemyTurn(playerAction, "attack")
+              }
+              case _ => enemyTurn(playerAction, "attack")
+            }
           case "no" => enemyTurn(playerAction, "attack")
         }
       case "block" =>
         if (currentEnemy.inventory.potions.size > 0)
-          random.nextInt(10) + 1 match {
+          random.nextInt(6) + 1 match {
             case 1 => enemyTurn(playerAction, "special")
             case 2 => enemyTurn(playerAction, "heal")
             case 3 => enemyTurn(playerAction, "block")
@@ -340,35 +345,35 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     enemies = enemies.filterNot(_ == currentEnemy)
 
     if (enemyAction == "block")
-      enemyLastAction = currentEnemy.name + " blocked with " + (currentEnemy.getArmor + currentEnemy.rightHand.block + currentEnemy.leftHand.block * 2) + " armor"
+      enemyLastAction = currentEnemy.name + ": blocked with " + (currentEnemy.getArmor + currentEnemy.rightHand.block + currentEnemy.leftHand.block * 2) + " armor"
     if (playerAction == "block")
-      playerLastAction = player.name + " blocked with " + (player.getArmor + player.rightHand.block + player.leftHand.block * 2) + " armor"
+      playerLastAction = player.name + ": blocked with " + (player.getArmor + player.rightHand.block + player.leftHand.block * 2) + " armor"
 
     if (playerAction == "attack") {
       currentEnemy = fight.playerAttack(player, currentEnemy, enemyAction)
-      playerLastAction = player.name + " attacked for " + player.getAttack
+      playerLastAction = player.name + ": attacked for " + player.getAttack
     }
     else if (playerAction == "special") {
       currentEnemy = fight.playerSpecial(player, currentEnemy)
-      playerLastAction = player.name + " special attacked with " + player.getAttack + " damage"
+      playerLastAction = player.name + ": special attacked with " + player.getAttack + " damage"
     }
 
     if (currentEnemy.isAlive && enemyAction != "block") {
       enemyAction match {
         case "attack" => {
           player = fight.enemyAttack(player, currentEnemy, playerAction)
-          enemyLastAction = currentEnemy.name + " attacked for " + currentEnemy.getAttack + " damage"
+          enemyLastAction = currentEnemy.name + ": attacked for " + currentEnemy.getAttack + " damage"
         }
         case "heal" => {
           currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl,maxHealth = currentEnemy.maxHealth + 25 * currentEnemy.lvl)
-          enemyLastAction = currentEnemy.name + " healed for " + 25 * currentEnemy.lvl + " hp"
+          enemyLastAction = currentEnemy.name + ": healed for " + 25 * currentEnemy.lvl + " hp"
         }
         case "special" =>
           if (currentEnemy.mana >= 50) {
             println("Enemy did Special Attack")
             currentEnemy = currentEnemy.copy(mana = currentEnemy.mana - 50)
             player = fight.enemySpecial(player, currentEnemy)
-            enemyLastAction = currentEnemy.name + " special attacked with " + currentEnemy.getAttack + " damage"
+            enemyLastAction = currentEnemy.name + ": special attacked with " + currentEnemy.getAttack + " damage"
           } else return enemyThinking(playerAction)
       }
     }

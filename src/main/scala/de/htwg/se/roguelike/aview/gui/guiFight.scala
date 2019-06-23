@@ -115,7 +115,6 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
           case _ => g.drawImage(errorTexture, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
         }
 
-
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
         g.setFont(new Font("TimesRoman", Font.BOLD, 4 * SCALE))
