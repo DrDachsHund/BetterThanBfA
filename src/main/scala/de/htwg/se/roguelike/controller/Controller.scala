@@ -288,6 +288,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def run(): Unit = {
+    playerLastAction = ""
+    enemyLastAction = ""
     val runPlayer = player
     setGameStatus(GameStatus.LEVEL)
     undo()
@@ -330,29 +332,52 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     }
   }
 
+  var enemyLastAction:String = ""
+  var playerLastAction :String = ""
   def enemyTurn(playerAction: String, enemyAction: String): Unit = {
     println("Enemy Thinking => " + enemyAction)
+
     enemies = enemies.filterNot(_ == currentEnemy)
+
+    if (enemyAction == "block")
+      enemyLastAction = currentEnemy.name + " blocked with " + (currentEnemy.getArmor + currentEnemy.rightHand.block + currentEnemy.leftHand.block * 2) + " armor"
+    if (playerAction == "block")
+      playerLastAction = player.name + " blocked with " + (player.getArmor + player.rightHand.block + player.leftHand.block * 2) + " armor"
 
     if (playerAction == "attack") {
       currentEnemy = fight.playerAttack(player, currentEnemy, enemyAction)
+      playerLastAction = player.name + " attacked for " + player.getAttack
     }
-    else if (playerAction == "special") currentEnemy = fight.playerSpecial(player, currentEnemy)
+    else if (playerAction == "special") {
+      currentEnemy = fight.playerSpecial(player, currentEnemy)
+      playerLastAction = player.name + " special attacked with " + player.getAttack + " damage"
+    }
 
     if (currentEnemy.isAlive && enemyAction != "block") {
       enemyAction match {
-        case "attack" => player = fight.enemyAttack(player, currentEnemy, playerAction)
-        case "heal" => currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl)
+        case "attack" => {
+          player = fight.enemyAttack(player, currentEnemy, playerAction)
+          enemyLastAction = currentEnemy.name + " attacked for " + currentEnemy.getAttack + " damage"
+        }
+        case "heal" => {
+          currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl,maxHealth = currentEnemy.maxHealth + 25 * currentEnemy.lvl)
+          enemyLastAction = currentEnemy.name + " healed for " + 25 * currentEnemy.lvl + " hp"
+        }
         case "special" =>
           if (currentEnemy.mana >= 50) {
             println("Enemy did Special Attack")
             currentEnemy = currentEnemy.copy(mana = currentEnemy.mana - 50)
             player = fight.enemySpecial(player, currentEnemy)
+            enemyLastAction = currentEnemy.name + " special attacked with " + currentEnemy.getAttack + " damage"
           } else return enemyThinking(playerAction)
       }
     }
 
-    if (!player.isAlive) setGameStatus(GameStatus.GAMEOVER)
+    if (!player.isAlive) {
+      playerLastAction = ""
+      enemyLastAction = ""
+      setGameStatus(GameStatus.GAMEOVER)
+    }
     else if (!currentEnemy.isAlive) {
       if (enemies.length == 5) {
         createPortal()
@@ -366,6 +391,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       enemyLoot = enemyLoot ++ currentEnemy.inventory.armor
 
       println(enemyLoot.toString())
+
+      playerLastAction = ""
+      enemyLastAction = ""
 
       if (oldLvl < player.lvl) setGameStatus(GameStatus.PLAYERLEVELUP)
       else setGameStatus(GameStatus.LOOTENEMY)

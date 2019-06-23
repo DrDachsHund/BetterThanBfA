@@ -222,6 +222,12 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
         g.drawString("ATK: " + controller.player.getAttack + " DEF: " + controller.player.getArmor, 5 * SCALE, 97 * SCALE)
         g.drawString("ATK: " + controller.currentEnemy.getAttack + " DEF: " + controller.currentEnemy.getArmor, 200 * SCALE, 97 * SCALE)
 
+        //Actions
+        g.setFont(new Font("TimesRoman", Font.BOLD, 4 * SCALE))
+        g.setColor(Color.BLACK)
+        g.drawString(controller.playerLastAction, 76 * SCALE, 6 * SCALE)
+        g.drawString(controller.enemyLastAction, 76 * SCALE, 11 * SCALE)
+
       }
 
       repaint()
