@@ -4,6 +4,7 @@ import java.awt.{Color, Font, Graphics2D}
 
 import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import javax.swing.ImageIcon
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FlowPanel, Panel}
@@ -31,24 +32,35 @@ case class guiPlayerLevelUp(controller: Controller, gui: SwingGui) extends State
   }
 
   override def drawPanel(SCALE: Int): Panel = {
+
+    val healthButtonImage = new SpriteSheet("resources/healthLevelUpButtonIcon.png")
+    val healthIcon = new ImageIcon(healthButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val attackButtonImage = new SpriteSheet("resources/attackLevelUpButtonIcon.png")
+    val attackIcon = new ImageIcon(attackButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val manaButtonImage = new SpriteSheet("resources/manaLevelUpButtonIcon.png")
+    val manaIcon = new ImageIcon(manaButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+
     val panel = new FlowPanel() {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
       peer.setLayout(null)
 
       val health = new Button()
-      //health.peer.setIcon(healthIcon)
+      health.peer.setIcon(healthIcon)
       listenTo(health)
       health.peer.setBounds(64 * SCALE, 34 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += health
 
       val mana = new Button()
-      //mana.peer.setIcon(manaIcon)
+      mana.peer.setIcon(manaIcon)
       listenTo(mana)
       mana.peer.setBounds(64 * SCALE, 64 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += mana
 
       val attack = new Button()
-      //attack.peer.setIcon(attackIcon)
+      attack.peer.setIcon(attackIcon)
       listenTo(attack)
       attack.peer.setBounds(64 * SCALE, 94 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += attack

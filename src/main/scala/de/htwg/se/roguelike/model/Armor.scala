@@ -26,14 +26,15 @@ trait Armor extends Item {
     var sb = new StringBuilder
     sb.append(armorType + ": (" + rarity + ") " + name + " armor: ")
     if (armor >= 1000) {
-      val armorInK = armor.toDouble / 1000.0
-      sb.append(armorInK + "K")
+      val armorInK = armor / 1000.0
+      sb.append((armorInK - (armorInK % 0.1)) + "K")
     } else sb.append("" + armor)
 
-    if (value >= 1000) {
-      val valueInK = value.toDouble / 1000.0
-      sb.append(" value: " + valueInK + "K")
-    } else sb.append(" value: " + value)
+    /*
+    if (value >= 1000) { ersma weglassen wegen kaufen sellen
+      val valueInK = value / 1000.0
+      sb.append(" value: " + (valueInK - (valueInK % 0.1)) + "K")
+    } else*/ sb.append(" value: " + value)
 
     sb.toString()
   }

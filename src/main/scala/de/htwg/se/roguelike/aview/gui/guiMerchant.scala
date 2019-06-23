@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
+import javax.swing.ImageIcon
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{Button, Dimension, FlowPanel, ListView, Panel, ScrollPane}
@@ -35,6 +36,18 @@ case class guiMerchant(controller: Controller, gui: SwingGui) extends StateGui {
 
   override def drawPanel(SCALE: Int): Panel = {
 
+    val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
+    val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val buyButtonImage = new SpriteSheet("resources/buyButtonIcon.png")
+    val buyIcon = new ImageIcon(buyButtonImage.getImage().getScaledInstance(128 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val sellButtonImage = new SpriteSheet("resources/sellButtonIcon.png")
+    val sellIcon = new ImageIcon(sellButtonImage.getImage().getScaledInstance(128 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val restockButtonImage = new SpriteSheet("resources/restockButtonIcon.png")
+    val restockIcon = new ImageIcon(restockButtonImage.getImage().getScaledInstance(128 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     val panel = new FlowPanel() {
 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
@@ -58,21 +71,25 @@ case class guiMerchant(controller: Controller, gui: SwingGui) extends StateGui {
 
       val sell = new Button()
       sell.peer.setBounds(0 * SCALE, 96 * SCALE, 128 * SCALE, 24 * SCALE)
+      sell.peer.setIcon(sellIcon)
       listenTo(sell)
       contents += sell
 
       val exit = new Button()
       exit.peer.setBounds(0 * SCALE, 120 * SCALE, 128 * SCALE, 24 * SCALE)
+      exit.peer.setIcon(exitIcon)
       listenTo(exit)
       contents += exit
 
       val buy = new Button()
       buy.peer.setBounds(128 * SCALE, 96 * SCALE, 128 * SCALE, 24 * SCALE)
+      buy.peer.setIcon(buyIcon)
       listenTo(buy)
       contents += buy
 
       val restock = new Button()
       restock.peer.setBounds(128 * SCALE, 120 * SCALE, 128 * SCALE, 24 * SCALE)
+      restock.peer.setIcon(restockIcon)
       listenTo(restock)
       contents += restock
 

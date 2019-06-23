@@ -24,23 +24,24 @@ trait Weapon extends Item {
 
   def getScaledWeapon(lvl: Int): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
 
-  override def toString: String = { //eig unnötig da auf 3nachkommastellen lul und nicht in gui für zahl benutzt werden kann
+  override def toString: String = {
     var sb = new StringBuilder
     sb.append("(" + rarity + ") " + name + " dmg: ")
     if (dmg >= 1000) {
-      val dmgInK = dmg.toDouble / 1000.0
-      sb.append(dmgInK + "K")
+      val dmgInK = dmg / 1000.0
+      sb.append((dmgInK - (dmgInK % 0.1)) + "K")
     } else sb.append("" + dmg)
 
     if (block >= 1000) {
-      val blockInK = block.toDouble / 1000.0
-      sb.append(" block: " + blockInK + "K")
+      val blockInK = block / 1000.0
+      sb.append(" block: " + (blockInK - (blockInK % 0.1)) + "K")
     } else sb.append(" block: " + block)
 
+    /*
     if (value >= 1000) {
-      val valueInK = value.toDouble / 1000.0
-      sb.append(" value: " + valueInK + "K")
-    } else sb.append(" value: " + value)
+      val valueInK = value / 1000.0
+      sb.append(" value: " + (valueInK - (valueInK % 0.1)) + "K")
+    } else*/ sb.append(" value: " + value)
 
     sb.toString()
   }
@@ -48,8 +49,8 @@ trait Weapon extends Item {
 
 object Weapon {
   def apply(kind: String): Weapon = kind match {
-    case "rightFist" => Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "",textureIndex = 24)
-    case "leftFist" => Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "",textureIndex = 24)
+    case "rightFist" => Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "", textureIndex = 24)
+    case "leftFist" => Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "", textureIndex = 24)
     case "Sword" => Sword(name = "Sword", value = 10, usable = false, dmg = 10, block = 5, oneHanded = true, rarity = "Common")
     case "random" =>
       val name: String = RandomWeapon.getWeaponName()
@@ -102,7 +103,7 @@ private object RandomWeapon {
     val random = Random //geht auch so zu schreiben lul wierd
     val weaponType = 1 //random.nextInt(0) + 1 // => ersma 1 weil ja nur Sword derzeit gibt => easy expandable
     weaponType match {
-      case 1 => Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity, textureIndex = (Random.nextInt(3) + 1))//texture index erhöhen wenn mehr texturen dazukommen
+      case 1 => Sword(name, value, usable = false, dmg, block, oneHanded = true, rarity, textureIndex = (Random.nextInt(3) + 1)) //texture index erhöhen wenn mehr texturen dazukommen
       //case 2 => Bow(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
       //case 3 => Hammer(name = "Sword", value = 0, usable = false, dmg = 0, block = 0, oneHanded = true, rarity = "Common")
       //etc..

@@ -43,6 +43,9 @@ case class guiInventoryArmor(controller: Controller, gui: SwingGui) extends Stat
     val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
     val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
+    val equipButtonImage = new SpriteSheet("resources/equipButtonIcon.png")
+    val equipIcon = new ImageIcon(equipButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     def getImageIcon(item: Item): ImageIcon = {
       item match {
         case armor: Armor => armor match {
@@ -79,7 +82,7 @@ case class guiInventoryArmor(controller: Controller, gui: SwingGui) extends Stat
       contents += scrollBar
 
       val equip = new Button()
-      //equip.peer.setIcon(equipIcon)
+      equip.peer.setIcon(equipIcon)
       listenTo(equip)
       equip.peer.setBounds(0 * SCALE, 104 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += equip

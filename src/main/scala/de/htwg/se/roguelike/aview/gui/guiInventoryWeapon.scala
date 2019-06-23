@@ -42,6 +42,12 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
     val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
     val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
+    val equipRButtonImage = new SpriteSheet("resources/equipR.png")
+    val equipRIcon = new ImageIcon(equipRButtonImage.getImage().getScaledInstance(64 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val equipLButtonImage = new SpriteSheet("resources/equipL.png")
+    val equipLIcon = new ImageIcon(equipLButtonImage.getImage().getScaledInstance(64 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     def getImageIcon(item: Item): ImageIcon = {
       item match {
         case armor: Armor => armor match {
@@ -78,13 +84,13 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
       contents += scrollBar
 
       val equipR = new Button()
-      //equip.peer.setIcon(equipIcon)
+      equipR.peer.setIcon(equipRIcon)
       listenTo(equipR)
       equipR.peer.setBounds(64 * SCALE, 104 * SCALE, 64 * SCALE, 20 * SCALE)
       contents += equipR
 
       val equipL = new Button()
-      //equip.peer.setIcon(equipIcon)
+      equipL.peer.setIcon(equipLIcon)
       listenTo(equipL)
       equipL.peer.setBounds(0 * SCALE, 104 * SCALE, 64 * SCALE, 20 * SCALE)
       contents += equipL
