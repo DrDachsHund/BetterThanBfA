@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage
 import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
-import javax.swing.{BoxLayout, ListSelectionModel}
+import javax.swing.{BoxLayout, ImageIcon, ListSelectionModel}
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{BorderPanel, BoxPanel, Button, Component, Dimension, FlowPanel, ListView, Orientation, Panel, ScrollBar, ScrollPane}
@@ -38,6 +38,15 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
     var enemyItems = new ListView(controller.enemyLoot)
 
+    val exitButtonImage = new SpriteSheet("resources/exitButtonIcon.png")
+    val exitIcon = new ImageIcon(exitButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val lootButtonImage = new SpriteSheet("resources/lootButtonIcon.png")
+    val lootIcon = new ImageIcon(lootButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+    val lootAllButtonImage = new SpriteSheet("resources/lootAllButtonIcon.png")
+    val lootAlIcon = new ImageIcon(lootAllButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     val panel = new FlowPanel() {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
       peer.setLayout(null)
@@ -49,17 +58,20 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       listenTo(enemyItems.selection)
       contents += scrollBar
 
-      val lootButton = new Button("Loot")//vll noch texture
+      val lootButton = new Button()//vll noch texture
+      lootButton.peer.setIcon(lootIcon)
       listenTo(lootButton)
       lootButton.peer.setBounds(128 * SCALE, 64 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += lootButton
 
-      val lootAllButton = new Button("Loot All")
+      val lootAllButton = new Button()
+      lootAllButton.peer.setIcon(lootAlIcon)
       listenTo(lootAllButton)
       lootAllButton.peer.setBounds(128 * SCALE, 94 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += lootAllButton
 
-      val exitButton = new Button("Exit")
+      val exitButton = new Button()
+      exitButton.peer.setIcon(exitIcon)
       listenTo(exitButton)
       exitButton.peer.setBounds(128 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += exitButton
@@ -74,25 +86,12 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
 
       override def paintComponent(g: Graphics2D): Unit = {
 
+        val inventoryBackground = new SpriteSheet("resources/inventoryBackground.png").getImage()
+        g.drawImage(inventoryBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
+
         val backgroundSpriteSheet = new SpriteSheet("resources/16bitSpritesBackground.png")
         val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
-        g.setColor(Color.WHITE)
-        g.fillRect(192 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE)
-        /*
-        g.setColor(Color.BLACK)
-        g.setFont(new Font("TimesRoman", Font.BOLD, 5 * SCALE))
-        enemyItems.peer.getSelectedValue match {
-          case armor: Armor => g.drawString("DEF: " + armor.armor, 222 * SCALE, 0 * SCALE)
-          case weapon: Weapon => g.drawString("ATK: " + weapon.dmg, 202 * SCALE, 0 * SCALE)
-          case potion: Potion => potion match {
-            case hp:HealPotion => g.drawString("HP: " + hp.power, 202 * SCALE, 0 * SCALE)
-            case mp:ManaPotion => g.drawString("MP: " + mp.power, 202 * SCALE, 0 * SCALE)
-          }
-          case _ => g.fillRect(202 * SCALE, 0 * SCALE,100,100)
-        }
-        //geht nict ka zeichnet den string nicht
-        */
         enemyItems.peer.getSelectedValue match {
           case armor: Armor => armor match {
             case helm: Helmet => g.drawImage(getTexture(helm.textureIndex, "resources/HelmTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
@@ -104,7 +103,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
           case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex, "resources/WeaponTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case _ => {
-            g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
+            //g.drawImage(errorTexture, 128 * SCALE, 0 * SCALE, 64 * SCALE, 64 * SCALE, null)
             println("NichtsAusgewählt")
           }
         }
