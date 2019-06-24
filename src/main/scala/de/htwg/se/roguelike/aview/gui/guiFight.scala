@@ -4,6 +4,7 @@ import java.awt.{Color, Font, Graphics2D}
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import javax.swing.ImageIcon
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FlowPanel, Label, Panel}
@@ -47,6 +48,21 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
       peer.setLayout(null)
 
+      val runButtonImage = new SpriteSheet("resources/runButtonIcon.png")
+      val runIcon = new ImageIcon(runButtonImage.getImage().getScaledInstance(48 * SCALE, 38 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+      val inventoryButtonImage = new SpriteSheet("resources/inventoryButtonIcon.png")
+      val inventoryIcon = new ImageIcon(inventoryButtonImage.getImage().getScaledInstance(51 * SCALE, 38 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+      val blockButtonImage = new SpriteSheet("resources/blockButtonIcon.png")
+      val blockIcon = new ImageIcon(blockButtonImage.getImage().getScaledInstance(51 * SCALE, 38 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+      val attackButtonImage = new SpriteSheet("resources/attackButtonIcon.png")
+      val attackIcon = new ImageIcon(attackButtonImage.getImage().getScaledInstance(51 * SCALE, 38 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+      val specialButtonImage = new SpriteSheet("resources/specialButtonIcon.png")
+      val specialIcon = new ImageIcon(specialButtonImage.getImage().getScaledInstance(51 * SCALE, 38 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
       //ersma so aber eig eigene texturen für fihgt
       val playerSpriteSheet = new SpriteSheet("resources/Player.png")
       val fightSpriteSheet = new SpriteSheet("resources/TextBar.png")
@@ -67,26 +83,31 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
 
       val attack = new Button()
       attack.peer.setBounds(2 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
+      attack.peer.setIcon(attackIcon)
       listenTo(attack)
       contents += attack
 
       val block = new Button()
       block.peer.setBounds(53 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
+      block.peer.setIcon(blockIcon)
       listenTo(block)
       contents += block
 
       val special = new Button()
       special.peer.setBounds(104 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
+      special.peer.setIcon(specialIcon)
       listenTo(special)
       contents += special
 
       val inventory = new Button()
       inventory.peer.setBounds(155 * SCALE, 104 * SCALE, 51 * SCALE, 38 * SCALE)
+      inventory.peer.setIcon(inventoryIcon)
       listenTo(inventory)
       contents += inventory
 
       val run = new Button()
       run.peer.setBounds(206 * SCALE, 104 * SCALE, 48 * SCALE, 38 * SCALE)
+      run.peer.setIcon(runIcon)
       listenTo(run)
       contents += run
 
