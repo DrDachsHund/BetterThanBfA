@@ -14,7 +14,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var portal = Portal()
   var crate = Crate(inventory = new Inventory(Vector(), Vector(), Vector()))
   var merchant = Merchant()
-  var lvlDepth = 1
+  var lvlDepth = 0
 
   var SCALE: Int = 3
 
@@ -43,7 +43,10 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   def createRandomLevel(): Unit = {
     val (level1, enemies1) = new LevelCreator(9, 16).createRandom(player, 10)
     level = level1
-    enemies = enemies1
+    enemies = Vector()
+    for (e <- enemies1) {
+      enemies ++= e.setScale(player.lvl + lvlDepth).setLoot() :: Nil
+    }
     createMerchant()
     createPortal()
     createCrateDepth(lvlDepth)
@@ -208,7 +211,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     else {
       setGameStatus(GameStatus.LOOTENEMY)
     }
-    println("lvlUP exp:"+ player.exp)
+    println("lvlUP exp:" + player.exp)
     repaint()
   }
 
@@ -304,8 +307,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
           case "yes" => enemyTurn(playerAction, "block")
           case "maybe" =>
             random.nextInt(10) + 1 match {
-              case x if 1 until 4 contains(x) => enemyTurn(playerAction, "block")
-              case x if 4 until 6 contains(x) => {
+              case x if 1 until 4 contains (x) => enemyTurn(playerAction, "block")
+              case x if 4 until 6 contains (x) => {
                 if (currentEnemy.inventory.potions.size > 0)
                   enemyTurn(playerAction, "heal")
                 else enemyTurn(playerAction, "attack")
@@ -337,8 +340,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     }
   }
 
-  var enemyLastAction:String = ""
-  var playerLastAction :String = ""
+  var enemyLastAction: String = ""
+  var playerLastAction: String = ""
+
   def enemyTurn(playerAction: String, enemyAction: String): Unit = {
     println("Enemy Thinking => " + enemyAction)
 
@@ -365,7 +369,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
           enemyLastAction = currentEnemy.name + ": attacked for " + currentEnemy.getAttack + " damage"
         }
         case "heal" => {
-          currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl,maxHealth = currentEnemy.maxHealth + 25 * currentEnemy.lvl)
+          currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl, maxHealth = currentEnemy.maxHealth + 25 * currentEnemy.lvl)
           enemyLastAction = currentEnemy.name + ": healed for " + 25 * currentEnemy.lvl + " hp"
         }
         case "special" =>
@@ -823,7 +827,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       false
     else {
       player = player.copy(gulden = player.gulden - 250)
-      merchant = merchant.restock()
+      merchant = merchant.restock(player.lvl)
       publish(new TileChanged)
       true
     }

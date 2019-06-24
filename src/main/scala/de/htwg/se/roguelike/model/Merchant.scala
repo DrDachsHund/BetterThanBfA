@@ -2,7 +2,7 @@ package de.htwg.se.roguelike.model
 
 case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[Item] = Vector(Weapon("random"),Armor("random"),Potion("random")), gulden:Int = 50) {
 
-  def restock():Merchant = {
+  def restock(lvl:Int):Merchant = {
     var newInventory = this.inventory
 
     var newWeapon = Weapon("Sword")
@@ -10,7 +10,7 @@ case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[Item] = Vecto
     var newPotion = Potion("SmallHeal")
 
     while (newWeapon.rarity == "Common" || newWeapon.rarity == "Uncommon")
-      newWeapon = Weapon("random")
+      newWeapon = Weapon("random").getScaledWeapon(lvl)
 
     while (newArmor.rarity == "Common" || newArmor.rarity == "Uncommon")
       newArmor = Armor("random")

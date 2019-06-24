@@ -10,18 +10,13 @@ case class Sword(name: String,
                  oneHanded: Boolean,
                  rarity: String,
                  itemLevel: Int = 1,
-                 textureIndex:Int = 0) extends Weapon {
+                 textureIndex: Int = 0) extends Weapon {
 
   private def setItemLevel(lvl: Int): Sword = {
     val random = new Random()
-    val coinflip = random.nextInt(2)
     val randomItemLevel2 = random.nextInt(5)
     var randomItemLevel = 1
-    coinflip match {
-      case 0 => randomItemLevel = lvl + randomItemLevel2
-      case 1 => randomItemLevel = lvl - randomItemLevel2
-        if (randomItemLevel < 1) randomItemLevel = 1
-    }
+    randomItemLevel = lvl + randomItemLevel2
     this.copy(itemLevel = randomItemLevel)
   }
 

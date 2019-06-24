@@ -15,7 +15,7 @@ class MerchantTest extends WordSpec with Matchers {
         merchant.gulden should be(50)
       }
 
-      val merchant2 = merchant.restock()
+      val merchant2 = merchant.restock(0)
       "be able to restock" in {
         merchant2.inventory.size should be(6)
       }
