@@ -7,7 +7,7 @@ import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
 import javax.swing.ImageIcon
 
-import scala.swing.event.{ButtonClicked, SelectionChanged}
+import scala.swing.event.{ButtonClicked, MouseClicked, SelectionChanged}
 import scala.swing.{Button, Dimension, FlowPanel, ListView, Panel, ScrollPane}
 
 
