@@ -58,7 +58,7 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       listenTo(enemyItems.selection)
       contents += scrollBar
 
-      val lootButton = new Button()//vll noch texture
+      val lootButton = new Button()
       lootButton.peer.setIcon(lootIcon)
       listenTo(lootButton)
       lootButton.peer.setBounds(128 * SCALE, 64 * SCALE, 128 * SCALE, 20 * SCALE)
