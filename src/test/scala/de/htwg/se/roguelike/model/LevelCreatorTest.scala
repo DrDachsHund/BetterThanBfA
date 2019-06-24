@@ -15,15 +15,19 @@ class LevelCreatorTest extends WordSpec with Matchers {
       level.map.tile(0,0) should be(Tile(5))
       level.map.tile(1,1) should be(Tile(3))
     }
-    var test = false
-    val level2 = new LevelCreator(2,2).
-      createRandom(new Player(name = "TestPlayer",posX = 0,posY = 0),1)
 
+
+    val level2 = new LevelCreator(10,10).createRandom(new Player(name = "TestPlayer",posX = 0,posY = 0),1)
+    var count = 0
     "createRandom" in {
-      for (x <- 0 to level2._1.map.sizeY) {
-        if (level2._2.length == 1) test = true
+      for (x <- 0 to level2._1.map.sizeX-1) {
+        for (y <- 0 to level2._1.map.sizeY-1) {
+          if (level2._1.map.tile(x,y) == Tile(2)) count += 1
+        }
+
       }
-      test should be (true)
+      count should be (24)
     }
+
   }
 }
