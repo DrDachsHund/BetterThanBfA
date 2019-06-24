@@ -5,9 +5,9 @@ case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[Item] = Vecto
   def restock():Merchant = {
     var newInventory = this.inventory
 
-    var newWeapon = Weapon("random")
-    var newArmor = Armor("random")
-    var newPotion = Potion("random")
+    var newWeapon = Weapon("Sword")
+    var newArmor = Armor("Helmet")
+    var newPotion = Potion("SmallHeal")
 
     while (newWeapon.rarity == "Common" || newWeapon.rarity == "Uncommon")
       newWeapon = Weapon("random")
