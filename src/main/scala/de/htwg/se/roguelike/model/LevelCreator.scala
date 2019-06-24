@@ -20,8 +20,8 @@ class LevelCreator(sizeY: Int, sizeX: Int) {
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
 
-    var row: Int = Random.nextInt(level.map.sizeY)
-    var col: Int = Random.nextInt(level.map.sizeX)
+    var row: Int = player.posY
+    var col: Int = player.posX
     var enemies: Vector[Enemy] = Vector()
 
     for (_ <- 1 to enemyCount) {
@@ -61,8 +61,8 @@ class LevelCreator(sizeY: Int, sizeX: Int) {
 
     var newLevel = level
 
-    var row: Int = Random.nextInt(newLevel.map.sizeX)
-    var col: Int = Random.nextInt(newLevel.map.sizeX)
+    var row: Int = 0
+    var col: Int = 0
 
     for (_ <- 1 to numberOfTiles) {
       while (newLevel.map.tile(col, row).isSet) {
