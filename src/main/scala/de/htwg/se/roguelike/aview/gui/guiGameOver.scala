@@ -5,6 +5,7 @@ import java.awt.{Color, Font, Graphics2D}
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import javax.swing.ImageIcon
 
+import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FlowPanel, Panel}
 
 case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
@@ -52,6 +53,11 @@ case class guiGameOver(controller: Controller, gui: SwingGui) extends StateGui {
       exit.peer.setIcon(exitIcon)
       listenTo(exit)
       contents += exit
+
+      reactions += {
+        case ButtonClicked(b) if b == exit => System.exit(0)
+        case ButtonClicked(b) if b == newGameButoon => controller.newGame()
+      }
 
       override def paintComponent(g: Graphics2D): Unit = {
         g.drawImage(gameOver, 0, 0, 256 * SCALE, 144 * SCALE, null)
