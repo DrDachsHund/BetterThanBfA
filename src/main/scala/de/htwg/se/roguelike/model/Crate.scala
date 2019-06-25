@@ -25,6 +25,7 @@ case class Crate(posX:Int = -1,posY:Int = -1, inventory:Vector[Item] = Vector())
         case _ => newInventory ++= Weapon("random").getScaledWeapon(playerlvl) :: Nil
       }
     }
+    newInventory = newInventory.sortWith(_.value > _.value)
     crate.copy(inventory = newInventory)
   }
 }

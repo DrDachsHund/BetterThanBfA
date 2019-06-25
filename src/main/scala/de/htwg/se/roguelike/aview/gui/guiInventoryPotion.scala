@@ -68,9 +68,23 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
       exitButton.peer.setBounds(0 * SCALE, 124 * SCALE, 128 * SCALE, 20 * SCALE)
       contents += exitButton
 
+      val sortButtonPower = new Button()
+      //sortButtonPower.peer.setIcon(potionIcon)
+      listenTo(sortButtonPower)
+      sortButtonPower.peer.setBounds(130 * SCALE, 104 * SCALE, 20 * SCALE, 20 * SCALE)
+      contents += sortButtonPower
+
+      val sortButtonValue = new Button()
+      //sortButtonValue.peer.setIcon(potionIcon)
+      listenTo(sortButtonValue)
+      sortButtonValue.peer.setBounds(130 * SCALE, 124 * SCALE, 20 * SCALE, 20 * SCALE)
+      contents += sortButtonValue
+
       reactions += {
         case ButtonClicked(e) if e == use => controller.usePotion(playerItems.peer.getSelectedIndex + 1)
         case ButtonClicked(e) if e == exitButton => controller.setGameStatus(GameStatus.INVENTORY)
+        case ButtonClicked(b) if b == sortButtonPower => controller.playerSortInventoryPower()
+        case ButtonClicked(b) if b == sortButtonValue => controller.playerSortInventoryValue()
         case SelectionChanged(_) => controller.repaint()
       }
 

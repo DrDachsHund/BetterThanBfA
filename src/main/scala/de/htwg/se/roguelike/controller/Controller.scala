@@ -289,7 +289,6 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         setGameStatus(GameStatus.LEVEL)
         return
       }
-
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     publish(new TileChanged)
   }
@@ -795,6 +794,17 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     publish(new TileChanged)
   }
 
+  def playerSortInventoryPower() : Unit = {
+    player = player.copy(inventory = player.inventory.invSortPower())
+    publish(new TileChanged)
+  }
+
+  def playerSortInventoryValue() : Unit = {
+    player = player.copy(inventory = player.inventory.invSortValue())
+    publish(new TileChanged)
+  }
+
+
   //-----------INVENTORY----------------
 
   def inventoryAsOneVector(): Vector[Item] = {
@@ -839,6 +849,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       player = player.copy(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden + itemToSell.value)
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
+    merchant = merchant.copy(inventory = merchant.sortItems(merchant.inventory))
     publish(new TileChanged)
   }
 

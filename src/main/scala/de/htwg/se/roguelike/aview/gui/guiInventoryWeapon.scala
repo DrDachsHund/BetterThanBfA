@@ -145,6 +145,19 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
       listenTo(weaponLeftHandButton)
       contents += weaponLeftHandButton
 
+
+      val sortButtonPower = new Button()
+      //sortButtonPower.peer.setIcon(potionIcon)
+      listenTo(sortButtonPower)
+      sortButtonPower.peer.setBounds(130 * SCALE, 104 * SCALE, 20 * SCALE, 20 * SCALE)
+      contents += sortButtonPower
+
+      val sortButtonValue = new Button()
+      //sortButtonValue.peer.setIcon(potionIcon)
+      listenTo(sortButtonValue)
+      sortButtonValue.peer.setBounds(130 * SCALE, 124 * SCALE, 20 * SCALE, 20 * SCALE)
+      contents += sortButtonValue
+
       reactions += {
         case ButtonClicked(e) if e == equipR => controller.equipWeapon(0, playerItems.peer.getSelectedIndex + 1)
         case ButtonClicked(e) if e == equipL => controller.equipWeapon(1, playerItems.peer.getSelectedIndex + 1)
@@ -156,6 +169,8 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
         case ButtonClicked(b) if b == glovesButton => controller.unEquipGloves()
         case ButtonClicked(b) if b == weaponRightHandButton => controller.unEquipRightHand()
         case ButtonClicked(b) if b == weaponLeftHandButton => controller.unEquipLeftHand()
+        case ButtonClicked(b) if b == sortButtonPower => controller.playerSortInventoryPower()
+        case ButtonClicked(b) if b == sortButtonValue => controller.playerSortInventoryValue()
 
         //case SelectionChanged(_) => controller.repaint()
       }
