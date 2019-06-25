@@ -19,7 +19,8 @@ case class Player(name: String,
                   rightHand: Weapon = Weapon("rightFist"),
                   leftHand: Weapon = Weapon("leftFist"),
                   gulden: Int = 0,
-                  killCounter: Int = 0
+                  killCounter: Int = 0,
+                  direction: Int = 0,
                   //necromancer vll companion:Entity oder so
                   //merchant vll gold:Int direkt auf 500
                   //mage/archer etc ...

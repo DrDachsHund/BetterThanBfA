@@ -15,6 +15,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var crate = Crate()
   var merchant = Merchant()
   var lvlDepth = 0
+  var bossfight: Boolean = false
 
   var SCALE: Int = 3
 
@@ -123,15 +124,18 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     } else if (player.posX == portal.posX && player.posY == portal.posY) {
       portal = Portal()
       lvlDepth += 1
+      if (lvlDepth % 11 == 0) {
+        bossfight = true
+        currentEnemy = Enemy().createRandomBoss(lvlDepth)
+        setGameStatus(GameStatus.FIGHT)
+      }
       createRandomLevel()
       //notifyObservers()
       publish(new TileChanged)
     } else if (player.posX == merchant.posX && player.posY == merchant.posY) {
       setGameStatus(GameStatus.MERCHANT)
-      publish(new TileChanged)
     } else if (player.posX == crate.posX && player.posY == crate.posY) {
       setGameStatus(GameStatus.CRATE)
-      publish(new TileChanged)
     }
   }
 
@@ -153,24 +157,28 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def moveUp(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, this))
+    player = player.copy(direction = 1)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveDown(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies, this))
+    player = player.copy(direction = 0)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveLeft(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies, this))
+    player = player.copy(direction = 2)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveRight(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies, this))
+    player = player.copy(direction = 3)
     //notifyObservers()
     publish(new TileChanged)
   }
@@ -316,12 +324,14 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def run(): Unit = {
-    playerLastAction = ""
-    enemyLastAction = ""
-    val runPlayer = player
-    setGameStatus(GameStatus.LEVEL)
-    undo()
-    player = runPlayer.copy(posX = player.posX, posY = player.posY)
+    if (!bossfight) {
+      playerLastAction = ""
+      enemyLastAction = ""
+      val runPlayer = player
+      setGameStatus(GameStatus.LEVEL)
+      undo()
+      player = runPlayer.copy(posX = player.posX, posY = player.posY)
+    }
   }
 
   def enemyThinking(playerAction: String): Unit = {
@@ -410,6 +420,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     if (!player.isAlive) {
       playerLastAction = ""
       enemyLastAction = ""
+      bossfight = false
       setGameStatus(GameStatus.GAMEOVER)
     }
     else if (!currentEnemy.isAlive) {
@@ -428,6 +439,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
       playerLastAction = ""
       enemyLastAction = ""
+      bossfight = false
 
       if (oldLvl < player.lvl) setGameStatus(GameStatus.PLAYERLEVELUP)
       else setGameStatus(GameStatus.LOOTENEMY)

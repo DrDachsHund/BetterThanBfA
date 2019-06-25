@@ -56,7 +56,10 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
 
       val errorTexture = backgroundSpriteSheet.getSprite(32, 16, 16)
 
-      val playerTexture = playerSpriteSheet.getSprite(16, 0, 16)
+      val playerTextureRight = playerSpriteSheet.getSprite(16, 0, 16)
+      val playerTextureLeft = playerSpriteSheet.getSprite(16, 16, 16)
+      val playerTextureDown = playerSpriteSheet.getSprite(16, 32, 16)
+      val playerTextureUp = playerSpriteSheet.getSprite(16, 48, 16)
 
       val enemyTextureBlue = enemiesSpriteSheet.getSprite(0, 32, 16)
       val enemyTextureRed = enemiesSpriteSheet.getSprite(0, 16, 16)
@@ -97,9 +100,14 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
         g.drawImage(levelTextureCrate,controller.crate.posX * 16 * SCALE, controller.crate.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
 
         //--PLAYER
-        g.drawImage(playerTexture, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
-      }
 
+        controller.player.direction match {
+          case 0 => g.drawImage(playerTextureDown, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+          case 1 => g.drawImage(playerTextureUp, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+          case 2 => g.drawImage(playerTextureLeft, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+          case 3 => g.drawImage(playerTextureRight, controller.player.posX * 16 * SCALE, controller.player.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        }
+      }
       repaint()
     }
     panel
