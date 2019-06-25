@@ -50,7 +50,8 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
 
       val levelTextureFlower = backgroundSpriteSheet.getSprite(16, 0, 16)
       val levelTextureGrass = backgroundSpriteSheet.getSprite(0, 0, 16)
-      val levelTexturePortal = backgroundSpriteSheet.getSprite(0, 16, 16)
+      val levelTexturePortalBlue = backgroundSpriteSheet.getSprite(0, 16, 16)
+      val levelTexturePortalRed = backgroundSpriteSheet.getSprite(64, 16, 16)
       val levelTextureMerchant = backgroundSpriteSheet.getSprite(16, 16, 16)
       val levelTextureCrate = backgroundSpriteSheet.getSprite(48,16,16)
 
@@ -90,14 +91,18 @@ case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
           }
         }
 
-        //--Portal
-        g.drawImage(levelTexturePortal, controller.portal.posX * 16 * SCALE, controller.portal.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
-
         //--Merchant
         g.drawImage(levelTextureMerchant, controller.merchant.posX * 16 * SCALE, controller.merchant.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
 
         //--Crate
         g.drawImage(levelTextureCrate,controller.crate.posX * 16 * SCALE, controller.crate.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+
+
+        //--Portal
+        controller.portal.portalType match {
+          case 0 => g.drawImage(levelTexturePortalBlue, controller.portal.posX * 16 * SCALE, controller.portal.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+          case 1 => g.drawImage(levelTexturePortalRed, controller.portal.posX * 16 * SCALE, controller.portal.posY * 16 * SCALE, 16 * SCALE, 16 * SCALE, null)
+        }
 
         //--PLAYER
 

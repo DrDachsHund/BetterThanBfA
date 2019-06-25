@@ -90,7 +90,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     } while (level.map.tile(col, row).isSet)
 
     level = level.removeElement(col, row, 1)
-    portal = portal.copy(posX = row, posY = col)
+    if ((lvlDepth % 11) == 10) {
+      portal = portal.copy(posX = row, posY = col,portalType = 1)
+    } else portal = portal.copy(posX = row, posY = col,portalType = 0)
   }
 
   def createMerchant(): Unit = {
