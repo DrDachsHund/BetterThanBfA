@@ -2,34 +2,29 @@ package de.htwg.se.roguelike.model
 
 import scala.util.Random
 
-case class Crate(posX:Int = -1,posY:Int = -1,inventory: Inventory) {
+case class Crate(posX:Int = -1,posY:Int = -1, inventory:Vector[Item] = Vector()) {
 
-  /*
-  def fillCrate (crate: Crate): Unit = {
+  def fillCrate (depth:Int,playerlvl:Int): Crate = {
     val random = new Random()
-    val itemRandom = random.nextInt(100) + 1
-    println(itemRandom)
+    val itemRandom = random.nextInt(100) + depth
     itemRandom match {
-      case x if 1 until 50 contains x => randomCrate(crate,1)
-      case x if 51 until 85 contains x => randomCrate(crate,2) until ist exclusive also wiede bhei 50 weiter
-      case x if 86 until 100 contains x => randomCrate(crate,3)
-      case _ => print("Fehler beim Crate fill")
+      case x if 1 until 50 contains x => randomCrate(this,1,playerlvl)
+      case x if 50 until 85 contains x => randomCrate(this,2,playerlvl)
+      case _ => randomCrate(this,3,playerlvl)
     }
   }
 
-  def randomCrate (crate:Crate, items:Int): Unit = {
+  def randomCrate (crate:Crate, items:Int, playerlvl:Int): Crate = {
+    var newInventory = this.inventory
     val random = new Random()
     val itemRandom = random.nextInt(100) + 1
     for (x <- 1 to items) {
-      println(items)
-      println(itemRandom)
-      itemRandom match { //Maybe einfach gleiche Wahrscheinlichkeit für alle
-        case y if 1 until 50 contains y => crate.copy(inventory = inventory.copy(potions = inventory.potions :+ Potion("SmallHeal")))
-        case y if 51 until 85 contains y => crate.copy(inventory = inventory.copy(armor = inventory.armor :+ Armor("Sword")))  <= ?????????????????????????
-        case y if 86 until 100 contains y => crate.copy(inventory = inventory.copy(weapons = inventory.weapons :+ Weapon("Boots")))  <= ?????????????????????????
-        case _ => print("Fehler beim Crate fill")
+      itemRandom match {
+        case y if 1 until 50 contains y => newInventory ++= Potion("random") :: Nil
+        case y if 50 until 85 contains y => newInventory ++= Armor("random") :: Nil
+        case _ => newInventory ++= Weapon("random").getScaledWeapon(playerlvl) :: Nil
       }
     }
+    crate.copy(inventory = newInventory)
   }
-*/
 }

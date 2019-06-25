@@ -12,7 +12,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
   var portal = Portal()
-  var crate = Crate(inventory = new Inventory(Vector(), Vector(), Vector()))
+  var crate = Crate()
   var merchant = Merchant()
   var lvlDepth = 0
 
@@ -49,7 +49,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     }
     createMerchant()
     createPortal()
-    createCrateDepth(lvlDepth)
+    createCrate()
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
     //notifyObservers()
     publish(new TileChanged)
@@ -63,33 +63,20 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def createCrate(): Unit = {
-    var row: Int = 0
-    var col: Int = 0
-    do {
-      col = Random.nextInt(level.map.sizeX)
-      row = Random.nextInt(level.map.sizeY)
-    } while (level.map.tile(col, row).isSet)
+    if ((lvlDepth % 3) == 0) {
+      var row: Int = 0
+      var col: Int = 0
+      do {
+        col = Random.nextInt(level.map.sizeX)
+        row = Random.nextInt(level.map.sizeY)
+      } while (level.map.tile(col, row).isSet)
 
-    level = level.removeElement(col, row, 8)
-    crate = crate.copy(posX = row, posY = col)
-    //crate.fillCrate(crate)
-    print(crateInventoryAsOneVector())
-  }
-
-  def createCrateDepth(depth: Int): Unit = {
-    var times: Int = 0
-    val random = new Random()
-    val crateRandom = random.nextInt(100) + depth
-    println(crateRandom)
-    crateRandom match {
-      case x if 1 until 50 contains x => times = 1
-      case x if 51 until 85 contains x => times = 2
-      case x if 86 until 100 contains x => times = 3
-      case _ => times = 5
-    }
-
-    for (x <- 1 to times) {
-      createCrate()
+      level = level.removeElement(col, row, 8)
+      crate = Crate()
+      crate = crate.copy(posX = row, posY = col)
+      crate = crate.fillCrate(lvlDepth,player.lvl)
+    } else {
+      crate = crate.copy(posX = -1,posY = -1)
     }
   }
 
@@ -106,16 +93,20 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def createMerchant(): Unit = {
-    var row: Int = 0
-    var col: Int = 0
-    do {
-      col = Random.nextInt(level.map.sizeX)
-      row = Random.nextInt(level.map.sizeY)
-    } while (level.map.tile(col, row).isSet)
+    if ((lvlDepth % 5) == 0 && (lvlDepth != 0)) {
+      var row: Int = 0
+      var col: Int = 0
+      do {
+        col = Random.nextInt(level.map.sizeX)
+        row = Random.nextInt(level.map.sizeY)
+      } while (level.map.tile(col, row).isSet)
 
-    level = level.removeElement(col, row, 4)
-    merchant = Merchant()
-    merchant = merchant.copy(posX = row, posY = col, gulden = merchant.gulden * lvlDepth)
+      level = level.removeElement(col, row, 4)
+      merchant = Merchant()
+      merchant = merchant.copy(posX = row, posY = col, gulden = merchant.gulden * lvlDepth)
+    } else {
+      merchant = merchant.copy(posX = -1, posY = -1)
+    }
   }
 
   def interaction(): Unit = {
@@ -131,8 +122,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       //publish(new FightEvent)
     } else if (player.posX == portal.posX && player.posY == portal.posY) {
       portal = Portal()
-      createRandomLevel()
       lvlDepth += 1
+      createRandomLevel()
       //notifyObservers()
       publish(new TileChanged)
     } else if (player.posX == merchant.posX && player.posY == merchant.posY) {
@@ -268,6 +259,41 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     //notifyObservers()
     publish(new TileChanged)
   }
+
+  def lootAllCrate(): Unit = {
+    while (crate.inventory.size != 0) {
+      lootingCrate(1)
+    }
+  }
+
+  def lootingCrate(index: Int): Unit = {
+    if (crate.inventory.size < 1) setGameStatus(GameStatus.LEVEL)
+    else if (index > 0 && index <= crate.inventory.size) {
+      val loot = crate.inventory(index - 1)
+
+      loot match {
+        case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
+        case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
+        case _ => "LOOT FEHLER !!!!"
+      }
+
+      var usedItem = crate.inventory.filter(_ == loot)
+      usedItem = usedItem.drop(1)
+      var newLoot = crate.inventory.filterNot(_ == loot)
+      newLoot ++= usedItem
+      crate = crate.copy(inventory = newLoot)
+
+      if (crate.inventory.size == 0) {
+        crate = crate.copy(posX = -1, posY = -1)
+        setGameStatus(GameStatus.LEVEL)
+        return
+      }
+
+    } else println("CONTROLLER INKOREKTER INDEX => " + index)
+    publish(new TileChanged)
+  }
+
 
   //-----------LOOTING----------------
 
@@ -494,9 +520,42 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     override def updateToString: String = "Level-Up:\n[1]Health\n[2]Mana\n[3]Attack\n"
   }
 
+  class StrategyLootCrate extends Strategy {
+    override def updateToString: String = lootCrateString()
+  }
+
   class StrategyLootEnemy extends Strategy {
     override def updateToString: String = lootEnemyString()
   }
+
+  class StrategyMerchant extends Strategy {
+    override def updateToString: String = merchantString()
+  }
+
+  private def merchantString(): String = {
+    var sb = new StringBuilder
+    sb ++= "Interacting with Merchant:\n"
+    var index = 1
+    for (loot <- merchant.inventory) {
+      sb ++= ("[" + index + "]" + loot.toString + "\n")
+      index += 1
+    }
+    sb ++= "\n"
+    sb.toString
+  }
+
+  private def lootCrateString(): String = {
+    var sb = new StringBuilder
+    sb ++= "Opening Crate:\n"
+    var index = 1
+    for (loot <- crate.inventory) {
+      sb ++= ("[" + index + "]" + loot.toString + "\n")
+      index += 1
+    }
+    sb ++= "\n"
+    sb.toString
+  }
+
 
   private def lootEnemyString(): String = {
     var sb = new StringBuilder
@@ -523,6 +582,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       case GameStatus.INVENTORYARMOR => strategy = new StrategyArmor
       case GameStatus.PLAYERLEVELUP => strategy = new StrategyPlayerLevelUp
       case GameStatus.LOOTENEMY => strategy = new StrategyLootEnemy
+      case GameStatus.CRATE => strategy = new StrategyLootCrate
+      case GameStatus.MERCHANT => strategy = new StrategyMerchant
       case _ => println("Fehlender GAMESTATUS!!!!!!!!!!!!")
     }
     //notifyObservers()
@@ -740,13 +801,6 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     var items: Vector[Item] = player.inventory.weapons
     items ++= player.inventory.armor
     items ++= player.inventory.potions
-    items
-  }
-
-  def crateInventoryAsOneVector(): Vector[Item] = {
-    var items: Vector[Item] = crate.inventory.weapons
-    items ++= crate.inventory.armor
-    items ++= crate.inventory.potions
     items
   }
 

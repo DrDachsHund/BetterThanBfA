@@ -52,9 +52,9 @@ case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui 
       peer.setLayout(null)
 
       val scrollBar = new ScrollPane(enemyItems)
-      scrollBar.peer.setBounds(0, 0, 128 * SCALE, 144 * SCALE)
+      scrollBar.peer.setBounds(0 * SCALE, 0 * SCALE, 128 * SCALE, 144 * SCALE)
 
-      enemyItems.peer.setBounds(0, 0, 128 * SCALE, 144 * SCALE)
+      enemyItems.peer.setBounds(0 * SCALE, 0 * SCALE, 128 * SCALE, 144 * SCALE)
       listenTo(enemyItems.selection)
       contents += scrollBar
 
