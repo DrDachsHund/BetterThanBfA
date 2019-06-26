@@ -824,7 +824,6 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     publish(new TileChanged)
   }
 
-
   //-----------INVENTORY----------------
 
   def inventoryAsOneVector(): Vector[Item] = {

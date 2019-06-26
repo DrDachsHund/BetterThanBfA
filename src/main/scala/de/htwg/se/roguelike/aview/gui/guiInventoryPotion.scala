@@ -51,11 +51,9 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
       peer.setLayout(null)
 
-
       var playerItems = new ListView(controller.player.inventory.potions)
       val scrollBar = new ScrollPane(playerItems)
       scrollBar.peer.setBounds(128 * SCALE, 0, 128 * SCALE, 72 * SCALE)
-
       playerItems.peer.setBounds(128 * SCALE, 0, 128 * SCALE, 72 * SCALE)
       listenTo(playerItems.selection)
       contents += scrollBar
