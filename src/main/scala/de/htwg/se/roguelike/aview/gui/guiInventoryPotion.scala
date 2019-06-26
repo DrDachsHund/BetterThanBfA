@@ -43,6 +43,10 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
     val useButtonImage = new SpriteSheet("resources/usePotionButtonIcon.png")
     val useIcon = new ImageIcon(useButtonImage.getImage().getScaledInstance(128 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
+    val sortButtonImage = new SpriteSheet("resources/sortItemIcons.png")
+    val sortVIcon = new ImageIcon(sortButtonImage.getSprite(0,0,20).getScaledInstance(20 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+    val sortDIcon = new ImageIcon(sortButtonImage.getSprite(20,0,20).getScaledInstance(20 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     val panel = new FlowPanel() {
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
       peer.setLayout(null)
@@ -69,13 +73,13 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
       contents += exitButton
 
       val sortButtonPower = new Button()
-      //sortButtonPower.peer.setIcon(potionIcon)
+      sortButtonPower.peer.setIcon(sortDIcon)
       listenTo(sortButtonPower)
       sortButtonPower.peer.setBounds(130 * SCALE, 104 * SCALE, 20 * SCALE, 20 * SCALE)
       contents += sortButtonPower
 
       val sortButtonValue = new Button()
-      //sortButtonValue.peer.setIcon(potionIcon)
+      sortButtonValue.peer.setIcon(sortVIcon)
       listenTo(sortButtonValue)
       sortButtonValue.peer.setBounds(130 * SCALE, 124 * SCALE, 20 * SCALE, 20 * SCALE)
       contents += sortButtonValue

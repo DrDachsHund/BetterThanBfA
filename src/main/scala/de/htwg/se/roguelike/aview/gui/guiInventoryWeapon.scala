@@ -48,6 +48,10 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
     val equipLButtonImage = new SpriteSheet("resources/equipL.png")
     val equipLIcon = new ImageIcon(equipLButtonImage.getImage().getScaledInstance(64 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
+    val sortButtonImage = new SpriteSheet("resources/sortItemIcons.png")
+    val sortVIcon = new ImageIcon(sortButtonImage.getSprite(0,0,20).getScaledInstance(20 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+    val sortDIcon = new ImageIcon(sortButtonImage.getSprite(20,0,20).getScaledInstance(20 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     def getImageIcon(item: Item): ImageIcon = {
       item match {
         case armor: Armor => armor match {
@@ -147,13 +151,13 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
 
 
       val sortButtonPower = new Button()
-      //sortButtonPower.peer.setIcon(potionIcon)
+      sortButtonPower.peer.setIcon(sortDIcon)
       listenTo(sortButtonPower)
       sortButtonPower.peer.setBounds(130 * SCALE, 104 * SCALE, 20 * SCALE, 20 * SCALE)
       contents += sortButtonPower
 
       val sortButtonValue = new Button()
-      //sortButtonValue.peer.setIcon(potionIcon)
+      sortButtonValue.peer.setIcon(sortVIcon)
       listenTo(sortButtonValue)
       sortButtonValue.peer.setBounds(130 * SCALE, 124 * SCALE, 20 * SCALE, 20 * SCALE)
       contents += sortButtonValue
