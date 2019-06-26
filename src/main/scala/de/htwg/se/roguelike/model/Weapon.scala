@@ -48,15 +48,15 @@ private object RandomWeapon {
   def getStats(rarity: String): (Int, Int, Int) = { //(value,dmg,block)
     val random = new Random()
     rarity match {
-      case "Common" => (random.nextInt(10) + 1, random.nextInt(5) + 1, random.nextInt(10) + 1)
-      case "Uncommon" => (random.nextInt(20) + 10, random.nextInt(20) + 10, random.nextInt(10) + 2)
-      case "Rare" => (random.nextInt(30) + 20, random.nextInt(30) + 20, random.nextInt(15) + 3)
-      case "Epic" => (random.nextInt(40) + 30, random.nextInt(40) + 30, random.nextInt(20) + 3)
-      case "Legendary" => (random.nextInt(50) + 50, random.nextInt(50) + 50, random.nextInt(25) + 5)
-      case "Golden-Legendary" => (random.nextInt(60) + 100, random.nextInt(60) + 60, random.nextInt(30) + 15)
-      case "Seraph" => (random.nextInt(100) + 1000, random.nextInt(100) + 100, random.nextInt(50) + 25)
-      case "Pearlescent" => (random.nextInt(1000) + 10000, random.nextInt(200) + 200, random.nextInt(100) + 50)
-      case "Unknown" => (random.nextInt(9999999) + 9999999, random.nextInt(999) + 999, random.nextInt(999) + 999)
+      case "Common" => (random.nextInt(10) + 1, random.nextInt(5) + 1, random.nextInt(20) + 1)
+      case "Uncommon" => (random.nextInt(20) + 10, random.nextInt(10) + 10, random.nextInt(15) + 2)
+      case "Rare" => (random.nextInt(30) + 20, random.nextInt(10) + 20, random.nextInt(15) + 3)
+      case "Epic" => (random.nextInt(40) + 30, random.nextInt(15) + 30, random.nextInt(20) + 3)
+      case "Legendary" => (random.nextInt(50) + 50, random.nextInt(20) + 50, random.nextInt(25) + 5)
+      case "Golden-Legendary" => (random.nextInt(60) + 100, random.nextInt(25) + 60, random.nextInt(30) + 15)
+      case "Seraph" => (random.nextInt(100) + 1000, random.nextInt(30) + 100, random.nextInt(50) + 25)
+      case "Pearlescent" => (random.nextInt(1000) + 5000, random.nextInt(200) + 200, random.nextInt(100) + 50)
+      case "Unknown" => (random.nextInt(9999999) + 9999999, random.nextInt(500) + 500, random.nextInt(500) + 500)
     }
   }
 

@@ -69,6 +69,11 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       val fightBackgroundSpriteSheet = new SpriteSheet("resources/FightBackground1.png")
       val enemiesSpriteSheet = new SpriteSheet("resources/Enemy.png")
       val backgroundSpriteSheet = new SpriteSheet("resources/16bitSpritesBackground.png")
+      val fightItemIcons = new SpriteSheet("resources/fightItemIcons.png")
+
+      val enemyWeapon = fightItemIcons.getSprite(0, 0, 32)
+      val enemyArmor = fightItemIcons.getSprite(32, 0, 32)
+      val enemyPotion = fightItemIcons.getSprite(64, 0, 32)
 
       val playerTexture = playerSpriteSheet.getSprite(16, 0, 16)
       val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32, 16)) //zum flippen vll in eigene klasse?!?!?!?
@@ -134,6 +139,18 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
           case 2 => g.drawImage(enemyTextureRed, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
           case 3 => g.drawImage(enemyTextureGreen, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
           case _ => g.drawImage(errorTexture, 210 * SCALE, 60 * SCALE, 32 * SCALE, 32 * SCALE, null)
+        }
+
+        if (controller.currentEnemy.inventory.weapons.size != 0) {
+          g.drawImage(enemyWeapon, 243 * SCALE, 60 * SCALE, 12 * SCALE, 12 * SCALE, null)
+        }
+
+        if (controller.currentEnemy.inventory.potions.size != 0) {
+          g.drawImage(enemyPotion, 243 * SCALE, 72 * SCALE, 12 * SCALE, 12 * SCALE, null)
+        }
+
+        if (controller.currentEnemy.inventory.armor.size != 0) {
+          g.drawImage(enemyArmor, 243 * SCALE, 84 * SCALE, 12 * SCALE, 12 * SCALE, null)
         }
 
         g.drawImage(fight, 0, 0, 256 * SCALE, 144 * SCALE, null)

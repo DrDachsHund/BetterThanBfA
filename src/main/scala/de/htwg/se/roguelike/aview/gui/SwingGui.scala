@@ -131,6 +131,11 @@ private class GMenuBar(controller: Controller) extends MenuBar {
     contents += new MenuItem(Action("LUL") {})
     contents += new MenuItem(Action("W") {})
   }
+  /*
+  contents += new MenuItem(Action("Inventory") {
+    controller.setGameStatus(GameStatus.INVENTORY)
+  })
+  */
 }
 
 

@@ -147,7 +147,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def newGame(): Unit = {
     player = Player(name = "Player", posX = 5, posY = 5)
-    lvlDepth = 1
+    lvlDepth = 0
     createRandomLevel()
     setGameStatus(GameStatus.LEVEL)
     publish(new TileChanged)
@@ -472,7 +472,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   class StrategyFightStatus extends Strategy {
-    override def updateToString: String = fightStatus
+    override def updateToString: String = fightStatus + currentEnemy.inventory.toString
   }
 
   def fightStatus: String = {
