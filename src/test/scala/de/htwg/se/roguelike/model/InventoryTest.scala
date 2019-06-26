@@ -48,6 +48,43 @@ class InventoryTest extends WordSpec with Matchers {
         inventory2.weaponsToString() should be("Keine Weapons\n")
       }
 
+      var inventory3 = new Inventory(
+        Vector(new Sword(name = "Test",value = 5,usable = true,dmg = 10,block = 10,oneHanded = true,rarity = "test")
+        ,new Sword(name = "Test",value = 10,usable = true,dmg = 5,block = 10,oneHanded = true,rarity = "test"))
+        ,Vector(new HealPotion(name = "test",value = 5,usable = true,power = 10,rarity = "test")
+        ,new HealPotion(name = "test",value = 10,usable = true,power = 5,rarity = "test"))
+        ,Vector(new Helmet(name = "test", value = 5,usable = true,armor = 10,rarity = "test")
+          ,new Helmet(name = "test", value = 10,usable = true,armor = 5,rarity = "test")))
+
+      val testW = Vector(new Sword(name = "Test",value = 10,usable = true,dmg = 5,block = 10,oneHanded = true,rarity = "test")
+        ,new Sword(name = "Test",value = 5,usable = true,dmg = 10,block = 10,oneHanded = true,rarity = "test"))
+      val testP = Vector(new HealPotion(name = "test",value = 10,usable = true,power = 5,rarity = "test")
+        ,new HealPotion(name = "test",value = 5,usable = true,power = 10,rarity = "test"))
+      val testA = Vector(new Helmet(name = "test", value = 10,usable = true,armor = 5,rarity = "test")
+        ,new Helmet(name = "test", value = 5,usable = true,armor = 10,rarity = "test"))
+
+      "should be able to sort by value" in {
+        inventory3 = inventory3.invSortValue()
+        inventory3.weapons(0) should be(testW(0))
+        inventory3.weapons(1) should be(testW(1))
+        inventory3.potions(0) should be(testP(0))
+        inventory3.potions(1) should be(testP(1))
+        inventory3.armor(0) should be(testA(0))
+        inventory3.armor(1) should be(testA(1))
+      }
+
+      "should be able to sort by power" in {
+        inventory3 = inventory3.invSortPower()
+        inventory3.weapons(0) should be(testW(1))
+        inventory3.weapons(1) should be(testW(0))
+        inventory3.potions(0) should be(testP(1))
+        inventory3.potions(1) should be(testP(0))
+        inventory3.armor(0) should be(testA(1))
+        inventory3.armor(1) should be(testA(0))
+      }
+
+
+
     }
   }
 
