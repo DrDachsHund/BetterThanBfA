@@ -12,7 +12,8 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
   var portal = Portal()
-  var crate = Crate()
+  var crate = Crate(inventory = Vector(Sword(name = "Starting Weapon",value = 10, usable = false
+    ,dmg = 10, block = 10, oneHanded = true,rarity = "Common")))
   var merchant = Merchant()
   var lvlDepth = 0
   var bossfight: Boolean = false
@@ -72,8 +73,13 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         row = Random.nextInt(level.map.sizeY)
       } while (level.map.tile(col, row).isSet)
 
+
       level = level.removeElement(col, row, 8)
-      crate = Crate()
+
+      if (lvlDepth != 0) {
+        crate = Crate()
+      }
+
       crate = crate.copy(posX = row, posY = col)
       crate = crate.fillCrate(lvlDepth,player.lvl)
     } else {

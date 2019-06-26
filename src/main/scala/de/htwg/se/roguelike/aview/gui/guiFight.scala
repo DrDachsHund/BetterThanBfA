@@ -72,8 +72,8 @@ case class guiFight(controller: Controller, gui: SwingGui) extends StateGui {
       val fightItemIcons = new SpriteSheet("resources/fightItemIcons.png")
 
       val enemyWeapon = fightItemIcons.getSprite(0, 0, 32)
-      val enemyArmor = fightItemIcons.getSprite(32, 0, 32)
-      val enemyPotion = fightItemIcons.getSprite(64, 0, 32)
+      val enemyArmor = fightItemIcons.getSprite(64, 0, 32)
+      val enemyPotion = fightItemIcons.getSprite(32, 0, 32)
 
       val playerTexture = playerSpriteSheet.getSprite(16, 0, 16)
       val enemyTextureBlue = enemiesSpriteSheet.horizontalFlip(enemiesSpriteSheet.getSprite(0, 32, 16)) //zum flippen vll in eigene klasse?!?!?!?

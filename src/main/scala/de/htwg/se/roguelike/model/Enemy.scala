@@ -9,7 +9,7 @@ case class Enemy(name: String = "Empty-Name",
                  maxHealth: Int = 100,
                  mana: Int = 100,
                  maxMana: Int = 100,
-                 attack: Int = 10,
+                 attack: Int = 10, //maybe 7 oder 8 attack für bessere Balance
                  lvl: Int = 0,
                  exp: Int = 20,
                  posX: Int = 0, posY: Int = 0,
