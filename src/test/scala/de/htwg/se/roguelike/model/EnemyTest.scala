@@ -92,10 +92,13 @@ class EnemyTest extends WordSpec with Matchers {
         enemy6.gloves should not be(Armor("noGloves"))
       }
 
-      var bossenemy = Enemy(health = 50,maxHealth = 50,mana = 50, maxMana = 50,attack = 4,lvl = 1)
       "when creating a RandomBoss" in {
         var boss = Enemy().createRandomBoss(1)
-        boss should be (bossenemy)
+        boss.name should be("Empty-Name")
+        boss.health should be(50)
+        boss.mana should be(50)
+        boss.attack should be(4)
+        boss.lvl should be(1)
       }
 
     }
