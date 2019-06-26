@@ -48,6 +48,10 @@ case class guiMerchant(controller: Controller, gui: SwingGui) extends StateGui {
     val restockButtonImage = new SpriteSheet("resources/restockButtonIcon.png")
     val restockIcon = new ImageIcon(restockButtonImage.getImage().getScaledInstance(128 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
+    val sortButtonImage = new SpriteSheet("resources/sortItemIcons.png")
+    val sortVIcon = new ImageIcon(sortButtonImage.getSprite(0,0,20).getScaledInstance(24 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
+    val sortDIcon = new ImageIcon(sortButtonImage.getSprite(20,0,20).getScaledInstance(24 * SCALE, 24 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
     val panel = new FlowPanel() {
 
       preferredSize = new Dimension(256 * SCALE, 144 * SCALE)
@@ -93,10 +97,24 @@ case class guiMerchant(controller: Controller, gui: SwingGui) extends StateGui {
       listenTo(restock)
       contents += restock
 
+      val sortButtonPower = new Button()
+      sortButtonPower.peer.setIcon(sortDIcon)
+      listenTo(sortButtonPower)
+      sortButtonPower.peer.setBounds(80 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE)
+      contents += sortButtonPower
+
+      val sortButtonValue = new Button()
+      sortButtonValue.peer.setIcon(sortVIcon)
+      listenTo(sortButtonValue)
+      sortButtonValue.peer.setBounds(56 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE)
+      contents += sortButtonValue
+
       reactions += {
         case ButtonClicked(s) if s == sell => controller.sellItem(playerItems.peer.getSelectedIndex)
         case ButtonClicked(e) if e == exit => controller.run()
         case ButtonClicked(b) if b == buy => controller.buyItem(merchantItems.peer.getSelectedIndex)
+        case ButtonClicked(b) if b == sortButtonPower => controller.playerSortInventoryPower()
+        case ButtonClicked(b) if b == sortButtonValue => controller.playerSortInventoryValue()
         case ButtonClicked(rs) if rs == restock => controller.restock
 
         case SelectionChanged(_) => controller.repaint()
