@@ -2,7 +2,7 @@ package de.htwg.se.roguelike.aview.tui
 
 import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 
-class tuiFight(controller: Controller, tui: Tui) extends State {
+case class tuiFight(controller: Controller, tui: Tui) extends State {
   def processInputLine(input: String): Unit = {
     input match {
       case "q" =>
