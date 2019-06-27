@@ -19,6 +19,16 @@ class tuiLevelTest extends WordSpec with Matchers{
       tui.state.processInputLine("w")
       controller.player.posY should be(old - 1)
     }
+    "create z random Level on input 'z'" in {
+      val old = controller.player.posY
+      tui.state.processInputLine("z")
+      controller.player.posY should be(old + 1)
+    }
+    "create y random Level on input 'y'" in {
+      val old = controller.player.posY
+      tui.state.processInputLine("y")
+      controller.player.posY should be(old - 1)
+    }
     "move left with input 'a'" in {
       val old = controller.player.posX
       tui.state.processInputLine("a")
@@ -92,13 +102,13 @@ class tuiLevelTest extends WordSpec with Matchers{
       tui3.state should not be(tui3Test)
     }
 
-    val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
-    val tui3 = new Tui(controller3)
+
     "should not change to wrong game status" in {
-      controller3.setGameStatus(GameStatus.GAMEOVER)
-      tui3.state.handle()
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiLevel(controller3,tui3)
       val tui3Test = tui3.state
-      tui3.state.handle()
+      controller3.setGameStatus(GameStatus.GAMEOVER)
       tui3.state should be(tui3Test)
     }
   }
