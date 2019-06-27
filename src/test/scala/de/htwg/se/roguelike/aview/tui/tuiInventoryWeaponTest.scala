@@ -38,12 +38,6 @@ class tuiInventoryWeaponTest extends WordSpec with Matchers {
       tui.state.processInputLine("11")
       controller.player.leftHand should be(weapon2)
     }
-
-    "switch to inventory on input 'x'" in {
-      val tuitest = tui.state
-      tui.state.processInputLine("x")
-      tui.state should not be(tuitest)
-    }
     "do nothing when state equals startScreen on input 'q'" in {
       val old = controller.strategy.updateToString
       tui.state.processInputLine("q")
@@ -54,6 +48,12 @@ class tuiInventoryWeaponTest extends WordSpec with Matchers {
       tui.state.processInputLine("abc")
       controller.strategy.updateToString should be(old)
     }
+    "switch to inventory on input 'x'" in {
+      val tuitest = tui.state
+      tui.state.processInputLine("x")
+      tui.state should not be(tuitest)
+    }
+
   }
 
 }
