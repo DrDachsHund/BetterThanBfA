@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.aview.tui
 
-import de.htwg.se.roguelike.controller.Controller
+import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
 import org.scalatest.{Matchers, WordSpec}
 
@@ -35,6 +35,36 @@ class tuiCrateTest extends WordSpec with Matchers {
       tui.state.processInputLine("a")
       controller.strategy.updateToString should be (old)
     }
+    "switch to levelstate" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiCrate(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.LEVEL)
+      tui3.state should not equal (tui3Test)
+    }
+
+    "switch to Crate" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiCrate(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.CRATE)
+      tui3.state should be (tui3Test)
+    }
+
+    val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val tui3 = new Tui(controller3)
+    "should not change to wrong game status" in {
+      controller3.setGameStatus(GameStatus.GAMEOVER)
+      tui3.state.handle()
+      val tui3Test = tui3.state
+      tui3.state.handle()
+      tui3.state should be(tui3Test)
+    }
+
+
+
   }
 
 }
