@@ -81,9 +81,32 @@ class tuiFightTest extends WordSpec with Matchers {
       tui.state should not equal tuitest
     }
 
+    "switch to GameOver" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiFight(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.GAMEOVER)
+      tui3.state should not equal tui3Test
+    }
 
+    "switch to PlayerLevelUP" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiFight(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.PLAYERLEVELUP)
+      tui3.state should not equal tui3Test
+    }
 
-
+    "switch to LootEnemy" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiFight(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.LOOTENEMY)
+      tui3.state should not equal tui3Test
+    }
 
   }
 
