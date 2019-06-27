@@ -21,6 +21,18 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     val tui = new Tui(controller)
     tui.state = new tuiInventoryMain(controller, tui)
 
+    "do nothing on when state equals startScreen bad input like'abc'" in {
+      val old = controller.strategy.updateToString
+      tui.state.processInputLine("abc")
+      controller.strategy.updateToString should be(old)
+    }
+
+    "do nothing when state equals startScreen on input 'q'" in {
+      val old = controller.strategy.updateToString
+      tui.state.processInputLine("q")
+      controller.strategy.updateToString should be(old)
+    }
+
     "on input H" in {
       tui.state.processInputLine("H")
       controller.player.helmet should be(Armor("noHelmet"))
@@ -125,6 +137,17 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
       val tuitest = tui.state
       controller.setGameStatus(GameStatus.INVENTORY)
       tui.state should be(tuitest)
+    }
+
+    "switch to controllerInvenmtoryGameStatus on x" in {
+      val player = Player(name = "Player", posX = 5, posY = 5)
+      val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
+      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui = new Tui(controller)
+      tui.state = new tuiInventoryMain(controller, tui)
+      val tuitest = tui.state
+      tui.state.processInputLine("x")
+      tui.state should not be(tuitest)
     }
 
   }
