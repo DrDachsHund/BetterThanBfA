@@ -9,7 +9,7 @@ case class tuiMerchant(controller: Controller, tui: Tui) extends State {
       case "x" => controller.run()
       case _ =>
         input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
-          case index :: Nil => controller.lootingEnemy(index)
+          case index :: Nil => controller.buyItem(index)
           case _ =>
         }
     }
