@@ -40,6 +40,15 @@ class tuiGameOverTest extends WordSpec with Matchers {
       tui3.state should not be(tui3Test)
     }
 
+    "switch to GameOver" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiGameOver(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.GAMEOVER)
+      tui3.state should be(tui3Test)
+    }
+
     "should not change to wrong game status" in {
       val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
       val tui3 = new Tui(controller3)
