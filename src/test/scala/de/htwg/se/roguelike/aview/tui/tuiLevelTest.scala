@@ -12,7 +12,7 @@ class tuiLevelTest extends WordSpec with Matchers{
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
     val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
     val tui = new Tui(controller)
-    tui.state = new tuiLevel(controller,tui)
+    tui.state = new tuiLevel(controller, tui)
 
     "move up with input 'w'" in {
       val old = controller.player.posY
