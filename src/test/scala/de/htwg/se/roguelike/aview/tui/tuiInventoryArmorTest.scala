@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.aview.tui
 
-import de.htwg.se.roguelike.controller.Controller
+import de.htwg.se.roguelike.controller.{Controller, GameStatus}
 import de.htwg.se.roguelike.model._
 import org.scalatest.{Matchers, WordSpec}
 
@@ -71,6 +71,15 @@ class tuiInventoryArmorTest extends WordSpec with Matchers {
       val tuitest = tui.state
       tui.state.processInputLine("x")
       tui.state should not be(tuitest)
+    }
+
+    "switch to InventoryArmor" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiInventoryArmor(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.INVENTORYARMOR)
+      tui3.state should be (tui3Test)
     }
 
 
