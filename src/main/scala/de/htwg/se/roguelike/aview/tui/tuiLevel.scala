@@ -7,7 +7,6 @@ class tuiLevel(controller: Controller, tui: Tui) extends State {
     input match {
       case "q" =>
       case "r" => controller.createRandomLevel()
-      case "n" => controller.createLevel()
       case "w" => controller.moveUp()
       case "a" => controller.moveLeft()
       case "s" => controller.moveDown()
