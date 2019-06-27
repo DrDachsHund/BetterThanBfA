@@ -55,12 +55,13 @@ class EnemyTest extends WordSpec with Matchers {
         enemy4.lvl should (be >= 2 and be <= 4)
       }
       "should not scale under 1" in {
-        while (enemy4.lvl != 1) {
+        while (enemy4.lvl != 15) {
           enemy4 = Enemy()
           enemy4 = enemy4.setScale(0)
           //println("-LEVEL ENEMY LVL" + enemy4.lvl)
         }
-        enemy4.lvl should be(1)
+        enemy4.lvl should be(15)
+        enemy4.exp should be(251)
       }
 
       val enemy5 = Enemy(lvl = 1)
