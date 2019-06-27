@@ -52,14 +52,14 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     createMerchant()
     createPortal()
     createCrate()
-    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
+    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies,merchant,crate, this))
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def createLevel(): Unit = {
     level = new LevelCreator(9, 16).createLevel(player, enemies)
-    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, this))
+    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies,merchant,crate, this))
     //notifyObservers()
     publish(new LevelSizeChanged(10))
   }
@@ -164,28 +164,28 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   //-----------MOVE----------------
 
   def moveUp(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies,merchant,crate, this))
     player = player.copy(direction = 1)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveDown(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies,merchant,crate, this))
     player = player.copy(direction = 0)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveLeft(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies,merchant,crate, this))
     player = player.copy(direction = 2)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveRight(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies,merchant,crate, this))
     player = player.copy(direction = 3)
     //notifyObservers()
     publish(new TileChanged)

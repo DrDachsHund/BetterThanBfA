@@ -18,6 +18,8 @@ Controller vll umbauen und nen enemy extra setzen in interact für bessere/einfa
 //pause with esc anstatt toolbar für besseres scaling maybe??
   => da dann maybe auch safe
 
+maybe stamina
+
 Tests:
   => GUI:
     => Start Screen mit options and load maybe                                                               (Marvin)[X}
