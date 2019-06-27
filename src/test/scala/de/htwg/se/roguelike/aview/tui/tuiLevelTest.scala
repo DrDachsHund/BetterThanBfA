@@ -44,9 +44,9 @@ class tuiLevelTest extends WordSpec with Matchers{
       tui.state.processInputLine("q")
       controller.strategy.updateToString should be(old)
     }
-    "do nothing on when state equals startScreen bad input like'99999'" in {
+    "do nothing on when state equals startScreen bad input like'abc'" in {
       val old = controller.strategy.updateToString
-      tui.state.processInputLine("99999")
+      tui.state.processInputLine("abc")
       controller.strategy.updateToString should be(old)
     }
 
@@ -56,10 +56,47 @@ class tuiLevelTest extends WordSpec with Matchers{
       tui.state should not equal(tuiTest)
     }
 
+    "switch to levelstate" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiLevel(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.LEVEL)
+      tui3.state should be(tui3Test)
+    }
+
+    "switch to fight" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      val tui3Test = tui3.state
+      tui3.state = new tuiLevel(controller3,tui3)
+      controller3.setGameStatus(GameStatus.FIGHT)
+      tui3.state should not be(tui3Test)
+    }
+
+    "switch to merchant" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      val tui3Test = tui3.state
+      tui3.state = new tuiLevel(controller3,tui3)
+      controller3.setGameStatus(GameStatus.MERCHANT)
+      tui3.state should not be(tui3Test)
+    }
+
+    "switch to Crate" in {
+      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val tui3 = new Tui(controller3)
+      val tui3Test = tui3.state
+      tui3.state = new tuiLevel(controller3,tui3)
+      controller3.setGameStatus(GameStatus.CRATE)
+      tui3.state should not be(tui3Test)
+    }
+
     val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
     val tui3 = new Tui(controller3)
     "should not change to wrong game status" in {
       controller3.setGameStatus(GameStatus.GAMEOVER)
+      tui3.state.handle()
       val tui3Test = tui3.state
       tui3.state.handle()
       tui3.state should be(tui3Test)
