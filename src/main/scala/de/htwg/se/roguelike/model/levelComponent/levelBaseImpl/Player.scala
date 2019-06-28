@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
+import de.htwg.se.roguelike.model.levelComponent.EntityInterface
+
 case class Player(name: String,
                   health: Int = 100,
                   maxHealth: Int = 100,
@@ -24,7 +26,7 @@ case class Player(name: String,
                   //necromancer vll companion:Entity oder so
                   //merchant vll gold:Int direkt auf 500
                   //mage/archer etc ...
-                 ) extends Entity {
+                 ) extends EntityInterface {
 
   //muss dan in controller zu Gamestatus levelup wechseln um dann auszuwählen was geändert werden will
   def lvlUp(collectedExp: Int): Player = {
@@ -50,6 +52,10 @@ case class Player(name: String,
     println("Um zu schauen wo minus herkommt!!!!!!!!!!!!!!")
     println(gulden + " * " + killCounter + " + " + lvl + " * " + levelDepth)
     gulden * killCounter + lvl * levelDepth
+  }
+
+  override def nextEntity(): EntityInterface = {
+    this.copy(name,)
   }
 
   override def toString: String =
