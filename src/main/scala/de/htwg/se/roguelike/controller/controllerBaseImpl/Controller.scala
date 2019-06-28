@@ -1,13 +1,14 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
 import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.UndoManager
 
 import scala.swing.Publisher
 import scala.util.Random
 
-class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy] = Vector()) extends Publisher { //with Observer
+class Controller(var level: Level, var player: PlayerInterface, var enemies: Vector[Enemy] = Vector()) extends Publisher { //with Observer
 
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
@@ -166,28 +167,28 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def moveUp(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies,merchant,crate, this))
-    player = player.copy(direction = 1)
+    player = player.nextPlayer(direction = 1)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveDown(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies,merchant,crate, this))
-    player = player.copy(direction = 0)
+    player = player.nextPlayer(direction = 0)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveLeft(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies,merchant,crate, this))
-    player = player.copy(direction = 2)
+    player = player.nextPlayer(direction = 2)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveRight(): Unit = {
     undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies,merchant,crate, this))
-    player = player.copy(direction = 3)
+    player = player.nextPlayer(direction = 3)
     //notifyObservers()
     publish(new TileChanged)
   }
@@ -232,9 +233,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val loot = enemyLoot(0)
 
       loot match {
-        case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
-        case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
-        case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
+        case potion: Potion => player = player.nextPlayer(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
+        case weapon: Weapon => player = player.nextPlayer(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: Armor => player = player.nextPlayer(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
         case _ => "LOOT FEHLER !!!!"
       }
 
@@ -255,9 +256,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val loot = enemyLoot(index - 1)
 
       loot match {
-        case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
-        case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
-        case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
+        case potion: Potion => player = player.nextPlayer(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
+        case weapon: Weapon => player = player.nextPlayer(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: Armor => player = player.nextPlayer(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
         case _ => "LOOT FEHLER !!!!"
       }
 
@@ -289,9 +290,9 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val loot = crate.inventory(index - 1)
 
       loot match {
-        case potion: Potion => player = player.copy(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
-        case weapon: Weapon => player = player.copy(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
-        case armor: Armor => player = player.copy(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
+        case potion: Potion => player = player.nextPlayer(inventory = player.inventory.copy(potions = (player.inventory.potions :+ potion)))
+        case weapon: Weapon => player = player.nextPlayer(inventory = player.inventory.copy(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: Armor => player = player.nextPlayer(inventory = player.inventory.copy(armor = (player.inventory.armor :+ armor)))
         case _ => "LOOT FEHLER !!!!"
       }
 
@@ -327,7 +328,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   def special(): Unit = {
     if (player.mana >= 25) {
-      player = player.copy(mana = player.mana - 25)
+      player = player.nextPlayer(mana = player.mana - 25)
       enemyThinking("special")
     } else println("Not enough mana")
   }
@@ -339,7 +340,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val runPlayer = player
       setGameStatus(GameStatus.LEVEL)
       undo()
-      player = runPlayer.copy(posX = player.posX, posY = player.posY)
+      player = runPlayer.nextPlayer(posX = player.posX, posY = player.posY)
     }
   }
 
@@ -439,7 +440,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       val oldLvl: Int = player.lvl
       level = level.removeElement(currentEnemy.posY, currentEnemy.posX, 5)
       player = player.lvlUp(currentEnemy.exp)
-      player = player.copy(killCounter = player.killCounter + 1, gulden = player.gulden + currentEnemy.gulden)
+      player = player.nextPlayer(killCounter = player.killCounter + 1, gulden = player.gulden + currentEnemy.gulden)
       enemyLoot = currentEnemy.inventory.weapons //für loot
       enemyLoot = enemyLoot ++ currentEnemy.inventory.potions
       enemyLoot = enemyLoot ++ currentEnemy.inventory.armor
@@ -640,7 +641,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       usedPotion = usedPotion.drop(1)
       var newPotions = player.inventory.potions.filterNot(_ == potion)
       newPotions ++= usedPotion
-      player = player.copy(inventory = player.inventory.copy(potions = newPotions))
+      player = player.nextPlayer(inventory = player.inventory.copy(potions = newPotions))
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
     publish(new TileChanged)
@@ -671,7 +672,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       }
 
 
-      player = player.copy(inventory = player.inventory.copy(armor = newArmor))
+      player = player.nextPlayer(inventory = player.inventory.copy(armor = newArmor))
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
     publish(new TileChanged)
@@ -679,31 +680,31 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
 
   private def equipHelmet(newHelmet: Armor): Armor = {
     val oldHelmet = player.helmet
-    player = player.copy(helmet = newHelmet)
+    player = player.nextPlayer(helmet = newHelmet)
     oldHelmet
   }
 
   private def equipChest(newChest: Armor): Armor = {
     val oldHelmet = player.chest
-    player = player.copy(chest = newChest)
+    player = player.nextPlayer(chest = newChest)
     oldHelmet
   }
 
   private def equipPants(newPants: Armor): Armor = {
     val oldHelmet = player.pants
-    player = player.copy(pants = newPants)
+    player = player.nextPlayer(pants = newPants)
     oldHelmet
   }
 
   private def equipBoots(newBoots: Armor): Armor = {
     val oldHelmet = player.boots
-    player = player.copy(boots = newBoots)
+    player = player.nextPlayer(boots = newBoots)
     oldHelmet
   }
 
   private def equipGloves(newGloves: Armor): Armor = {
     val oldHelmet = player.gloves
-    player = player.copy(gloves = newGloves)
+    player = player.nextPlayer(gloves = newGloves)
     oldHelmet
   }
 
@@ -713,7 +714,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newArmor = player.inventory.armor
       newArmor ++= player.helmet :: Nil
       val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(helmet = Armor("noHelmet"), inventory = newInventory)
+      player = player.nextPlayer(helmet = Armor("noHelmet"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -724,7 +725,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newArmor = player.inventory.armor
       newArmor ++= player.chest :: Nil
       val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(chest = Armor("noChest"), inventory = newInventory)
+      player = player.nextPlayer(chest = Armor("noChest"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -735,7 +736,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newArmor = player.inventory.armor
       newArmor ++= player.pants :: Nil
       val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(pants = Armor("noPants"), inventory = newInventory)
+      player = player.nextPlayer(pants = Armor("noPants"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -746,7 +747,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newArmor = player.inventory.armor
       newArmor ++= player.boots :: Nil
       val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(boots = Armor("noBoots"), inventory = newInventory)
+      player = player.nextPlayer(boots = Armor("noBoots"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -757,7 +758,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newArmor = player.inventory.armor
       newArmor ++= player.gloves :: Nil
       val newInventory = player.inventory.copy(armor = newArmor)
-      player = player.copy(gloves = Armor("noGloves"), inventory = newInventory)
+      player = player.nextPlayer(gloves = Armor("noGloves"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -769,7 +770,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newWeapon = player.inventory.weapons
       newWeapon ++= player.rightHand :: Nil
       val newInventory = player.inventory.copy(weapons = newWeapon)
-      player = player.copy(rightHand = Weapon("rightFist"), inventory = newInventory)
+      player = player.nextPlayer(rightHand = Weapon("rightFist"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -781,7 +782,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var newWeapon = player.inventory.weapons
       newWeapon ++= player.leftHand :: Nil
       val newInventory = player.inventory.copy(weapons = newWeapon)
-      player = player.copy(leftHand = Weapon("leftFist"), inventory = newInventory)
+      player = player.nextPlayer(leftHand = Weapon("leftFist"), inventory = newInventory)
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -803,12 +804,12 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
         if (player.rightHand.name != "RightFist") {
           newWeapons ++= player.rightHand :: Nil
         }
-        player = player.copy(rightHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
+        player = player.nextPlayer(rightHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
       } else if (hand == 1) {
         if (player.leftHand.name != "LeftFist") {
           newWeapons ++= player.leftHand :: Nil
         }
-        player = player.copy(leftHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
+        player = player.nextPlayer(leftHand = playerWeapon, inventory = player.inventory.copy(weapons = newWeapons))
       }
     } else println("CONTROLLER INKOREKTER INDEX ODER HAND => " + index + "  " + hand)
     //notifyObservers()
@@ -816,12 +817,12 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
   }
 
   def playerSortInventoryPower() : Unit = {
-    player = player.copy(inventory = player.inventory.invSortPower())
+    player = player.nextPlayer(inventory = player.inventory.invSortPower())
     publish(new TileChanged)
   }
 
   def playerSortInventoryValue() : Unit = {
-    player = player.copy(inventory = player.inventory.invSortValue())
+    player = player.nextPlayer(inventory = player.inventory.invSortValue())
     publish(new TileChanged)
   }
 
@@ -866,7 +867,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       var merchantNewInventory = merchant.inventory
       merchantNewInventory ++= itemToSell :: Nil
       merchant = merchant.copy(inventory = merchantNewInventory, gulden = merchant.gulden - itemToSell.value)
-      player = player.copy(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden + itemToSell.value)
+      player = player.nextPlayer(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden + itemToSell.value)
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
     merchant = merchant.copy(inventory = merchant.sortItems(merchant.inventory))
@@ -901,7 +902,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
       }
 
       merchant = merchant.copy(inventory = newItems, gulden = merchant.gulden + itemToBuy.value)
-      player = player.copy(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden - itemToBuy.value)
+      player = player.nextPlayer(inventory = player.inventory.copy(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden - itemToBuy.value)
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
     publish(new TileChanged)
@@ -911,7 +912,7 @@ class Controller(var level: Level, var player: Player, var enemies: Vector[Enemy
     if (player.gulden < 250)
       false
     else {
-      player = player.copy(gulden = player.gulden - 250)
+      player = player.nextPlayer(gulden = player.gulden - 250)
       merchant = merchant.restock(player.lvl)
       publish(new TileChanged)
       true

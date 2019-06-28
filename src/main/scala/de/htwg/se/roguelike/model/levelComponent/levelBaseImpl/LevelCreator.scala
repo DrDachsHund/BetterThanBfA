@@ -1,10 +1,12 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
+import de.htwg.se.roguelike.model.levelComponent._
+
 import scala.util.Random
 
 class LevelCreator(sizeY: Int, sizeX: Int) {
 
-  def createLevel(player: Player, enemies: Vector[Enemy]): Level = {
+  def createLevel(player: PlayerInterface, enemies: Vector[Enemy]): Level = {
     var level = new Level(sizeY, sizeX)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 
@@ -15,7 +17,7 @@ class LevelCreator(sizeY: Int, sizeX: Int) {
     level
   }
 
-  def createRandom(player: Player, enemyCount: Int): (Level, Vector[Enemy]) = {
+  def createRandom(player: PlayerInterface, enemyCount: Int): (Level, Vector[Enemy]) = {
     var level = new Level(sizeY, sizeX)
     level = Level(level.map.replaceTile(player.posY, player.posX, Tile(5)))
 

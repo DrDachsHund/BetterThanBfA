@@ -1,13 +1,14 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Player, Potion}
 import org.scalatest.{Matchers, WordSpec}
 
 class HealPotionTest extends WordSpec with Matchers {
 
       val healPotion = Potion("SmallHeal")
-      var player = Player(name = "TestPlayer",health = 90)
-      var player2 = Player(name = "TestPlayer",health = 10)
+      var player:PlayerInterface = Player(name = "TestPlayer",health = 90)
+      var player2:PlayerInterface = Player(name = "TestPlayer",health = 10)
 
       "should heal and cap at 100 when used" in {
         player = healPotion.usePotion(player)

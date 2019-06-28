@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
+import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
+
 import scala.util.Random
 
 trait Potion extends Item {
@@ -8,12 +10,12 @@ trait Potion extends Item {
   val usable: Boolean
   val power: Int
 
-  def usePotion(player: Player): Player = {
+  def usePotion(player: PlayerInterface): PlayerInterface = {
     if (player.health > player.maxHealth) {
-      return player.copy(health = player.maxHealth)
+      return player.nextPlayer(health = player.maxHealth)
     }
     if (player.mana > player.maxMana) {
-      return player.copy(mana = player.maxMana)
+      return player.nextPlayer(mana = player.maxMana)
     }
     player
   }

@@ -3,11 +3,16 @@ package de.htwg.se.roguelike.model.levelComponent
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Weapon, _}
 
 trait levelInterface {
-  val map:Land[Tile]
-  def moveUp(player: EntityInterface): (levelInterface,EntityInterface)
-  def moveDown(player: Player): (levelInterface, EntityInterface)
-  def moveLeft(player: Player): (levelInterface, EntityInterface)
-  def moveRight(player: Player): (levelInterface, EntityInterface)
+  val map: Land[Tile]
+
+  def moveUp(player: PlayerInterface): (levelInterface, PlayerInterface)
+
+  def moveDown(player: PlayerInterface): (levelInterface, PlayerInterface)
+
+  def moveLeft(player: PlayerInterface): (levelInterface, PlayerInterface)
+
+  def moveRight(player: PlayerInterface): (levelInterface, PlayerInterface)
+
   def removeElement(col: Int, row: Int, value: Int): levelInterface
 }
 
@@ -16,7 +21,7 @@ trait EntityInterface {
   val health: Int
   val maxHealth: Int
   val mana: Int
-  val maxMana:Int
+  val maxMana: Int
   val attack: Int
   val lvl: Int
   val exp: Int
@@ -34,12 +39,50 @@ trait EntityInterface {
 
   def isAlive: Boolean = health > 0
 
-  def nextEntity(): EntityInterface
-
   def getArmor: Int = helmet.armor + chest.armor + pants.armor + boots.armor + gloves.armor
 
   //Template Method
   def getAttack: Double = attack + rightHand.dmg + (leftHand.dmg / 2)
 }
 
+trait PlayerInterface extends EntityInterface {
+
+  val maxExp: Int
+  val killCounter: Int
+  val direction: Int
+
+  def nextPlayer(name: String = this.name,
+                 health: Int = this.health,
+                 maxHealth: Int = this.maxHealth,
+                 mana: Int = this.mana,
+                 maxMana: Int = this.maxMana,
+                 attack: Int = this.attack,
+                 lvl: Int = this.lvl,
+                 exp: Int = this.exp,
+                 maxExp: Int = this.maxExp,
+                 posX: Int = this.posX,
+                 posY: Int = this.posY,
+                 inventory: Inventory = this.inventory,
+                 helmet: Armor = this.helmet,
+                 chest: Armor = this.chest,
+                 pants: Armor = this.pants,
+                 boots: Armor = this.boots,
+                 gloves: Armor = this.gloves,
+                 rightHand: Weapon = this.rightHand,
+                 leftHand: Weapon = this.leftHand,
+                 gulden: Int = this.gulden,
+                 killCounter: Int = this.killCounter,
+                 direction: Int = this.direction): PlayerInterface
+
+  def getScore(levelDepth: Int): Int
+
+  def lvlUpAttack: Player
+
+  def lvlUpMana: Player
+
+  def lvlUpHealth: Player
+
+  def lvlUp(collectedExp: Int): Player
+
+}
 

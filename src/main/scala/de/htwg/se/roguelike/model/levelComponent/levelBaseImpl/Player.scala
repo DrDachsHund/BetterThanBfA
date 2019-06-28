@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.EntityInterface
+import de.htwg.se.roguelike.model.levelComponent.{EntityInterface, PlayerInterface}
 
 case class Player(name: String,
                   health: Int = 100,
@@ -26,7 +26,7 @@ case class Player(name: String,
                   //necromancer vll companion:Entity oder so
                   //merchant vll gold:Int direkt auf 500
                   //mage/archer etc ...
-                 ) extends EntityInterface {
+                 ) extends PlayerInterface {
 
   //muss dan in controller zu Gamestatus levelup wechseln um dann auszuwählen was geändert werden will
   def lvlUp(collectedExp: Int): Player = {
@@ -54,8 +54,49 @@ case class Player(name: String,
     gulden * killCounter + lvl * levelDepth
   }
 
-  override def nextEntity(): EntityInterface = {
-    this.copy(name,)
+  override def nextPlayer(name: String =  "DER NEGER GEBÜHRT NACH AFRIKA",
+                          health: Int = this.health,
+                          maxHealth: Int = this.maxHealth,
+                          mana: Int = this.mana,
+                          maxMana: Int = this.maxMana,
+                          attack: Int = this.attack,
+                          lvl: Int = this.lvl,
+                          exp: Int = this.exp,
+                          maxExp: Int = this.maxExp,
+                          posX: Int = this.posX,
+                          posY: Int = this.posY,
+                          inventory: Inventory = this.inventory,
+                          helmet: Armor = this.helmet,
+                          chest: Armor = this.chest,
+                          pants: Armor = this.pants,
+                          boots: Armor = this.boots,
+                          gloves: Armor = this.gloves,
+                          rightHand: Weapon = this.rightHand,
+                          leftHand: Weapon = this.leftHand,
+                          gulden: Int = this.gulden,
+                          killCounter: Int = this.killCounter,
+                          direction: Int = this.direction): PlayerInterface = {
+    this.copy(name = name,
+      health = health,
+      maxHealth = maxHealth,
+      mana = mana,
+      maxMana = maxMana,
+      attack = attack,
+      lvl = lvl,
+      exp = exp,
+      maxExp = maxExp,
+      posX = posX, posY = posY,
+      inventory = inventory,
+      helmet = helmet,
+      chest = chest,
+      pants = pants,
+      boots = boots,
+      gloves = gloves,
+      rightHand = rightHand,
+      leftHand = leftHand,
+      gulden = gulden,
+      killCounter = killCounter,
+      direction = direction)
   }
 
   override def toString: String =
