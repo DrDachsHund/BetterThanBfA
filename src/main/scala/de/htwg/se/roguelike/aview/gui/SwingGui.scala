@@ -3,6 +3,7 @@ package de.htwg.se.roguelike.aview.gui
 import java.awt.event.{KeyEvent, KeyListener}
 
 import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 
 import scala.swing._
 import scala.swing.event.Key

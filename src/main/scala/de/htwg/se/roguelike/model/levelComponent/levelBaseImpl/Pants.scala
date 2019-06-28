@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Pants(name: String,
                  value: Int,

@@ -1,6 +1,6 @@
-package de.htwg.se.roguelike.controller
+package de.htwg.se.roguelike.controller.controllerBaseImpl
 
-import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.Command
 
 class LevelCommand(lpOld: (Level, Player), lpNew: (Level, Player), enemies: Vector[Enemy],merchant: Merchant,crate: Crate, controller: Controller) extends Command {

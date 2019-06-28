@@ -2,7 +2,8 @@ package de.htwg.se.roguelike.aview.gui
 
 import java.awt.{Color, Font, Graphics2D}
 
-import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import javax.swing.ImageIcon
 
 import scala.swing.event.ButtonClicked

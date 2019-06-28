@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion] = Vector(Potion("SmallHeal"), Potion("SmallHeal"), Potion("BigHeal")), armor: Vector[Armor] = Vector()) {
 

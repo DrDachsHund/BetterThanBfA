@@ -1,8 +1,9 @@
 package de.htwg.se.roguelike.aview.tui
 
 import de.htwg.se.roguelike.aview.tui
-import de.htwg.se.roguelike.controller.{Controller, GameStatus}
-import de.htwg.se.roguelike.model.{Enemy, Level, Player}
+import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Enemy, Level, Player}
 import org.scalatest.{Matchers, WordSpec}
 
 class tuiLevelTest extends WordSpec with Matchers{

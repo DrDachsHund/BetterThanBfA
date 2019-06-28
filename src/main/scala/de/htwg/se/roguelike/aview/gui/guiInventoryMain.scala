@@ -4,8 +4,10 @@ import java.awt.{Color, Font, Graphics2D}
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.aview.tui.State
-import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import javax.swing.ImageIcon
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}

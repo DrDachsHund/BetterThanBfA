@@ -1,6 +1,8 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 import java.io.InputStream
+
+import de.htwg.se.roguelike.model._
 
 import scala.io.Source
 import scala.util.Random

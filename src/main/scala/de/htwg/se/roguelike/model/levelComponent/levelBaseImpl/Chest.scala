@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Chest(name: String,
                  value: Int,
@@ -7,4 +7,3 @@ case class Chest(name: String,
                  armorType: String = "Chest",
                  rarity: String,
                  textureIndex:Int = 0) extends Armor {}
-

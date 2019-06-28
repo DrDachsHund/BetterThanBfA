@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Level(map: Land[Tile]) {
   def this(sizeY: Int,sizeX:Int) = this(new Land[Tile](sizeY,sizeX, Tile(0)))

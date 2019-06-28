@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[Item] = Vector(Weapon("random"),Armor("random"),Potion("random")), gulden:Int = 50) {
 

@@ -1,6 +1,7 @@
-package de.htwg.se.roguelike.controller
+package de.htwg.se.roguelike.controller.controllerBaseImpl
 
-import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.UndoManager
 
 import scala.swing.Publisher

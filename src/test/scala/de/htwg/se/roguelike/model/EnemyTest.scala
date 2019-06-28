@@ -1,6 +1,7 @@
 package de.htwg.se.roguelike.model
 
 //import org.scalatest.{Matchers, WordSpec}
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Enemy, Inventory}
 import org.scalatest._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner

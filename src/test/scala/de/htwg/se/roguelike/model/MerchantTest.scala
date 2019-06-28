@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.Merchant
 import org.scalatest.{Matchers, WordSpec}
 
 class MerchantTest extends WordSpec with Matchers {

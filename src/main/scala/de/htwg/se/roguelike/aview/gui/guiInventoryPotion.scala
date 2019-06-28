@@ -3,8 +3,11 @@ package de.htwg.se.roguelike.aview.gui
 import java.awt.image.BufferedImage
 import java.awt.{Color, Font, Graphics2D}
 
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.Potion
+
 //import de.htwg.se.roguelike.aview.tui.State
-import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.model._
 import javax.swing.ImageIcon
 //import javax.xml.ws.handler.MessageContext.Scope

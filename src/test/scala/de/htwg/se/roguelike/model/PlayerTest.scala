@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.Player
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner

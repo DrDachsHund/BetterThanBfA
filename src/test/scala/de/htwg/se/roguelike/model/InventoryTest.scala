@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import org.scalatest.{Matchers, WordSpec}
 
 class InventoryTest extends WordSpec with Matchers {

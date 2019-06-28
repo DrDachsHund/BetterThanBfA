@@ -1,6 +1,6 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.controller.GameStatus.Value
+import de.htwg.se.roguelike.model._
 
 import scala.util.Random
 

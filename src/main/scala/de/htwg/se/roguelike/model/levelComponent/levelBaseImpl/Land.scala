@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Land[T](map: Vector[Vector[T]]) {
   def this(sizeY: Int, sizeX: Int, filling: T) = this(Vector.tabulate(sizeY, sizeX) { (row, col) => filling })

@@ -1,6 +1,7 @@
 package de.htwg.se.roguelike.aview.tui
 
 import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 //import de.htwg.se.roguelike.util.Observer
 
 import scala.swing.Reactor

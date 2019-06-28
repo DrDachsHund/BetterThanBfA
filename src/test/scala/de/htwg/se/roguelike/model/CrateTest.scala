@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Crate, Potion, Weapon}
 import org.scalatest.{Matchers, WordSpec}
 
 class CrateTest extends WordSpec with Matchers{

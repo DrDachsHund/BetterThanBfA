@@ -1,9 +1,9 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-case class Helmet(name: String,
+case class Gloves(name: String,
                   value: Int,
                   usable: Boolean,
                   armor: Int,
-                  armorType: String = "Helmet",
+                  armorType: String = "Gloves",
                   rarity: String,
                   textureIndex:Int = 0) extends Armor {}

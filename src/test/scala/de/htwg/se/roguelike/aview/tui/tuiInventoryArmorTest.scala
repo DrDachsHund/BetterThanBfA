@@ -1,7 +1,9 @@
 package de.htwg.se.roguelike.aview.tui
 
-import de.htwg.se.roguelike.controller.{Controller, GameStatus}
+import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Enemy, Level, Player}
 import org.scalatest.{Matchers, WordSpec}
 
 class tuiInventoryArmorTest extends WordSpec with Matchers {

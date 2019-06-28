@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.controller
+package de.htwg.se.roguelike.controller.controllerBaseImpl
 
 import scala.swing.event.Event
 

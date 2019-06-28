@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.model
 
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Player, Potion}
 import org.scalatest.{Matchers, WordSpec}
 
 class ManaPotionTest extends WordSpec with Matchers {

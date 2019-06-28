@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.model
+package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 case class Player(name: String,
                   health: Int = 100,
@@ -60,4 +60,3 @@ case class Player(name: String,
       "\nposX: " + posX +
       "\nposY: " + posY
 }
-
