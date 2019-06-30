@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.{EnemyInterface, PlayerInterface}
+import de.htwg.se.roguelike.model.levelComponent._
 
 import scala.util.Random
 
@@ -13,7 +13,7 @@ case class Enemy(name: String = "Empty-Name",
                  lvl: Int = 0,
                  exp: Int = 20,
                  posX: Int = 0, posY: Int = 0,
-                 inventory: Inventory = new Inventory(Vector(), Vector(), Vector()),
+                 inventory: InventoryInterface = new Inventory(Vector(), Vector(), Vector()),
                  helmet: Armor = Armor("noHelmet"),
                  chest: Armor = Armor("noChest"),
                  pants: Armor = Armor("noPants"),
@@ -34,7 +34,7 @@ case class Enemy(name: String = "Empty-Name",
                          exp: Int = this.exp,
                          posX: Int = this.posX,
                          posY: Int = this.posY,
-                         inventory: Inventory = this.inventory,
+                         inventory: InventoryInterface = this.inventory,
                          helmet: Armor = this.helmet,
                          chest: Armor = this.chest,
                          pants: Armor = this.pants,
@@ -91,16 +91,16 @@ case class Enemy(name: String = "Empty-Name",
     itemType match {
       case 1 =>
         val randomWeapon = Weapon("random").getScaledWeapon(lvl) //vll noch while weapon rarity hoch nochmal rollen
-        this.copy(rightHand = randomWeapon, inventory = inventory.copy(weapons = inventory.weapons :+ randomWeapon))
-      case 2 => this.copy(inventory = inventory.copy(potions = inventory.potions :+ Potion("random")))
+        this.copy(rightHand = randomWeapon, inventory = inventory.nextInventory(weapons = inventory.weapons :+ randomWeapon))
+      case 2 => this.copy(inventory = inventory.nextInventory(potions = inventory.potions :+ Potion("random")))
       case 3 =>
         val armor = Armor("random")
         armor match {
-          case helm: Helmet => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), helmet = armor) //Evemtuel noch sclae hinzufügen
-          case chest: Chest => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), chest = armor)
-          case pants: Pants => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), pants = armor)
-          case boots: Boots => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), boots = armor)
-          case gloves: Gloves => this.copy(inventory = inventory.copy(armor = inventory.armor :+ armor), gloves = armor)
+          case helm: Helmet => this.copy(inventory = inventory.nextInventory(armor = inventory.armor :+ armor), helmet = armor) //Evemtuel noch sclae hinzufügen
+          case chest: Chest => this.copy(inventory = inventory.nextInventory(armor = inventory.armor :+ armor), chest = armor)
+          case pants: Pants => this.copy(inventory = inventory.nextInventory(armor = inventory.armor :+ armor), pants = armor)
+          case boots: Boots => this.copy(inventory = inventory.nextInventory(armor = inventory.armor :+ armor), boots = armor)
+          case gloves: Gloves => this.copy(inventory = inventory.nextInventory(armor = inventory.armor :+ armor), gloves = armor)
         }
     }
   }

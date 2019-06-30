@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.{EntityInterface, PlayerInterface}
+import de.htwg.se.roguelike.model.levelComponent._
 
 case class Player(name: String,
                   health: Int = 100,
@@ -12,7 +12,7 @@ case class Player(name: String,
                   exp: Int = 0,
                   maxExp: Int = 100,
                   posX: Int = 0, posY: Int = 0,
-                  inventory: Inventory = new Inventory,
+                  inventory: InventoryInterface = new Inventory,
                   helmet: Armor = Armor("noHelmet"),
                   chest: Armor = Armor("noChest"),
                   pants: Armor = Armor("noPants"),
@@ -65,7 +65,7 @@ case class Player(name: String,
                           maxExp: Int = this.maxExp,
                           posX: Int = this.posX,
                           posY: Int = this.posY,
-                          inventory: Inventory = this.inventory,
+                          inventory: InventoryInterface = this.inventory,
                           helmet: Armor = this.helmet,
                           chest: Armor = this.chest,
                           pants: Armor = this.pants,

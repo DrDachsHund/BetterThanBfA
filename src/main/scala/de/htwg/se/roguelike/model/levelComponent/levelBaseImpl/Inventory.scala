@@ -63,4 +63,10 @@ case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion]
     sb.toString
   }
 
+  def nextInventory(weapons: Vector[Weapon] = this.weapons,
+                    potions: Vector[Potion] = this.potions,
+                    armor: Vector[Armor] = this.armor): InventoryInterface = {
+    this.copy(weapons = weapons, potions = potions, armor = armor)
+  }
+
 }

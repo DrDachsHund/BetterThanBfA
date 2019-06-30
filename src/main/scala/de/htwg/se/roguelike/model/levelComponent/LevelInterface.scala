@@ -53,7 +53,7 @@ trait EntityInterface {
   val exp: Int
   val posX: Int
   val posY: Int
-  val inventory: Inventory
+  val inventory: InventoryInterface
   val helmet: Armor
   val chest: Armor
   val pants: Armor
@@ -88,7 +88,7 @@ trait PlayerInterface extends EntityInterface {
                  maxExp: Int = this.maxExp,
                  posX: Int = this.posX,
                  posY: Int = this.posY,
-                 inventory: Inventory = this.inventory,
+                 inventory: InventoryInterface = this.inventory,
                  helmet: Armor = this.helmet,
                  chest: Armor = this.chest,
                  pants: Armor = this.pants,
@@ -126,7 +126,7 @@ trait EnemyInterface extends EntityInterface {
                 exp: Int = this.exp,
                 posX: Int = this.posX,
                 posY: Int = this.posY,
-                inventory: Inventory = this.inventory,
+                inventory: InventoryInterface = this.inventory,
                 helmet: Armor = this.helmet,
                 chest: Armor = this.chest,
                 pants: Armor = this.pants,
@@ -159,6 +159,14 @@ trait ItemInterface {
 }
 
 trait InventoryInterface {
+
+  val weapons: Vector[Weapon]
+  val potions: Vector[Potion]
+  val armor: Vector[Armor]
+
+  def nextInventory(weapons: Vector[Weapon] = this.weapons,
+                    potions: Vector[Potion] = this.potions,
+                    armor: Vector[Armor] = this.armor): InventoryInterface
 
   def invSortPower(): InventoryInterface
 
