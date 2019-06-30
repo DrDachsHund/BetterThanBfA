@@ -23,7 +23,7 @@ case class Player(name: String,
                   gulden: Int = 0,
                   killCounter: Int = 0,
                   direction: Int = 0,
-                  //necromancer vll companion:Entity oder so
+                  //necromancer vll companion:Entity2 oder so
                   //merchant vll gold:Int direkt auf 500
                   //mage/archer etc ...
                  ) extends PlayerInterface {
