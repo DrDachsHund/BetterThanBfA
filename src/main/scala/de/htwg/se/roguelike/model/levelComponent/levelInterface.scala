@@ -86,3 +86,39 @@ trait PlayerInterface extends EntityInterface {
 
 }
 
+trait EnemyInterface extends EntityInterface {
+
+  val enemyType: Int
+
+  def nextEnemy(name: String = this.name,
+                health: Int = this.health,
+                maxHealth: Int = this.maxHealth,
+                mana: Int = this.mana,
+                maxMana: Int = this.maxMana,
+                attack: Int = this.attack,
+                lvl: Int = this.lvl,
+                exp: Int = this.exp,
+                posX: Int = this.posX,
+                posY: Int = this.posY,
+                inventory: Inventory = this.inventory,
+                helmet: Armor = this.helmet,
+                chest: Armor = this.chest,
+                pants: Armor = this.pants,
+                boots: Armor = this.boots,
+                gloves: Armor = this.gloves,
+                rightHand: Weapon = this.rightHand,
+                leftHand: Weapon = this.leftHand,
+                gulden: Int = this.gulden,
+                enemyType: Int = this.enemyType): EnemyInterface
+
+  def setName(): String
+
+  val enemyNames: Array[String]
+
+  def setLoot(): EnemyInterface
+
+  def setScale(lvl: Int): EnemyInterface
+
+  def createRandomBoss(lvl: Int): EnemyInterface
+}
+

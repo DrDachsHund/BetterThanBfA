@@ -54,7 +54,7 @@ case class Player(name: String,
     gulden * killCounter + lvl * levelDepth
   }
 
-  override def nextPlayer(name: String =  "DER NEGER GEBÜHRT NACH AFRIKA",
+  override def nextPlayer(name: String =  this.name,
                           health: Int = this.health,
                           maxHealth: Int = this.maxHealth,
                           mana: Int = this.mana,
