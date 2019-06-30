@@ -2,7 +2,8 @@ package de.htwg.se.roguelike
 
 import de.htwg.se.roguelike.aview.gui.SwingGui
 import de.htwg.se.roguelike.aview.tui.Tui
-import de.htwg.se.roguelike.controller.controllerBaseImpl.{Controller, TileChanged}
+import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 
 import scala.io.StdIn.readLine

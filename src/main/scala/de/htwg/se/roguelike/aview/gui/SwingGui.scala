@@ -2,9 +2,10 @@ package de.htwg.se.roguelike.aview.gui
 
 import java.awt.event.{KeyEvent, KeyListener}
 
-import de.htwg.se.roguelike.controller.controllerBaseImpl._
 import scala.swing._
 import scala.swing.event.Key
+import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 
 
 class SwingGui(controller: Controller) extends Reactor {

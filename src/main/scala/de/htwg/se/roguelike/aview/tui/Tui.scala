@@ -1,6 +1,8 @@
 package de.htwg.se.roguelike.aview.tui
 
-import de.htwg.se.roguelike.controller.controllerBaseImpl.{Controller, FightEvent, LevelSizeChanged, TileChanged}
+import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
+
 import scala.swing.Reactor
 
 class Tui(controller: Controller) extends Reactor { //with Observer
