@@ -2,35 +2,15 @@ package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 import java.io.InputStream
 
-import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, ItemInterface}
 
 import scala.io.Source
 import scala.util.Random
 
-trait Armor extends Item {
-  val name: String
-  val value: Int
-  val usable: Boolean
-  val armor: Int
-  val armorType: String
-  val rarity: String
-  //val rarity boosts wahrscheinlichkeit gute specails und vll wie viele
-
-  //def randomItem
-
-  //var curse zeigs z.b pro schlag 10 hp verlieren 10%attack miss
-
-  //var special = specaial random!!!!
-  //
-  //def specals1 ... usw
-
-  override def toString: String = armorType + ": (" + rarity + ") " + name + " armor: " + armor + " value: " + value
-}
-
 //FactoryMethod
 //noch schöner machen name = etc ...
 object Armor {
-  def apply(kind: String): Armor = kind match {
+  def apply(kind: String): ArmorInterface = kind match {
     case "Helmet" => Helmet(name = "Helmet", value = 10, usable = false, armor = 10, rarity = "Common")
     case "Chest" => Chest(name = "Chest", value = 10, usable = false, armor = 10, rarity = "Common")
     case "Pants" => Pants(name = "Pants", value = 10, usable = false, armor = 10, rarity = "Common")
@@ -49,7 +29,7 @@ object Armor {
   }
 }
 
-private object RandomArmor {
+object RandomArmor {
   //stats noch anpassen maybe je nach waffenart extra stats also extra def getWeaponStats(weaponType:String)
   def getStats(rarity: String): (Int, Int) = { //(value,armor)
     val random = new Random()
@@ -86,7 +66,7 @@ private object RandomArmor {
   }
 
   //einzeln get name aufrufen
-  def getArmorType(value: Int, armor: Int, rarity: String): Armor = {
+  def getArmorType(value: Int, armor: Int, rarity: String): ArmorInterface = {
     val random = Random //geht auch so zu schreiben lul wierd
     val armorType = random.nextInt(5) + 1
     armorType match {

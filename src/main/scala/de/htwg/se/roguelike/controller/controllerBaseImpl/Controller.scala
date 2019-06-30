@@ -13,8 +13,8 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   val fight:FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
-  var portal = Portal()
-  var crate = Crate(inventory = Vector(Sword(name = "Starting Weapon",value = 10, usable = false
+  var portal:PortalInterface = Portal()
+  var crate:CrateInterface = Crate(inventory = Vector(Sword(name = "Starting Weapon",value = 10, usable = false
     ,dmg = 10, block = 10, oneHanded = true,rarity = "Common")))
   var merchant:MerchantInterface = Merchant()
   var lvlDepth = 0
@@ -25,7 +25,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   var inventoryGameStatus: GameStatus.Value = GameStatus.LEVEL
 
   //--FIGHT--
-  var enemyLoot: Vector[Item] = Vector()
+  var enemyLoot: Vector[ItemInterface] = Vector()
   var currentEnemy: EnemyInterface = Enemy("ControlerFehler")
   //var currentAction: String = "nothing"
   //--FIGHT--
@@ -82,10 +82,10 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
         crate = Crate()
       }
 
-      crate = crate.copy(posX = row, posY = col)
+      crate = crate.nextCrate(posX = row, posY = col)
       crate = crate.fillCrate(lvlDepth,player.lvl)
     } else {
-      crate = crate.copy(posX = -1,posY = -1)
+      crate = crate.nextCrate(posX = -1,posY = -1)
     }
   }
 
@@ -99,8 +99,8 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
 
     level = level.removeElement(col, row, 1)
     if ((lvlDepth % 11) == 10) {
-      portal = portal.copy(posX = row, posY = col,portalType = 1)
-    } else portal = portal.copy(posX = row, posY = col,portalType = 0)
+      portal = portal.nextPortal(posX = row, posY = col,portalType = 1)
+    } else portal = portal.nextPortal(posX = row, posY = col,portalType = 0)
   }
 
   def createMerchant(): Unit = {
@@ -114,9 +114,9 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
 
       level = level.removeElement(col, row, 4)
       merchant = Merchant()
-      merchant = merchant.copy(posX = row, posY = col, gulden = merchant.gulden * lvlDepth)
+      merchant = merchant.nextMerchant(posX = row, posY = col, gulden = merchant.gulden * lvlDepth)
     } else {
-      merchant = merchant.copy(posX = -1, posY = -1)
+      merchant = merchant.nextMerchant(posX = -1, posY = -1)
     }
   }
 
@@ -233,9 +233,9 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       val loot = enemyLoot(0)
 
       loot match {
-        case potion: Potion => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
-        case weapon: Weapon => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
-        case armor: Armor => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
+        case potion: PotionInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
+        case weapon: WeaponInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: ArmorInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
         case _ => "LOOT FEHLER !!!!"
       }
 
@@ -256,9 +256,9 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       val loot = enemyLoot(index - 1)
 
       loot match {
-        case potion: Potion => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
-        case weapon: Weapon => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
-        case armor: Armor => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
+        case potion: PotionInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
+        case weapon: WeaponInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: ArmorInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
         case _ => "LOOT FEHLER !!!!"
       }
 
@@ -290,9 +290,9 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       val loot = crate.inventory(index - 1)
 
       loot match {
-        case potion: Potion => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
-        case weapon: Weapon => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
-        case armor: Armor => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
+        case potion: PotionInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
+        case weapon: WeaponInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
+        case armor: ArmorInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
         case _ => "LOOT FEHLER !!!!"
       }
 
@@ -300,10 +300,10 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       usedItem = usedItem.drop(1)
       var newLoot = crate.inventory.filterNot(_ == loot)
       newLoot ++= usedItem
-      crate = crate.copy(inventory = newLoot)
+      crate = crate.nextCrate(inventory = newLoot)
 
       if (crate.inventory.size == 0) {
-        crate = crate.copy(posX = -1, posY = -1)
+        crate = crate.nextCrate(posX = -1, posY = -1)
         setGameStatus(GameStatus.LEVEL)
         return
       }
@@ -656,7 +656,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       var usedArmor = player.inventory.armor.filter(_ == playerArmor)
       usedArmor = usedArmor.drop(1)
 
-      var oldArmor: Armor = Armor("noHelmet")
+      var oldArmor: ArmorInterface = Armor("noHelmet")
       playerArmor.armorType match {
         case "Helmet" => oldArmor = equipHelmet(playerArmor)
         case "Chest" => oldArmor = equipChest(playerArmor)
@@ -678,31 +678,31 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
     publish(new TileChanged)
   }
 
-  private def equipHelmet(newHelmet: Armor): Armor = {
+  private def equipHelmet(newHelmet: ArmorInterface): ArmorInterface = {
     val oldHelmet = player.helmet
     player = player.nextPlayer(helmet = newHelmet)
     oldHelmet
   }
 
-  private def equipChest(newChest: Armor): Armor = {
+  private def equipChest(newChest: ArmorInterface): ArmorInterface = {
     val oldHelmet = player.chest
     player = player.nextPlayer(chest = newChest)
     oldHelmet
   }
 
-  private def equipPants(newPants: Armor): Armor = {
+  private def equipPants(newPants: ArmorInterface): ArmorInterface = {
     val oldHelmet = player.pants
     player = player.nextPlayer(pants = newPants)
     oldHelmet
   }
 
-  private def equipBoots(newBoots: Armor): Armor = {
+  private def equipBoots(newBoots: ArmorInterface): ArmorInterface = {
     val oldHelmet = player.boots
     player = player.nextPlayer(boots = newBoots)
     oldHelmet
   }
 
-  private def equipGloves(newGloves: Armor): Armor = {
+  private def equipGloves(newGloves: ArmorInterface): ArmorInterface = {
     val oldHelmet = player.gloves
     player = player.nextPlayer(gloves = newGloves)
     oldHelmet
@@ -765,7 +765,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   }
 
   def unEquipRightHand(): Unit = {
-    val weapon: Weapon = player.rightHand
+    val weapon: WeaponInterface = player.rightHand
     if (weapon.name != "RightFist") {
       var newWeapon = player.inventory.weapons
       newWeapon ++= player.rightHand :: Nil
@@ -777,7 +777,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   }
 
   def unEquipLeftHand(): Unit = {
-    val weapon: Weapon = player.leftHand
+    val weapon: WeaponInterface = player.leftHand
     if (weapon.name != "LeftFist") {
       var newWeapon = player.inventory.weapons
       newWeapon ++= player.leftHand :: Nil
@@ -828,8 +828,8 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
 
   //-----------INVENTORY----------------
 
-  def inventoryAsOneVector(): Vector[Item] = {
-    var items: Vector[Item] = player.inventory.weapons
+  def inventoryAsOneVector(): Vector[ItemInterface] = {
+    var items: Vector[ItemInterface] = player.inventory.weapons
     items ++= player.inventory.armor
     items ++= player.inventory.potions
     items
@@ -852,25 +852,25 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       var newItems = items.filterNot(_ == itemToSell)
       newItems ++= usedItem
 
-      var newWeapons: Vector[Weapon] = Vector()
-      var newArmor: Vector[Armor] = Vector()
-      var newPotion: Vector[Potion] = Vector()
+      var newWeapons: Vector[WeaponInterface] = Vector()
+      var newArmor: Vector[ArmorInterface] = Vector()
+      var newPotion: Vector[PotionInterface] = Vector()
 
       for (x <- newItems) {
         x match {
-          case w: Weapon => newWeapons ++= w :: Nil
-          case a: Armor => newArmor ++= a :: Nil
-          case p: Potion => newPotion ++= p :: Nil
+          case w: WeaponInterface => newWeapons ++= w :: Nil
+          case a: ArmorInterface => newArmor ++= a :: Nil
+          case p: PotionInterface => newPotion ++= p :: Nil
         }
       }
 
       var merchantNewInventory = merchant.inventory
       merchantNewInventory ++= itemToSell :: Nil
-      merchant = merchant.copy(inventory = merchantNewInventory, gulden = merchant.gulden - itemToSell.value)
+      merchant = merchant.nextMerchant(inventory = merchantNewInventory, gulden = merchant.gulden - itemToSell.value)
       player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden + itemToSell.value)
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()
-    merchant = merchant.copy(inventory = merchant.sortItems(merchant.inventory))
+    merchant = merchant.nextMerchant(inventory = merchant.sortItems(merchant.inventory))
     publish(new TileChanged)
   }
 
@@ -891,17 +891,17 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       var newItems = items.filterNot(_ == itemToBuy)
       newItems ++= usedItem
 
-      var newWeapons: Vector[Weapon] = player.inventory.weapons
-      var newArmor: Vector[Armor] = player.inventory.armor
-      var newPotion: Vector[Potion] = player.inventory.potions
+      var newWeapons: Vector[WeaponInterface] = player.inventory.weapons
+      var newArmor: Vector[ArmorInterface] = player.inventory.armor
+      var newPotion: Vector[PotionInterface] = player.inventory.potions
 
       itemToBuy match {
-        case w: Weapon => newWeapons ++= w :: Nil
-        case a: Armor => newArmor ++= a :: Nil
-        case p: Potion => newPotion ++= p :: Nil
+        case w: WeaponInterface => newWeapons ++= w :: Nil
+        case a: ArmorInterface => newArmor ++= a :: Nil
+        case p: PotionInterface => newPotion ++= p :: Nil
       }
 
-      merchant = merchant.copy(inventory = newItems, gulden = merchant.gulden + itemToBuy.value)
+      merchant = merchant.nextMerchant(inventory = newItems, gulden = merchant.gulden + itemToBuy.value)
       player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = newWeapons, armor = newArmor, potions = newPotion), gulden = player.gulden - itemToBuy.value)
     } else println("CONTROLLER INKOREKTER INDEX => " + index)
     //notifyObservers()

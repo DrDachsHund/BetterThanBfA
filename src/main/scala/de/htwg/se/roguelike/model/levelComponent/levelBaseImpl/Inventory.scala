@@ -1,8 +1,8 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.InventoryInterface
+import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, InventoryInterface, PotionInterface, WeaponInterface}
 
-case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion] = Vector(Potion("SmallHeal"), Potion("SmallHeal"), Potion("BigHeal")), armor: Vector[Armor] = Vector()) extends InventoryInterface {
+case class Inventory(weapons: Vector[WeaponInterface] = Vector(), potions: Vector[PotionInterface] = Vector(Potion("SmallHeal"), Potion("SmallHeal"), Potion("BigHeal")), armor: Vector[ArmorInterface] = Vector()) extends InventoryInterface {
 
   def invSortPower(): Inventory = {
     val newWeapons = weapons.sortWith(_.dmg > _.dmg)
@@ -18,15 +18,15 @@ case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion]
     this.copy(weapons = newWeapons, potions = newPotion, armor = newArmor)
   }
 
-  def getPotion(index: Int): Potion = {
+  def getPotion(index: Int): PotionInterface = {
     potions(index - 1)
   }
 
-  def getArmor(index: Int): Armor = {
+  def getArmor(index: Int): ArmorInterface = {
     armor(index - 1)
   }
 
-  def getWeapon(index: Int): Weapon = {
+  def getWeapon(index: Int): WeaponInterface = {
     weapons(index - 1)
   }
 
@@ -63,9 +63,9 @@ case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion]
     sb.toString
   }
 
-  def nextInventory(weapons: Vector[Weapon] = this.weapons,
-                    potions: Vector[Potion] = this.potions,
-                    armor: Vector[Armor] = this.armor): InventoryInterface = {
+  def nextInventory(weapons: Vector[WeaponInterface] = this.weapons,
+                    potions: Vector[PotionInterface] = this.potions,
+                    armor: Vector[ArmorInterface] = this.armor): InventoryInterface = {
     this.copy(weapons = weapons, potions = potions, armor = armor)
   }
 

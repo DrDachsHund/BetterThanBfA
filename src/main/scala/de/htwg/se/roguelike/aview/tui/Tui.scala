@@ -22,7 +22,7 @@ class Tui(controller: Controller) extends Reactor { //with Observer
       tuidraw()
       state.handle()
     }
-    case _: LevelSizeChanged =>{
+    case _: LevelSizeChanged => {
       tuidraw()
       state.handle()
     }

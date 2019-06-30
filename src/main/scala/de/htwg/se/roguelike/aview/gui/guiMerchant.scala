@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage
 import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, PotionInterface, WeaponInterface}
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import javax.swing.ImageIcon
 
@@ -136,30 +137,30 @@ case class guiMerchant(controller: Controller, gui: SwingGui) extends StateGui {
 
 
         playerItems.peer.getSelectedValue match {
-          case armor: Armor => armor match {
+          case armor: ArmorInterface => armor match {
             case helm: Helmet => g.drawImage(getTexture(helm.textureIndex, "resources/HelmTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case chest: Chest => g.drawImage(getTexture(chest.textureIndex, "resources/ChestTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case pants: Pants => g.drawImage(getTexture(pants.textureIndex, "resources/PantsTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case boots: Boots => g.drawImage(getTexture(boots.textureIndex, "resources/BootsTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex, "resources/GlovesTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
           }
-          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex, "resources/WeaponTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
-          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
+          case weapon: WeaponInterface => g.drawImage(getTexture(weapon.textureIndex, "resources/WeaponTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
+          case potion: PotionInterface => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 104 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
           case _ => {
             println("NichtsAusgewählt")
           }
         }
 
         merchantItems.peer.getSelectedValue match {
-          case armor: Armor => armor match {
+          case armor: ArmorInterface => armor match {
             case helm: Helmet => g.drawImage(getTexture(helm.textureIndex, "resources/HelmTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case chest: Chest => g.drawImage(getTexture(chest.textureIndex, "resources/ChestTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case pants: Pants => g.drawImage(getTexture(pants.textureIndex, "resources/PantsTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case boots: Boots => g.drawImage(getTexture(boots.textureIndex, "resources/BootsTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
             case gloves: Gloves => g.drawImage(getTexture(gloves.textureIndex, "resources/GlovesTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
           }
-          case weapon: Weapon => g.drawImage(getTexture(weapon.textureIndex, "resources/WeaponTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
-          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
+          case weapon: WeaponInterface => g.drawImage(getTexture(weapon.textureIndex, "resources/WeaponTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
+          case potion: PotionInterface => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 128 * SCALE, 72 * SCALE, 24 * SCALE, 24 * SCALE, null)
           case _ => {
             println("NichtsAusgewählt")
           }

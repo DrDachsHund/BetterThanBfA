@@ -6,6 +6,7 @@ import de.htwg.se.roguelike.aview.tui.State
 import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
+import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, ItemInterface, PotionInterface, WeaponInterface}
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import javax.swing.ImageIcon
 
@@ -54,17 +55,17 @@ case class guiInventoryWeapon(controller: Controller, gui: SwingGui) extends Sta
     val sortVIcon = new ImageIcon(sortButtonImage.getSprite(0,0,20).getScaledInstance(20 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
     val sortDIcon = new ImageIcon(sortButtonImage.getSprite(20,0,20).getScaledInstance(20 * SCALE, 20 * SCALE, java.awt.Image.SCALE_SMOOTH))
 
-    def getImageIcon(item: Item): ImageIcon = {
+    def getImageIcon(item: ItemInterface): ImageIcon = {
       item match {
-        case armor: Armor => armor match {
+        case armor: ArmorInterface => armor match {
           case helm: Helmet => getTexture(helm.textureIndex, "resources/HelmTextures.png")
           case chest: Chest => getTexture(chest.textureIndex, "resources/ChestTextures.png")
           case pants: Pants => getTexture(pants.textureIndex, "resources/PantsTextures.png")
           case boots: Boots => getTexture(boots.textureIndex, "resources/BootsTextures.png")
           case gloves: Gloves => getTexture(gloves.textureIndex, "resources/GlovesTextures.png")
         }
-        case weapon: Weapon => getTexture(weapon.textureIndex, "resources/WeaponTextures.png")
-        case potion: Potion => getTexture(potion.textureIndex, "resources/PotionTextures.png")
+        case weapon: WeaponInterface => getTexture(weapon.textureIndex, "resources/WeaponTextures.png")
+        case potion: PotionInterface => getTexture(potion.textureIndex, "resources/PotionTextures.png")
       }
     }
 

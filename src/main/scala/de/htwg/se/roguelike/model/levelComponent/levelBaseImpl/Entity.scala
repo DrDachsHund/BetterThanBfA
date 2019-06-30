@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
+import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, WeaponInterface}
+
 trait Entity {
   val name: String
   val health: Int
@@ -12,13 +14,13 @@ trait Entity {
   val posX: Int
   val posY: Int
   val inventory: Inventory
-  val helmet: Armor
-  val chest: Armor
-  val pants: Armor
-  val boots: Armor
-  val gloves: Armor
-  val rightHand: Weapon
-  val leftHand: Weapon
+  val helmet: ArmorInterface
+  val chest: ArmorInterface
+  val pants: ArmorInterface
+  val boots: ArmorInterface
+  val gloves: ArmorInterface
+  val rightHand: WeaponInterface
+  val leftHand: WeaponInterface
   val gulden: Int
 
   def isAlive: Boolean = health > 0

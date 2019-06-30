@@ -1,31 +1,13 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
+import de.htwg.se.roguelike.model.levelComponent.{ItemInterface, PlayerInterface, PotionInterface}
 
 import scala.util.Random
 
-trait Potion extends Item {
-  val name: String
-  val value: Int
-  val usable: Boolean
-  val power: Int
-
-  def usePotion(player: PlayerInterface): PlayerInterface = {
-    if (player.health > player.maxHealth) {
-      return player.nextPlayer(health = player.maxHealth)
-    }
-    if (player.mana > player.maxMana) {
-      return player.nextPlayer(mana = player.maxMana)
-    }
-    player
-  }
-
-  override def toString: String = name + " (" + rarity + ") PW:" + power + " VAlue: " + value
-}
 
 //FactoryMethod
 object Potion {
-  def apply(kind: String): Potion = kind match {
+  def apply(kind: String): PotionInterface = kind match {
     case "SmallHeal" => HealPotion(name = "Small-Heal-Potion", value = 25, usable = true, power = 25, rarity = "Common",textureIndex = 4)
     case "MediumHeal" => HealPotion(name = "Medium-Heal-Potion", value = 50, usable = true, power = 50, rarity = "Uncommon",textureIndex = 3)
     case "BigHeal" => HealPotion(name = "Big-Heal-Potion", value = 75, usable = true, power = 75, rarity = "Rare",textureIndex = 2)
@@ -41,7 +23,7 @@ object Potion {
 
 private object RandomPotion {
 
-  def getRandomPotion(): Potion = {
+  def getRandomPotion(): PotionInterface = {
     val random = Random
     val armorType = random.nextInt(8) + 1
     armorType match {

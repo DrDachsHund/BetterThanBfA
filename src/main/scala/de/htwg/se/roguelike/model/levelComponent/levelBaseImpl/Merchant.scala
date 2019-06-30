@@ -2,9 +2,9 @@ package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 import de.htwg.se.roguelike.model.levelComponent.{ItemInterface, MerchantInterface}
 
-case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[ItemInterface] = Vector(Weapon("random"),Armor("random"),Potion("random")), gulden:Int = 50) extends MerchantInterface {
+case class Merchant(posX: Int = -1, posY: Int = -1, inventory: Vector[ItemInterface] = Vector(Weapon("random"), Armor("random"), Potion("random")), gulden: Int = 50) extends MerchantInterface {
 
-  def restock(lvl:Int):Merchant = {
+  def restock(lvl: Int): Merchant = {
     var newInventory = this.inventory
 
     var newWeapon = Weapon("Sword")
@@ -24,13 +24,18 @@ case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[ItemInterface
     newInventory ++= newArmor :: Nil
     newInventory ++= newPotion :: Nil
     newInventory = sortItems(newInventory)
-    this.copy(inventory = newInventory,gulden = this.gulden + 250)
+    this.copy(inventory = newInventory, gulden = this.gulden + 250)
   }
 
-  def sortItems(inventory: Vector[ItemInterface]) : Vector[ItemInterface] = {
+  def sortItems(inventory: Vector[ItemInterface]): Vector[ItemInterface] = {
     var newInventory = inventory.sortWith(_.value > _.value)
     newInventory = newInventory.sortWith(_.getClass.getName > _.getClass.getName)
     newInventory
+  }
+
+  override def nextMerchant(posX: Int = this.posX, posY: Int = this.posY,
+                            inventory: Vector[ItemInterface] = this.inventory, gulden: Int = this.gulden): MerchantInterface = {
+    this.copy(posX = posX, posY = posY, inventory = inventory, gulden = gulden)
   }
 
 }

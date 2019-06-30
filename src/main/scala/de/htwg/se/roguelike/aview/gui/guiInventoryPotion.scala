@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage
 import java.awt.{Color, Font, Graphics2D}
 
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
+import de.htwg.se.roguelike.model.levelComponent.PotionInterface
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.Potion
 
 //import de.htwg.se.roguelike.aview.tui.State
@@ -166,7 +167,7 @@ case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends Sta
 
         //-PotionIcon
         playerItems.peer.getSelectedValue match {
-          case potion: Potion => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 160 * SCALE, 75 * SCALE, 64 * SCALE, 64 * SCALE, null)
+          case potion: PotionInterface => g.drawImage(getTexture(potion.textureIndex, "resources/PotionTextures.png"), 160 * SCALE, 75 * SCALE, 64 * SCALE, 64 * SCALE, null)
           case _ => {
             g.drawImage(getTexture(24, "resources/PotionTextures.png"), 160 * SCALE, 75 * SCALE, 64 * SCALE, 64 * SCALE, null)
             println("NichtsAusgewählt")

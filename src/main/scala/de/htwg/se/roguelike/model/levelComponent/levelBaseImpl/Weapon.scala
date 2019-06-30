@@ -2,33 +2,13 @@ package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 import java.io.InputStream
 
+import de.htwg.se.roguelike.model.levelComponent.{ItemInterface, WeaponInterface}
+
 import scala.io.Source
 import scala.util.Random
 
-trait Weapon extends Item {
-  val name: String
-  val value: Int
-  val usable: Boolean //vll als wert um die waffe benutzen zu können maybe??????????
-  val dmg: Int
-  val block: Int
-  val oneHanded: Boolean
-  val rarity: String
-  val itemLevel: Int
-
-  /*
-  def getAttack():(Int,Int,Int) = { //normalDmg,magicDmg,critDmg/trueDmg,etc
-  }
-  def special():(Int,Int,Int) = {
-  }
-  */
-
-  def getScaledWeapon(lvl: Int): Weapon //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
-
-  override def toString: String = "(" + rarity + ") " + name + " dmg: " + dmg + " block: " + block + " value: " + value
-}
-
 object Weapon {
-  def apply(kind: String): Weapon = kind match {
+  def apply(kind: String): WeaponInterface = kind match {
     case "rightFist" => Sword(name = "RightFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "", textureIndex = 24)
     case "leftFist" => Sword(name = "LeftFist", value = 0, usable = false, dmg = 5, block = 5, oneHanded = true, rarity = "", textureIndex = 24)
     case "Sword" => Sword(name = "Sword", value = 10, usable = false, dmg = 10, block = 5, oneHanded = true, rarity = "Common")
@@ -79,7 +59,7 @@ private object RandomWeapon {
     }
   }
 
-  def getWeaponType(name: String, value: Int, dmg: Int, block: Int, rarity: String): Weapon = {
+  def getWeaponType(name: String, value: Int, dmg: Int, block: Int, rarity: String): WeaponInterface = {
     val random = Random //geht auch so zu schreiben lul wierd
     val weaponType = 1 //random.nextInt(0) + 1 // => ersma 1 weil ja nur Sword derzeit gibt => easy expandable
     weaponType match {

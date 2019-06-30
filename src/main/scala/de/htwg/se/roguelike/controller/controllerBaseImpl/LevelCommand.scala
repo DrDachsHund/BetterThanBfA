@@ -4,12 +4,12 @@ import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.Command
 
-class LevelCommand(lpOld: (LevelInterface, PlayerInterface), lpNew: (LevelInterface, PlayerInterface), enemies: Vector[EnemyInterface],merchant: Merchant,crate: Crate, controller: Controller) extends Command {
+class LevelCommand(lpOld: (LevelInterface, PlayerInterface), lpNew: (LevelInterface, PlayerInterface), enemies: Vector[EnemyInterface], merchant: MerchantInterface, crate: CrateInterface , controller: Controller) extends Command {
 
   var memento: (LevelInterface, PlayerInterface) = lpOld
   var mementoE: Vector[EnemyInterface] = enemies
-  var mementoM: Merchant = merchant
-  var mementoC: Crate = crate
+  var mementoM: MerchantInterface = merchant
+  var mementoC: CrateInterface = crate
 
   override def doStep(): Unit = {
     memento = lpOld

@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
+import de.htwg.se.roguelike.model.levelComponent.WeaponInterface
+
 import scala.util.Random
 
 case class Sword(name: String,
@@ -10,7 +12,7 @@ case class Sword(name: String,
                  oneHanded: Boolean,
                  rarity: String,
                  itemLevel: Int = 1,
-                 textureIndex: Int = 0) extends Weapon {
+                 textureIndex: Int = 0) extends WeaponInterface {
 
   private def setItemLevel(lvl: Int): Sword = {
     val random = new Random()
@@ -21,7 +23,7 @@ case class Sword(name: String,
   }
 
 
-  override def getScaledWeapon(lvl: Int): Weapon = {
+  override def getScaledWeapon(lvl: Int): WeaponInterface = {
     val weapon = setItemLevel(lvl)
     val scale: Double = (weapon.itemLevel.toDouble / 25.0) + 1.0
     weapon.copy(name,

@@ -1,6 +1,7 @@
 package de.htwg.se.roguelike.model.levelComponent
 
-import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Land, Tile}
+
 
 trait LevelInterface {
   val map: Land[Tile]
@@ -54,13 +55,13 @@ trait EntityInterface {
   val posX: Int
   val posY: Int
   val inventory: InventoryInterface
-  val helmet: Armor
-  val chest: Armor
-  val pants: Armor
-  val boots: Armor
-  val gloves: Armor
-  val rightHand: Weapon
-  val leftHand: Weapon
+  val helmet: ArmorInterface
+  val chest: ArmorInterface
+  val pants: ArmorInterface
+  val boots: ArmorInterface
+  val gloves: ArmorInterface
+  val rightHand: WeaponInterface
+  val leftHand: WeaponInterface
   val gulden: Int
 
   def isAlive: Boolean = health > 0
@@ -89,26 +90,26 @@ trait PlayerInterface extends EntityInterface {
                  posX: Int = this.posX,
                  posY: Int = this.posY,
                  inventory: InventoryInterface = this.inventory,
-                 helmet: Armor = this.helmet,
-                 chest: Armor = this.chest,
-                 pants: Armor = this.pants,
-                 boots: Armor = this.boots,
-                 gloves: Armor = this.gloves,
-                 rightHand: Weapon = this.rightHand,
-                 leftHand: Weapon = this.leftHand,
+                 helmet: ArmorInterface = this.helmet,
+                 chest: ArmorInterface = this.chest,
+                 pants: ArmorInterface = this.pants,
+                 boots: ArmorInterface = this.boots,
+                 gloves: ArmorInterface = this.gloves,
+                 rightHand: WeaponInterface = this.rightHand,
+                 leftHand: WeaponInterface = this.leftHand,
                  gulden: Int = this.gulden,
                  killCounter: Int = this.killCounter,
                  direction: Int = this.direction): PlayerInterface
 
   def getScore(levelDepth: Int): Int
 
-  def lvlUpAttack: Player
+  def lvlUpAttack: PlayerInterface
 
-  def lvlUpMana: Player
+  def lvlUpMana: PlayerInterface
 
-  def lvlUpHealth: Player
+  def lvlUpHealth: PlayerInterface
 
-  def lvlUp(collectedExp: Int): Player
+  def lvlUp(collectedExp: Int): PlayerInterface
 
 }
 
@@ -127,13 +128,13 @@ trait EnemyInterface extends EntityInterface {
                 posX: Int = this.posX,
                 posY: Int = this.posY,
                 inventory: InventoryInterface = this.inventory,
-                helmet: Armor = this.helmet,
-                chest: Armor = this.chest,
-                pants: Armor = this.pants,
-                boots: Armor = this.boots,
-                gloves: Armor = this.gloves,
-                rightHand: Weapon = this.rightHand,
-                leftHand: Weapon = this.leftHand,
+                helmet: ArmorInterface = this.helmet,
+                chest: ArmorInterface = this.chest,
+                pants: ArmorInterface = this.pants,
+                boots: ArmorInterface = this.boots,
+                gloves: ArmorInterface = this.gloves,
+                rightHand: WeaponInterface = this.rightHand,
+                leftHand: WeaponInterface = this.leftHand,
                 gulden: Int = this.gulden,
                 enemyType: Int = this.enemyType): EnemyInterface
 
@@ -160,23 +161,23 @@ trait ItemInterface {
 
 trait InventoryInterface {
 
-  val weapons: Vector[Weapon]
-  val potions: Vector[Potion]
-  val armor: Vector[Armor]
+  val weapons: Vector[WeaponInterface]
+  val potions: Vector[PotionInterface]
+  val armor: Vector[ArmorInterface]
 
-  def nextInventory(weapons: Vector[Weapon] = this.weapons,
-                    potions: Vector[Potion] = this.potions,
-                    armor: Vector[Armor] = this.armor): InventoryInterface
+  def nextInventory(weapons: Vector[WeaponInterface] = this.weapons,
+                    potions: Vector[PotionInterface] = this.potions,
+                    armor: Vector[ArmorInterface] = this.armor): InventoryInterface
 
   def invSortPower(): InventoryInterface
 
   def invSortValue(): InventoryInterface
 
-  def getPotion(index: Int): Potion
+  def getPotion(index: Int): PotionInterface
 
-  def getArmor(index: Int): Armor
+  def getArmor(index: Int): ArmorInterface
 
-  def getWeapon(index: Int): Weapon
+  def getWeapon(index: Int): WeaponInterface
 
   def potionsToString(): String
 
@@ -185,11 +186,76 @@ trait InventoryInterface {
   def armorToString(): String
 }
 
+trait ArmorInterface extends ItemInterface {
+  val name: String
+  val value: Int
+  val usable: Boolean
+  val armor: Int
+  val armorType: String
+  val rarity: String
+  //val rarity boosts wahrscheinlichkeit gute specails und vll wie viele
+
+  //def randomItem
+
+  //var curse zeigs z.b pro schlag 10 hp verlieren 10%attack miss
+
+  //var special = specaial random!!!!
+  //
+  //def specals1 ... usw
+
+  override def toString: String = armorType + ": (" + rarity + ") " + name + " armor: " + armor + " value: " + value
+}
+
+trait WeaponInterface extends ItemInterface {
+  val name: String
+  val value: Int
+  val usable: Boolean //vll als wert um die waffe benutzen zu können maybe??????????
+  val dmg: Int
+  val block: Int
+  val oneHanded: Boolean
+  val rarity: String
+  val itemLevel: Int
+
+  /*
+  def getAttack():(Int,Int,Int) = { //normalDmg,magicDmg,critDmg/trueDmg,etc
+  }
+  def special():(Int,Int,Int) = {
+  }
+  */
+
+  def getScaledWeapon(lvl: Int): WeaponInterface //vll nur lvl übergeben um nicht zu viel zu übergeben wen später components gibt bei anderen ethoden auch schauen und eventuel refactorn!!!
+
+  override def toString: String = "(" + rarity + ") " + name + " dmg: " + dmg + " block: " + block + " value: " + value
+}
+
+trait PotionInterface extends ItemInterface {
+  val name: String
+  val value: Int
+  val usable: Boolean
+  val power: Int
+
+  def usePotion(player: PlayerInterface): PlayerInterface = {
+    if (player.health > player.maxHealth) {
+      return player.nextPlayer(health = player.maxHealth)
+    }
+    if (player.mana > player.maxMana) {
+      return player.nextPlayer(mana = player.maxMana)
+    }
+    player
+  }
+
+  override def toString: String = name + " (" + rarity + ") PW:" + power + " VAlue: " + value
+}
+
+
 trait MerchantInterface {
   val posX: Int
   val posY: Int
   val inventory: Vector[ItemInterface]
   val gulden: Int
+
+  def nextMerchant(posX:Int = this.posX, posY:Int = this.posY,
+                   inventory:Vector[ItemInterface] = this.inventory, gulden:Int = this.gulden) : MerchantInterface
 
   def restock(lvl: Int): MerchantInterface
 
@@ -199,8 +265,10 @@ trait MerchantInterface {
 
 trait CrateInterface {
   val posX:Int
-  val posX:Int
+  val posY:Int
   val inventory: Vector[ItemInterface]
+
+  def nextCrate(posX:Int = this.posX,posY:Int  = this.posY, inventory:Vector[ItemInterface] = this.inventory) : CrateInterface
 
   def fillCrate(depth: Int, playerlvl: Int): CrateInterface
 
@@ -211,5 +279,7 @@ trait PortalInterface {
   val posX:Int
   val posY:Int
   val portalType: Int
+
+  def nextPortal(posX:Int = this.posX,posY:Int = this.posY,portalType: Int = this.portalType) : PortalInterface
 }
 

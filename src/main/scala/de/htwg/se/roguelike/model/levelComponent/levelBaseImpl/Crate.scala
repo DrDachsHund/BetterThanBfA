@@ -4,9 +4,9 @@ import de.htwg.se.roguelike.model.levelComponent.{CrateInterface, ItemInterface}
 
 import scala.util.Random
 
-case class Crate(posX:Int = -1,posX:Int  = -1, inventory:Vector[ItemInterface] = Vector()) extends CrateInterface{
+case class Crate(posX:Int = -1,posY:Int  = -1, inventory:Vector[ItemInterface] = Vector()) extends CrateInterface {
 
-  def fillCrate (depth:Int,playerlvl:Int): Crate = {
+  def fillCrate (depth:Int,playerlvl:Int): CrateInterface = {
     val random = new Random()
     val itemRandom = random.nextInt(100) + depth
     itemRandom match {
@@ -16,7 +16,7 @@ case class Crate(posX:Int = -1,posX:Int  = -1, inventory:Vector[ItemInterface] =
     }
   }
 
-  def randomCrate (crate:Crate, items:Int, playerlvl:Int): Crate = {
+  def randomCrate (crate:CrateInterface, items:Int, playerlvl:Int): CrateInterface = {
     var newInventory = this.inventory
     val random = new Random()
     val itemRandom = random.nextInt(100) + 1
@@ -28,6 +28,11 @@ case class Crate(posX:Int = -1,posX:Int  = -1, inventory:Vector[ItemInterface] =
       }
     }
     newInventory = newInventory.sortWith(_.value > _.value)
-    crate.copy(inventory = newInventory)
+    crate.nextCrate(inventory = newInventory)
+  }
+
+
+  override def nextCrate(posX:Int = this.posX,posY:Int  = this.posY, inventory:Vector[ItemInterface] = this.inventory): CrateInterface = {
+    this.copy(posX = posX,posY = posY, inventory = inventory)
   }
 }
