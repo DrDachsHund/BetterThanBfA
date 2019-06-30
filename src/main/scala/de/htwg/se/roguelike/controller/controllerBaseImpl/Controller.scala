@@ -1,14 +1,13 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
-import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller._
 import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.UndoManager
 
-import scala.swing.Publisher
 import scala.util.Random
 
-class Controller(var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends Publisher { //with Observer
+class Controller(var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends ControllerInterface { //with Observer
 
   val fight:FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
@@ -466,10 +465,6 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   //-----------STRATEGY PATTERN TO STRING----------------
 
   var strategy: Strategy = new StrategyLevel
-
-  trait Strategy {
-    def updateToString: String
-  }
 
   class StrategyLevel extends Strategy {
     override def updateToString: String = level.toString
