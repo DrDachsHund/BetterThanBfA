@@ -1,14 +1,14 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
 import de.htwg.se.roguelike.controller.GameStatus
-import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
+import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.UndoManager
 
 import scala.swing.Publisher
 import scala.util.Random
 
-class Controller(var level: Level, var player: PlayerInterface, var enemies: Vector[Enemy] = Vector()) extends Publisher { //with Observer
+class Controller(var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends Publisher { //with Observer
 
   val fight = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
@@ -26,7 +26,7 @@ class Controller(var level: Level, var player: PlayerInterface, var enemies: Vec
 
   //--FIGHT--
   var enemyLoot: Vector[Item] = Vector()
-  var currentEnemy: Enemy = Enemy("ControlerFehler")
+  var currentEnemy: EnemyInterface = Enemy("ControlerFehler")
   //var currentAction: String = "nothing"
   //--FIGHT--
 
@@ -414,13 +414,13 @@ class Controller(var level: Level, var player: PlayerInterface, var enemies: Vec
           enemyLastAction = currentEnemy.name + ": attacked for " + currentEnemy.getAttack + " damage"
         }
         case "heal" => {
-          currentEnemy = currentEnemy.copy(health = currentEnemy.health + 25 * currentEnemy.lvl, maxHealth = currentEnemy.maxHealth + 25 * currentEnemy.lvl)
+          currentEnemy = currentEnemy.nextEnemy(health = currentEnemy.health + 25 * currentEnemy.lvl, maxHealth = currentEnemy.maxHealth + 25 * currentEnemy.lvl)
           enemyLastAction = currentEnemy.name + ": healed for " + 25 * currentEnemy.lvl + " hp"
         }
         case "special" =>
           if (currentEnemy.mana >= 50) {
             println("Enemy did Special Attack")
-            currentEnemy = currentEnemy.copy(mana = currentEnemy.mana - 50)
+            currentEnemy = currentEnemy.nextEnemy(mana = currentEnemy.mana - 50)
             player = fight.enemySpecial(player, currentEnemy)
             enemyLastAction = currentEnemy.name + ": special attacked with " + currentEnemy.getAttack + " damage"
           } else return enemyThinking(playerAction)

@@ -2,18 +2,27 @@ package de.htwg.se.roguelike.model.levelComponent
 
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Weapon, _}
 
-trait levelInterface {
+trait LevelInterface {
   val map: Land[Tile]
 
-  def moveUp(player: PlayerInterface): (levelInterface, PlayerInterface)
+  def moveUp(player: PlayerInterface): (LevelInterface, PlayerInterface)
 
-  def moveDown(player: PlayerInterface): (levelInterface, PlayerInterface)
+  def moveDown(player: PlayerInterface): (LevelInterface, PlayerInterface)
 
-  def moveLeft(player: PlayerInterface): (levelInterface, PlayerInterface)
+  def moveLeft(player: PlayerInterface): (LevelInterface, PlayerInterface)
 
-  def moveRight(player: PlayerInterface): (levelInterface, PlayerInterface)
+  def moveRight(player: PlayerInterface): (LevelInterface, PlayerInterface)
 
-  def removeElement(col: Int, row: Int, value: Int): levelInterface
+  def removeElement(col: Int, row: Int, value: Int): LevelInterface
+}
+
+trait LevelCreatorInterface {
+  val sizeY: Int
+  val sizeX: Int
+
+  def createLevel(player: PlayerInterface, enemies: Vector[EnemyInterface]): LevelInterface
+  def createRandom(player: PlayerInterface, enemyCount: Int): (LevelInterface, Vector[EnemyInterface])
+  def spawnRandomTile(level: LevelInterface, tile: Tile, numberOfTiles: Int): LevelInterface
 }
 
 trait EntityInterface {

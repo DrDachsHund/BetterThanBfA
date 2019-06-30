@@ -24,28 +24,26 @@ case class Enemy(name: String = "Empty-Name",
                  gulden: Int = 1,
                  enemyType: Int = 0) extends EnemyInterface {
 
-  override def nextEnemy(name: String =  this.name,
-                          health: Int = this.health,
-                          maxHealth: Int = this.maxHealth,
-                          mana: Int = this.mana,
-                          maxMana: Int = this.maxMana,
-                          attack: Int = this.attack,
-                          lvl: Int = this.lvl,
-                          exp: Int = this.exp,
-                          maxExp: Int = this.maxExp,
-                          posX: Int = this.posX,
-                          posY: Int = this.posY,
-                          inventory: Inventory = this.inventory,
-                          helmet: Armor = this.helmet,
-                          chest: Armor = this.chest,
-                          pants: Armor = this.pants,
-                          boots: Armor = this.boots,
-                          gloves: Armor = this.gloves,
-                          rightHand: Weapon = this.rightHand,
-                          leftHand: Weapon = this.leftHand,
-                          gulden: Int = this.gulden,
-                          killCounter: Int = this.killCounter,
-                          direction: Int = this.direction): PlayerInterface = {
+  override def nextEnemy(name: String = this.name,
+                         health: Int = this.health,
+                         maxHealth: Int = this.maxHealth,
+                         mana: Int = this.mana,
+                         maxMana: Int = this.maxMana,
+                         attack: Int = this.attack,
+                         lvl: Int = this.lvl,
+                         exp: Int = this.exp,
+                         posX: Int = this.posX,
+                         posY: Int = this.posY,
+                         inventory: Inventory = this.inventory,
+                         helmet: Armor = this.helmet,
+                         chest: Armor = this.chest,
+                         pants: Armor = this.pants,
+                         boots: Armor = this.boots,
+                         gloves: Armor = this.gloves,
+                         rightHand: Weapon = this.rightHand,
+                         leftHand: Weapon = this.leftHand,
+                         gulden: Int = this.gulden,
+                         enemyType: Int = this.enemyType): EnemyInterface = {
     this.copy(name = name,
       health = health,
       maxHealth = maxHealth,
@@ -54,7 +52,6 @@ case class Enemy(name: String = "Empty-Name",
       attack = attack,
       lvl = lvl,
       exp = exp,
-      maxExp = maxExp,
       posX = posX, posY = posY,
       inventory = inventory,
       helmet = helmet,
@@ -65,15 +62,14 @@ case class Enemy(name: String = "Empty-Name",
       rightHand = rightHand,
       leftHand = leftHand,
       gulden = gulden,
-      killCounter = killCounter,
-      direction = direction)
+      enemyType = enemyType)
   }
 
   def setName(): String = {
     enemyNames(enemyType)
   }
 
-  val enemyNames = Array("Test","Blue-Slime","Red-Slime","Green-Slime")
+  val enemyNames = Array("Test", "Blue-Slime", "Red-Slime", "Green-Slime")
 
 
   //Template Method
@@ -113,17 +109,17 @@ case class Enemy(name: String = "Empty-Name",
     val random = new Random()
     val lvlBuffer = random.nextInt(4) //0-3
     random.nextInt(2) match {
-      case 0 => this.copy(lvl = lvl + lvlBuffer, health = 75 + (lvl + lvlBuffer) * 25, maxHealth = 75 + (lvl + lvlBuffer) * 25, exp = exp * (lvl + lvlBuffer), gulden = gulden * (lvl + lvlBuffer),attack = attack + 2 * (lvl + lvlBuffer))
+      case 0 => this.copy(lvl = lvl + lvlBuffer, health = 75 + (lvl + lvlBuffer) * 25, maxHealth = 75 + (lvl + lvlBuffer) * 25, exp = exp * (lvl + lvlBuffer), gulden = gulden * (lvl + lvlBuffer), attack = attack + 2 * (lvl + lvlBuffer))
       case 1 =>
         if (lvl - lvlBuffer < 1) {
-          return this.copy(lvl = 15, exp = 251,health = 250,maxHealth = 250,mana = 250,maxMana = 250, gulden = 250, name = "Rare-Mob", inventory = new Inventory(Vector(Weapon("random")), Vector(Potion("random")), Vector(Armor("random"))),attack = 25)
+          return this.copy(lvl = 15, exp = 251, health = 250, maxHealth = 250, mana = 250, maxMana = 250, gulden = 250, name = "Rare-Mob", inventory = new Inventory(Vector(Weapon("random")), Vector(Potion("random")), Vector(Armor("random"))), attack = 25)
         }
-        return this.copy(lvl = lvl - lvlBuffer, health = 75 + (lvl - lvlBuffer) * 25, maxHealth = 75 + (lvl - lvlBuffer) * 25, exp = exp * (lvl - lvlBuffer), gulden = gulden * (lvl - lvlBuffer),attack = attack + 2 * (lvl - lvlBuffer))
+        return this.copy(lvl = lvl - lvlBuffer, health = 75 + (lvl - lvlBuffer) * 25, maxHealth = 75 + (lvl - lvlBuffer) * 25, exp = exp * (lvl - lvlBuffer), gulden = gulden * (lvl - lvlBuffer), attack = attack + 2 * (lvl - lvlBuffer))
     }
   }
 
-  def createRandomBoss(lvl:Int) : Enemy = {
-    var boss = this.copy(health = 50 * lvl,maxHealth = 50 * lvl,mana = 50 * lvl, maxMana = 50 * lvl,attack = 4 * lvl,lvl = lvl)
+  def createRandomBoss(lvl: Int): Enemy = {
+    var boss = this.copy(health = 50 * lvl, maxHealth = 50 * lvl, mana = 50 * lvl, maxMana = 50 * lvl, attack = 4 * lvl, lvl = lvl)
     boss = boss.setLoot()
     boss
   }

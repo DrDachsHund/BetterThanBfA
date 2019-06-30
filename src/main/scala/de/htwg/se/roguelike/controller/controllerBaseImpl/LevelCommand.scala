@@ -1,13 +1,13 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
+import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import de.htwg.se.roguelike.util.Command
 
-class LevelCommand(lpOld: (Level, PlayerInterface), lpNew: (Level, PlayerInterface), enemies: Vector[Enemy],merchant: Merchant,crate: Crate, controller: Controller) extends Command {
+class LevelCommand(lpOld: (LevelInterface, PlayerInterface), lpNew: (LevelInterface, PlayerInterface), enemies: Vector[EnemyInterface],merchant: Merchant,crate: Crate, controller: Controller) extends Command {
 
-  var memento: (Level, PlayerInterface) = lpOld
-  var mementoE: Vector[Enemy] = enemies
+  var memento: (LevelInterface, PlayerInterface) = lpOld
+  var mementoE: Vector[EnemyInterface] = enemies
   var mementoM: Merchant = merchant
   var mementoC: Crate = crate
 

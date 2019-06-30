@@ -1,10 +1,10 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.PlayerInterface
+import de.htwg.se.roguelike.model.levelComponent._
 
 case class Fight() {
 
-  def interaction(player: PlayerInterface, enemies: Vector[Enemy]): Boolean = {
+  def interaction(player: PlayerInterface, enemies: Vector[EnemyInterface]): Boolean = {
     for (enemy <- enemies) {
       if (player.posX == enemy.posX && player.posY == enemy.posY)
         return true
@@ -12,14 +12,14 @@ case class Fight() {
     false
   }
 
-  def playerAttack(player: PlayerInterface, enemy: Enemy, enemyAction: String): Enemy = {
+  def playerAttack(player: PlayerInterface, enemy: EnemyInterface, enemyAction: String): EnemyInterface = {
     var enemy2 = enemy
-    if (enemyAction != "block")  enemy2 = enemy.copy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor))
-    else enemy2 = enemy.copy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor + enemy.rightHand.block + enemy.leftHand.block * 2))
+    if (enemyAction != "block")  enemy2 = enemy.nextEnemy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor))
+    else enemy2 = enemy.nextEnemy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor + enemy.rightHand.block + enemy.leftHand.block * 2))
     enemy2
   }
 
-  def enemyAttack(player: PlayerInterface, enemy: Enemy, playerAction: String): PlayerInterface = {
+  def enemyAttack(player: PlayerInterface, enemy: EnemyInterface, playerAction: String): PlayerInterface = {
     println("EnemyAttack: " + calcAttack(enemy.getAttack, player.getArmor))
     var player2 = player
     if (playerAction != "block") player2 = player.nextPlayer(health = player.health - calcAttack(enemy.getAttack, player.getArmor))
@@ -31,7 +31,7 @@ case class Fight() {
 
   override def toString: String = "Fight:\n[1]Attack\n[2]:Block\n[3]:Special\n"
 
-  def shouldBlock(player: PlayerInterface, enemy: Enemy): String = {
+  def shouldBlock(player: PlayerInterface, enemy: EnemyInterface): String = {
     val enemyTest = playerAttack(player, enemy, "")
 
     if (enemyTest.health <= 0) "yes"
@@ -39,14 +39,14 @@ case class Fight() {
     else "no"
   }
 
-  def enemySpecial(player: PlayerInterface, currentEnemy: Enemy): PlayerInterface = {
+  def enemySpecial(player: PlayerInterface, currentEnemy: EnemyInterface): PlayerInterface = {
     println("EnemySpecial: " + currentEnemy.getAttack.toInt)
     player.nextPlayer(health = player.health - currentEnemy.getAttack.toInt)
   }
 
-  def playerSpecial(player: PlayerInterface, currentEnemy: Enemy): Enemy = {
+  def playerSpecial(player: PlayerInterface, currentEnemy: EnemyInterface): EnemyInterface = {
     println("PlayerSpecial: " + player.getAttack.toInt)
-    currentEnemy.copy(health = currentEnemy.health - player.getAttack.toInt)
+    currentEnemy.nextEnemy(health = currentEnemy.health - player.getAttack.toInt)
   }
 
 }

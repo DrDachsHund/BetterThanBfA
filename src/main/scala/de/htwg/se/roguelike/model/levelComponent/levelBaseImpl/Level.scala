@@ -1,8 +1,8 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-import de.htwg.se.roguelike.model.levelComponent.{PlayerInterface, levelInterface}
+import de.htwg.se.roguelike.model.levelComponent.{PlayerInterface, LevelInterface}
 
-case class Level(map: Land[Tile]) extends levelInterface {
+case class Level(map: Land[Tile]) extends LevelInterface {
   def this(sizeY: Int,sizeX:Int) = this(new Land[Tile](sizeY,sizeX, Tile(0)))
 
   def moveUp(player: PlayerInterface): (Level, PlayerInterface) = {
