@@ -1,6 +1,8 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[Item] = Vector(Weapon("random"),Armor("random"),Potion("random")), gulden:Int = 50) {
+import de.htwg.se.roguelike.model.levelComponent.{ItemInterface, MerchantInterface}
+
+case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[ItemInterface] = Vector(Weapon("random"),Armor("random"),Potion("random")), gulden:Int = 50) extends MerchantInterface {
 
   def restock(lvl:Int):Merchant = {
     var newInventory = this.inventory
@@ -25,7 +27,7 @@ case class Merchant(posX:Int = -1, posY:Int = -1, inventory:Vector[Item] = Vecto
     this.copy(inventory = newInventory,gulden = this.gulden + 250)
   }
 
-  def sortItems(inventory: Vector[Item]) : Vector[Item] = {
+  def sortItems(inventory: Vector[ItemInterface]) : Vector[ItemInterface] = {
     var newInventory = inventory.sortWith(_.value > _.value)
     newInventory = newInventory.sortWith(_.getClass.getName > _.getClass.getName)
     newInventory

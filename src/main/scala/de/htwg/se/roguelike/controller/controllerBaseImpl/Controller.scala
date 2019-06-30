@@ -16,7 +16,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   var portal = Portal()
   var crate = Crate(inventory = Vector(Sword(name = "Starting Weapon",value = 10, usable = false
     ,dmg = 10, block = 10, oneHanded = true,rarity = "Common")))
-  var merchant = Merchant()
+  var merchant:MerchantInterface = Merchant()
   var lvlDepth = 0
   var bossfight: Boolean = false
 

@@ -1,8 +1,10 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
+import de.htwg.se.roguelike.model.levelComponent.{CrateInterface, ItemInterface}
+
 import scala.util.Random
 
-case class Crate(posX:Int = -1,posY:Int = -1, inventory:Vector[Item] = Vector()) {
+case class Crate(posX:Int = -1,posX:Int  = -1, inventory:Vector[ItemInterface] = Vector()) extends CrateInterface{
 
   def fillCrate (depth:Int,playerlvl:Int): Crate = {
     val random = new Random()

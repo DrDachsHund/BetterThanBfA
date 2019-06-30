@@ -185,3 +185,31 @@ trait InventoryInterface {
   def armorToString(): String
 }
 
+trait MerchantInterface {
+  val posX: Int
+  val posY: Int
+  val inventory: Vector[ItemInterface]
+  val gulden: Int
+
+  def restock(lvl: Int): MerchantInterface
+
+  def sortItems(inventory: Vector[ItemInterface]): Vector[ItemInterface]
+
+}
+
+trait CrateInterface {
+  val posX:Int
+  val posX:Int
+  val inventory: Vector[ItemInterface]
+
+  def fillCrate(depth: Int, playerlvl: Int): CrateInterface
+
+  def randomCrate(crate: CrateInterface, items: Int, playerlvl: Int): CrateInterface
+}
+
+trait PortalInterface {
+  val posX:Int
+  val posY:Int
+  val portalType: Int
+}
+
