@@ -1,19 +1,21 @@
 package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
-case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion] = Vector(Potion("SmallHeal"), Potion("SmallHeal"), Potion("BigHeal")), armor: Vector[Armor] = Vector()) {
+import de.htwg.se.roguelike.model.levelComponent.InventoryInterface
+
+case class Inventory(weapons: Vector[Weapon] = Vector(), potions: Vector[Potion] = Vector(Potion("SmallHeal"), Potion("SmallHeal"), Potion("BigHeal")), armor: Vector[Armor] = Vector()) extends InventoryInterface {
 
   def invSortPower(): Inventory = {
     val newWeapons = weapons.sortWith(_.dmg > _.dmg)
     val newArmor = armor.sortWith(_.armor > _.armor)
     val newPotion = potions.sortWith(_.power > _.power)
-    this.copy(weapons = newWeapons,potions = newPotion,armor = newArmor)
+    this.copy(weapons = newWeapons, potions = newPotion, armor = newArmor)
   }
 
   def invSortValue(): Inventory = {
     val newWeapons = weapons.sortWith(_.value > _.value)
     val newArmor = armor.sortWith(_.value > _.value)
     val newPotion = potions.sortWith(_.value > _.value)
-    this.copy(weapons = newWeapons,potions = newPotion,armor = newArmor)
+    this.copy(weapons = newWeapons, potions = newPotion, armor = newArmor)
   }
 
   def getPotion(index: Int): Potion = {

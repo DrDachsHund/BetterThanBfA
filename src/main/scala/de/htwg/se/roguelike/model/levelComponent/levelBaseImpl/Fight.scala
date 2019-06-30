@@ -2,7 +2,7 @@ package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
 
 import de.htwg.se.roguelike.model.levelComponent._
 
-case class Fight() {
+case class Fight() extends FightInterface {
 
   def interaction(player: PlayerInterface, enemies: Vector[EnemyInterface]): Boolean = {
     for (enemy <- enemies) {
@@ -14,7 +14,7 @@ case class Fight() {
 
   def playerAttack(player: PlayerInterface, enemy: EnemyInterface, enemyAction: String): EnemyInterface = {
     var enemy2 = enemy
-    if (enemyAction != "block")  enemy2 = enemy.nextEnemy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor))
+    if (enemyAction != "block") enemy2 = enemy.nextEnemy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor))
     else enemy2 = enemy.nextEnemy(health = enemy.health - calcAttack(player.getAttack, enemy.getArmor + enemy.rightHand.block + enemy.leftHand.block * 2))
     enemy2
   }

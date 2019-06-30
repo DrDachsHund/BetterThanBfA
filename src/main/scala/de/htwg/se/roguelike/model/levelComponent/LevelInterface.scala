@@ -1,6 +1,6 @@
 package de.htwg.se.roguelike.model.levelComponent
 
-import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Weapon, _}
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 
 trait LevelInterface {
   val map: Land[Tile]
@@ -21,8 +21,25 @@ trait LevelCreatorInterface {
   val sizeX: Int
 
   def createLevel(player: PlayerInterface, enemies: Vector[EnemyInterface]): LevelInterface
+
   def createRandom(player: PlayerInterface, enemyCount: Int): (LevelInterface, Vector[EnemyInterface])
+
   def spawnRandomTile(level: LevelInterface, tile: Tile, numberOfTiles: Int): LevelInterface
+}
+
+trait FightInterface {
+
+  def interaction(player: PlayerInterface, enemies: Vector[EnemyInterface]): Boolean
+
+  def playerAttack(player: PlayerInterface, enemy: EnemyInterface, enemyAction: String): EnemyInterface
+
+  def enemyAttack(player: PlayerInterface, enemy: EnemyInterface, playerAction: String): PlayerInterface
+
+  def shouldBlock(player: PlayerInterface, enemy: EnemyInterface): String
+
+  def enemySpecial(player: PlayerInterface, currentEnemy: EnemyInterface): PlayerInterface
+
+  def playerSpecial(player: PlayerInterface, currentEnemy: EnemyInterface): EnemyInterface
 }
 
 trait EntityInterface {
@@ -129,5 +146,34 @@ trait EnemyInterface extends EntityInterface {
   def setScale(lvl: Int): EnemyInterface
 
   def createRandomBoss(lvl: Int): EnemyInterface
+}
+
+trait ItemInterface {
+  val name: String
+  val value: Int
+  val usable: Boolean
+  val rarity: String
+  val textureIndex: Int
+
+  def isUseable: Boolean = usable
+}
+
+trait InventoryInterface {
+
+  def invSortPower(): InventoryInterface
+
+  def invSortValue(): InventoryInterface
+
+  def getPotion(index: Int): Potion
+
+  def getArmor(index: Int): Armor
+
+  def getWeapon(index: Int): Weapon
+
+  def potionsToString(): String
+
+  def weaponsToString(): String
+
+  def armorToString(): String
 }
 
