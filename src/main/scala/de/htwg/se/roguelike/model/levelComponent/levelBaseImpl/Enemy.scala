@@ -24,7 +24,7 @@ case class Enemy(name: String = "Empty-Name",
                  gulden: Int = 1,
                  enemyType: Int = 0) extends EnemyInterface {
 
-  override def nextEnemy(name: String =  "DER NEGER GEBÜHRT NACH AFRIKA",
+  override def nextEnemy(name: String =  this.name,
                           health: Int = this.health,
                           maxHealth: Int = this.maxHealth,
                           mana: Int = this.mana,
