@@ -68,6 +68,19 @@ class tuiFightTest extends WordSpec with Matchers {
       controller2.currentEnemy.health should be (old.health - controller2.player.getAttack)
     }
 
+    "cant do a special with input '3' and less than 25 Mana" in {
+      var player2 = Player(name = "Player", posX = 5, posY = 5)
+      val enemies2 = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
+      val controller2 = new Controller(player = player2, enemies = enemies2, level = new Level(10, 10))
+      val tui2 = new Tui(controller2)
+      tui2.state = new tuiFight(controller2,tui2)
+
+      val old = controller2.currentEnemy
+      controller2.player = player2.copy(mana = 2)
+      tui2.state.processInputLine("3")
+      controller2.currentEnemy.health should not be (old.health - controller2.player.getAttack)
+    }
+
     "run with input 'r'" in {
       tui.state = new tuiFight(controller,tui)
       val tuitest = tui.state

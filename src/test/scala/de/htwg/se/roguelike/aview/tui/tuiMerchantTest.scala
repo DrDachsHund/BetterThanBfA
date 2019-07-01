@@ -32,6 +32,7 @@ class tuiMerchantTest extends WordSpec with Matchers {
       tui.state should be (tuitest)
     }
 
+
     "do nothing when state equals startScreen on input 'q'" in {
       val old = controller.strategy.updateToString
       tui.state.processInputLine("q")
