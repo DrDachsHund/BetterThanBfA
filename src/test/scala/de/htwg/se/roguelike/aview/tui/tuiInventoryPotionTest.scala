@@ -24,6 +24,7 @@ class tuiInventoryPotionTest extends WordSpec with Matchers {
       controller.player.health should be (100)
     }
 
+
     "do nothing when state equals startScreen on input 'q'" in {
       val old = controller.strategy.updateToString
       tui.state.processInputLine("q")

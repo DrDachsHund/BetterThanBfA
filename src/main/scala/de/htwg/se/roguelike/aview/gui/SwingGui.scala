@@ -8,7 +8,7 @@ import de.htwg.se.roguelike.controller._
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 
 
-class SwingGui(controller: Controller) extends Reactor {
+class SwingGui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
@@ -91,7 +91,7 @@ class SwingGui(controller: Controller) extends Reactor {
 }
 
 
-private class GMenuBar(controller: Controller) extends MenuBar {
+private class GMenuBar(controller: ControllerInterface) extends MenuBar {
   this.peer.setSize(new Dimension(0, 20))
   contents += new Menu("File") {
     mnemonic = Key.F //Dose not work

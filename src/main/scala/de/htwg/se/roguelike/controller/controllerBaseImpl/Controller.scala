@@ -1,5 +1,7 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.roguelike.RogueLikeModule
 import de.htwg.se.roguelike.controller._
 import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
@@ -7,7 +9,9 @@ import de.htwg.se.roguelike.util.UndoManager
 
 import scala.util.Random
 
-class Controller(var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends ControllerInterface { //with Observer
+class Controller @Inject() (var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends ControllerInterface { //with Observer
+
+  val injector = Guice.createInjector(new RogueLikeModule)
 
   val fight:FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN

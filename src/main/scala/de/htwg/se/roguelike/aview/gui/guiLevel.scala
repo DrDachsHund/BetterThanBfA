@@ -4,13 +4,13 @@ import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.aview.tui.State
-import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.Tile
 
 import scala.swing.{Dimension, Panel}
 
-case class guiLevel(controller: Controller, gui: SwingGui) extends StateGui {
+case class guiLevel(controller: ControllerInterface, gui: SwingGui) extends StateGui {
 
   override def processInputLine(input: String): Unit = {
     input match {

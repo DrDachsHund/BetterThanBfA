@@ -1,9 +1,9 @@
 package de.htwg.se.roguelike.aview.tui
 
-import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 
-case class tuiPlayerLevelUp(controller: Controller, tui: Tui) extends State {
+case class tuiPlayerLevelUp(controller: ControllerInterface, tui: Tui) extends State {
   def processInputLine(input: String): Unit = {
     input match {
       case "q" =>
