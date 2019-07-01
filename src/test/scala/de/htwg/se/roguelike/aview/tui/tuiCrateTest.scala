@@ -37,6 +37,23 @@ class tuiCrateTest extends WordSpec with Matchers {
       tui.state.processInputLine("a")
       controller.strategy.updateToString should be (old)
     }
+
+    "do not create a Create % 3 Level" in {
+      tui.state = new tuiCrate(controller,tui)
+      val old = controller.strategy.updateToString
+      controller.lvlDepth = 1
+      controller.createCrate()
+      controller.strategy.updateToString should be (old)
+    }
+
+    "do create a Create % 3 Level" in {
+      tui.state = new tuiCrate(controller,tui)
+      val old = controller.strategy.updateToString
+      controller.lvlDepth = 3
+      controller.createCrate()
+      controller.strategy.updateToString should not be (old)
+    }
+
     "switch to levelstate" in {
       val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
       val tui3 = new Tui(controller3)
