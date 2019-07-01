@@ -9,13 +9,13 @@ import scala.util.Random
 
 class Controller(var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends ControllerInterface { //with Observer
 
-  val fight:FightInterface = new Fight
+  val fight: FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
-  var portal:PortalInterface = Portal()
-  var crate:CrateInterface = Crate(inventory = Vector(Sword(name = "Starting Weapon",value = 10, usable = false
-    ,dmg = 10, block = 10, oneHanded = true,rarity = "Common")))
-  var merchant:MerchantInterface = Merchant()
+  var portal: PortalInterface = Portal()
+  var crate: CrateInterface = Crate(inventory = Vector(Sword(name = "Starting Weapon", value = 10, usable = false
+    , dmg = 10, block = 10, oneHanded = true, rarity = "Common")))
+  var merchant: MerchantInterface = Merchant()
   var lvlDepth = 0
   var bossfight: Boolean = false
 
@@ -53,14 +53,14 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
     createMerchant()
     createPortal()
     createCrate()
-    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies,merchant,crate, this))
+    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, merchant, crate, portal, this))
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def createLevel(): Unit = {
     level = new LevelCreator(9, 16).createLevel(player, enemies)
-    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies,merchant,crate, this))
+    undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, merchant, crate, portal, this))
     //notifyObservers()
     publish(new LevelSizeChanged(10))
   }
@@ -82,9 +82,9 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
       }
 
       crate = crate.nextCrate(posX = row, posY = col)
-      crate = crate.fillCrate(lvlDepth,player.lvl)
+      crate = crate.fillCrate(lvlDepth, player.lvl)
     } else {
-      crate = crate.nextCrate(posX = -1,posY = -1)
+      crate = crate.nextCrate(posX = -1, posY = -1)
     }
   }
 
@@ -98,8 +98,8 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
 
     level = level.removeElement(col, row, 1)
     if ((lvlDepth % 11) == 10) {
-      portal = portal.nextPortal(posX = row, posY = col,portalType = 1)
-    } else portal = portal.nextPortal(posX = row, posY = col,portalType = 0)
+      portal = portal.nextPortal(posX = row, posY = col, portalType = 1)
+    } else portal = portal.nextPortal(posX = row, posY = col, portalType = 0)
   }
 
   def createMerchant(): Unit = {
@@ -165,28 +165,28 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   //-----------MOVE----------------
 
   def moveUp(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies,merchant,crate, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveUp(player), enemies, merchant, crate, portal, this))
     player = player.nextPlayer(direction = 1)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveDown(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies,merchant,crate, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveDown(player), enemies, merchant, crate, portal, this))
     player = player.nextPlayer(direction = 0)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveLeft(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies,merchant,crate, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveLeft(player), enemies, merchant, crate, portal, this))
     player = player.nextPlayer(direction = 2)
     //notifyObservers()
     publish(new TileChanged)
   }
 
   def moveRight(): Unit = {
-    undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies,merchant,crate, this))
+    undoManager.doStep(new LevelCommand((level, player), level.moveRight(player), enemies, merchant, crate, portal, this))
     player = player.nextPlayer(direction = 3)
     //notifyObservers()
     publish(new TileChanged)
@@ -811,12 +811,12 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
     publish(new TileChanged)
   }
 
-  def playerSortInventoryPower() : Unit = {
+  def playerSortInventoryPower(): Unit = {
     player = player.nextPlayer(inventory = player.inventory.invSortPower())
     publish(new TileChanged)
   }
 
-  def playerSortInventoryValue() : Unit = {
+  def playerSortInventoryValue(): Unit = {
     player = player.nextPlayer(inventory = player.inventory.invSortValue())
     publish(new TileChanged)
   }
