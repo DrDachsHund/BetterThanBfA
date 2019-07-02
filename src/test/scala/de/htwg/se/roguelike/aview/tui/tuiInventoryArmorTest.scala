@@ -50,6 +50,8 @@ class tuiInventoryArmorTest extends WordSpec with Matchers {
       controller.player.inventory.armor.size should be(5)
     }
 
+
+
     "equip on input number of index 0" in {
       val armor = controller.player.inventory.armor(0)
       tui.state.processInputLine("1")
