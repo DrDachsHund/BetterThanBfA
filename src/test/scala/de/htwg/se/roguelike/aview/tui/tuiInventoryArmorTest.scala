@@ -59,6 +59,47 @@ class tuiInventoryArmorTest extends WordSpec with Matchers {
       tui.state.processInputLine("9999999")
       controller.player.inventory.armor.size should be(oldSize)
     }
+
+    "equip on input number of index 1" in {
+      val armor = controller.player.inventory.armor(0)
+      tui.state.processInputLine("1")
+      controller.player.chest should be(armor)
+
+      val oldSize = controller.player.inventory.armor.size
+      tui.state.processInputLine("9999999")
+      controller.player.inventory.armor.size should be(oldSize)
+    }
+
+    "equip on input number of index 2" in {
+      val armor = controller.player.inventory.armor(0)
+      tui.state.processInputLine("1")
+      controller.player.pants should be(armor)
+
+      val oldSize = controller.player.inventory.armor.size
+      tui.state.processInputLine("9999999")
+      controller.player.inventory.armor.size should be(oldSize)
+    }
+    "equip on input number of index 3" in {
+      val armor = controller.player.inventory.armor(0)
+      tui.state.processInputLine("1")
+      controller.player.boots should be(armor)
+
+      val oldSize = controller.player.inventory.armor.size
+      tui.state.processInputLine("9999999")
+      controller.player.inventory.armor.size should be(oldSize)
+    }
+    "equip on input number of index 4" in {
+      val armor = controller.player.inventory.armor(0)
+      tui.state.processInputLine("1")
+      controller.player.gloves should be(armor)
+
+      val oldSize = controller.player.inventory.armor.size
+      tui.state.processInputLine("9999999")
+      controller.player.inventory.armor.size should be(oldSize)
+    }
+
+
+
     "do nothing when state equals startScreen on input 'q'" in {
       val old = controller.strategy.updateToString
       tui.state.processInputLine("q")

@@ -20,6 +20,23 @@ class tuiMerchantTest extends WordSpec with Matchers {
       controller.player.inventory.weapons.size should be(0)
     }
 
+    "cant buy items with a wrong index" in {
+      controller.merchant = new Merchant(inventory = Vector(Potion("random")))
+      controller.buyItem(100)
+      controller.player.inventory.weapons.size should be(0)
+    }
+
+    "cant buy items that are too expensive" in {
+      var player2 = Player(gulden = 1,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
+      val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
+      val controller2 = new Controller(player = player2, enemies = enemies, level = new Level(10, 10))
+      val tui = new Tui(controller2)
+      tui.state = new tuiMerchant(controller2, tui)
+      controller2.merchant = new Merchant(inventory = Vector(Weapon("random")))
+      tui.state.processInputLine("0")
+      controller.player.inventory.weapons.size should be(0)
+    }
+
     "can buy a weapon" in {
       controller.merchant = new Merchant(inventory = Vector(Weapon("random")))
       tui.state.processInputLine("0")
@@ -43,6 +60,19 @@ class tuiMerchantTest extends WordSpec with Matchers {
       controller.merchant = new Merchant(inventory = Vector())
       controller.sellItem(0)
       controller.merchant.inventory.size should be(0)
+    }
+
+    "cant sell items with a wrong index" in {
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(), Vector(), Vector()))
+      controller.merchant = new Merchant(inventory = Vector())
+      controller.sellItem(100)
+      controller.merchant.inventory.size should be(0)
+    }
+
+    "cant sell items that are too expensive" in {
+      controller.merchant = new Merchant(gulden = 1,inventory = Vector(Weapon("random")))
+      controller.sellItem(0)
+      controller.player.inventory.weapons.size should be(0)
     }
 
     "can sell a weapon" in {
