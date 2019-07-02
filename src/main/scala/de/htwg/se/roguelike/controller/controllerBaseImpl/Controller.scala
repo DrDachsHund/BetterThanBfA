@@ -227,7 +227,6 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
         case potion: PotionInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
         case weapon: WeaponInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
         case armor: ArmorInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
-        case _ => "LOOT FEHLER !!!!"
       }
 
       var usedItem = enemyLoot.filter(_ == loot)
@@ -250,7 +249,6 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
         case potion: PotionInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
         case weapon: WeaponInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
         case armor: ArmorInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
-        case _ => "LOOT FEHLER !!!!"
       }
 
       var usedItem = enemyLoot.filter(_ == loot)
@@ -284,7 +282,6 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
         case potion: PotionInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(potions = (player.inventory.potions :+ potion)))
         case weapon: WeaponInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(weapons = (player.inventory.weapons :+ weapon)))
         case armor: ArmorInterface => player = player.nextPlayer(inventory = player.inventory.nextInventory(armor = (player.inventory.armor :+ armor)))
-        case _ => "LOOT FEHLER !!!!"
       }
 
       var usedItem = crate.inventory.filter(_ == loot)
