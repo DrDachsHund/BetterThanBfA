@@ -65,16 +65,20 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
     publish(new LevelSizeChanged(10))
   }
 
+  private def findFreeTile(): (Int, Int) = {
+    var row: Int = player.posX
+    var col: Int = player.posY
+    do {
+      col = Random.nextInt(level.map.sizeX)
+      row = Random.nextInt(level.map.sizeY)
+    } while (level.map.tile(col, row).isSet)
+    (col, row)
+  }
+
   def createCrate(): Unit = {
     if ((lvlDepth % 3) == 0) {
-      var row: Int = 0
-      var col: Int = 0
-      do {
-        col = Random.nextInt(level.map.sizeX)
-        row = Random.nextInt(level.map.sizeY)
-      } while (level.map.tile(col, row).isSet)
 
-
+      val (col, row) = findFreeTile()
       level = level.removeElement(col, row, 8)
 
       if (lvlDepth != 0) {
@@ -89,13 +93,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   }
 
   def createPortal(): Unit = {
-    var row: Int = 0
-    var col: Int = 0
-    do {
-      col = Random.nextInt(level.map.sizeX)
-      row = Random.nextInt(level.map.sizeY)
-    } while (level.map.tile(col, row).isSet)
-
+    val (col, row) = findFreeTile()
     level = level.removeElement(col, row, 1)
     if ((lvlDepth % 11) == 10) {
       portal = portal.nextPortal(posX = row, posY = col, portalType = 1)
@@ -104,13 +102,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
 
   def createMerchant(): Unit = {
     if ((lvlDepth % 5) == 0 && (lvlDepth != 0)) {
-      var row: Int = 0
-      var col: Int = 0
-      do {
-        col = Random.nextInt(level.map.sizeX)
-        row = Random.nextInt(level.map.sizeY)
-      } while (level.map.tile(col, row).isSet)
-
+      val (col, row) = findFreeTile()
       level = level.removeElement(col, row, 4)
       merchant = Merchant()
       merchant = merchant.nextMerchant(posX = row, posY = col, gulden = merchant.gulden * lvlDepth)
