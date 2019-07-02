@@ -14,11 +14,58 @@ class tuiMerchantTest extends WordSpec with Matchers {
     val tui = new Tui(controller)
     tui.state = new tuiMerchant(controller, tui)
 
-    "can buy items" in {
+    "cant buy items" in {
+      controller.merchant = new Merchant(inventory = Vector())
+      tui.state.processInputLine("0")
+      controller.player.inventory.weapons.size should be(0)
+    }
+
+    "can buy a weapon" in {
       controller.merchant = new Merchant(inventory = Vector(Weapon("random")))
       tui.state.processInputLine("0")
       controller.player.inventory.weapons.size should be(1)
     }
+
+    "can buy an armor" in {
+      controller.merchant = new Merchant(inventory = Vector(Armor("random")))
+      tui.state.processInputLine("0")
+      controller.player.inventory.weapons.size should be(1)
+    }
+
+    "can buy a potion" in {
+      controller.merchant = new Merchant(inventory = Vector(Potion("random")))
+      tui.state.processInputLine("0")
+      controller.player.inventory.weapons.size should be(1)
+    }
+
+    "cant sell items" in {
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(), Vector(), Vector()))
+      controller.merchant = new Merchant(inventory = Vector())
+      controller.sellItem(0)
+      controller.merchant.inventory.size should be(0)
+    }
+
+    "can sell a weapon" in {
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(Weapon("random")), Vector(), Vector()))
+      controller.merchant = new Merchant(inventory = Vector())
+      controller.sellItem(0)
+      controller.merchant.inventory.size should be(1)
+    }
+
+    "can sell an armor" in {
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(), Vector(), Vector(Armor("random"))))
+      controller.merchant = new Merchant(inventory = Vector())
+      controller.sellItem(0)
+      controller.merchant.inventory.size should be(1)
+    }
+
+    "can sell a potion" in {
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
+      controller.merchant = new Merchant(inventory = Vector())
+      controller.sellItem(0)
+      controller.merchant.inventory.size should be(1)
+    }
+
 
     "dont switch wrong gamestatus" in {
       val tuitest = tui.state
@@ -54,9 +101,12 @@ class tuiMerchantTest extends WordSpec with Matchers {
     }
 
     "restock merchant" in {
-      var player2 = player
-      player2 = player2.copy(gulden = 251)
-      controller.restock() should be (true)
+      var player2 = Player(gulden = 1000,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
+      val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
+      val controller2 = new Controller(player = player2, enemies = enemies, level = new Level(10, 10))
+      val tui = new Tui(controller2)
+      tui.state = new tuiMerchant(controller2, tui)
+      controller2.restock() should be (true)
     }
 
     "switch to inventory on input 'x'" in {

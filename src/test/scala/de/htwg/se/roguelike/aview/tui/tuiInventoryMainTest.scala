@@ -23,6 +23,18 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     val tui = new Tui(controller)
     tui.state = new tuiInventoryMain(controller, tui)
 
+    "should sort inventory by Power" in {
+      val old = controller.strategy.updateToString
+      controller.playerSortInventoryPower()
+      controller.strategy.updateToString should be(old)
+    }
+
+    "should sort inventory by Value" in {
+      val old = controller.strategy.updateToString
+      controller.playerSortInventoryValue()
+      controller.strategy.updateToString should be(old)
+    }
+
     "do nothing on when state equals startScreen bad input like'abc'" in {
       val old = controller.strategy.updateToString
       tui.state.processInputLine("abc")
