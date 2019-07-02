@@ -70,20 +70,20 @@ class tuiMerchantTest extends WordSpec with Matchers {
     }
 
     "cant sell items that are too expensive" in {
-      controller.merchant = new Merchant(gulden = 1,inventory = Vector(Weapon("random")))
+      controller.merchant = new Merchant(gulden = 1,inventory = Vector(Weapon("Sword")))
       controller.sellItem(0)
       controller.player.inventory.weapons.size should be(0)
     }
 
     "can sell a weapon" in {
-      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(Weapon("random")), Vector(), Vector()))
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(Weapon("Sword")), Vector(), Vector()))
       controller.merchant = new Merchant(inventory = Vector())
       controller.sellItem(0)
       controller.merchant.inventory.size should be(1)
     }
 
     "can sell an armor" in {
-      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(), Vector(), Vector(Armor("random"))))
+      controller.player = new Player(name = "Player", posX = 5, posY = 5,inventory = new Inventory(Vector(), Vector(), Vector(Armor("Helmet"))))
       controller.merchant = new Merchant(inventory = Vector())
       controller.sellItem(0)
       controller.merchant.inventory.size should be(1)
