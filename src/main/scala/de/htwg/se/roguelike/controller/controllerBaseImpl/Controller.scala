@@ -904,9 +904,9 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   }
 
   def restock(): Boolean = {
-    if (player.gulden < 250)
+    if (player.gulden < 250) {
       false
-    else {
+    } else {
       player = player.nextPlayer(gulden = player.gulden - 250)
       merchant = merchant.restock(player.lvl)
       publish(new TileChanged)

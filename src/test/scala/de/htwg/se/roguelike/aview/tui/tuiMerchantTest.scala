@@ -43,11 +43,28 @@ class tuiMerchantTest extends WordSpec with Matchers {
       tui.state.processInputLine("abc")
       controller.strategy.updateToString should be(old)
     }
+
+    "do not restock merchant" in {
+      var player2 = Player(gulden = 200,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
+      val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
+      val controller2 = new Controller(player = player2, enemies = enemies, level = new Level(10, 10))
+      val tui = new Tui(controller2)
+      tui.state = new tuiMerchant(controller2, tui)
+      controller2.restock() should be (false)
+    }
+
+    "restock merchant" in {
+      var player2 = player
+      player2 = player2.copy(gulden = 251)
+      controller.restock() should be (true)
+    }
+
     "switch to inventory on input 'x'" in {
       val tuitest = tui.state
       tui.state.processInputLine("x")
       tui.state should not be (tuitest)
     }
+
 
 
 
