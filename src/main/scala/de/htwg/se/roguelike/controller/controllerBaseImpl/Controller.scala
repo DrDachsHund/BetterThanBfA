@@ -332,44 +332,63 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
     }
   }
 
-  def enemyThinking(playerAction: String): Unit = {
+  def enemyThinking(playerAction: String): String = {
     val random = Random
     playerAction match {
       case "attack" =>
         fight.shouldBlock(player, currentEnemy) match {
           case "yes" => enemyTurn(playerAction, "block")
+            "block"
           case "maybe" =>
             random.nextInt(10) + 1 match {
               case x if 1 until 4 contains (x) => enemyTurn(playerAction, "block")
+                "block"
               case x if 4 until 6 contains (x) => {
-                if (currentEnemy.inventory.potions.size > 0)
+                if (currentEnemy.inventory.potions.size > 0) {
                   enemyTurn(playerAction, "heal")
-                else enemyTurn(playerAction, "attack")
+                  "heal"
+                } else {
+                  enemyTurn(playerAction, "attack")
+                  "attack"
+                }
               }
               case _ => enemyTurn(playerAction, "attack")
+                "attack"
             }
           case "no" => enemyTurn(playerAction, "attack")
+            "attack"
         }
       case "block" =>
         if (currentEnemy.inventory.potions.size > 0)
           random.nextInt(6) + 1 match {
             case 1 => enemyTurn(playerAction, "special")
+              "special"
             case 2 => enemyTurn(playerAction, "heal")
+              "heal"
             case 3 => enemyTurn(playerAction, "block")
+              "block"
             case _ => enemyTurn(playerAction, "attack")
+              "attack"
           }
         else {
-          if (random.nextInt(2) == 0)
+          if (random.nextInt(2) == 0) {
             enemyTurn(playerAction, "attack")
-          else
+            "attack"
+          } else {
             enemyTurn(playerAction, "special")
+            "special"
+          }
         }
       case "special" =>
         random.nextInt(10) + 1 match {
           case 1 => enemyTurn(playerAction, "special")
+            "special"
           case x if 2 until 5 contains x => enemyTurn(playerAction, "attack")
+            "attack"
           case _ => enemyTurn(playerAction, "block")
+            "block"
         }
+      case _ => "WRONG PLAYER MOVE"
     }
   }
 
@@ -377,7 +396,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
   var playerLastAction: String = ""
 
   def enemyTurn(playerAction: String, enemyAction: String): Unit = {
-    println("Enemy Thinking => " + enemyAction)
+    //println("Enemy Thinking => " + enemyAction)
 
     enemies = enemies.filterNot(_ == currentEnemy)
 
@@ -407,7 +426,7 @@ class Controller(var level: LevelInterface, var player: PlayerInterface, var ene
         }
         case "special" =>
           if (currentEnemy.mana >= 50) {
-            println("Enemy did Special Attack")
+            //println("Enemy did Special Attack")
             currentEnemy = currentEnemy.nextEnemy(mana = currentEnemy.mana - 50)
             player = fight.enemySpecial(player, currentEnemy)
             enemyLastAction = currentEnemy.name + ": special attacked with " + currentEnemy.getAttack + " damage"

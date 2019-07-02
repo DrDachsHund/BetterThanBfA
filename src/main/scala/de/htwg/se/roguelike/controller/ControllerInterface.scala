@@ -53,7 +53,7 @@ trait ControllerInterface extends Publisher {
   def block(): Unit
   def special(): Unit
   def run(): Unit
-  def enemyThinking(playerAction: String): Unit
+  def enemyThinking(playerAction: String): String
   def enemyTurn(playerAction: String, enemyAction: String): Unit
   def setGameStatus(gameStatus: GameStatus.Value): Unit
   def redo(): Unit

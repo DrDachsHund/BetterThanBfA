@@ -200,6 +200,141 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.inventory.weapons.size should be(1)
       }
 
+      "be able to let the enemy think" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0))
+
+        controller.currentEnemy = new Enemy("TestEnemy", health = 1)
+        controller.enemyThinking("") should be("WRONG PLAYER MOVE")
+        controller.enemyThinking("attack") should be("block")
+
+        controller.currentEnemy = new Enemy("TestEnemy", health = 20)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("attack") != "block") {
+          controller.currentEnemy = new Enemy("TestEnemy", health = 20)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(100)
+        controller.currentEnemy.health should be(6)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 20, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+        while (controller.enemyThinking("attack") != "heal") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 20, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+          controller.player = new Player("Test")
+        }
+        controller.currentEnemy.health should be(45 - 17) //eHealth - pAttack
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 20, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("attack") != "attack") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 20, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+
+        controller.currentEnemy = new Enemy("TestEnemy", health = 10000)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("attack") != "attack") {
+          controller.currentEnemy = new Enemy("TestEnemy", health = 10000)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+
+
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("block") != "special") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("block") != "heal") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+          controller.player = new Player("Test")
+        }
+        controller.currentEnemy.health should be(125)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("block") != "block") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(100)
+        controller.currentEnemy.health should be(100)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("block") != "attack") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(87)
+        controller.currentEnemy.health should be(100)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("block") != "attack") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(87)
+        controller.currentEnemy.health should be(100)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("block") != "special") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+        controller.currentEnemy.health should be(100)
+
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("special") != "special") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+        controller.currentEnemy.health should be(83)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("special") != "attack") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+        controller.currentEnemy.health should be(83)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("special") != "block") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(100)
+        controller.currentEnemy.health should be(83)
+
+
+
+
+
+
+
+      }
+
+
+
     }
   }
 }

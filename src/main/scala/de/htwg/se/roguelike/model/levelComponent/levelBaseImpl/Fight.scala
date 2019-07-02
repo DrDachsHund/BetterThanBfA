@@ -20,7 +20,7 @@ case class Fight() extends FightInterface {
   }
 
   def enemyAttack(player: PlayerInterface, enemy: EnemyInterface, playerAction: String): PlayerInterface = {
-    println("EnemyAttack: " + calcAttack(enemy.getAttack, player.getArmor))
+    //println("EnemyAttack: " + calcAttack(enemy.getAttack, player.getArmor))
     var player2 = player
     if (playerAction != "block") player2 = player.nextPlayer(health = player.health - calcAttack(enemy.getAttack, player.getArmor))
     else player2 = player.nextPlayer(health = player.health - calcAttack(enemy.getAttack, player.getArmor + player.rightHand.block + player.leftHand.block * 2))
@@ -40,12 +40,12 @@ case class Fight() extends FightInterface {
   }
 
   def enemySpecial(player: PlayerInterface, currentEnemy: EnemyInterface): PlayerInterface = {
-    println("EnemySpecial: " + currentEnemy.getAttack.toInt)
+    //println("EnemySpecial: " + currentEnemy.getAttack.toInt)
     player.nextPlayer(health = player.health - currentEnemy.getAttack.toInt)
   }
 
   def playerSpecial(player: PlayerInterface, currentEnemy: EnemyInterface): EnemyInterface = {
-    println("PlayerSpecial: " + player.getAttack.toInt)
+    //println("PlayerSpecial: " + player.getAttack.toInt)
     currentEnemy.nextEnemy(health = currentEnemy.health - player.getAttack.toInt)
   }
 
