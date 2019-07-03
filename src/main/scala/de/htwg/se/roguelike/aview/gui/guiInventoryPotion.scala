@@ -3,6 +3,7 @@ package de.htwg.se.roguelike.aview.gui
 import java.awt.image.BufferedImage
 import java.awt.{Color, Font, Graphics2D}
 
+import de.htwg.se.roguelike.controller.ControllerInterface
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model.levelComponent.PotionInterface
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.Potion
@@ -16,7 +17,7 @@ import javax.swing.ImageIcon
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{Button, Dimension, FlowPanel, ListView, Panel, ScrollPane}
 
-case class guiInventoryPotion(controller: Controller, gui: SwingGui) extends StateGui {
+case class guiInventoryPotion(controller: ControllerInterface, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
     input match {
       case "x" => controller.setGameStatus(GameStatus.INVENTORY)

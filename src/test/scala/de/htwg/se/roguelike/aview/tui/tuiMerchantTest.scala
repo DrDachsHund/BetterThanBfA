@@ -2,7 +2,6 @@ package de.htwg.se.roguelike.aview.tui
 
 import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
-import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import org.scalatest.{Matchers, WordSpec}
 
@@ -10,7 +9,8 @@ class tuiMerchantTest extends WordSpec with Matchers {
   "A Rogue-Like Tui with state tuiInventoryPotion" should {
     val player = Player(gulden = 999999999,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val controller = new Controller(player = player, level = new Level(10, 10))
+    controller.enemies = enemies
     val tui = new Tui(controller)
     tui.state = new tuiMerchant(controller, tui)
 
@@ -29,7 +29,8 @@ class tuiMerchantTest extends WordSpec with Matchers {
     "cant buy items that are too expensive" in {
       var player2 = Player(gulden = 1,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller2 = new Controller(player = player2, enemies = enemies, level = new Level(10, 10))
+      val controller2 = new Controller(player = player2, level = new Level(10, 10))
+      controller2.enemies = enemies
       val tui = new Tui(controller2)
       tui.state = new tuiMerchant(controller2, tui)
       controller2.merchant = new Merchant(inventory = Vector(Weapon("random")))
@@ -124,7 +125,8 @@ class tuiMerchantTest extends WordSpec with Matchers {
     "do not restock merchant" in {
       var player2 = Player(gulden = 200,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller2 = new Controller(player = player2, enemies = enemies, level = new Level(10, 10))
+      val controller2 = new Controller(player = player2, level = new Level(10, 10))
+      controller2.enemies = enemies
       val tui = new Tui(controller2)
       tui.state = new tuiMerchant(controller2, tui)
       controller2.restock() should be (false)
@@ -133,7 +135,8 @@ class tuiMerchantTest extends WordSpec with Matchers {
     "restock merchant" in {
       var player2 = Player(gulden = 1000,health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller2 = new Controller(player = player2, enemies = enemies, level = new Level(10, 10))
+      val controller2 = new Controller(player = player2, level = new Level(10, 10))
+      controller2.enemies = enemies
       val tui = new Tui(controller2)
       tui.state = new tuiMerchant(controller2, tui)
       controller2.restock() should be (true)

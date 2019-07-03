@@ -19,7 +19,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
       rightHand = Weapon("Sword"),
       leftHand = Weapon("Sword"))
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val controller = new Controller(player = player, level = new Level(10, 10))
+    controller.enemies = enemies
     val tui = new Tui(controller)
     tui.state = new tuiInventoryMain(controller, tui)
 
@@ -92,7 +93,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to Potions on 1" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state
@@ -102,7 +104,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to Weapon on 2" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state
@@ -112,7 +115,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to Armor on 3" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state
@@ -123,7 +127,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to fight" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state
@@ -134,7 +139,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to Level" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state
@@ -145,7 +151,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to inventoryMain" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state
@@ -156,7 +163,8 @@ class tuiInventoryMainTest extends WordSpec with Matchers {
     "switch to controllerInvenmtoryGameStatus on x" in {
       val player = Player(name = "Player", posX = 5, posY = 5)
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiInventoryMain(controller, tui)
       val tuitest = tui.state

@@ -10,7 +10,8 @@ class tuiFightTest extends WordSpec with Matchers {
   "A Rogue-Like Tui with State tuiFight" should {
     val player = Player(name = "Player", posX = 5, posY = 5)
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val controller = new Controller(player = player, level = new Level(10, 10))
+    controller.enemies = enemies
     val tui = new Tui(controller)
     tui.state = new tuiFight(controller,tui)
 
@@ -41,7 +42,8 @@ class tuiFightTest extends WordSpec with Matchers {
     "do a block with input '2'" in {
       val player1 = Player(name = "Player", posX = 5, posY = 5)
       val enemies1 = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller1 = new Controller(player = player1, enemies = enemies1, level = new Level(10, 10))
+      val controller1 = new Controller(player = player1, level = new Level(10, 10))
+      controller1.enemies = enemies
       val tui1 = new Tui(controller1)
       tui1.state = new tuiFight(controller1,tui1)
 
@@ -59,7 +61,8 @@ class tuiFightTest extends WordSpec with Matchers {
     "do a special with input '3'" in {
       val player2 = Player(name = "Player", posX = 5, posY = 5)
       val enemies2 = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller2 = new Controller(player = player2, enemies = enemies2, level = new Level(10, 10))
+      val controller2 = new Controller(player = player2, level = new Level(10, 10))
+      controller2.enemies = enemies
       val tui2 = new Tui(controller2)
       tui2.state = new tuiFight(controller2,tui2)
 
@@ -71,7 +74,8 @@ class tuiFightTest extends WordSpec with Matchers {
     "cant do a special with input '3' and less than 25 Mana" in {
       var player2 = Player(name = "Player", posX = 5, posY = 5)
       val enemies2 = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller2 = new Controller(player = player2, enemies = enemies2, level = new Level(10, 10))
+      val controller2 = new Controller(player = player2, level = new Level(10, 10))
+      controller2.enemies = enemies
       val tui2 = new Tui(controller2)
       tui2.state = new tuiFight(controller2,tui2)
 
@@ -96,7 +100,8 @@ class tuiFightTest extends WordSpec with Matchers {
     }
 
     "switch to GameOver" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiFight(controller3,tui3)
       val tui3Test = tui3.state
@@ -105,7 +110,8 @@ class tuiFightTest extends WordSpec with Matchers {
     }
 
     "switch to PlayerLevelUP" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiFight(controller3,tui3)
       val tui3Test = tui3.state
@@ -114,7 +120,8 @@ class tuiFightTest extends WordSpec with Matchers {
     }
 
     "switch to LootEnemy" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiFight(controller3,tui3)
       val tui3Test = tui3.state

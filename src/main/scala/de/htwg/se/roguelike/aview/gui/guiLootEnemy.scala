@@ -4,7 +4,7 @@ import java.awt.{Color, Font, Graphics2D}
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.aview.tui.State
-import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, PotionInterface, WeaponInterface}
@@ -14,7 +14,7 @@ import javax.swing.{BoxLayout, ImageIcon, ListSelectionModel}
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{BorderPanel, BoxPanel, Button, Component, Dimension, FlowPanel, ListView, Orientation, Panel, ScrollBar, ScrollPane}
 
-case class guiLootEnemy(controller: Controller, gui: SwingGui) extends StateGui {
+case class guiLootEnemy(controller: ControllerInterface, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
     input match {
       case "q" =>

@@ -13,7 +13,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "do nothing when input 'q'" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val old = controller.strategy.updateToString
@@ -24,7 +25,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "do nothing on wrong input like'abc'" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val old = controller.strategy.updateToString
@@ -35,7 +37,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "lvl up health on 1" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val tuitest = tui.state
@@ -48,7 +51,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "lvl up health on 2" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val tuitest = tui.state
@@ -61,7 +65,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "lvl up health on 3" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val tuitest = tui.state
@@ -73,7 +78,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "when wrong game status" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val tuitest = tui.state
@@ -84,7 +90,8 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
     "when same game status" in {
       val player = Player(health = 75, name = "Player", posX = 5, posY = 5, inventory = new Inventory(Vector(), Vector(Potion("SmallHeal")), Vector()))
       val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-      val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller = new Controller(player = player, level = new Level(10, 10))
+      controller.enemies = enemies
       val tui = new Tui(controller)
       tui.state = new tuiPlayerLevelUp(controller, tui)
       val tuitest = tui.state

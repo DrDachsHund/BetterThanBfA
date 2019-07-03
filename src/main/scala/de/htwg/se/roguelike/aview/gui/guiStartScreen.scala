@@ -2,13 +2,13 @@ package de.htwg.se.roguelike.aview.gui
 
 import java.awt.{Color, Font, Graphics2D}
 
-import de.htwg.se.roguelike.controller.GameStatus
+import de.htwg.se.roguelike.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FileChooser, FlowPanel, Panel}
 
-case class guiStartScreen(controller: Controller, gui: SwingGui) extends StateGui {
+case class guiStartScreen(controller: ControllerInterface, gui: SwingGui) extends StateGui {
   override def processInputLine(input: String): Unit = {
     input match {
       case "q" =>

@@ -11,7 +11,8 @@ class tuiLevelTest extends WordSpec with Matchers{
   "A Rogue-Like Tui with state tuiLevel" should {
     val player = Player(name = "Player", posX = 5, posY = 5)
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val controller = new Controller(player = player, level = new Level(10, 10))
+    controller.enemies = enemies
     val tui = new Tui(controller)
     tui.state = new tuiLevel(controller, tui)
 
@@ -84,7 +85,8 @@ class tuiLevelTest extends WordSpec with Matchers{
 
 
     "switch to levelstate" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiLevel(controller3,tui3)
       val tui3Test = tui3.state
@@ -93,7 +95,8 @@ class tuiLevelTest extends WordSpec with Matchers{
     }
 
     "switch to fight" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       val tui3Test = tui3.state
       tui3.state = new tuiLevel(controller3,tui3)
@@ -102,7 +105,8 @@ class tuiLevelTest extends WordSpec with Matchers{
     }
 
     "switch to merchant" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       val tui3Test = tui3.state
       tui3.state = new tuiLevel(controller3,tui3)
@@ -111,7 +115,8 @@ class tuiLevelTest extends WordSpec with Matchers{
     }
 
     "switch to Crate" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       val tui3Test = tui3.state
       tui3.state = new tuiLevel(controller3,tui3)
@@ -121,7 +126,8 @@ class tuiLevelTest extends WordSpec with Matchers{
 
 
     "should not change to wrong game status" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiLevel(controller3,tui3)
       val tui3Test = tui3.state

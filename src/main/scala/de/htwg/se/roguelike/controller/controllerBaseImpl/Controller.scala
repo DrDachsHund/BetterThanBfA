@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
+import com.google.inject.Inject
 import de.htwg.se.roguelike.controller._
 import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
@@ -7,11 +8,13 @@ import de.htwg.se.roguelike.util.UndoManager
 
 import scala.util.Random
 
-class Controller(var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends ControllerInterface { //with Observer
+class Controller @Inject() (var level: LevelInterface,
+                            var player: PlayerInterface) extends ControllerInterface { //with Observer
 
   val fight: FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
+  var enemies: Vector[EnemyInterface] = Vector()
   var portal: PortalInterface = Portal()
   var crate: CrateInterface = Crate(inventory = Vector(Sword(name = "Starting Weapon", value = 10, usable = false
     , dmg = 10, block = 10, oneHanded = true, rarity = "Common")))

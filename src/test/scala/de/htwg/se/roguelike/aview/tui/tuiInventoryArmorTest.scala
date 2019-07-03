@@ -16,7 +16,8 @@ class tuiInventoryArmorTest extends WordSpec with Matchers {
       boots = Armor("Boots"),
       gloves = Armor("Gloves"))
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val controller = new Controller(player = player, level = new Level(10, 10))
+    controller.enemies = enemies
     val tui = new Tui(controller)
     tui.state = new tuiInventoryArmor(controller, tui)
 
@@ -119,8 +120,9 @@ class tuiInventoryArmorTest extends WordSpec with Matchers {
     }
 
     "switch to InventoryArmor" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
       val tui3 = new Tui(controller3)
+      controller3.enemies = enemies
       tui3.state = new tuiInventoryArmor(controller3,tui3)
       val tui3Test = tui3.state
       controller3.setGameStatus(GameStatus.INVENTORYARMOR)

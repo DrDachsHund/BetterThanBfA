@@ -16,11 +16,13 @@ class ControllerTest extends WordSpec with Matchers {
       }
 
       "be able to see interactions with enemies" in {
+        var enemies = Vector(new Enemy("TestEnemy", posX = 0, posY = 0))
         val controller: ControllerInterface = new Controller(
           level = new Level(9, 16),
           player = new Player("Test",
             posX = 0,
-            posY = 0), enemies = Vector(new Enemy("TestEnemy", posX = 0, posY = 0)))
+            posY = 0))
+        controller.enemies = enemies
         controller.interaction()
         controller.currentEnemy should be(new Enemy("TestEnemy", posX = 0, posY = 0))
         controller.gameStatus should be(GameStatus.FIGHT)
@@ -94,16 +96,17 @@ class ControllerTest extends WordSpec with Matchers {
       }
 
       "be able to let the Player lootAll() Enemy Items" in {
+        var enemies = Vector(new Enemy(name = "TestEnemy",
+          inventory = new Inventory(Vector(Weapon("random")),
+            Vector(Potion("random")),
+            Vector(Armor("random")))))
         val controller: ControllerInterface = new Controller(
           level = new Level(9, 16),
           player = new Player("Test",
             posX = 0,
             posY = 0,
-            inventory = new Inventory(Vector(), Vector(), Vector())),
-          enemies = Vector(new Enemy(name = "TestEnemy",
-            inventory = new Inventory(Vector(Weapon("random")),
-              Vector(Potion("random")),
-              Vector(Armor("random"))))))
+            inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.enemies = enemies
 
         controller.currentEnemy = controller.enemies(0)
         controller.enemyLoot = controller.currentEnemy.inventory.weapons
@@ -120,16 +123,17 @@ class ControllerTest extends WordSpec with Matchers {
       }
 
       "be able to let the Player loot single Enemy Items" in {
+        var enemies = Vector(new Enemy(name = "TestEnemy",
+          inventory = new Inventory(Vector(Weapon("random")),
+            Vector(Potion("random")),
+            Vector(Armor("random")))))
         val controller: ControllerInterface = new Controller(
           level = new Level(9, 16),
           player = new Player("Test",
             posX = 0,
             posY = 0,
-            inventory = new Inventory(Vector(), Vector(), Vector())),
-          enemies = Vector(new Enemy(name = "TestEnemy",
-            inventory = new Inventory(Vector(Weapon("random")),
-              Vector(Potion("random")),
-              Vector(Armor("random"))))))
+            inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.enemies = enemies
 
         controller.currentEnemy = controller.enemies(0)
         controller.enemyLoot = controller.currentEnemy.inventory.weapons

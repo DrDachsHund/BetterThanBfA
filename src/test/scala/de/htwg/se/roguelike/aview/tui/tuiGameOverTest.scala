@@ -10,7 +10,8 @@ class tuiGameOverTest extends WordSpec with Matchers {
   "A Rogue-Like Tui with state tuiLevel" should {
     val player = Player(name = "Player", posX = 5, posY = 5)
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
-    val controller = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+    val controller = new Controller(player = player, level = new Level(10, 10))
+    controller.enemies = enemies
     val tui = new Tui(controller)
     tui.state = new tuiGameOver(controller, tui)
 
@@ -25,7 +26,8 @@ class tuiGameOverTest extends WordSpec with Matchers {
       controller.strategy.updateToString should be(old)
     }
     "create a Random Level when state equals startScreen on input 'n'" in {
-      val controller2 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller2 = new Controller(player = player, level = new Level(10, 10))
+      controller2.enemies = enemies
       val tui2 = new Tui(controller2)
       tui2.state = new tuiGameOver(controller2,tui2)
       tui2.state.processInputLine("n")
@@ -33,7 +35,8 @@ class tuiGameOverTest extends WordSpec with Matchers {
     }
 
     "switch to Crate" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       val tui3Test = tui3.state
       tui3.state = new tuiGameOver(controller3,tui3)
@@ -42,7 +45,8 @@ class tuiGameOverTest extends WordSpec with Matchers {
     }
 
     "switch to GameOver" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiGameOver(controller3,tui3)
       val tui3Test = tui3.state
@@ -51,7 +55,8 @@ class tuiGameOverTest extends WordSpec with Matchers {
     }
 
     "should not change to wrong game status" in {
-      val controller3 = new Controller(player = player, enemies = enemies, level = new Level(10, 10))
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
       val tui3 = new Tui(controller3)
       tui3.state = new tuiGameOver(controller3,tui3)
       val tui3Test = tui3.state
