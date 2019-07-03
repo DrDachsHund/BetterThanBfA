@@ -1,17 +1,17 @@
-package de.htwg.se.roguelike.model.levelComponent.levelBaseImpl
+package de.htwg.se.roguelike.model.levelComponent.levelAdvancedImpl
 
-import com.google.inject.Inject
 import de.htwg.se.roguelike.model.levelComponent._
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Inventory, Weapon}
 
-case class Player (name: String,
-                  health: Int = 100,
-                  maxHealth: Int = 100,
-                  mana: Int = 100,
-                  maxMana: Int = 100,
-                  attack: Int = 10,
-                  lvl: Int = 1,
+case class PlayerDI (name: String,
+                  health: Int = 1000,
+                  maxHealth: Int = 1000,
+                  mana: Int = 1000,
+                  maxMana: Int = 1000,
+                  attack: Int = 100,
+                  lvl: Int = 10,
                   exp: Int = 0,
-                  maxExp: Int = 100,
+                  maxExp: Int = 1000,
                   posX: Int = 0, posY: Int = 0,
                   inventory: InventoryInterface = new Inventory,
                   helmet: ArmorInterface = Armor("noHelmet"),
@@ -30,7 +30,7 @@ case class Player (name: String,
                  ) extends PlayerInterface {
 
   //muss dan in controller zu Gamestatus levelup wechseln um dann auszuwählen was geändert werden will
-  def lvlUp(collectedExp: Int): Player = {
+  def lvlUp(collectedExp: Int): PlayerDI = {
     var newExp = exp + collectedExp
     var newMaxExp = 0
     var lvlUp = false
@@ -43,11 +43,11 @@ case class Player (name: String,
     this.copy(exp = newExp)
   }
 
-  def lvlUpHealth: Player = this.copy(maxHealth = maxHealth + 10, health = maxHealth + 10)
+  def lvlUpHealth: PlayerDI = this.copy(maxHealth = maxHealth + 10, health = maxHealth + 10)
 
-  def lvlUpMana: Player = this.copy(maxMana = maxMana + 10, mana = maxMana + 10)
+  def lvlUpMana: PlayerDI = this.copy(maxMana = maxMana + 10, mana = maxMana + 10)
 
-  def lvlUpAttack: Player = this.copy(attack = attack + 10)
+  def lvlUpAttack: PlayerDI = this.copy(attack = attack + 10)
 
   def getScore(levelDepth: Int): Int = {
     println("Um zu schauen wo minus herkommt!!!!!!!!!!!!!!")

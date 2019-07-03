@@ -9,10 +9,12 @@ import de.htwg.se.roguelike.util.UndoManager
 
 import scala.util.Random
 
-class Controller @Inject() (var level: LevelInterface, var player: PlayerInterface, var enemies: Vector[EnemyInterface] = Vector()) extends ControllerInterface { //with Observer
+class Controller @Inject() (var level: LevelInterface = new Level(9,16),
+                  var player: PlayerInterface = Player(name = "Player", posX = 5, posY = 5)) extends ControllerInterface { //with Observer
+
 
   val injector = Guice.createInjector(new RogueLikeModule)
-
+  var enemies: Vector[EnemyInterface] = Vector()
   val fight:FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager

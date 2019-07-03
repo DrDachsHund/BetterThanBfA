@@ -1,4 +1,4 @@
-package de.htwg.se.roguelike.aview.tui
+/*package de.htwg.se.roguelike.aview.tui
 
 import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
@@ -95,3 +95,4 @@ class tuiPlayerLevelUpTest extends WordSpec with Matchers {
   }
 
 }
+*/
