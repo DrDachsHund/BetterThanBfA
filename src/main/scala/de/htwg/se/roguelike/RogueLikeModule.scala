@@ -3,6 +3,7 @@ package de.htwg.se.roguelike
 import com.google.inject.AbstractModule
 import de.htwg.se.roguelike.controller.ControllerInterface
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
+import de.htwg.se.roguelike.model.fileIOComponent.FileIOInterface
 import de.htwg.se.roguelike.model.levelComponent.{EnemyInterface, LevelInterface, PlayerInterface}
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Enemy, Level, LevelCreator, Player}
 import net.codingwell.scalaguice.ScalaModule
@@ -17,6 +18,8 @@ class RogueLikeModule extends AbstractModule with ScalaModule {
     bind[Player].toInstance(new Player(name = "Player", posX = 5, posY = 5))
     bind[LevelInterface].to[Level]
     bind[Level].toInstance(new Level(9,16))
+
+    bind[FileIOInterface].to[model.fileIOComponent.fileIoJsonImpl.FileIO]
   }
 
 }

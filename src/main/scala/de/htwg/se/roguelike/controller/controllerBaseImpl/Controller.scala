@@ -1,9 +1,12 @@
 package de.htwg.se.roguelike.controller.controllerBaseImpl
 
-import com.google.inject.Inject
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.roguelike.RogueLikeModule
 import de.htwg.se.roguelike.controller._
+import de.htwg.se.roguelike.model.fileIOComponent.FileIOInterface
 import de.htwg.se.roguelike.model.levelComponent._
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.roguelike.util.UndoManager
 
 import scala.util.Random
@@ -21,6 +24,8 @@ class Controller @Inject() (var level: LevelInterface,
   var merchant: MerchantInterface = Merchant()
   var lvlDepth = 0
   var bossfight: Boolean = false
+  val injector = Guice.createInjector(new RogueLikeModule)
+  val fileIo = injector.instance[FileIOInterface]
 
   var SCALE: Int = 3
 
@@ -923,6 +928,17 @@ class Controller @Inject() (var level: LevelInterface,
       publish(new TileChanged)
       true
     }
+  }
+
+  def save: Unit = {
+    fileIo.save(player)
+    publish(new TileChanged)
+  }
+
+  def load: Unit = {
+    player = fileIo.load
+    createRandomLevel()
+    publish(new TileChanged)
   }
 
 }

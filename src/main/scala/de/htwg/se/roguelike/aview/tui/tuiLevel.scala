@@ -14,6 +14,8 @@ case class tuiLevel(controller: ControllerInterface, tui: Tui) extends State {
       case "d" => controller.moveRight()
       case "z" => controller.undo()
       case "y" => controller.redo()
+      case "f" => controller.save()
+      case "l" => controller.load()
       case "i" =>
         controller.setGameStatus(GameStatus.INVENTORY)
         controller.inventoryGameStatus = GameStatus.LEVEL

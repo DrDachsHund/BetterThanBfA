@@ -74,6 +74,8 @@ trait ControllerInterface extends Publisher {
   def sellItem(index: Int): Unit
   def buyItem(index: Int): Unit
   def restock(): Boolean
+  def load(): Unit
+  def save(): Unit
 }
 
 
