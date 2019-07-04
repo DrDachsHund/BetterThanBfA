@@ -14,7 +14,7 @@ class FileIO extends FileIOInterface {
 
   override def load: PlayerInterface = {
     var player: PlayerInterface = null
-    val file = scala.xml.XML.loadFile("player.xml")
+    val file = scala.xml.XML.loadFile("./player.xml")
     val injector = Guice.createInjector(new RogueLikeModule)
 
 
@@ -31,7 +31,7 @@ class FileIO extends FileIOInterface {
   def save(player: PlayerInterface): Unit = saveString(player)
 
   def saveXML(player: PlayerInterface): Unit = {
-    scala.xml.XML.save("player.xml", playerToXml(player))
+    scala.xml.XML.save("./player.xml", playerToXml(player))
   }
 
   def saveString(player: PlayerInterface): Unit = {
