@@ -84,6 +84,8 @@ class tuiLevelTest extends WordSpec with Matchers{
     }
 
 
+
+
     "switch to levelstate" in {
       val controller3 = new Controller(player = player, level = new Level(10, 10))
       controller3.enemies = enemies
