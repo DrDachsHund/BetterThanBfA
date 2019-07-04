@@ -932,11 +932,13 @@ class Controller @Inject() (var level: LevelInterface,
 
   def save: Unit = {
     fileIo.save(player)
+    println("Save Game")
     publish(new TileChanged)
   }
 
   def load: Unit = {
     player = fileIo.load
+    println("Save Game")
     createRandomLevel()
     publish(new TileChanged)
   }

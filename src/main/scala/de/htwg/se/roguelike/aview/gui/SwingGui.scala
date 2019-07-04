@@ -127,9 +127,8 @@ private class GMenuBar(controller: ControllerInterface) extends MenuBar {
       contents += new MenuItem(Action("1792x1008") {controller.setSCALE(7)})
       contents += new MenuItem(Action("2048x1152") {controller.setSCALE(8)})
     }
-    contents += new MenuItem(Action("OPTIONS") {})
-    contents += new MenuItem(Action("LUL") {})
-    contents += new MenuItem(Action("W") {})
+    contents += new MenuItem(Action("Save Game") {controller.save()})
+    contents += new MenuItem(Action("Load Game") {controller.load()})
   }
   /*
   contents += new MenuItem(Action("Inventory") {
