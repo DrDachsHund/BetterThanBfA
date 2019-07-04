@@ -33,6 +33,7 @@ case class guiFight(controller: ControllerInterface, gui: SwingGui) extends Stat
     e match {
       case GameStatus.LEVEL => gui.state = new guiLevel(controller, gui)
       case GameStatus.FIGHT => gui.state = this
+      case GameStatus.BOSSFIGHT => gui.state = this
       case GameStatus.FIGHTSTATUS => gui.state = this
       case GameStatus.INVENTORY => gui.state = new guiInventoryMain(controller, gui)
       case GameStatus.GAMEOVER => gui.state = new guiGameOver(controller, gui)
