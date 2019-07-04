@@ -1,5 +1,6 @@
 package de.htwg.se.roguelike.controller
 
+import de.htwg.se.roguelike.aview.tui.{Tui, tuiFight}
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import org.scalatest.{Matchers, WordSpec}
@@ -502,6 +503,15 @@ class ControllerTest extends WordSpec with Matchers {
         controller.inventoryAsOneVector().size should be(test - 1)
 
 
+      }
+
+
+      "Controller has a Startscreen with String representation" in {
+        var enemies = Vector(new Enemy("TestEnemy", posX = 0, posY = 0))
+        val controller3 = new Controller(player = new Player("Test"), level = new Level(10, 10))
+        controller3.enemies = enemies
+        controller3.setGameStatus(GameStatus.STARTSCREEN)
+        controller3.strategy.updateToString should be ("Rogue-Like The Game\nPress 'n' to start the game")
       }
 
     }

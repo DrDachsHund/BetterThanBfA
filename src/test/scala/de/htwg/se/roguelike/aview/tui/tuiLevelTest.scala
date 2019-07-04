@@ -77,7 +77,9 @@ class tuiLevelTest extends WordSpec with Matchers{
       controller.strategy.updateToString should be(old)
     }
 
+
     "create a Red Portal at lvlDepth % 11" in {
+      controller.setGameStatus(GameStatus.LEVEL)
       val old = controller.strategy.updateToString
       controller.lvlDepth = 10
       controller.createPortal()
@@ -85,12 +87,12 @@ class tuiLevelTest extends WordSpec with Matchers{
     }
 
     "create a Merchant every 5 Levels" in {
+      controller.setGameStatus(GameStatus.LEVEL)
       val old = controller.strategy.updateToString
       controller.lvlDepth = 5
       controller.createMerchant()
       controller.strategy.updateToString should not be(old)
     }
-
 
     "switch to state Inventory when pressing 'i'" in {
       val tuiTest = tui.state
@@ -148,6 +150,16 @@ class tuiLevelTest extends WordSpec with Matchers{
       val tui3Test = tui3.state
       controller3.setGameStatus(GameStatus.GAMEOVER)
       tui3.state should be(tui3Test)
+    }
+
+    "switch to BossFight" in {
+      val controller3 = new Controller(player = player, level = new Level(10, 10))
+      controller3.enemies = enemies
+      val tui3 = new Tui(controller3)
+      tui3.state = new tuiLevel(controller3,tui3)
+      val tui3Test = tui3.state
+      controller3.setGameStatus(GameStatus.BOSSFIGHT)
+      tui3.state should not equal (tui3Test)
     }
   }
 

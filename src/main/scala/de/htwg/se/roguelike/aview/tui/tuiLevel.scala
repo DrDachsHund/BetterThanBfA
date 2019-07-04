@@ -30,6 +30,7 @@ case class tuiLevel(controller: ControllerInterface, tui: Tui) extends State {
     e match {
       case GameStatus.LEVEL => tui.state = this
       case GameStatus.FIGHT => tui.state = new tuiFight(controller, tui)
+      case GameStatus.BOSSFIGHT => tui.state = new tuiFight(controller, tui)
       case GameStatus.INVENTORY => tui.state = new tuiInventoryMain(controller, tui)
       case GameStatus.MERCHANT => tui.state = new tuiMerchant(controller, tui)
       case GameStatus.CRATE => tui.state = new tuiCrate(controller, tui)

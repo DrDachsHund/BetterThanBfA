@@ -144,6 +144,7 @@ class tuiFightTest extends WordSpec with Matchers {
       tui3.state should not equal tui3Test
     }
 
+
   }
 
 }
