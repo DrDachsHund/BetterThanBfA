@@ -25,6 +25,7 @@ object RogueLike {
   controller.publish(new TileChanged)
 
 
+
   def main(args: Array[String]): Unit = {
     var input: String = ""
     if (args.length != 0) {
