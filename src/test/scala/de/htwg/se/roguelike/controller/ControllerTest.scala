@@ -248,7 +248,6 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.health should be(85)
 
 
-
         controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
         controller.player = new Player("Test")
         while (controller.enemyThinking("block") != "special") {
@@ -311,6 +310,14 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.health should be(85)
         controller.currentEnemy.health should be(83)
 
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, mana = 0, maxMana = 0)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("special") != "special") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1, mana = 0, maxMana = 0)
+          controller.player = new Player("Test")
+        }
+        controller.currentEnemy.mana should be(0)
+
         controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
         controller.player = new Player("Test")
         while (controller.enemyThinking("special") != "attack") {
@@ -320,6 +327,18 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.health should be(85)
         controller.currentEnemy.health should be(83)
 
+        controller.enemies = Vector(new Enemy("TEST"), new Enemy("TEST"), new Enemy("TEST"), new Enemy("TEST"), new Enemy("TEST"))
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 1, lvl = 1)
+        controller.player = new Player("Test", exp = 1000)
+        while (controller.enemyThinking("special") != "attack") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 1, lvl = 1)
+          controller.player = new Player("Test", exp = 1000)
+        }
+        controller.portal.posX should not be (-1)
+        controller.portal.posY should not be (-1)
+        controller.gameStatus should be(GameStatus.PLAYERLEVELUP)
+
+
         controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
         controller.player = new Player("Test")
         while (controller.enemyThinking("special") != "block") {
@@ -328,9 +347,148 @@ class ControllerTest extends WordSpec with Matchers {
         }
         controller.player.health should be(100)
         controller.currentEnemy.health should be(83)
+
+        controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+        controller.player = new Player("Test", health = 0)
+        while (controller.enemyThinking("special") != "attack") {
+          controller.currentEnemy = new Enemy(name = "TestEnemy", health = 100, lvl = 1)
+          controller.player = new Player("Test", health = 0)
+        }
+        controller.playerLastAction should be("")
+        controller.enemyLastAction should be("")
+        controller.bossfight should be(false)
+        controller.gameStatus should be(GameStatus.GAMEOVER)
+
       }
 
+      "be able to create different portel in level depth 11 " in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0))
+        controller.lvlDepth = 11
+        controller.createPortal()
+        controller.portal.portalType should be(0)
+      }
 
+      "be able to set the merchant properly" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0))
+        controller.lvlDepth = 0
+        controller.createMerchant()
+        controller.merchant.posX should be(-1)
+        controller.merchant.posY should be(-1)
+      }
+
+      "be able to give a string from lootCrate" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0))
+        controller.crate = new Crate(inventory = Vector(Weapon("random")))
+        controller.setGameStatus(GameStatus.CRATE)
+        controller.strategy.updateToString should not be ("")
+
+        controller.enemyLoot = Vector(Weapon("random"))
+        controller.setGameStatus(GameStatus.LOOTENEMY)
+        controller.strategy.updateToString should not be ("")
+      }
+
+      "be able to see if player has potion" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0, inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.usePotion(1)
+        controller.player.inventory.potions.size should be(0)
+        controller.player = new Player("Test",
+          posX = 0,
+          posY = 0, inventory = new Inventory(Vector(), Vector(Potion("random")), Vector()))
+        controller.usePotion(-1)
+        controller.player.inventory.potions.size should be(1)
+      }
+
+      "be able to se if player has armor" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0, inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.equipArmor(1)
+        controller.player.inventory.armor.size should be(0)
+        controller.player = new Player("Test",
+          posX = 0,
+          posY = 0, inventory = new Inventory(Vector(), Vector(), Vector(Armor("Helmet"))),
+          helmet = Armor("Helmet"))
+        controller.equipArmor(1)
+        controller.player.inventory.armor.size should be(1)
+      }
+
+      "be able to detect when player weres no armor or weapon" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0, inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.unEquipHelmet()
+        controller.unEquipChest()
+        controller.unEquipBoots()
+        controller.unEquipPants()
+        controller.unEquipGloves()
+        controller.unEquipLeftHand()
+        controller.unEquipRightHand()
+        controller.player.inventory.weapons.size should be(0)
+        controller.player.inventory.armor.size should be(0)
+      }
+
+      "be able to only equip weapon when something to equip" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0, inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.equipWeapon(0, 0)
+        controller.player.inventory.weapons.size should be(0)
+
+        controller.player = new Player("Test",
+          posX = 0,
+          posY = 0, inventory = new Inventory(Vector(Weapon("random"), Weapon("random"), Weapon("random"), Weapon("random")), Vector(), Vector()))
+        controller.equipWeapon(0, 1)
+        controller.equipWeapon(0, 1)
+        controller.player.inventory.weapons.size should be(3)
+        controller.equipWeapon(1, 1)
+        controller.equipWeapon(1, 1)
+        controller.player.inventory.weapons.size should be(2)
+        controller.equipWeapon(0, -1)
+        controller.player.inventory.weapons.size should be(2)
+
+      }
+
+      "be able to sell items to the merchant when he has enough money" in {
+        val controller: ControllerInterface = new Controller(
+          level = new Level(9, 16),
+          player = new Player("Test",
+            posX = 0,
+            posY = 0, inventory = new Inventory(Vector(Weapon("Sword"), Weapon("Sword")), Vector(Potion("random")), Vector(Armor("random")))))
+
+        controller.merchant = new Merchant(gulden = 0, inventory = Vector(Weapon("Sword"), Potion("random"), Armor("random")))
+        controller.sellItem(0)
+        controller.player.inventory.weapons.size should be(2)
+        controller.sellItem(-1)
+        controller.player.inventory.weapons.size should be(2)
+        controller.merchant = controller.merchant.nextMerchant(gulden = 10000)
+        val test = controller.inventoryAsOneVector().size
+        controller.sellItem(0)
+        controller.inventoryAsOneVector().size should be(test - 1)
+
+
+      }
 
     }
   }

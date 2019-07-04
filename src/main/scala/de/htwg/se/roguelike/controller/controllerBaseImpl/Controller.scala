@@ -350,20 +350,20 @@ class Controller @Inject() (var level: LevelInterface,
           case "yes" => enemyTurn(playerAction, "block")
             "block"
           case "maybe" =>
-            random.nextInt(10) + 1 match {
-              case x if 1 until 4 contains (x) => enemyTurn(playerAction, "block")
-                "block"
-              case x if 4 until 6 contains (x) => {
-                if (currentEnemy.inventory.potions.size > 0) {
-                  enemyTurn(playerAction, "heal")
+            if (currentEnemy.inventory.potions.size > 0) {
+              random.nextInt(2) + 1 match {
+                case 1 =>enemyTurn(playerAction, "heal")
                   "heal"
-                } else {
-                  enemyTurn(playerAction, "attack")
+                case 2 =>  enemyTurn(playerAction, "attack")
                   "attack"
-                }
               }
-              case _ => enemyTurn(playerAction, "attack")
-                "attack"
+            } else {
+              random.nextInt(10) + 1 match {
+                case x if 1 until 4 contains (x) => enemyTurn(playerAction, "block")
+                  "block"
+                case _ => enemyTurn(playerAction, "attack")
+                  "attack"
+              }
             }
           case "no" => enemyTurn(playerAction, "attack")
             "attack"
@@ -618,7 +618,7 @@ class Controller @Inject() (var level: LevelInterface,
       case GameStatus.LOOTENEMY => strategy = new StrategyLootEnemy
       case GameStatus.CRATE => strategy = new StrategyLootCrate
       case GameStatus.MERCHANT => strategy = new StrategyMerchant
-      case _ => println("Fehlender GAMESTATUS!!!!!!!!!!!!")
+      case _ => println("Fehlender GAMESTATUS!!!!!!!!!!!!") //noch ändern
     }
     //notifyObservers()
     publish(new TileChanged)
@@ -870,7 +870,8 @@ class Controller @Inject() (var level: LevelInterface,
       var newPotion: Vector[PotionInterface] = Vector()
 
       for (x <- newItems) {
-        x match {
+        val y = x
+        y match {
           case w: WeaponInterface => newWeapons ++= w :: Nil
           case a: ArmorInterface => newArmor ++= a :: Nil
           case p: PotionInterface => newPotion ++= p :: Nil
