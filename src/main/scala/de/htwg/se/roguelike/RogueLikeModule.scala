@@ -19,6 +19,7 @@ class RogueLikeModule extends AbstractModule with ScalaModule {
     bind[LevelInterface].to[Level]
     bind[Level].toInstance(new Level(9,16))
 
+    //bind[FileIOInterface].to[model.fileIOComponent.fileIoXmlImpl.FileIO]
     bind[FileIOInterface].to[model.fileIOComponent.fileIoJsonImpl.FileIO]
   }
 

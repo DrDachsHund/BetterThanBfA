@@ -2,10 +2,12 @@ package de.htwg.se.roguelike.model.fileIOComponent.fileIoJsonImpl
 
 import com.google.inject.Guice
 import de.htwg.se.roguelike.RogueLikeModule
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.roguelike.model.fileIOComponent.FileIOInterface
 import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, PlayerInterface, PotionInterface, WeaponInterface}
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import play.api.libs.json.{JsNumber, JsString, JsValue, Json}
+
 
 import scala.io.Source
 
@@ -19,6 +21,8 @@ class FileIO extends FileIOInterface {
     val injector = Guice.createInjector(new RogueLikeModule)
 
     println(sourceFile)
+
+    player = injector.instance[PlayerInterface]
 
     println(source)
 
