@@ -77,21 +77,6 @@ class tuiLevelTest extends WordSpec with Matchers{
       controller.strategy.updateToString should be(old)
     }
 
-    "create a Red Portal at lvlDepth % 11" in {
-      val old = controller.strategy.updateToString
-      controller.lvlDepth = 10
-      controller.createPortal()
-      controller.strategy.updateToString should not be(old)
-    }
-
-    "create a Merchant every 5 Levels" in {
-      val old = controller.strategy.updateToString
-      controller.lvlDepth = 5
-      controller.createMerchant()
-      controller.strategy.updateToString should not be(old)
-    }
-
-
     "switch to state Inventory when pressing 'i'" in {
       val tuiTest = tui.state
       tui.state.processInputLine("i")
