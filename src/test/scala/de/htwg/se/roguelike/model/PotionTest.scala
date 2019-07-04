@@ -51,42 +51,42 @@ class PotionTest extends WordSpec with Matchers {
 
       "have all avaible potions in random" in {
         var potion = Potion("random")
-        while (potion.name != "Small-Heal-Potion") {
+        while (potion.name != "SmallHeal") {
           potion = Potion("random")
         }
         potion.power should be(25)
 
-        while (potion.name != "Medium-Heal-Potion") {
+        while (potion.name != "MediumHeal") {
           potion = Potion("random")
         }
         potion.power should be(50)
 
-        while (potion.name != "Big-Heal-Potion") {
+        while (potion.name != "BigHeal") {
           potion = Potion("random")
         }
         potion.power should be(75)
 
-        while (potion.name != "Full-Heal-Potion") {
+        while (potion.name != "FullHeal") {
           potion = Potion("random")
         }
         potion.power should be(100)
 
-        while (potion.name != "Small-Mana-Potion") {
+        while (potion.name != "SmallMana") {
           potion = Potion("random")
         }
         potion.power should be(25)
 
-        while (potion.name != "Medium-Mana-Potion") {
+        while (potion.name != "MediumMana") {
           potion = Potion("random")
         }
         potion.power should be(50)
 
-        while (potion.name != "Big-Mana-Potion") {
+        while (potion.name != "BigMana") {
           potion = Potion("random")
         }
         potion.power should be(75)
 
-        while (potion.name != "Full-Mana-Potion") {
+        while (potion.name != "FullMana") {
           potion = Potion("random")
         }
         potion.power should be(100)
