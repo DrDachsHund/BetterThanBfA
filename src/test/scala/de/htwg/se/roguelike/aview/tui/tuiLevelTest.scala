@@ -51,6 +51,21 @@ class tuiLevelTest extends WordSpec with Matchers{
       controller.enemies.size should be(10)
     }
 
+
+    val oldY = controller.player.posY
+    val oldX = controller.player.posY
+    "save file with 'f'" in {
+      tui.state.processInputLine("f")
+      controller.player.posY should be(oldY)
+      controller.player.posX should be(oldX)
+    }
+    "load file with 'l'" in {
+      controller.player = controller.player.nextPlayer(posX = 20,posY = 20)
+      tui.state.processInputLine("l")
+      controller.player.posY should be(oldY)
+      controller.player.posX should be(oldX)
+    }
+
     "do nothing when state equals startScreen on input 'q'" in {
       val old = controller.strategy.updateToString
       tui.state.processInputLine("q")
