@@ -4,6 +4,7 @@ import java.awt.{Color, Font, Graphics2D}
 
 import de.htwg.se.roguelike.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
+import javax.swing.ImageIcon
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FileChooser, FlowPanel, Panel}
@@ -41,15 +42,14 @@ case class guiStartScreen(controller: ControllerInterface, gui: SwingGui) extend
 
       peer.setLayout(null)
 
-      val newGame = new Button("newGame")
-      newGame.peer.setBounds(64 * SCALE, 34 * SCALE, 128 * SCALE, 20 * SCALE)
+      val newGameButtonImage = new SpriteSheet("resources/newGame.png")
+      val newGameIcon = new ImageIcon(newGameButtonImage.getImage().getScaledInstance(256 * SCALE, 45 * SCALE, java.awt.Image.SCALE_SMOOTH))
+
+      val newGame = new Button()
+      newGame.peer.setBounds(0 * SCALE, 102 * SCALE, 256 * SCALE, 45 * SCALE)
+      newGame.peer.setIcon(newGameIcon)
       listenTo(newGame)
       contents += newGame
-
-      val devTest = new Button("devTest")
-      devTest.peer.setBounds(64 * SCALE, 94 * SCALE, 128 * SCALE, 20 * SCALE)
-      listenTo(devTest)
-      contents += devTest
 
 
       reactions += {
@@ -57,15 +57,14 @@ case class guiStartScreen(controller: ControllerInterface, gui: SwingGui) extend
           controller.createRandomLevel()
           controller.setGameStatus(GameStatus.LEVEL)
         }
-        case ButtonClicked(t) if t == devTest => {
-          controller.createLevel()
-          controller.setGameStatus(GameStatus.LEVEL)
-        }
       }
 
 
       override def paintComponent(g: Graphics2D): Unit = {
 
+        val startBackgroundSpriteSheet = new SpriteSheet("resources/startscreen.png")
+        val startBackground = startBackgroundSpriteSheet.getImage()
+        g.drawImage(startBackground, 0, 0, 256 * SCALE, 144 * SCALE, null)
 
       }
 
