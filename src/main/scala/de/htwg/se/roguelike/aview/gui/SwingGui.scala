@@ -43,7 +43,6 @@ class SwingGui(controller: ControllerInterface) extends Reactor {
   reactions += {
     case _: TileChanged => redraw
     case _: LevelSizeChanged => redraw
-    case _: FightEvent => redraw
     case _: ResolutionEvent => resize
     case _: RepaintEvent => frame.repaint()
   }

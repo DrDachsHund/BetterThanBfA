@@ -28,10 +28,6 @@ class Tui(controller: ControllerInterface) extends Reactor { //with Observer
       tuidraw()
       state.handle()
     }
-    case _: FightEvent => {
-      tuidraw()
-      state.handle()
-    }
   }
 
   def tuidraw(): Unit = println(">> \n" + controller.strategy.updateToString + "<<\n")
