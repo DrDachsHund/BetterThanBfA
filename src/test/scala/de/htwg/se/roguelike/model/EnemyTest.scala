@@ -96,7 +96,7 @@ class EnemyTest extends WordSpec with Matchers {
 
       "when creating a RandomBoss" in {
         var boss = Enemy().createRandomBoss(1)
-        boss.name should be("Empty-Name")
+        boss.name should be("Boss-Slime")
         boss.health should be(50)
         boss.mana should be(50)
         boss.attack should be(4)
