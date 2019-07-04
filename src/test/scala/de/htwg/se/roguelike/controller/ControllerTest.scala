@@ -420,6 +420,8 @@ class ControllerTest extends WordSpec with Matchers {
           player = new Player("Test",
             posX = 0,
             posY = 0, inventory = new Inventory(Vector(), Vector(), Vector())))
+        controller.equipArmor(-1)
+        controller.player.inventory.armor.size should be(0)
         controller.equipArmor(1)
         controller.player.inventory.armor.size should be(0)
         controller.player = new Player("Test",
