@@ -818,7 +818,8 @@ class Controller @Inject() (var level: LevelInterface,
           newWeapons ++= player.rightHand :: Nil
         }
         player = player.nextPlayer(rightHand = playerWeapon, inventory = player.inventory.nextInventory(weapons = newWeapons))
-      } else if (hand == 1) {
+      }
+      if (hand == 1) {
         if (player.leftHand.name != "LeftFist") {
           newWeapons ++= player.leftHand :: Nil
         }
