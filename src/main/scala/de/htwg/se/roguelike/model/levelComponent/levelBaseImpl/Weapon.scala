@@ -41,7 +41,7 @@ private object RandomWeapon {
   }
 
   def getWeaponName(): String = {
-    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("resources/Weapons.txt"))
+/*    val fileStream: Option[InputStream] = Option(getClass.getResourceAsStream("resources/Weapons.txt"))
 
     fileStream match {
       case None => return "Waffen-Name-Fehler-Beim-Laden"
@@ -56,7 +56,8 @@ private object RandomWeapon {
           val index = random.nextInt(nameList.size)
           nameList(index)
       }
-    }
+    }*/ //kommentiert da travis den path nicht findet
+    "Weapon"
   }
 
   def getWeaponType(name: String, value: Int, dmg: Int, block: Int, rarity: String): WeaponInterface = {

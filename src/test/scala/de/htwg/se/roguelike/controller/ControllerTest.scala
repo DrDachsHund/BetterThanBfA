@@ -224,6 +224,17 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.health should be(100)
         controller.currentEnemy.health should be(6)
 
+
+        controller.currentEnemy = new Enemy("TestEnemy", health = 20)
+        controller.player = new Player("Test")
+        while (controller.enemyThinking("attack") != "attack") {
+          controller.currentEnemy = new Enemy("TestEnemy", health = 20)
+          controller.player = new Player("Test")
+        }
+        controller.player.health should be(85)
+        controller.currentEnemy.health should be(3)
+
+
         controller.currentEnemy = new Enemy(name = "TestEnemy", health = 20, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
         while (controller.enemyThinking("attack") != "heal") {
           controller.currentEnemy = new Enemy(name = "TestEnemy", health = 20, lvl = 1, inventory = new Inventory(potions = Vector(Potion("random"))))
@@ -471,6 +482,7 @@ class ControllerTest extends WordSpec with Matchers {
         controller.player.inventory.weapons.size should be(2)
 
       }
+
 
       "be able to sell items to the merchant when he has enough money" in {
         val controller: ControllerInterface = new Controller(
