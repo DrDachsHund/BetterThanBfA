@@ -3,17 +3,17 @@ package de.htwg.se.roguelike.aview.tui
 import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
-import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Crate, Enemy, Level, Player}
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import org.scalatest.{Matchers, WordSpec}
 
 class tuiCrateTest extends WordSpec with Matchers {
 
   "A Tui-Crate" should {
-    val crate = Crate()
     val player = Player(name = "Player",posX = 5, posY = 5)
     val enemies = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2",posX = 1), Enemy(name = "TestE3", posY = 1))
     val controller = new Controller(player = player,level = new Level(10,10))
     controller.enemies = enemies
+    controller.crate = Crate(inventory = Vector(Weapon("random")))
     val tui = new Tui(controller)
     tui.state = new tuiCrate(controller,tui)
     "do nothing when state equals Crate on input'q'" in {
