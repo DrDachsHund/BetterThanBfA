@@ -3,7 +3,7 @@ package de.htwg.se.roguelike.aview.tui
 import de.htwg.se.roguelike.controller.GameStatus
 import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
 import de.htwg.se.roguelike.model._
-import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl.{Armor, Enemy, Level, Player}
+import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import org.scalatest.{Matchers, WordSpec}
 
 class tuiInventoryArmorTest extends WordSpec with Matchers {
@@ -129,6 +129,11 @@ class tuiInventoryArmorTest extends WordSpec with Matchers {
       tui3.state should be (tui3Test)
     }
 
+    "cant equip items with a wrong index" in {
+      controller.player = new Player(name = "Player",inventory = new Inventory(Vector(),Vector(),Vector(Armor("random"))))
+      controller.equipArmor(-1)
+      controller.player.inventory.armor.size should be(1)
+    }
 
   }
 }
