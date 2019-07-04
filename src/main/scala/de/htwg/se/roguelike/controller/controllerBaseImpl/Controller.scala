@@ -482,7 +482,7 @@ class Controller @Inject() (var level: LevelInterface,
 
   //-----------STRATEGY PATTERN TO STRING----------------
 
-  var strategy: Strategy = new StrategyLevel
+  var strategy: Strategy = new StrategyStartScreen
 
   class StrategyLevel extends Strategy {
     override def updateToString: String = level.toString
@@ -566,6 +566,10 @@ class Controller @Inject() (var level: LevelInterface,
     override def updateToString: String = merchantString()
   }
 
+  class StrategyStartScreen extends Strategy {
+    override def updateToString: String = "Rogue-Like The Game\nPress 'n' to start the game"
+  }
+
   private def merchantString(): String = {
     var sb = new StringBuilder
     sb ++= "Interacting with Merchant:\n"
@@ -618,7 +622,9 @@ class Controller @Inject() (var level: LevelInterface,
       case GameStatus.LOOTENEMY => strategy = new StrategyLootEnemy
       case GameStatus.CRATE => strategy = new StrategyLootCrate
       case GameStatus.MERCHANT => strategy = new StrategyMerchant
-      case _ => println("Fehlender GAMESTATUS!!!!!!!!!!!!") //noch ändern
+      case GameStatus.STARTSCREEN => strategy = new StrategyStartScreen
+      case GameStatus.BOSSFIGHT => strategy = new StrategyFight
+      //case _ => println("Fehlender GAMESTATUS!!!!!!!!!!!!")
     }
     //notifyObservers()
     publish(new TileChanged)
