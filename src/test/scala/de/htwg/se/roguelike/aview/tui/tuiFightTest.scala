@@ -92,6 +92,21 @@ class tuiFightTest extends WordSpec with Matchers {
       tui.state should not equal tuitest
     }
 
+    "cant run with input 'r' if in bossfight" in {
+      var player2 = Player(name = "Player", posX = 5, posY = 5)
+      val enemies2 = Vector(Enemy(name = "TestE1"), Enemy(name = "TestE2", posX = 1), Enemy(name = "TestE3", posY = 1))
+      val controller2 = new Controller(player = player2, level = new Level(10, 10))
+      controller2.enemies = enemies
+      val tui2 = new Tui(controller2)
+      tui2.state = new tuiFight(controller2,tui2)
+
+      val tuitest = tui2.state
+      controller2.bossfight = true
+      tui2.state.processInputLine("r")
+      tui2.state should be (tuitest)
+    }
+
+
     "open player inventory with input 'i'" in {
       tui.state = new tuiFight(controller,tui)
       val tuitest = tui.state

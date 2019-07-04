@@ -26,6 +26,13 @@ class tuiCrateTest extends WordSpec with Matchers {
       tui.state.processInputLine("1")
       controller.crate.inventory.size should be (testsize - 1)
     }
+
+    "Switch to gameStatus.Level if crate is empty" in {
+      tui.state = new tuiCrate(controller,tui)
+      tui.state.processInputLine("1")
+      controller.gameStatus should be (GameStatus.LEVEL)
+    }
+
     "go out of that State with 'x'" in {
       tui.state = new tuiCrate(controller,tui)
       val tuitest = tui.state

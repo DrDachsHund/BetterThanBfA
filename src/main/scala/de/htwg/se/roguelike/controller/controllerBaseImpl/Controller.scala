@@ -14,18 +14,19 @@ import scala.util.Random
 class Controller @Inject() (var level: LevelInterface,
                             var player: PlayerInterface) extends ControllerInterface { //with Observer
 
+
+  val injector = Guice.createInjector(new RogueLikeModule)
+  val fileIo = injector.instance[FileIOInterface]
   val fight: FightInterface = new Fight
   var gameStatus: GameStatus.Value = GameStatus.STARTSCREEN
   private val undoManager = new UndoManager
   var enemies: Vector[EnemyInterface] = Vector()
   var portal: PortalInterface = Portal()
-  var crate: CrateInterface = Crate(inventory = Vector(Sword(name = "Starting Weapon", value = 10, usable = false
-    , dmg = 10, block = 10, oneHanded = true, rarity = "Common")))
+  var crate: CrateInterface = Crate(inventory = Vector())
   var merchant: MerchantInterface = Merchant()
   var lvlDepth = 0
   var bossfight: Boolean = false
-  val injector = Guice.createInjector(new RogueLikeModule)
-  val fileIo = injector.instance[FileIOInterface]
+
 
   var SCALE: Int = 3
 
@@ -58,8 +59,6 @@ class Controller @Inject() (var level: LevelInterface,
     for (e <- enemies1) {
       enemies ++= e.setScale(player.lvl + lvlDepth).setLoot() :: Nil
     }
-    createMerchant()
-    createPortal()
     createCrate()
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, merchant, crate, portal, this))
     //notifyObservers()
@@ -89,8 +88,11 @@ class Controller @Inject() (var level: LevelInterface,
       val (col, row) = findFreeTile()
       level = level.removeElement(col, row, 8)
 
-      if (lvlDepth != 0) {
-        crate = Crate()
+      crate = Crate()
+
+      if (lvlDepth == 0) {
+        crate = Crate(inventory = Vector(Sword(name = "Starting Weapon", value = 10, usable = false
+          , dmg = 10, block = 10, oneHanded = true, rarity = "Common",textureIndex = 1)))
       }
 
       crate = crate.nextCrate(posX = row, posY = col)

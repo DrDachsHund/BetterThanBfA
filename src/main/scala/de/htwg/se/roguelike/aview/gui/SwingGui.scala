@@ -19,7 +19,7 @@ class SwingGui(controller: ControllerInterface) extends Reactor {
 
   var state: StateGui = new guiStartScreen(controller, this)
 
-  frame.title = "Pog Game"
+  frame.title = "Rogue-Like"
   setSize
 
   /*

@@ -328,13 +328,6 @@ class ControllerTest extends WordSpec with Matchers {
         }
         controller.player.health should be(100)
         controller.currentEnemy.health should be(83)
-
-
-
-
-
-
-
       }
 
 

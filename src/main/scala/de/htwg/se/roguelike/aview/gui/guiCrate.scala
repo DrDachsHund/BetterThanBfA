@@ -4,8 +4,6 @@ import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
 import de.htwg.se.roguelike.controller.{ControllerInterface, GameStatus}
-import de.htwg.se.roguelike.controller.controllerBaseImpl.Controller
-import de.htwg.se.roguelike.model._
 import de.htwg.se.roguelike.model.levelComponent.{ArmorInterface, PotionInterface, WeaponInterface}
 import de.htwg.se.roguelike.model.levelComponent.levelBaseImpl._
 import javax.swing.ImageIcon

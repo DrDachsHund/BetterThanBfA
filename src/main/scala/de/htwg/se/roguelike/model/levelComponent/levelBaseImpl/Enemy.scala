@@ -119,7 +119,7 @@ case class Enemy(name: String = "Empty-Name",
   }
 
   def createRandomBoss(lvl: Int): Enemy = {
-    var boss = this.copy(health = 50 * lvl, maxHealth = 50 * lvl, mana = 50 * lvl, maxMana = 50 * lvl, attack = 4 * lvl, lvl = lvl)
+    var boss = this.copy(health = 50 * lvl, maxHealth = 50 * lvl, mana = 50 * lvl, maxMana = 50 * lvl, attack = 4 * lvl, lvl = lvl,enemyType = 1)
     boss = boss.setLoot()
     boss
   }

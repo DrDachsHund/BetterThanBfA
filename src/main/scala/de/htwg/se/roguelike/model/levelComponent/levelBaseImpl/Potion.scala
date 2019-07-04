@@ -17,7 +17,6 @@ object Potion {
     case "BigMana" => ManaPotion(name = "BigMana", value = 75, usable = false, power = 75, rarity = "Rare",textureIndex = 6)
     case "FullMana" => ManaPotion(name = "FullMana", value = 100, usable = false, power = 100, rarity = "Epic",textureIndex = 5)
     case "random" => RandomPotion.getRandomPotion()
-
   }
 }
 

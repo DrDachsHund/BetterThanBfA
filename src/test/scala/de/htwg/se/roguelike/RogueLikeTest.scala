@@ -1,5 +1,5 @@
 package de.htwg.se.roguelike
-/*
+
 import org.scalatest.{Matchers, WordSpec}
 
 class RogueLikeTest extends WordSpec with Matchers {
@@ -11,4 +11,3 @@ class RogueLikeTest extends WordSpec with Matchers {
   }
 
 }
-*/
