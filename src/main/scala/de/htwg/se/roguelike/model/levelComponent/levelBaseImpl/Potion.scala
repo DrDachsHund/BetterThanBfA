@@ -11,8 +11,8 @@ object Potion {
     case "SmallHeal" => HealPotion(name = "SmallHeal", value = 25, usable = true, power = 25, rarity = "Common",textureIndex = 4)
     case "MediumHeal" => HealPotion(name = "MediumHeal", value = 50, usable = true, power = 50, rarity = "Uncommon",textureIndex = 3)
     case "BigHeal" => HealPotion(name = "BigHeal", value = 75, usable = true, power = 75, rarity = "Rare",textureIndex = 2)
-    case "FullHeal" => HealPotion(name = "Full-Heal-Potion", value = 100, usable = true, power = 100, rarity = "Epic",textureIndex = 1)
-    case "SmallMana" => ManaPotion(name = "FullHeal", value = 25, usable = false, power = 25, rarity = "Common",textureIndex = 8) // Power noch nicht final, könnte OP sein
+    case "FullHeal" => HealPotion(name = "FullHeal", value = 100, usable = true, power = 100, rarity = "Epic",textureIndex = 1)
+    case "SmallMana" => ManaPotion(name = "SmallMana", value = 25, usable = false, power = 25, rarity = "Common",textureIndex = 8) // Power noch nicht final, könnte OP sein
     case "MediumMana" => ManaPotion(name = "MediumMana", value = 50, usable = false, power = 50, rarity = "Uncommon",textureIndex = 7)
     case "BigMana" => ManaPotion(name = "BigMana", value = 75, usable = false, power = 75, rarity = "Rare",textureIndex = 6)
     case "FullMana" => ManaPotion(name = "FullMana", value = 100, usable = false, power = 100, rarity = "Epic",textureIndex = 5)
