@@ -75,13 +75,82 @@ class FileIO extends FileIOInterface {
 
 
       armorType match {
-        case "Helmet" => Helmet()
-        case "Chest" =>
-        case "Pants" =>
-        case "Boots" =>
-        case "Gloves" =>
+        case "Helmet" => armor ++= Helmet(armorName, armorValue, armorUsable, armorArmor, armorType, armorRarity, armorTextureIndex) :: Nil
+        case "Chest" => armor ++= Chest(armorName, armorValue, armorUsable, armorArmor, armorType, armorRarity, armorTextureIndex) :: Nil
+        case "Pants" => armor ++= Pants(armorName, armorValue, armorUsable, armorArmor, armorType, armorRarity, armorTextureIndex) :: Nil
+        case "Boots" => armor ++= Boots(armorName, armorValue, armorUsable, armorArmor, armorType, armorRarity, armorTextureIndex) :: Nil
+        case "Gloves" => armor ++= Gloves(armorName, armorValue, armorUsable, armorArmor, armorType, armorRarity, armorTextureIndex) :: Nil
       }
     }
+
+    val HArmorName: String = (json \ "player" \ "HArmorName").toString().replace("\"", "")
+    val HArmorValue: Int = (json \ "player" \ "HArmorValue").as[Int]
+    val HArmorUsable: Boolean = (json \ "player" \ "HArmorUsable").get.toString().toBoolean
+    val HArmorArmor: Int = (json \ "player" \ "HArmorArmor").as[Int]
+    val HArmorType: String = (json \ "player" \ "HArmorType").get.toString().replace("\"", "")
+    val HArmorRarity: String = (json \ "player" \ "HArmorRarity").get.toString().replace("\"", "")
+    val HArmorTextureIndex: Int = (json \ "player" \ "HArmorTextureIndex").as[Int]
+    val helmet = Helmet(HArmorName, HArmorValue, HArmorUsable, HArmorArmor,HArmorType, HArmorRarity, HArmorTextureIndex)
+
+    val CrmorName: String = (json \ "player" \ "CrmorName").toString().replace("\"", "")
+    val CArmorValue: Int = (json \ "player" \ "CArmorValue").as[Int]
+    val CArmorUsable: Boolean = (json \ "player" \ "CArmorUsable").get.toString().toBoolean
+    val CArmorArmor: Int = (json \ "player" \ "CArmorArmor").as[Int]
+    val CArmorType: String = (json \ "player" \ "CArmorType").get.toString().replace("\"", "")
+    val CArmorRarity: String = (json \ "player" \ "CArmorRarity").get.toString().replace("\"", "")
+    val CArmorTextureIndex: Int = (json \ "player" \ "CArmorTextureIndex").as[Int]
+    val chest = Chest(CrmorName, CArmorValue, CArmorUsable, CArmorArmor, CArmorType, CArmorRarity,CArmorTextureIndex)
+
+    val PArmorName: String = (json \ "player" \ "PArmorName").toString().replace("\"", "")
+    val PArmorValue: Int = (json \ "player" \ "PArmorValue").as[Int]
+    val PArmorUsable: Boolean = (json \ "player" \ "PArmorUsable").get.toString().toBoolean
+    val PArmorArmor: Int = (json \ "player" \ "PArmorArmor").as[Int]
+    val PArmorType: String = (json \ "player" \ "PArmorType").get.toString().replace("\"", "")
+    val PArmorRarity: String = (json \ "player" \ "PArmorRarity").get.toString().replace("\"", "")
+    val PArmorTextureIndex: Int = (json \ "player" \ "PArmorTextureIndex").as[Int]
+    val pants = Pants(PArmorName, PArmorValue, PArmorUsable, PArmorArmor,PArmorType, PArmorRarity, PArmorTextureIndex)
+
+    val BArmorName: String = (json \ "player" \ "BArmorName").toString().replace("\"", "")
+    val BArmorValue: Int = (json \ "player" \ "BArmorValue").as[Int]
+    val BArmorUsable: Boolean = (json \ "player" \ "BArmorUsable").get.toString().toBoolean
+    val BArmorArmor: Int = (json \ "player" \ "BArmorArmor").as[Int]
+    val BArmorType: String = (json \ "player" \ "BArmorType").get.toString().replace("\"", "")
+    val BArmorRarity: String = (json \ "player" \ "PArmorRarity").get.toString().replace("\"", "")
+    val BArmorTextureIndex: Int = (json \ "player" \ "BArmorTextureIndex").as[Int]
+    val boots = Boots(BArmorName, BArmorValue, BArmorUsable, BArmorArmor,BArmorType, BArmorRarity, BArmorTextureIndex)
+
+    val GArmorName: String = (json \ "player" \ "GArmorName").toString().replace("\"", "")
+    val GArmorValue: Int = (json \ "player" \ "GArmorValue").as[Int]
+    val GArmorUsable: Boolean = (json \ "player" \ "GArmorUsable").get.toString().toBoolean
+    val GArmorArmor: Int = (json \ "player" \ "GArmorArmor").as[Int]
+    val GArmorType: String = (json \ "player" \ "GArmorType").get.toString().replace("\"", "")
+    val GArmorRarity: String = (json \ "player" \ "GArmorRarity").get.toString().replace("\"", "")
+    val GArmorTextureIndex: Int = (json \ "player" \ "GArmorTextureIndex").as[Int]
+    val gloves = Gloves(GArmorName, GArmorValue, GArmorUsable, GArmorArmor,GArmorType, GArmorRarity, GArmorTextureIndex)
+
+
+
+    val rName: String = (json \ "player" \ "rightHandWeaponDamageWeaponName").as[String].replace("\"", "")
+    val rValue: Int = (json \ "player" \ "rightHandWeaponDamageWeaponValue").get.toString().toInt
+    val rUsbale: Boolean = (json \ "player" \ "rightHandWeaponDamageWeaponUsable").get.toString().toBoolean
+    val rDmg: Int = (json \ "player" \ "rightHandWeaponDamageWeaponDamage").get.toString().toInt
+    val rBlock: Int = (json \ "player" \ "rightHandWeaponDamageWeaponBlock").get.toString().toInt
+    val rOH: Boolean = (json \ "player" \ "rightHandWeaponDamageWeaponOneHanded").get.toString().toBoolean
+    val rRarity: String = (json \ "player" \ "rightHandWeaponDamageWeaponRarity").as[String].replace("\"", "")
+    val rLvl: Int = (json \ "player" \ "rightHandWeaponDamageWeaponItemLevel").get.toString().toInt
+    val rTID: Int = (json \ "player" \ "rightHandWeaponDamageWeaponTextureIndex").get.toString().toInt
+    val rightHand = Sword(rName, rValue, rUsbale, rDmg, rBlock, rOH, rRarity, rLvl, rTID)
+
+    val lName: String = (json \ "player" \ "leftHandWeaponName").as[String].replace("\"", "")
+    val lValue: Int = (json \ "player" \ "leftHandWeaponValue").get.toString().toInt
+    val lUsbale: Boolean = (json \ "player" \ "leftHandWeaponUsable").get.toString().toBoolean
+    val lDmg: Int = (json \ "player" \ "leftHandWeaponDamage").get.toString().toInt
+    val lBlock: Int = (json \ "player" \ "leftHandWeaponBlock").get.toString().toInt
+    val lOH: Boolean = (json \ "player" \ "leftHandWeaponOneHanded").get.toString().toBoolean
+    val lRarity: String = (json \ "player" \ "leftHandWeaponRarity").as[String].replace("\"", "")
+    val lLvl: Int = (json \ "player" \ "leftHandWeaponItemLevel").get.toString().toInt
+    val lTID: Int = (json \ "player" \ "leftHandWeaponTextureIndex").get.toString().toInt
+    val leftHand = Sword(lName, lValue, lUsbale, lDmg, lBlock, lOH, lRarity, lLvl, lTID)
 
 
     player = Player(name,
@@ -98,7 +167,14 @@ class FileIO extends FileIOInterface {
       gulden = gulden,
       killCounter = killCounter,
       direction = direction,
-      inventory = new Inventory(weapons = weapons, potions = potions, armor = Vector()))
+      inventory = new Inventory(weapons = weapons, potions = potions, armor = armor),
+      rightHand = rightHand,
+      leftHand = leftHand,
+      helmet = helmet,
+      chest = chest,
+      pants = pants,
+      boots = boots,
+      gloves = gloves)
 
     player
   }
@@ -175,8 +251,74 @@ class FileIO extends FileIOInterface {
               )
             }
           )
+        ),
 
-        )
+
+        "rightHandWeaponDamageWeaponName" -> player.rightHand.name,
+        "rightHandWeaponDamageWeaponValue" -> player.rightHand.value,
+        "rightHandWeaponDamageWeaponUsable" -> player.rightHand.usable,
+        "rightHandWeaponDamageWeaponDamage" -> player.rightHand.dmg,
+        "rightHandWeaponDamageWeaponBlock" -> player.rightHand.block,
+        "rightHandWeaponDamageWeaponOneHanded" -> player.rightHand.oneHanded,
+        "rightHandWeaponDamageWeaponRarity" -> player.rightHand.rarity,
+        "rightHandWeaponDamageWeaponItemLevel" -> player.rightHand.itemLevel,
+        "rightHandWeaponDamageWeaponTextureIndex" -> player.rightHand.textureIndex,
+
+
+        "leftHandWeaponName" -> player.leftHand.name,
+        "leftHandWeaponValue" -> player.leftHand.value,
+        "leftHandWeaponUsable" -> player.leftHand.usable,
+        "leftHandWeaponDamage" -> player.leftHand.dmg,
+        "leftHandWeaponBlock" -> player.leftHand.block,
+        "leftHandWeaponOneHanded" -> player.leftHand.oneHanded,
+        "leftHandWeaponRarity" -> player.leftHand.rarity,
+        "leftHandWeaponItemLevel" -> player.leftHand.itemLevel,
+        "leftHandWeaponTextureIndex" -> player.leftHand.textureIndex,
+
+
+    "HArmorName" -> player.helmet.name,
+    "HArmorValue" -> player.helmet.value,
+    "HArmorUsable" -> player.helmet.usable,
+    "HArmorArmor" -> player.helmet.armor,
+    "HArmorType" -> player.helmet.armorType,
+    "HArmorRarity" -> player.helmet.rarity,
+    "HArmorTextureIndex" -> player.helmet.textureIndex,
+
+
+    "CrmorName" -> player.chest.name,
+    "CArmorValue" -> player.chest.value,
+    "CArmorUsable" -> player.chest.usable,
+    "CArmorArmor" -> player.chest.armor,
+    "CArmorType" -> player.chest.armorType,
+    "CArmorRarity" -> player.chest.rarity,
+    "CArmorTextureIndex" -> player.chest.textureIndex,
+
+
+    "PArmorName" -> player.pants.name,
+    "PArmorValue" -> player.pants.value,
+    "PArmorUsable" -> player.pants.usable,
+    "PArmorArmor" -> player.pants.armor,
+    "PArmorType" -> player.pants.armorType,
+    "PArmorRarity" -> player.pants.rarity,
+    "PArmorTextureIndex" -> player.pants.textureIndex,
+
+
+    "BArmorName" -> player.boots.name,
+    "BArmorValue" -> player.boots.value,
+    "BArmorUsable" -> player.boots.usable,
+    "BArmorArmor" -> player.boots.armor,
+    "BArmorType" -> player.boots.armorType,
+    "BArmorRarity" -> player.boots.rarity,
+    "BArmorTextureIndex" -> player.boots.textureIndex,
+
+
+    "GArmorName" -> player.gloves.name,
+    "GArmorValue" -> player.gloves.value,
+    "GArmorUsable" -> player.gloves.usable,
+    "GArmorArmor" -> player.gloves.armor,
+    "GArmorType" -> player.gloves.armorType,
+    "GArmorRarity" -> player.gloves.rarity,
+    "GArmorTextureIndex" -> player.gloves.textureIndex
 
 
       )
