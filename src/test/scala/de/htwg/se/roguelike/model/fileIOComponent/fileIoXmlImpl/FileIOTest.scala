@@ -11,6 +11,7 @@ class FileIOTest extends WordSpec with Matchers {
     "save and load the Player" in {
       var testX = player.posX
       var testY = player.posY
+      fileIO.saveXML(player)
       fileIO.save(player)
       player = player.nextPlayer(posX = 20, posY = 20)
       player = fileIO.load

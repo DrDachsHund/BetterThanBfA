@@ -31,5 +31,35 @@ class FileIOTest extends WordSpec with Matchers {
       player.posX should be (testX)
       player.posY should be (testY)
     }
+    "save and load the Player with Pants" in {
+      var player:PlayerInterface = new Player("Test",posX = 5,posY = 5,inventory = new Inventory(Vector(Weapon("random")),Vector(Potion("random")),Vector(Armor("Pants"))))
+      var testX = player.posX
+      var testY = player.posY
+      fileIO.save(player)
+      player = player.nextPlayer(posX = 20,posY = 20)
+      player = fileIO.load
+      player.posX should be (testX)
+      player.posY should be (testY)
+    }
+    "save and load the Player with Boots" in {
+      var player:PlayerInterface = new Player("Test",posX = 5,posY = 5,inventory = new Inventory(Vector(Weapon("random")),Vector(Potion("random")),Vector(Armor("Boots"))))
+      var testX = player.posX
+      var testY = player.posY
+      fileIO.save(player)
+      player = player.nextPlayer(posX = 20,posY = 20)
+      player = fileIO.load
+      player.posX should be (testX)
+      player.posY should be (testY)
+    }
+    "save and load the Player with Gloves" in {
+      var player:PlayerInterface = new Player("Test",posX = 5,posY = 5,inventory = new Inventory(Vector(Weapon("random")),Vector(Potion("random")),Vector(Armor("Gloves"))))
+      var testX = player.posX
+      var testY = player.posY
+      fileIO.save(player)
+      player = player.nextPlayer(posX = 20,posY = 20)
+      player = fileIO.load
+      player.posX should be (testX)
+      player.posY should be (testY)
+    }
   }
 }
