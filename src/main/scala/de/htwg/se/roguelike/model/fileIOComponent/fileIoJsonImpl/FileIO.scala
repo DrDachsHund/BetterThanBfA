@@ -20,7 +20,7 @@ class FileIO extends FileIOInterface {
     val json: JsValue = Json.parse(source)
     val injector = Guice.createInjector(new RogueLikeModule)
 
-    val name = (json \\ "name").toString()
+    val name = (json \"player" \ "Name").get.toString().replace("\"", "")
     val health = (json \ "player" \ "health").get.toString().toInt
     val maxHealth = (json \ "player" \ "maxHealth").get.toString().toInt
     val mana = (json \ "player" \ "mana").get.toString().toInt
@@ -61,7 +61,7 @@ class FileIO extends FileIOInterface {
 
     val armorSize = (json \ "player" \ "armorSize").get.toString.toInt
     var armor: Vector[ArmorInterface] = Vector()
-    for (index <- 0 until weaponSize) {
+    for (index <- 0 until armorSize) {
       val armorType: String = (json \\ "ArmorType") (index).toString().replace("\"", "")
 
       val armorName: String = (json \\ "ArmorName") (index).toString().replace("\"", "")

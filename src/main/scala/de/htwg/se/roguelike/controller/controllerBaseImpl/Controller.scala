@@ -59,6 +59,7 @@ class Controller @Inject() (var level: LevelInterface,
     for (e <- enemies1) {
       enemies ++= e.setScale(player.lvl + lvlDepth).setLoot() :: Nil
     }
+    createMerchant()
     createCrate()
     undoManager.doStep(new LevelCommand((level, player), (level, player), enemies, merchant, crate, portal, this))
     //notifyObservers()
